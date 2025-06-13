@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nd2py"
+version = "2.3.0"
+description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
+authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
+requires-python = ">=3.8"
+dependencies = [
+  "tqdm>=4.66",
+  "pytest>=8.3",
+  "numpy>=1.20",
+  "scipy>=1.14",
+  "torch>=1.12",
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+  "setproctitle",
+  "matplotlib",
+  "seaborn",
+  "pyyaml",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["nd2py*"]
