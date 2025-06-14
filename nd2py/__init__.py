@@ -9,6 +9,7 @@ from .core.simplify.split_by_add import SplitByAdd
 from . import utils
 from .search.gplearn_generator import GPLearnGenerator
 from .search.gp import GP
+from .search.llmsr import LLMSR
 
 Constant = lambda x, *args, **kwargs: Number(x, *args, **kwargs, fitable=False)
 variables = lambda vars, *args, **kwargs: (

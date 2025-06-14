@@ -36,7 +36,8 @@ class LogFormatter(logging.Formatter):
         ]
         prefix = f"[{'|'.join([str(p) for p in prefixes if str(p).strip()])}]"
         if record.levelname in ["WARNING", "ERROR", "CRITICAL"]:
-            prefix += f" ({record.pathname}:{record.lineno})"
+            path = os.path.relpath(record.pathname, os.getcwd())
+            prefix += f" ({path}:{record.lineno})"
         message = record.getMessage() or ""
         message = message.replace("\n", "\n" + " " * len(prefix + " "))
         if self.colorful:

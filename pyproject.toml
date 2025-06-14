@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nd2py"
-version = "2.3.0"
+version = "2.4.0"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
 requires-python = ">=3.8"
@@ -20,6 +20,10 @@ dependencies = [
   "matplotlib",
   "seaborn",
   "pyyaml",
+  "rich",
+  "dotenv",
+  "requests",
+  "pyperclip"
 ]
 
 [tool.pytest.ini_options]
