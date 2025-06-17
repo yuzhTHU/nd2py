@@ -58,7 +58,7 @@ class SplitByAdd(Visitor):
 
     def visit_Sub(self, node: Sub, *args, **kwargs) -> List[Symbol]:
         if not kwargs.get("split_by_sub"):
-            return [self]
+            return [node]
         x1, x2 = node.operands
         result1 = self(x1, *args, **kwargs)
         result2 = self(x2, *args, **kwargs)
