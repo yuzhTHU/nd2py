@@ -95,7 +95,7 @@ class SplitByAdd(Visitor):
             return [node]
         x1, x2 = node.operands
         result = self(x1, *args, **kwargs)
-        for idx, item in result:
+        for idx, item in enumerate(result):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
             elif isinstance(item, Number):
