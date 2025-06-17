@@ -93,34 +93,32 @@ def get_fig(
         FW = LM + CN * AW + (CN - 1) * HS + RM
 
     figinfo = AttrDict(
-        dict(
-            RN=RN,
-            CN=CN,
-            FW=FW,
-            FH=FH,
-            AW=AW,
-            AH=AH,
-            LM=LM,
-            RM=RM,
-            TM=TM,
-            BM=BM,
-            HS=HS,
-            VS=VS,
-            r_AW=AW / FW,
-            r_AH=AH / FH,
-            r_HS=HS / FW,
-            r_VS=VS / FH,
-            r_LM=LM / FW,
-            r_RM=RM / FW,
-            r_TM=TM / FH,
-            r_BM=BM / FH,
-            fontsize=fontsize,
-            lw=lw,
-            top_box=(LM / FW, 1 - TM / FH, 1 - (LM + RM) / FW, TM / FH),
-            bottom_box=(LM / FW, 0, 1 - (LM + RM) / FW, BM / FH),
-            right_box=(1 - RM / FW, BM / FH, RM / FW, 1 - (TM + BM) / FH),
-            left_box=(0, BM / FH, LM / FW, 1 - (TM + BM) / FH),
-        )
+        RN=RN,
+        CN=CN,
+        FW=FW,
+        FH=FH,
+        AW=AW,
+        AH=AH,
+        LM=LM,
+        RM=RM,
+        TM=TM,
+        BM=BM,
+        HS=HS,
+        VS=VS,
+        r_AW=AW / FW,
+        r_AH=AH / FH,
+        r_HS=HS / FW,
+        r_VS=VS / FH,
+        r_LM=LM / FW,
+        r_RM=RM / FW,
+        r_TM=TM / FH,
+        r_BM=BM / FH,
+        fontsize=fontsize,
+        lw=lw,
+        top_box=(LM / FW, 1 - TM / FH, 1 - (LM + RM) / FW, TM / FH),
+        bottom_box=(LM / FW, 0, 1 - (LM + RM) / FW, BM / FH),
+        right_box=(1 - RM / FW, BM / FH, RM / FW, 1 - (TM + BM) / FH),
+        left_box=(0, BM / FH, LM / FW, 1 - (TM + BM) / FH),
     )
     if gridspec:
         fig = plt.figure(figsize=(FW, FH), dpi=dpi, **kwargs)
@@ -276,6 +274,19 @@ class EqualizeNormalize(mcolors.Normalize):
         )
 
 
+myhsv = mcolors.LinearSegmentedColormap.from_list(
+    "myhsv",
+    ["#d63031", "#e17055", "#fdcb6e", "#00b894", "#00cec9", "#0984e3", "#6c5ce7"],
+    N=256,
+)
+mybwr = mcolors.LinearSegmentedColormap.from_list(
+    "mybwr", ["#0984e3", "#ffffff", "#d63031"], N=256
+)
+myhot = mcolors.LinearSegmentedColormap.from_list(
+    "myhot", ["#0308F8", "#FD0B1B", "#ffff00"], gamma=5.0
+)
+
+
 def plotOD(
     ax,
     source: List[str],
@@ -388,7 +399,7 @@ def clear_svg(path, debug=False):
     ):
         style = text.attrib.pop("style", "")
 
-        font_size = re.search(r"font:[^;]*\s+(\d+\.?\d*px)(?:\s|$)", style)
+        font_size = re.search(r"font:[^;]*\s+(\d+\.?\d*+px)(?:\s|$)", style)
         font_family = re.search(r"font:[^;]*\s+\'([^\']*)\'(?:\s|$)", style)
         font_style = re.search(r"font:[^;]*\s+(italic|oblique)(?:\s|$)", style)
         font_weight = re.search(
@@ -441,3 +452,76 @@ def load_font():
     plt.rcParams["font.sans-serif"] = [font_path]  # 这里指定.otf文件路径
     plt.rcParams["axes.unicode_minus"] = False  # 正确显示负号
     return font
+
+
+# 计算两个 box 的重叠面积
+def _overlapping_area(bbox1, bbox2):
+    x0 = max(bbox1.x0, bbox2.x0)
+    x1 = min(bbox1.x1, bbox2.x1)
+    y0 = max(bbox1.y0, bbox2.y0)
+    y1 = min(bbox1.y1, bbox2.y1)
+    return max(0, x1 - x0) * max(0, y1 - y0)
+
+
+# 计算 point 到 box 的最近距离
+def _distance_to_box(point, box):
+    x = max(box.x0, min(point[0], box.x1))
+    y = max(box.y0, min(point[1], box.y1))
+    return np.sqrt((point[0] - x) ** 2 + (point[1] - y) ** 2)
+
+
+# 调整文本位置的函数
+def adjust_text(texts, ax, step=0.01, max_iterations=100, mode="xy"):
+    raw_pos = np.array([text.get_position() for text in texts], dtype=float)
+    cur_pos = raw_pos.copy()
+
+    overlap = np.zeros((len(texts), len(texts)))
+
+    def update(i, utri_only=False):
+        bbox1 = texts[i].get_window_extent(renderer=ax.figure.canvas.get_renderer())
+        for j, text2 in enumerate(texts):
+            if j == i:
+                continue
+            if utri_only and j <= i:
+                continue
+            bbox2 = text2.get_window_extent(renderer=ax.figure.canvas.get_renderer())
+            overlap[i, j] = overlap[j, i] = _overlapping_area(bbox1, bbox2)
+
+    def normalize(v):
+        return v / np.linalg.norm(v).clip(1e-6)
+
+    # 初始化
+    for i in range(len(texts)):
+        update(i, utri_only=True)
+
+    for iteration in range(max_iterations):
+        i, j = random.choice(list(np.stack(np.nonzero(overlap), axis=-1)))
+
+        # i 对 j 的排斥
+        F1 = cur_pos[j] - cur_pos[i]
+
+        # raw_pos[j] 对 j 的吸引
+        bbox = texts[j].get_window_extent(renderer=ax.figure.canvas.get_renderer())
+        F2 = (
+            normalize(raw_pos[j] - cur_pos[j])
+            * _distance_to_box(raw_pos[j], bbox)
+            * 0.001
+        )
+        # F2 = 0.0
+
+        # 随机扰动
+        F3 = np.random.randn(2)
+
+        # 合力
+        F = F1 + F2 + F3
+        if mode == "x":
+            F[1] = 0
+        if mode == "y":
+            F[0] = 0
+
+        # 更新位置
+        cur_pos[j] += F * step
+        texts[j].set_position(cur_pos[j])
+        update(j)
+        if (overlap == 0).all():
+            break
