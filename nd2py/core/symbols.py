@@ -1,7 +1,8 @@
 import warnings
 from copy import deepcopy
-from typing import List, Literal, Optional, Tuple, Set
 from functools import reduce
+from typing import List, Literal, Optional, Tuple, Set
+from .context.check_nettype import check_nettype
 
 
 __all__ = [
@@ -127,39 +128,36 @@ class Symbol(metaclass=SymbolMeta):
             op.parent = self
         self.operands = operands
 
-        # Ensure nettype is specified or can be inferred
-        if nettype is None and len(operands) == 0:
-            raise ValueError(
-                f"The nettype of {type(self).__name__} is not specified, nor can it be inferred from operands."
-            )
         # Set nettype to the one specified or inferred from operands
         implied_nettype = (
             self.map_nettype([op.nettype for op in operands])
             if len(operands)
             else nettype
         )
-        if implied_nettype == "invalid":
+        self.nettype = nettype or implied_nettype
+        # Ensure nettype of operands meets the requirements of the current Symbol
+        if check_nettype() and implied_nettype == "invalid":
             raise ValueError(
                 f"Cannot determine nettype for {type(self).__name__} with operands {operands}. "
             )
-        self.nettype = nettype or implied_nettype
+        # Ensure nettype is specified or can be inferred
+        if check_nettype() and self.nettype is None:
+            raise ValueError(
+                f"The nettype of {type(self).__name__} is not specified, nor can it be inferred from operands."
+            )
         # Ensure nettype is valid
-        if self.nettype is not None and self.nettype not in self.nettype_range():
+        if (
+            check_nettype()
+            and self.nettype is not None
+            and self.nettype not in self.nettype_range()
+        ):
             raise ValueError(
                 f"Invalid nettype '{nettype}' for {type(self).__name__}, while {self.nettype_range()} is desired."
             )
-        # Ensure nettypes of operands are valid
-        for op in operands:
-            if op.nettype is not None and op.nettype not in self.replaceable_nettype(
-                op
-            ):
-                raise ValueError(
-                    f"Invalid nettype '{op.nettype}' for subexpression '{op}' of {type(self).__name__}, "
-                    f"while {self.replaceable_nettype(op)} is desired."
-                )
         # Ensure consistency of nettype if it is both specified and can be inferred
         if (
-            self.nettype is not None
+            check_nettype()
+            and self.nettype is not None
             and implied_nettype is not None
             and self.nettype != implied_nettype
         ):
@@ -170,6 +168,17 @@ class Symbol(metaclass=SymbolMeta):
                     "Please make sure this behavior is what you expect.",
                     category=UserWarning,
                     stacklevel=2,
+                )
+        # Ensure nettypes of operands are valid
+        for op in operands:
+            if (
+                check_nettype()
+                and op.nettype is not None
+                and op.nettype not in self.replaceable_nettype(op)
+            ):
+                raise ValueError(
+                    f"Invalid nettype '{op.nettype}' for subexpression '{op}' of {type(self).__name__}, "
+                    f"while {self.replaceable_nettype(op)} is desired."
                 )
 
     def __repr__(self):
@@ -480,7 +489,7 @@ class Symbol(metaclass=SymbolMeta):
         - remove_coefficients: bool, whether to remove coefficients from the symbols
         - merge_bias: bool, whether to merge bias terms
         """
-        from .simplify.split_by_add import SplitByAdd
+        from .transform.split_by_add import SplitByAdd
 
         return SplitByAdd()(
             self,
@@ -506,12 +515,48 @@ class Symbol(metaclass=SymbolMeta):
         - split_by_div: bool, whether to split by Div (a / b -> [a, b])
         - merge_coefficients: bool, whether to merge coefficients from the symbols
         """
-        from .simplify.split_by_mul import SplitByMul
+        from .transform.split_by_mul import SplitByMul
 
         return SplitByMul()(
             self,
             split_by_div=split_by_div,
             merge_coefficients=merge_coefficients,
+        )
+
+    def fix_nettype(
+        self,
+        nettype: NetType = "node",
+        direction: Literal["bottom-up", "top-down"] = "top-down",
+        edge_to_node=["remove_targ", "remove_sour", "add_aggr", "add_rgga"],
+        node_to_edge=["remove_aggr", "remove_rgga", "add_targ", "add_sour"],
+        edge_to_scalar=["remove_sour", "remove_targ", "add_readout"],
+        node_to_scalar=["remove_aggr", "remove_rgga", "add_readout"],
+        scalar_to_node=["keep"],
+        scalar_to_edge=["keep"],
+    ):
+        """fix the nettype of symbols in an expression, useful in GP or LLMSR where equations are generated randomly and can have incorrect nettypes
+        - node: the root symbol of the expression to fix
+        - nettype: the nettype to set for the symbols, can be 'node', 'edge', or 'scalar'
+        - direction: the direction of the fix, can be 'bottom-up' or 'top-down'
+        - edge_to_node: list of operations to convert edge symbols to node symbols
+        - node_to_edge: list of operations to convert node symbols to edge symbols
+        - edge_to_scalar: list of operations to convert edge symbols to scalar symbols
+        - node_to_scalar: list of operations to convert node symbols to scalar symbols
+        - scalar_to_node: list of operations to convert scalar symbols to node symbols
+        - scalar_to_edge: list of operations to convert scalar symbols to edge symbols
+        """
+        from .transform.fix_nettype import FixNetType
+
+        return FixNetType()(
+            self,
+            nettype=nettype,
+            direction=direction,
+            edge_to_node=edge_to_node,
+            node_to_edge=node_to_edge,
+            edge_to_scalar=edge_to_scalar,
+            node_to_scalar=node_to_scalar,
+            scalar_to_node=scalar_to_node,
+            scalar_to_edge=scalar_to_edge,
         )
 
 

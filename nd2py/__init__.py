@@ -1,3 +1,4 @@
+from .core.context.check_nettype import no_nettype_check
 from .core.symbols import *
 from .core.printer.string_printer import StringPrinter
 from .core.printer.tree_printer import TreePrinter
@@ -5,7 +6,9 @@ from .core.calc.numpy_calc import NumpyCalc
 from .core.calc.torch_calc import TorchCalc
 from .core.fit.fold_constant import FoldConstant
 from .core.fit.bfgs_fit import BFGSFit
-from .core.simplify.split_by_add import SplitByAdd
+from .core.transform.split_by_add import SplitByAdd
+from .core.transform.split_by_mul import SplitByMul
+from .core.transform.fix_nettype import FixNetType
 from . import utils
 from .search.gplearn_generator import GPLearnGenerator
 from .search.gp import GP
