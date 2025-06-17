@@ -144,7 +144,7 @@ class Symbol(metaclass=SymbolMeta):
             )
         self.nettype = nettype or implied_nettype
         # Ensure nettype is valid
-        if self.nettype not in self.nettype_range():
+        if self.nettype is not None and self.nettype not in self.nettype_range():
             raise ValueError(
                 f"Invalid nettype '{nettype}' for {type(self).__name__}, while {self.nettype_range()} is desired."
             )

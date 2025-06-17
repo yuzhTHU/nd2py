@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 from scipy.optimize import minimize
 from sklearn.base import BaseEstimator, RegressorMixin
@@ -57,12 +58,16 @@ class BFGSFit(BaseEstimator, RegressorMixin):
                 num_nodes=self.num_nodes,
                 use_eps=self.use_eps,
             )
-            return np.mean((y_pred - y) ** 2)
+            with np.errstate(all="ignore"):
+                loss = np.mean((y_pred - y) ** 2)
+            return loss
 
         # 4. 调用 scipy.optimize.minimize
-        res = minimize(
-            loss_fn, init_vals, method=self.method, tol=self.tol, options=self.options
-        )
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=RuntimeWarning, module="scipy")
+            res = minimize(
+                loss_fn, init_vals, method=self.method, tol=self.tol, options=self.options
+            )
 
         # 5. 把最优参数写回 Number 节点，保存结果
         for n, v in zip(numbers, res.x):

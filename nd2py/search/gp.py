@@ -428,7 +428,8 @@ class GP(BaseEstimator, RegressorMixin):
             vars=X, edge_list=self.edge_list, num_nodes=self.num_nodes
         )
         self.named_timer.add("evaluate.calc")
-        individual.accuracy = float(np.mean((y_pred - y) ** 2))
+        with np.errstate(all="ignore"):
+            individual.accuracy = float(np.mean((y_pred - y) ** 2))
         individual.fitness = float(
             0.999**individual.complexity / (1 + individual.accuracy / y.var())
         )
