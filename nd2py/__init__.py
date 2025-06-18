@@ -10,8 +10,7 @@ from .core.transform.split_by_add import SplitByAdd
 from .core.transform.split_by_mul import SplitByMul
 from .core.transform.fix_nettype import FixNetType
 from . import utils
-from .search.gplearn_generator import GPLearnGenerator
-from .search.gp import GP
+from .search.gp import GP, GPLearnGenerator
 from .search.llmsr import LLMSR
 
 Constant = lambda x, *args, **kwargs: Number(x, *args, **kwargs, fitable=False)

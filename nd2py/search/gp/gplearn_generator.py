@@ -2,8 +2,9 @@ import logging
 import numpy as np
 from typing import Tuple, Optional, List, Dict, Literal, Set
 from numpy.random import RandomState, default_rng
-from ..core.symbols import *
+from ...core.symbols import *
 
+__all__ = ["GPLearnGenerator"]
 _logger = logging.getLogger(__name__)
 
 

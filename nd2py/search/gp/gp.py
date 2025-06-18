@@ -8,12 +8,13 @@ from numpy.random import RandomState, default_rng
 from tqdm import tqdm
 from joblib import Parallel, delayed
 from typing import List, Tuple, Dict, Generator, Optional, Literal, Set
-from ..core.symbols import *
-from ..utils.timing import Timer, NamedTimer
+from ...core.symbols import *
+from ...utils.timing import Timer, NamedTimer
 from sklearn.base import BaseEstimator, RegressorMixin
 from .gplearn_generator import GPLearnGenerator
 from .. import BFGSFit
 
+__all__ = ["GP"]
 _logger = logging.getLogger(__name__)
 
 
@@ -385,7 +386,7 @@ class GP(BaseEstimator, RegressorMixin):
         child = parent.copy()
         mutate_nodes = [
             node
-            for node in child.eqtree.iter_postorder() # Use postorder to ensure we mutate deeper nodes first
+            for node in child.eqtree.iter_postorder()  # Use postorder to ensure we mutate deeper nodes first
             if self._rng.random() < self.p_point_replace
         ]
         for node in mutate_nodes:
