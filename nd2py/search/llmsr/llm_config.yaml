@@ -1,0 +1,33 @@
+Qwen3-8B: &SILICONFLOW
+  url: https://api.siliconflow.cn/v1/chat/completions
+  payload:
+    model: Qwen/Qwen3-8B
+    stream: False
+    max_tokens: 1024
+    enable_thinking: True
+    thinking_budget: 1024
+    min_p: 0.05
+    temperature: 0.7
+    top_p: 0.7
+    top_k: 50
+    frequency_penalty: 0.5
+    n: 
+    stop: []
+  headers:
+    Authorization: ${SILICONFLOW_API_KEY}
+    Content-Type: application/json
+
+Deepseek-V3: 
+  <<: *SILICONFLOW
+  payload:
+    model: deepseek-ai/DeepSeek-V3
+    stream: False
+    max_tokens: 1024
+    thinking_budget: 1024
+    min_p: 0.05
+    temperature: 0.7
+    top_p: 0.7
+    top_k: 50
+    frequency_penalty: 0.5
+    n: 
+    stop: []

@@ -2,6 +2,7 @@ import re
 import os
 import ast
 import time
+import yaml
 import json
 import dotenv
 import inspect
@@ -15,11 +16,11 @@ from numpy.random import default_rng
 from sklearn.base import BaseEstimator, RegressorMixin
 from typing import Dict, List, Tuple, Optional, Literal
 from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
-from ..utils import Timer, NamedTimer
+from ...utils import NamedTimer
 
 dotenv.load_dotenv()
 
-__all__ = ["LLMSR"]
+__all__ = ["LLMSR", "render_markdown", "render_python"]
 
 _logger = logging.getLogger(__name__)
 
@@ -30,7 +31,7 @@ def _softmax(logprob: np.ndarray, tau: float = 1.0) -> np.ndarray:
     return prob
 
 
-def _render_markdown(text: str, width=80) -> str:
+def render_markdown(text: str, width=80) -> str:
     from rich.console import Console
     from rich.markdown import Markdown
     from rich.syntax import Syntax
@@ -52,7 +53,7 @@ def _render_markdown(text: str, width=80) -> str:
     return capture.get()
 
 
-def _render_python(text: str, width=80, highlight_lines=[]) -> str:
+def render_python(text: str, width=80, highlight_lines=[]) -> str:
     from rich.console import Console
     from rich.markdown import Markdown
     from rich.syntax import Syntax
@@ -103,14 +104,7 @@ class LLMSR(BaseEstimator, RegressorMixin):
         log_per_sec: float = float("inf"),
         log_detailed_speed=False,
         save_path: str = None,
-        model: Literal[
-            "Qwen/Qwen3-8B",  # free
-            "Qwen/Qwen3-235B-A22B",  # 10 CNY/M tokens
-            "Qwen/QwQ-32B",  # 4 CNY/M tokens
-            "deepseek-ai/DeepSeek-V3",  # 8 CNY/M tokens
-            "deepseek-ai/DeepSeek-R1",  # 16 CNY/M tokens
-            "manual",
-        ] = "Qwen/Qwen3-8B",
+        model: str | Literal["manual"] = "Qwen3-8B",
         **kwargs,
     ):
         self.prompt = prompt
@@ -136,13 +130,8 @@ class LLMSR(BaseEstimator, RegressorMixin):
         self.records = []
         self.best_model = None
         self._rng = default_rng(random_state)
-        self.speed_timer = NamedTimer(unit="iter")
-        self.token_timer = {
-            "prompt": Timer(unit="token", unit_time=True),
-            "reason": Timer(unit="token", unit_time=True),
-            "answer": Timer(unit="token", unit_time=True),
-            "totals": Timer(unit="token", unit_time=True),
-        }
+        self.speed_timer = NamedTimer(unit="iter", mode="pace")
+        self.token_timer = NamedTimer(unit="token", mode="speed")
         if kwargs:
             _logger.warning(
                 "Unknown args: %s", ", ".join(f"{k}={v}" for k, v in kwargs.items())
@@ -165,16 +154,18 @@ class LLMSR(BaseEstimator, RegressorMixin):
             raise ValueError(f"Unknown type: {type(data)}")
 
         prompt = self.generate_prompt([Individual(self.seed_program)])
-        render_prompt = _render_markdown(prompt)
+        render_prompt = render_markdown(prompt)
         _logger.note("Demo Prompt:\n%s", render_prompt)
         # lines = render_prompt.splitlines()
         # for i in range(0, len(lines), 10):
         #     print("\n".join(lines[i : i + 10]))
-        with open(f'./{self.save_path}/demo_prompt.md', 'w', encoding='utf-8') as f: 
+        with open(f"./{self.save_path}/demo_prompt.md", "w", encoding="utf-8") as f:
             f.write(prompt)
 
         self.islands = self.init_islands(data)
         self.start_time = time.time()
+        self.speed_timer.clear(reset=True)
+        self.token_timer.clear(reset=True)
         for n_iter in range(1, 1 + self.n_iter):
             self.islands = self.evolve(self.islands, data, n_iter=n_iter)
 
@@ -195,24 +186,22 @@ class LLMSR(BaseEstimator, RegressorMixin):
             )
             if (
                 not n_iter % self.log_per_iter
-                or self.speed_timer.total_time() > self.log_per_sec
+                or self.speed_timer.time > self.log_per_sec
             ):
                 log = {}
                 log["Iter"] = record["iter"]
                 log["Score"] = f"{record['score']:.6f}"
                 log["Length"] = record["length"]
                 log["Population Size"] = record["population_size"]
-                log["Best Model"] = f"\n{_render_python(record['program'])}\n"
+                log["Best Model"] = f"\n{render_python(record['program'])}\n"
                 if self.log_detailed_speed:
                     log["Speed"] = str(self.speed_timer)
-                    log["Token Usage"] = ", ".join(
-                        [f"{k}={v}" for k, v in self.token_timer.items()]
-                    )
+                    log["Token Usage"] = str(self.token_timer)
                 _logger.info(
                     " | ".join(f"\033[4m{k}\033[0m: {v}" for k, v in log.items())
                 )
                 self.speed_timer.clear()
-                # for timer in self.token_timer.values(): timer.clear()
+                # self.token_timer.clear()  # Comment this for more accurate token usage estimation
 
             record = {
                 k: float(v) if isinstance(v, (np.float32, np.float64)) else v
@@ -224,7 +213,7 @@ class LLMSR(BaseEstimator, RegressorMixin):
                     f.write(json.dumps(record) + "\n")
             if best.score > -1e-6:
                 _logger.info(
-                    f"Early stopping at iter {iter} with score {best.score}:\n{_render_python(best.program)}"
+                    f"Early stopping at iter {iter} with score {best.score}:\n{render_python(best.program)}"
                 )
                 break
         return self
@@ -307,43 +296,11 @@ class LLMSR(BaseEstimator, RegressorMixin):
         return self.template.format(**materials)
 
     def generate_children(self, prompt: str) -> List[Individual]:
-        programs = []
         self.speed_timer.add("drop")
         if self.model == "manual":
-            import pyperclip
-
-            for _ in range(self.programs_per_prompt):
-                pyperclip.copy(prompt)
-                _logger.info(
-                    "Prompt copied to clipboard. Please paste it into the LLM interface and return the generated program."
-                )
-                program = input(
-                    "Please enter the generated program (press Enter to use clipboard): "
-                )
-                if not program.strip():
-                    program = pyperclip.paste()
-                if program is not None:
-                    programs.append(program)
-                self.token_timer["prompt"].add(len(prompt.split()))
-                self.token_timer["reason"].add(len(program.split()))
-                self.token_timer["answer"].add(len(program.split()))
-                self.token_timer["totals"].add(len(program.split()))
+            programs = self._manual(prompt)
         else:
-            with ThreadPoolExecutor(
-                max_workers=min(8, self.programs_per_prompt)
-            ) as executor:
-                futures = [
-                    executor.submit(self.request_llm, prompt)
-                    for _ in range(self.programs_per_prompt)
-                ]
-                for future in as_completed(futures):
-                    program, tokens = future.result()
-                    self.token_timer["prompt"].add(tokens[0])
-                    self.token_timer["reason"].add(tokens[1])
-                    self.token_timer["answer"].add(tokens[2])
-                    self.token_timer["totals"].add(tokens[3])
-                    if program is not None:
-                        programs.append(program)
+            programs = self._silicon_flow(prompt)
         self.speed_timer.add("request_llm")
 
         children = []
@@ -353,37 +310,75 @@ class LLMSR(BaseEstimator, RegressorMixin):
                 children.append(Individual(clear_program))
         return children
 
-    def request_llm(self, prompt: str) -> str:
-        url = "https://api.siliconflow.cn/v1/chat/completions"
-        payload = {
-            "model": self.model,
-            "stream": False,
-            "max_tokens": 1024,
-            "enable_thinking": True,
-            "thinking_budget": 1024,
-            "min_p": 0.05,
-            "temperature": 0.7,
-            "top_p": 0.7,
-            "top_k": 50,
-            "frequency_penalty": 0.5,
-            "n": 1,
-            "stop": [],
-            "messages": [{"role": "user", "content": prompt}],
-        }
-        headers = {
-            "Authorization": os.environ.get("SILICONFLOW_API_KEY", ""),
-            "Content-Type": "application/json",
-        }
-        response = requests.request("POST", url, json=payload, headers=headers)
-        result = response.json()
-        tokens = (
-            result["usage"]["prompt_tokens"],
-            result["usage"]["completion_tokens_details"]["reasoning_tokens"],
-            result["usage"]["completion_tokens"]
-            - result["usage"]["completion_tokens_details"]["reasoning_tokens"],
-            result["usage"]["total_tokens"],
+    def _manual(self, prompt: str) -> str:
+        import pyperclip
+        import tiktoken
+
+        # Copy the prompt to clipboard and save it to a file for manual input
+        pyperclip.copy(prompt)
+        prompt_path = f"{self.save_path}/manual_prompt.md"
+        with open(prompt_path, "w") as f:
+            f.write(prompt)
+        _logger.note(
+            f"Prompt copied to clipboard (and saved to {prompt_path}). Please paste it into the LLM interface and return the generated program."
         )
-        return result["choices"][0]["message"]["content"], tokens
+        programs = []
+        for idx in range(1, self.programs_per_prompt + 1):
+            # Wait for user input or clipboard content
+            program = input(
+                f"Please enter the generated program {idx}/{self.programs_per_prompt} (press Enter to use clipboard): "
+            )
+            if not program.strip():
+                program = pyperclip.paste()
+            if program is not None:
+                programs.append(program)
+            # Calculate token usage
+            encoding = tiktoken.encoding_for_model("gpt-3.5")
+            prompt_tokens = len(encoding.encode(prompt))
+            answer_tokens = len(encoding.encode(program))
+            total_tokens = prompt_tokens + answer_tokens
+            self.token_timer.add("total", total_tokens, update_time=False)
+            self.token_timer.add("prompt", prompt_tokens, update_time=False)
+            self.token_timer.add("answer", answer_tokens)
+        return programs
+
+    def _silicon_flow(self, prompt: str) -> str:
+        # Load the LLM configuration from the environment variable ${LLM_CONFIG_PATH} or default path
+        path = os.environ.get("LLM_CONFIG_PATH", None)
+        path = path or os.path.join(os.path.dirname(__file__), "llm_config.yaml")
+        config = yaml.load(open(path, "r"), Loader=yaml.FullLoader)
+        if self.model not in config:
+            raise ValueError(
+                f"Model {self.model} not found in config file: {path} (available models: {', '.join(config.keys())})"
+            )
+        cfg = config[self.model]
+        # Send the request to the LLM
+        url = cfg["url"]
+        payload = cfg["payload"] | {
+            "messages": [{"role": "user", "content": prompt}],
+            "n": self.programs_per_prompt,
+        }
+        headers = {k: os.path.expandvars(v) for k, v in cfg["headers"].items()}
+        response = requests.request("POST", url, json=payload, headers=headers)
+        if response.status_code != 200:
+            _logger.error(
+                "Error requesting LLM: %s\nResponse: %s",
+                result.get("error", "Unknown error"),
+                response.text,
+            )
+            return []
+        result = response.json()
+        usage = result["usage"]
+        total_tokens = usage["total_tokens"]
+        prompt_tokens = usage["prompt_tokens"]
+        answer_tokens = usage["completion_tokens"]
+        reason_tokens = usage["completion_tokens_details"].get("reasoning_tokens", 0)
+        self.token_timer.add("total", total_tokens, update_time=False)
+        self.token_timer.add("prompt", prompt_tokens, update_time=False)
+        self.token_timer.add("answer", answer_tokens, update_time=False)
+        self.token_timer.add("reason", reason_tokens)
+        programs = [choice["message"]["content"] for choice in result["choices"]]
+        return programs
 
     def clear(self, program: str) -> Optional[str]:
         lines = program.split("\n")
@@ -393,7 +388,8 @@ class LLMSR(BaseEstimator, RegressorMixin):
                 break
         else:
             _logger.warning(
-                "No function definition found in the program:\n%s", _render_markdown(program)
+                "No function definition found in the program:\n%s",
+                render_markdown(program),
             )
             return None
         # Replace the first line with the seed program's first line
@@ -408,7 +404,7 @@ class LLMSR(BaseEstimator, RegressorMixin):
             except SyntaxError as e:
                 if e.lineno is None:
                     _logger.warning(
-                        "Syntax error in the program:\n%s", _render_markdown(program)
+                        "Syntax error in the program:\n%s", render_markdown(program)
                     )
                     return None
                 error_linenos.add(e.lineno)
@@ -416,14 +412,14 @@ class LLMSR(BaseEstimator, RegressorMixin):
         else:
             _logger.warning(
                 "No valid function definition found in the program:\n%s",
-                _render_markdown(program),
+                render_markdown(program),
             )
             return None
         # Ensure the function definition has a return statement
         if "return" not in "\n".join(lines[start_idx:end_idx]):
             _logger.warning(
                 "No return statement found in the function definition:\n%s",
-                _render_markdown(program),
+                render_markdown(program),
             )
             return None
         return "\n".join(lines[start_idx:end_idx])
@@ -459,19 +455,19 @@ class LLMSR(BaseEstimator, RegressorMixin):
     #                 _logger.debug(
     #                     "Evaluated individual (score=%s)\n%s",
     #                     indiv.score,
-    #                     _render_python(indiv.program),
+    #                     render_python(indiv.program),
     #                 )
     #             except TimeoutError as e:
     #                 _logger.warning(
     #                     "Timeout when evaluating individual:\n%s",
-    #                     _render_python(indiv.program),
+    #                     render_python(indiv.program),
     #                 )
     #                 indiv.score = -np.inf
     #             except Exception as e:
     #                 _logger.warning(
     #                     "Error evaluating individual: %s\n%s",
     #                     e,
-    #                     _render_python(indiv.program),
+    #                     render_python(indiv.program),
     #                 )
     #                 indiv.score = -np.inf
     #     self.speed_timer.add("set_score")
@@ -485,16 +481,12 @@ class LLMSR(BaseEstimator, RegressorMixin):
             try:
                 indiv.score = self.run_evaluate(indiv.program, **data)
                 _logger.debug(
-                    "Evaluated individual (score=%s)\n%s",
-                    indiv.score,
-                    _render_python(indiv.program),
+                    f"Evaluated individual (score={indiv.score})\n{render_python(indiv.program)}"
                 )
             except Exception as e:
                 indiv.score = -np.inf
                 _logger.warning(
-                    "Error evaluating individual: %s\n%s",
-                    e,
-                    _render_python(indiv.program),
+                    f"Error evaluating individual: {e}\n{render_python(indiv.program)}"
                 )
         self.speed_timer.add("set_score")
         return individuals

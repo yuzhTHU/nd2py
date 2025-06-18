@@ -180,6 +180,8 @@ class GP(BaseEstimator, RegressorMixin):
         else:
             raise ValueError(f"Unknown type: {type(X)}")
 
+        self.named_timer.clear(reset=True)
+        self.speed_timer.clear(reset=True)
         self.start_time = time.time()
         population = self.init_population(X, y)
         for iter in tqdm(range(1, 1 + self.n_iter), disable=not self.use_tqdm):
