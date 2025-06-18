@@ -47,7 +47,7 @@ class LogFormatter(logging.Formatter):
                 + message
             )
         else:
-            return prefix + " " + re.sub(r"\033\[\d+;?\d*m", "", message)
+            return prefix + " " + re.sub(r'\033\[[\d;]+m', '', message)
 
 
 def init_logger(
@@ -99,6 +99,7 @@ def init_logger(
             mode="a",
             maxBytes=int(file_max_size_MB * 1024 * 1024),
             backupCount=file_backup_count,
+            encoding='utf-8'
         )
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(

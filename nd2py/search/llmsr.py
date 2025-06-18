@@ -170,7 +170,8 @@ class LLMSR(BaseEstimator, RegressorMixin):
         # lines = render_prompt.splitlines()
         # for i in range(0, len(lines), 10):
         #     print("\n".join(lines[i : i + 10]))
-        # with open('./prompt.md', 'w', encoding='utf-8') as f: f.write(prompt)
+        with open(f'./{self.save_path}/demo_prompt.md', 'w', encoding='utf-8') as f: 
+            f.write(prompt)
 
         self.islands = self.init_islands(data)
         self.start_time = time.time()
