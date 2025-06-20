@@ -62,8 +62,12 @@ class SplitByAdd(Visitor):
         x1, x2 = node.operands
         result1 = self(x1, *args, **kwargs)
         result2 = self(x2, *args, **kwargs)
-        for idx, item in enumerate(result2):
-            result2[idx] = Neg(item) if not isinstance(item, Neg) else item.operands[0]
+        if not kwargs.get("remove_coefficients"):
+            for idx, item in enumerate(result2):
+                if not isinstance(item, Neg):
+                    result2[idx] = Neg(item)
+                else:
+                    result2[idx] = item.operands[0]
         result = result1 + result2
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
@@ -71,10 +75,12 @@ class SplitByAdd(Visitor):
 
     def visit_Mul(self, node: Mul, *args, **kwargs) -> List[Symbol]:
         if not kwargs.get("expand_mul"):
-            return [node]
-        x1, x2 = node.operands
-        result1 = self(x1, *args, **kwargs)
-        result2 = self(x2, *args, **kwargs)
+            result1 = [node.operands[0]]
+            result2 = [node.operands[1]]
+        else:
+            x1, x2 = node.operands
+            result1 = self(x1, *args, **kwargs)
+            result2 = self(x2, *args, **kwargs)
         result = []
         for item in result1:
             for jtem in result2:
@@ -92,9 +98,11 @@ class SplitByAdd(Visitor):
 
     def visit_Div(self, node: Div, *args, **kwargs) -> List[Symbol]:
         if not kwargs.get("expand_div"):
-            return [node]
-        x1, x2 = node.operands
-        result = self(x1, *args, **kwargs)
+            x1, x2 = node.operands
+            result = [x1]
+        else:
+            x1, x2 = node.operands
+            result = self(x1, *args, **kwargs)
         for idx, item in enumerate(result):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
@@ -106,6 +114,22 @@ class SplitByAdd(Visitor):
                 result[idx] = item / x2
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
+        return result
+
+    def visit_Neg(self, node: Neg, *args, **kwargs) -> List[Symbol]:
+        if kwargs.get("remove_coefficients"):
+            result = [node.operands[0]]
+        else:
+            result = self(node.operands[0], *args, **kwargs)
+        if kwargs.get("merge_bias"):
+            result = self.merge_bias(result, *args, **kwargs)
+        for idx, item in enumerate(result):
+            if isinstance(item, Number):
+                result[idx] = Number(-item.value)
+            elif isinstance(item, Neg):
+                result[idx] = item.operands[0]
+            else:
+                result[idx] = Neg(item)
         return result
 
     def visit_Sour(self, node: Sour, *args, **kwargs) -> List[Symbol]:

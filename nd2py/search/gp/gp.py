@@ -12,7 +12,7 @@ from ...core.symbols import *
 from ...utils.timing import Timer, NamedTimer
 from sklearn.base import BaseEstimator, RegressorMixin
 from .gplearn_generator import GPLearnGenerator
-from .. import BFGSFit
+from ... import BFGSFit
 
 __all__ = ["GP"]
 _logger = logging.getLogger(__name__)

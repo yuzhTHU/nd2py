@@ -127,6 +127,8 @@ class NamedTimer(Timer):
     def __str__(self):
         msg_list = {}
         pct_list = {}
+        if not self._time:
+            return 'None'
         for k in self._time:
             msg_list[k] = to_str(self._count[k], self._time[k], self.unit, self.mode)
             if self.mode == "pace":

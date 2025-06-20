@@ -1,4 +1,5 @@
 import warnings
+import numpy as np
 from copy import deepcopy
 from functools import reduce
 from typing import List, Literal, Optional, Tuple, Set
@@ -473,6 +474,7 @@ class Symbol(metaclass=SymbolMeta):
         expand_rgga: bool = False,
         expand_sour: bool = False,
         expand_targ: bool = False,
+        expand_readout: bool = False,
         remove_coefficients: bool = False,
         merge_bias: bool = False,
     ) -> List["Symbol"]:
@@ -486,6 +488,7 @@ class Symbol(metaclass=SymbolMeta):
         - expand_rgga: bool, whether to expand Rgga nodes
         - expand_sour: bool, whether to expand Sour nodes
         - expand_targ: bool, whether to expand Targ nodes
+        - expand_readout: bool, whether to expand Readout (Readout(a + b) -> [Readout(a), Readout(b)])
         - remove_coefficients: bool, whether to remove coefficients from the symbols
         - merge_bias: bool, whether to merge bias terms
         """
@@ -500,6 +503,7 @@ class Symbol(metaclass=SymbolMeta):
             expand_rgga=expand_rgga,
             expand_sour=expand_sour,
             expand_targ=expand_targ,
+            expand_readout=expand_readout,
             remove_coefficients=remove_coefficients,
             merge_bias=merge_bias,
         )
@@ -581,9 +585,9 @@ class Number(Symbol):
 
     def __eq__(self, other) -> bool:
         if is_number(other):
-            return self.value == other
+            return np.all(self.value == other)
         elif isinstance(other, Number):
-            return self.value == other.value
+            return np.all(self.value == other.value)
 
     def nettype_range(self) -> Set[NetType]:
         # Since it has no operands, it cannot give a nettype different
