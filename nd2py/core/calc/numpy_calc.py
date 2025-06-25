@@ -5,7 +5,7 @@ import traceback
 import numpy as np
 from typing import List, Tuple
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 # Decorator to unpack operands for operations
@@ -16,7 +16,11 @@ def unpack_operands():
         @functools.wraps(func)
         def wrapper(self, node, *args, **kwargs):
             # Calculate the values of the operands
-            X = [self(op, *args, **kwargs) for op in node.operands]
+            yield from yield_nothing()
+            X = []
+            for op in node.operands:
+                x = yield (op, args, kwargs)
+                X.append(x)
             # Use the defined 'visit_<Operation>' as 'func' to process the operands
             with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
                 return func(self, node, *X, *args, **kwargs)
@@ -48,17 +52,13 @@ class NumpyCalc(Visitor):
             nodes = np.unique(np.array(edge_list).reshape(-1))
             num_nodes = max(nodes) + 1
 
-        try:
-            y = super().__call__(
-                node,
-                vars=vars,
-                edge_list=edge_list,
-                num_nodes=num_nodes,
-                use_eps=use_eps,
-            )
-            return y
-        except Exception as e:
-            raise ValueError(f"Error in {type(self).__name__}({node}): {e}") from e
+        return super().__call__(
+            node,
+            vars=vars,
+            edge_list=edge_list,
+            num_nodes=num_nodes,
+            use_eps=use_eps,
+        )
 
     def generic_visit(self, node: Symbol, *args, **kwargs):
         raise NotImplementedError(
@@ -71,9 +71,11 @@ class NumpyCalc(Visitor):
         )
 
     def visit_Number(self, node: Number, *args, **kwargs):
+        yield from yield_nothing()
         return np.asarray(node.value)
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
+        yield from yield_nothing()
         return np.asarray(kwargs["vars"][node.name])
 
     @unpack_operands()

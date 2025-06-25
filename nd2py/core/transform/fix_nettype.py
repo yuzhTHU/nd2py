@@ -1,6 +1,6 @@
 from typing import Literal
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 class FixNetType(Visitor):
@@ -15,7 +15,6 @@ class FixNetType(Visitor):
         node_to_scalar=["remove_aggr", "remove_rgga", "add_readout"],
         scalar_to_node=["keep"],
         scalar_to_edge=["keep"],
-        _outside=True,
     ):
         """fix the nettype of symbols in an expression, useful in GP or LLMSR where equations are generated randomly and can have incorrect nettypes
         - node: the root symbol of the expression to fix
@@ -28,33 +27,29 @@ class FixNetType(Visitor):
         - scalar_to_node: list of operations to convert scalar symbols to node symbols
         - scalar_to_edge: list of operations to convert scalar symbols to edge symbols
         """
-        try:
-            y = super().__call__(
-                node,
+        y = super().__call__(
+            node,
+            nettype=nettype,
+            direction=direction,
+            edge_to_node=edge_to_node,
+            node_to_edge=node_to_edge,
+            edge_to_scalar=edge_to_scalar,
+            node_to_scalar=node_to_scalar,
+            scalar_to_node=scalar_to_node,
+            scalar_to_edge=scalar_to_edge,
+        )
+        if y.nettype != nettype:
+            y = self.fix_nettype(
+                y,
                 nettype=nettype,
-                direction=direction,
                 edge_to_node=edge_to_node,
                 node_to_edge=node_to_edge,
                 edge_to_scalar=edge_to_scalar,
                 node_to_scalar=node_to_scalar,
                 scalar_to_node=scalar_to_node,
                 scalar_to_edge=scalar_to_edge,
-                _outside=False,
             )
-            if _outside and y.nettype != nettype:
-                y = self.fix_nettype(
-                    y,
-                    nettype=nettype,
-                    edge_to_node=edge_to_node,
-                    node_to_edge=node_to_edge,
-                    edge_to_scalar=edge_to_scalar,
-                    node_to_scalar=node_to_scalar,
-                    scalar_to_node=scalar_to_node,
-                    scalar_to_edge=scalar_to_edge,
-                )
-            return y
-        except Exception as e:
-            raise ValueError(f"Error in {type(self).__name__}({node}): {e}") from e
+        return y
 
     def generic_visit(self, node, *args, **kwargs):
         """
@@ -65,15 +60,16 @@ class FixNetType(Visitor):
             raise NotImplementedError(f"visit_{type(node).__name__} is not implemented")
 
         if kwargs["direction"] == "top-down":
-            x = self(node.operands[0], *args, **kwargs)
+            x = yield (node.operands[0], args, kwargs)
             return node.__class__(x, nettype=kwargs["nettype"])
         elif kwargs["direction"] == "bottom-up":
-            x = self(node.operands[0], *args, **kwargs)
+            x = yield (node.operands[0], args, kwargs)
             return node.__class__(x, nettype=x.nettype)
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
     def visit_Number(self, node: Number, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs["direction"] == "top-down":
             return node.__class__(node.value, nettype=kwargs["nettype"])
         elif kwargs["direction"] == "bottom-up":
@@ -82,6 +78,7 @@ class FixNetType(Visitor):
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs["direction"] == "top-down":
             return self.fix_nettype(node, *args, **kwargs)
         elif kwargs["direction"] == "bottom-up":
@@ -90,13 +87,14 @@ class FixNetType(Visitor):
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
     def visit_BinaryOp(self, node, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs["direction"] == "top-down":
-            x1 = self(node.operands[0], *args, **kwargs)
-            x2 = self(node.operands[1], *args, **kwargs)
+            x1 = yield (node.operands[0], args, kwargs)
+            x2 = yield (node.operands[1], args, kwargs)
             return node.__class__(x1, x2, nettype=kwargs["nettype"])
         elif kwargs["direction"] == "bottom-up":
-            x1 = self(node.operands[0], *args, **kwargs)
-            x2 = self(node.operands[1], *args, **kwargs)
+            x1 = yield (node.operands[0], args, kwargs)
+            x2 = yield (node.operands[1], args, kwargs)
             if x1.nettype == x2.nettype:
                 return node.__class__(x1, x2, nettype=x1.nettype)
             elif {x1.nettype, x2.nettype} == {"node", "edge"}:
@@ -124,12 +122,12 @@ class FixNetType(Visitor):
 
     def visit_Aggr(self, node, *args, **kwargs):
         if kwargs["direction"] == "top-down":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "edge"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "edge"})
             y = node.__class__(x, nettype="node")
             y = self.fix_nettype(y, *args, **kwargs)
             return y
         elif kwargs["direction"] == "bottom-up":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "edge"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "edge"})
             if x.nettype == "node":
                 x = self.fix_nettype(x, *args, **(kwargs | {"nettype": "edge"}))
             y = node.__class__(x, nettype="node")
@@ -141,12 +139,12 @@ class FixNetType(Visitor):
 
     def visit_Sour(self, node, *args, **kwargs):
         if kwargs["direction"] == "top-down":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "node"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             y = node.__class__(x, nettype="edge")
             y = self.fix_nettype(y, *args, **kwargs)
             return y
         elif kwargs["direction"] == "bottom-up":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "node"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             if x.nettype == "edge":
                 x = self.fix_nettype(x, *args, **(kwargs | {"nettype": "node"}))
             y = node.__class__(x, nettype="edge")
@@ -158,12 +156,12 @@ class FixNetType(Visitor):
 
     def visit_Readout(self, node, *args, **kwargs):
         if kwargs["direction"] == "top-down":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "node"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             y = node.__class__(x, nettype="scalar")
             y = self.fix_nettype(y, *args, **kwargs)
             return y
         elif kwargs["direction"] == "bottom-up":
-            x = self(node.operands[0], *args, **(kwargs | {"nettype": "node"}))
+            x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             if x.nettype == "scalar":
                 return x
             y = node.__class__(x, nettype="scalar")

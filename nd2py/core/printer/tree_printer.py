@@ -2,7 +2,7 @@ import torch
 import numbers
 import numpy as np
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 class TreePrinter(Visitor):
@@ -21,8 +21,12 @@ class TreePrinter(Visitor):
         )
 
     def generic_visit(self, node: Symbol, *args, **kwargs):
+        yield from yield_nothing()
         name = f"{type(node).__name__} ({node.nettype})"
-        children = [self(op, **kwargs) for op in node.operands]
+        children = []
+        for op in node.operands:
+            child = yield (op, args, kwargs)
+            children.append(child)
         for idx, child in enumerate(children):
             children[idx] = ("├ " if idx < len(children) - 1 else "└ ") + child.replace(
                 "\n", "\n" + ("┆ " if idx < len(children) - 1 else "  ")
@@ -30,9 +34,11 @@ class TreePrinter(Visitor):
         return name + "\n" + "\n".join(children)
 
     def visit_Empty(self, node: Symbol, *args, **kwargs):
+        yield from yield_nothing()
         return f"? ({node.nettype})"
 
     def visit_Number(self, node: Number, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs.get("skeleton", False):
             return f"C ({node.nettype})"
         if isinstance(node.value, torch.Tensor):
@@ -51,12 +57,16 @@ class TreePrinter(Visitor):
         )
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
+        yield from yield_nothing()
         return f"{node.name} ({node.nettype})"
 
     def visit_Add(self, node: Add, *args, **kwargs):
         if kwargs.get("flat", False):
             name = f"{type(node).__name__} ({node.nettype})"
-            children = [self(op, **kwargs) for op in node.split_by_add()]
+            children = []
+            for op in node.split_by_add():
+                child = yield (op, args, kwargs)
+                children.append(child)
             for idx, child in enumerate(children):
                 children[idx] = (
                     "├ " if idx < len(children) - 1 else "└ "
@@ -64,12 +74,15 @@ class TreePrinter(Visitor):
                     "\n", "\n" + ("┆ " if idx < len(children) - 1 else "  ")
                 )
             return name + "\n" + "\n".join(children)
-        return self.generic_visit(node, *args, **kwargs)
+        return (yield from self.generic_visit(node, *args, **kwargs))
 
     def visit_Mul(self, node: Mul, *args, **kwargs):
         if kwargs.get("flat", False):
             name = f"{type(node).__name__} ({node.nettype})"
-            children = [self(op, **kwargs) for op in node.split_by_mul()]
+            children = []
+            for op in node.split_by_mul():
+                child = yield (op, args, kwargs)
+                children.append(child)
             for idx, child in enumerate(children):
                 children[idx] = (
                     "├ " if idx < len(children) - 1 else "└ "
@@ -77,4 +90,4 @@ class TreePrinter(Visitor):
                     "\n", "\n" + ("┆ " if idx < len(children) - 1 else "  ")
                 )
             return name + "\n" + "\n".join(children)
-        return self.generic_visit(node, *args, **kwargs)
+        return (yield from self.generic_visit(node, *args, **kwargs))

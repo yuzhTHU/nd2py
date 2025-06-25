@@ -189,7 +189,9 @@ class Symbol(metaclass=SymbolMeta):
         return self.to_str()
 
     def __len__(self):
-        return 1 + sum(len(operand) for operand in self.operands)
+        from .basic.get_length import GetLength
+
+        return GetLength()(self)
 
     def __add__(self, other):
         if is_number(other):
@@ -299,16 +301,16 @@ class Symbol(metaclass=SymbolMeta):
             return {self.nettype, "scalar"}
 
     def iter_preorder(self):
-        """Preorder traversal of the Symbol tree."""
-        yield self
-        for operand in self.operands:
-            yield from operand.iter_preorder()
+        """Non-recursive preorder traversal of the Symbol tree using an explicit stack."""
+        from .iteration.iter_preorder import IterPreorder
+
+        return IterPreorder()(self)
 
     def iter_postorder(self):
         """Postorder traversal of the Symbol tree."""
-        for operand in self.operands:
-            yield from operand.iter_postorder()
-        yield self
+        from .iteration.iter_postorder import IterPostorder
+
+        return IterPostorder()(self)
 
     def replace(self, child: "Symbol", other: "Symbol"):
         """Replace current expression (or subexpression denoted by child) with another expression."""
@@ -342,8 +344,9 @@ class Symbol(metaclass=SymbolMeta):
 
     def copy(self):
         """Create a deep copy of the Symbol. The result will not inherit self.parent"""
-        copy = self.__class__(*[op.copy() for op in self.operands])
-        return copy
+        from .basic.get_copy import GetCopy
+
+        return GetCopy()(self)
 
     def get_parameters(self, fitable_only: bool = False) -> List[float]:
         """Get the parameters of the Symbol.
@@ -594,11 +597,6 @@ class Number(Symbol):
         # from self.nettype by adjusting operands nettype combinations.
         return {self.nettype}
 
-    def copy(self):
-        return self.__class__(
-            deepcopy(self.value), nettype=self.nettype, fitable=self.fitable
-        )
-
 
 class Variable(Symbol):
     n_operands = 0
@@ -611,9 +609,6 @@ class Variable(Symbol):
         # Since it has no operands, it cannot give a nettype different
         # from self.nettype by adjusting operands nettype combinations.
         return {self.nettype}
-
-    def copy(self):
-        return self.__class__(self.name, nettype=self.nettype)
 
 
 class Add(Symbol):
@@ -788,7 +783,9 @@ class Sour(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(cls, operand_types: Optional[List[NetType]] = None) -> Optional[NetType]:
+    def map_nettype(
+        cls, operand_types: Optional[List[NetType]] = None
+    ) -> Optional[NetType]:
         """Determine the nettype of this Symbol based on its operands."""
         if len(operand_types) != cls.n_operands:
             raise ValueError(
@@ -830,7 +827,9 @@ class Aggr(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(cls, operand_types: Optional[List[NetType]] = None) -> Optional[NetType]:
+    def map_nettype(
+        cls, operand_types: Optional[List[NetType]] = None
+    ) -> Optional[NetType]:
         """Determine the nettype of this Symbol based on its operands."""
         if len(operand_types) != cls.n_operands:
             raise ValueError(
@@ -872,7 +871,9 @@ class Readout(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(cls, operand_types: Optional[List[NetType]] = None) -> Optional[NetType]:
+    def map_nettype(
+        cls, operand_types: Optional[List[NetType]] = None
+    ) -> Optional[NetType]:
         """Determine the nettype of this Symbol based on its operands."""
         if len(operand_types) != cls.n_operands:
             raise ValueError(

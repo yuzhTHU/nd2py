@@ -1,6 +1,6 @@
 from typing import List
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 class SplitByAdd(Visitor):
@@ -47,21 +47,25 @@ class SplitByAdd(Visitor):
         )
 
     def generic_visit(self, node: Symbol, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         return [node]
 
     def visit_Add(self, node: Add, *args, **kwargs) -> List[Symbol]:
         x1, x2 = node.operands
-        result = self(x1, *args, **kwargs) + self(x2, *args, **kwargs)
+        result1 = yield (x1, args, kwargs)
+        result2 = yield (x2, args, kwargs)
+        result = result1 + result2
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         return result
 
     def visit_Sub(self, node: Sub, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("split_by_sub"):
             return [node]
         x1, x2 = node.operands
-        result1 = self(x1, *args, **kwargs)
-        result2 = self(x2, *args, **kwargs)
+        result1 = yield (x1, args, kwargs)
+        result2 = yield (x2, args, kwargs)
         if not kwargs.get("remove_coefficients"):
             for idx, item in enumerate(result2):
                 if not isinstance(item, Neg):
@@ -74,13 +78,14 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Mul(self, node: Mul, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_mul"):
             result1 = [node.operands[0]]
             result2 = [node.operands[1]]
         else:
             x1, x2 = node.operands
-            result1 = self(x1, *args, **kwargs)
-            result2 = self(x2, *args, **kwargs)
+            result1 = yield (x1, args, kwargs)
+            result2 = yield (x2, args, kwargs)
         result = []
         for item in result1:
             for jtem in result2:
@@ -97,12 +102,13 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Div(self, node: Div, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_div"):
             x1, x2 = node.operands
             result = [x1]
         else:
             x1, x2 = node.operands
-            result = self(x1, *args, **kwargs)
+            result = yield (x1, args, kwargs)
         for idx, item in enumerate(result):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
@@ -117,10 +123,11 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Neg(self, node: Neg, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if kwargs.get("remove_coefficients"):
             result = [node.operands[0]]
         else:
-            result = self(node.operands[0], *args, **kwargs)
+            result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -133,9 +140,10 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Sour(self, node: Sour, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_sour"):
             return [node]
-        result = self(node.operands[0], *args, **kwargs)
+        result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -144,9 +152,10 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Targ(self, node: Targ, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_targ"):
             return [node]
-        result = self(node.operands[0], *args, **kwargs)
+        result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -155,9 +164,10 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Aggr(self, node: Aggr, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_aggr"):
             return [node]
-        result = self(node.operands[0], *args, **kwargs)
+        result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -165,9 +175,10 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Rgga(self, node: Rgga, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_rgga"):
             return [node]
-        result = self(node.operands[0], *args, **kwargs)
+        result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -175,9 +186,10 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Readout(self, node: Readout, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         if not kwargs.get("expand_readout"):
             return [node]
-        result = self(node.operands[0], *args, **kwargs)
+        result = yield (node.operands[0], args, kwargs)
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
@@ -191,6 +203,7 @@ class SplitByAdd(Visitor):
         return result
 
     def merge_bias(self, items: List[Symbol], *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         """Merge bias terms in the node."""
         is_bias = [isinstance(item, Number) for item in items]
         if not any(is_bias):

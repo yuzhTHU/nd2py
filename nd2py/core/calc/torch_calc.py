@@ -4,7 +4,7 @@ import functools
 import numpy as np
 from ..symbols import *
 from typing import List, Tuple
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 # Decorator to unpack operands for operations
@@ -29,7 +29,11 @@ def unpack_operands(
     def decorator(func):
         @functools.wraps(func)
         def wrapper(self, node, *args, **kwargs):
-            X = [self(op, *args, **kwargs) for op in node.operands]
+            yield from yield_nothing()
+            X = []
+            for op in node.operands:
+                x = yield (op, args, kwargs)
+                X.append(x)
             if not mask_out_nan:
                 return func(self, node, *X, *args, **kwargs)
             if double_check_nan:
@@ -100,10 +104,12 @@ class TorchCalc(Visitor):
         )
 
     def visit_Number(self, node: Number, *args, **kwargs):
+        yield from yield_nothing()
         device = kwargs.get("device")
         return torch.as_tensor(node.value, device=device)
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
+        yield from yield_nothing()
         device = kwargs.get("device")
         return torch.as_tensor(kwargs["vars"][node.name], device=device)
 

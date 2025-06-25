@@ -1,7 +1,7 @@
 from typing import List
 from functools import reduce
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 class SplitByMul(Visitor):
@@ -24,11 +24,14 @@ class SplitByMul(Visitor):
         )
 
     def generic_visit(self, node: Symbol, *args, **kwargs) -> List[Symbol]:
+        yield from yield_nothing()
         return [node]
 
     def visit_Mul(self, node: Mul, *args, **kwargs) -> List[Symbol]:
         x1, x2 = node.operands
-        result = self(x1, *args, **kwargs) + self(x2, *args, **kwargs)
+        result1 = yield (x1, args, kwargs)
+        result2 = yield (x2, args, kwargs)
+        result = result1 + result2
         if kwargs.get("merge_coefficients"):
             result = self.merge_coefficients(result, *args, **kwargs)
         return result
@@ -37,8 +40,8 @@ class SplitByMul(Visitor):
         if not kwargs.get("split_by_div"):
             return [node]
         x1, x2 = node.operands
-        result1 = self(x1, *args, **kwargs)
-        result2 = self(x2, *args, **kwargs)
+        result1 = yield (x1, args, kwargs)
+        result2 = yield (x2, args, kwargs)
         for idx, item in enumerate(result2):
             result2[idx] = Inv(item) if not isinstance(item, Inv) else item.operands[0]
         result = result1 + result2

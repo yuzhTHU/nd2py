@@ -1,5 +1,5 @@
 from typing import Dict, List
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 from ... import Symbol, Number, Variable
 
 class FoldConstant(Visitor):
@@ -17,7 +17,11 @@ class FoldConstant(Visitor):
         return super().__call__(node, vars)
 
     def generic_visit(self, node, *args, **kwargs):
-        X = [self(op, *args, **kwargs) for op in node.operands]
+        yield from yield_nothing()
+        X = []
+        for op in node.operands:
+            x = yield (op, args, kwargs)
+            X.append(x)
         node2 = node.__class__(*X)
         node2.nettype = node.nettype
         if all(isinstance(x, Number) and not x.fitable for x in X):
@@ -29,8 +33,10 @@ class FoldConstant(Visitor):
         raise NotImplementedError("Empty node should not be visited.")
 
     def visit_Number(self, node:Number, *args, **kwargs):
+        yield from yield_nothing()
         return node
 
     def visit_Variable(self, node:Variable, *args, **kwargs):
+        yield from yield_nothing()
         y = node.eval(*args, **kwargs)
         return Number(y, fitable=False, nettype=node.nettype)

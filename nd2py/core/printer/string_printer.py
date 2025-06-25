@@ -2,7 +2,7 @@ import torch
 import numbers
 import numpy as np
 from ..symbols import *
-from ..base_visitor import Visitor
+from ..base_visitor import Visitor, yield_nothing
 
 
 class StringPrinter(Visitor):
@@ -34,12 +34,18 @@ class StringPrinter(Visitor):
         )
 
     def generic_visit(self, node: Symbol, *args, **kwargs):
+        yield from yield_nothing()
         name = type(node).__name__
         if not kwargs.get("raw"):
             name = name.lower()
-        return f'{name}({", ".join(self(x, **kwargs) for x in node.operands)})'
+        children = []
+        for x in node.operands:
+            child = yield (x, args, kwargs)
+            children.append(child)
+        return f"{name}({', '.join(children)})"
 
-    def visit_Empty(self, node: Number, *args, **kwargs):
+    def visit_Empty(self, node: Empty, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs.get("raw", False):
             return "Empty()"
         if kwargs.get("latex", False):
@@ -47,6 +53,7 @@ class StringPrinter(Visitor):
         return "?"
 
     def visit_Number(self, node: Number, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs.get("raw", False):
             return f'Number({np.array(node.value).tolist()}, "{node.nettype}", {node.fitable})'
         if kwargs.get("skeleton", False):
@@ -57,8 +64,9 @@ class StringPrinter(Visitor):
             content = np.array(node.value)
         fmt = kwargs.get("number_format", "")
         if isinstance(content, (numbers.Number)) or content.size == 1:
-            if np.ndim(content) > 0: content = content[0]
-            if int(content) == content: 
+            if np.ndim(content) > 0:
+                content = content[0]
+            if int(content) == content:
                 content = str(int(content))
             else:
                 content = f"{content:{fmt}}"
@@ -69,6 +77,7 @@ class StringPrinter(Visitor):
         return content if node.fitable else f"Constant({content})"
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
+        yield from yield_nothing()
         if kwargs.get("raw", False):
             return f'Variable("{node.name}", "{node.nettype}")'
         if kwargs.get("latex", False):
@@ -80,11 +89,13 @@ class StringPrinter(Visitor):
         return node.name
 
     def visit_Add(self, node: Add, *args, **kwargs):
-        x1, x2 = self(node.operands[0], **kwargs), self(node.operands[1], **kwargs)
+        x1 = yield (node.operands[0], args, kwargs)
+        x2 = yield (node.operands[1], args, kwargs)
         return f"{x1} + {x2}"
 
     def visit_Sub(self, node: Sub, *args, **kwargs):
-        x1, x2 = self(node.operands[0], **kwargs), self(node.operands[1], **kwargs)
+        x1 = yield (node.operands[0], args, kwargs)
+        x2 = yield (node.operands[1], args, kwargs)
         if node.operands[1].__class__ in [Add, Sub]:
             x2 = (
                 rf"\left({x2}\right)"
@@ -94,7 +105,8 @@ class StringPrinter(Visitor):
         return f"{x1} - {x2}"
 
     def visit_Mul(self, node: Mul, *args, **kwargs):
-        x1, x2 = self(node.operands[0], **kwargs), self(node.operands[1], **kwargs)
+        x1 = yield (node.operands[0], args, kwargs)
+        x2 = yield (node.operands[1], args, kwargs)
         if node.operands[0].__class__ in [Add, Sub]:
             x1 = (
                 rf"\left({x1}\right)"
@@ -119,7 +131,8 @@ class StringPrinter(Visitor):
         )
 
     def visit_Div(self, node: Div, *args, **kwargs):
-        x1, x2 = self(node.operands[0], **kwargs), self(node.operands[1], **kwargs)
+        x1 = yield (node.operands[0], args, kwargs)
+        x2 = yield (node.operands[1], args, kwargs)
         if kwargs.get("latex", False):
             return rf"\frac{{{x1}}}{{{x2}}}"
         if node.operands[0].__class__ in [Add, Sub]:
@@ -137,7 +150,8 @@ class StringPrinter(Visitor):
         return f"{x1} / {x2}"
 
     def visit_Pow(self, node: Pow, *args, **kwargs):
-        x1, x2 = self(node.operands[0], **kwargs), self(node.operands[1], **kwargs)
+        x1 = yield (node.operands[0], args, kwargs)
+        x2 = yield (node.operands[1], args, kwargs)
         if node.operands[0].__class__ in [
             Add,
             Sub,
@@ -165,13 +179,13 @@ class StringPrinter(Visitor):
         return f"{x1} ** {x2}"
 
     def visit_Neg(self, node: Neg, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if node.operands[0].__class__ in [Add, Sub]:
             x = f"({x})"
         return f"-{x}"
 
     def visit_Inv(self, node: Inv, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex", False):
             return rf"\frac{{1}}{{{x}}}"
         if node.operands[0].__class__ in [Add, Sub, Mul, Div]:
@@ -179,7 +193,7 @@ class StringPrinter(Visitor):
         return f"1 / {x}"
 
     def visit_Pow2(self, node: Pow2, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if node.operands[0].__class__ in [
             Add,
             Sub,
@@ -195,7 +209,7 @@ class StringPrinter(Visitor):
         return f"{x} ** 2" if not kwargs.get("latex", False) else f"{x}^2"
 
     def visit_Pow3(self, node: Pow3, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if node.operands[0].__class__ in [
             Add,
             Sub,
@@ -211,7 +225,7 @@ class StringPrinter(Visitor):
         return f"{x} ** 3" if not kwargs.get("latex", False) else f"{x}^3"
 
     def visit_Sour(self, node: Sour, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex"):
             return rf"\phi_s\left({x}\right)" if r"\left" in x else rf"\phi_s({x})"
         if kwargs.get("raw"):
@@ -219,7 +233,7 @@ class StringPrinter(Visitor):
         return f"{type(node).__name__.lower()}({x})"
 
     def visit_Targ(self, node: Targ, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex"):
             return rf"\phi_t\left({x}\right)" if r"\left" in x else rf"\phi_t({x})"
         if kwargs.get("raw"):
@@ -227,7 +241,7 @@ class StringPrinter(Visitor):
         return f"{type(node).__name__.lower()}({x})"
 
     def visit_Aggr(self, node: Aggr, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex"):
             return rf"\rho\left({x}\right)" if r"\left" in x else rf"\rho({x})"
         if kwargs.get("raw"):
@@ -235,7 +249,7 @@ class StringPrinter(Visitor):
         return f"{type(node).__name__.lower()}({x})"
 
     def visit_Rgga(self, node: Rgga, *args, **kwargs):
-        x = self(node.operands[0], **kwargs)
+        x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex"):
             return (
                 rf"\rho^{-1}\left({x}\right)" if r"\left" in x else rf"\rho^{-1}({x})"
