@@ -1,7 +1,12 @@
-from typing import List
+from typing import List, Generator, Tuple, Dict
 from functools import reduce
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
+
+_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+_SendType = List[Symbol]  # List of symbols
+_ReturnType = List[Symbol]  # Merged list of symbols
+_Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class SplitByMul(Visitor):
@@ -23,11 +28,11 @@ class SplitByMul(Visitor):
             merge_coefficients=merge_coefficients,
         )
 
-    def generic_visit(self, node: Symbol, *args, **kwargs) -> List[Symbol]:
+    def generic_visit(self, node: Symbol, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         return [node]
 
-    def visit_Mul(self, node: Mul, *args, **kwargs) -> List[Symbol]:
+    def visit_Mul(self, node: Mul, *args, **kwargs) -> _Type:
         x1, x2 = node.operands
         result1 = yield (x1, args, kwargs)
         result2 = yield (x2, args, kwargs)
@@ -36,7 +41,7 @@ class SplitByMul(Visitor):
             result = self.merge_coefficients(result, *args, **kwargs)
         return result
 
-    def visit_Div(self, node: Div, *args, **kwargs) -> List[Symbol]:
+    def visit_Div(self, node: Div, *args, **kwargs) -> _Type:
         if not kwargs.get("split_by_div"):
             return [node]
         x1, x2 = node.operands

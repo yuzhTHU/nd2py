@@ -25,7 +25,7 @@ class Visitor(ABC):
                 gen = method(node, *args, **kwargs)
                 if not hasattr(gen, "__next__"):
                     raise TypeError(
-                        f"Expected a generator but got {type(gen).__name__}, please add `yield from yield_nothing()` in {method.__name__}."
+                        f"Expected a generator but got {type(gen).__name__}, please add `yield from yield_nothing()` in {type(self).__name__}.{method.__name__}."
                     )
                 try:
                     child, args, kwargs = next(gen)

@@ -1,8 +1,14 @@
 import torch
 import numbers
 import numpy as np
+from typing import Generator, Tuple, Dict, List
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
+
+_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+_SendType = str
+_ReturnType = str
+_Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class TreePrinter(Visitor):
@@ -20,7 +26,7 @@ class TreePrinter(Visitor):
             node, number_format=number_format, flat=flat, skeleton=skeleton
         )
 
-    def generic_visit(self, node: Symbol, *args, **kwargs):
+    def generic_visit(self, node: Symbol, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         name = f"{type(node).__name__} ({node.nettype})"
         children = []
@@ -33,11 +39,11 @@ class TreePrinter(Visitor):
             )
         return name + "\n" + "\n".join(children)
 
-    def visit_Empty(self, node: Symbol, *args, **kwargs):
+    def visit_Empty(self, node: Symbol, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         return f"? ({node.nettype})"
 
-    def visit_Number(self, node: Number, *args, **kwargs):
+    def visit_Number(self, node: Number, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs.get("skeleton", False):
             return f"C ({node.nettype})"
@@ -56,11 +62,11 @@ class TreePrinter(Visitor):
             else f"Constant({content}) ({node.nettype})"
         )
 
-    def visit_Variable(self, node: Variable, *args, **kwargs):
+    def visit_Variable(self, node: Variable, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         return f"{node.name} ({node.nettype})"
 
-    def visit_Add(self, node: Add, *args, **kwargs):
+    def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
         if kwargs.get("flat", False):
             name = f"{type(node).__name__} ({node.nettype})"
             children = []
@@ -76,7 +82,7 @@ class TreePrinter(Visitor):
             return name + "\n" + "\n".join(children)
         return (yield from self.generic_visit(node, *args, **kwargs))
 
-    def visit_Mul(self, node: Mul, *args, **kwargs):
+    def visit_Mul(self, node: Mul, *args, **kwargs) -> _Type:
         if kwargs.get("flat", False):
             name = f"{type(node).__name__} ({node.nettype})"
             children = []

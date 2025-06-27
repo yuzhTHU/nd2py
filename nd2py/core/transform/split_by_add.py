@@ -1,6 +1,11 @@
-from typing import List
+from typing import List, Generator, Tuple, Dict
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
+
+_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+_SendType = List[Symbol]  # List of symbols
+_ReturnType = List[Symbol]  # Merged list of symbols
+_Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class SplitByAdd(Visitor):
@@ -46,11 +51,11 @@ class SplitByAdd(Visitor):
             merge_bias=merge_bias,
         )
 
-    def generic_visit(self, node: Symbol, *args, **kwargs) -> List[Symbol]:
+    def generic_visit(self, node: Symbol, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         return [node]
 
-    def visit_Add(self, node: Add, *args, **kwargs) -> List[Symbol]:
+    def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
         x1, x2 = node.operands
         result1 = yield (x1, args, kwargs)
         result2 = yield (x2, args, kwargs)
@@ -59,7 +64,7 @@ class SplitByAdd(Visitor):
             result = self.merge_bias(result, *args, **kwargs)
         return result
 
-    def visit_Sub(self, node: Sub, *args, **kwargs) -> List[Symbol]:
+    def visit_Sub(self, node: Sub, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("split_by_sub"):
             return [node]
@@ -77,7 +82,7 @@ class SplitByAdd(Visitor):
             result = self.merge_bias(result, *args, **kwargs)
         return result
 
-    def visit_Mul(self, node: Mul, *args, **kwargs) -> List[Symbol]:
+    def visit_Mul(self, node: Mul, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_mul"):
             result1 = [node.operands[0]]
@@ -101,7 +106,7 @@ class SplitByAdd(Visitor):
             result = self.merge_bias(result, *args, **kwargs)
         return result
 
-    def visit_Div(self, node: Div, *args, **kwargs) -> List[Symbol]:
+    def visit_Div(self, node: Div, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_div"):
             x1, x2 = node.operands
@@ -122,7 +127,7 @@ class SplitByAdd(Visitor):
             result = self.merge_bias(result, *args, **kwargs)
         return result
 
-    def visit_Neg(self, node: Neg, *args, **kwargs) -> List[Symbol]:
+    def visit_Neg(self, node: Neg, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs.get("remove_coefficients"):
             result = [node.operands[0]]
@@ -139,7 +144,7 @@ class SplitByAdd(Visitor):
                 result[idx] = Neg(item)
         return result
 
-    def visit_Sour(self, node: Sour, *args, **kwargs) -> List[Symbol]:
+    def visit_Sour(self, node: Sour, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_sour"):
             return [node]
@@ -151,7 +156,7 @@ class SplitByAdd(Visitor):
                 result[idx] = Sour(item)
         return result
 
-    def visit_Targ(self, node: Targ, *args, **kwargs) -> List[Symbol]:
+    def visit_Targ(self, node: Targ, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_targ"):
             return [node]
@@ -163,7 +168,7 @@ class SplitByAdd(Visitor):
                 result[idx] = Targ(item)
         return result
 
-    def visit_Aggr(self, node: Aggr, *args, **kwargs) -> List[Symbol]:
+    def visit_Aggr(self, node: Aggr, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_aggr"):
             return [node]
@@ -174,7 +179,7 @@ class SplitByAdd(Visitor):
             result[idx] = Aggr(item)  # Aggr(C) 和 C 数学不等价
         return result
 
-    def visit_Rgga(self, node: Rgga, *args, **kwargs) -> List[Symbol]:
+    def visit_Rgga(self, node: Rgga, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_rgga"):
             return [node]
@@ -185,7 +190,7 @@ class SplitByAdd(Visitor):
             result[idx] = Rgga(item)  # Rgga(C) 和 C 数学不等价
         return result
 
-    def visit_Readout(self, node: Readout, *args, **kwargs) -> List[Symbol]:
+    def visit_Readout(self, node: Readout, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if not kwargs.get("expand_readout"):
             return [node]
@@ -203,7 +208,6 @@ class SplitByAdd(Visitor):
         return result
 
     def merge_bias(self, items: List[Symbol], *args, **kwargs) -> List[Symbol]:
-        yield from yield_nothing()
         """Merge bias terms in the node."""
         is_bias = [isinstance(item, Number) for item in items]
         if not any(is_bias):

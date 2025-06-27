@@ -1,6 +1,11 @@
-from typing import Literal
+from typing import Literal, Generator, Tuple, Dict, List
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
+
+_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+_SendType = Symbol
+_ReturnType = Symbol
+_Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class FixNetType(Visitor):
@@ -15,7 +20,7 @@ class FixNetType(Visitor):
         node_to_scalar=["remove_aggr", "remove_rgga", "add_readout"],
         scalar_to_node=["keep"],
         scalar_to_edge=["keep"],
-    ):
+    ) -> Symbol:
         """fix the nettype of symbols in an expression, useful in GP or LLMSR where equations are generated randomly and can have incorrect nettypes
         - node: the root symbol of the expression to fix
         - nettype: the nettype to set for the symbols, can be 'node', 'edge', or 'scalar'
@@ -51,7 +56,7 @@ class FixNetType(Visitor):
             )
         return y
 
-    def generic_visit(self, node, *args, **kwargs):
+    def generic_visit(self, node, *args, **kwargs) -> _Type:
         """
         direction = 'top-down': 每个 node 的 nettype 由 kwargs['nettype'] 决定。
         direction = 'bottom-up': 每个 node 的 nettype 由其 operands 决定。只保证每个 node 运算不会出错即可，不需要对 kwargs['nettype'] 负责
@@ -68,7 +73,7 @@ class FixNetType(Visitor):
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
-    def visit_Number(self, node: Number, *args, **kwargs):
+    def visit_Number(self, node: Number, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs["direction"] == "top-down":
             return node.__class__(node.value, nettype=kwargs["nettype"])
@@ -77,7 +82,7 @@ class FixNetType(Visitor):
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
-    def visit_Variable(self, node: Variable, *args, **kwargs):
+    def visit_Variable(self, node: Variable, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs["direction"] == "top-down":
             return self.fix_nettype(node, *args, **kwargs)
@@ -86,7 +91,7 @@ class FixNetType(Visitor):
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
-    def visit_BinaryOp(self, node, *args, **kwargs):
+    def visit_BinaryOp(self, node, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs["direction"] == "top-down":
             x1 = yield (node.operands[0], args, kwargs)
@@ -120,7 +125,7 @@ class FixNetType(Visitor):
     visit_Max = visit_BinaryOp
     visit_Min = visit_BinaryOp
 
-    def visit_Aggr(self, node, *args, **kwargs):
+    def visit_Aggr(self, node, *args, **kwargs) -> _Type:
         if kwargs["direction"] == "top-down":
             x = yield (node.operands[0], args, kwargs | {"nettype": "edge"})
             y = node.__class__(x, nettype="node")
@@ -137,7 +142,7 @@ class FixNetType(Visitor):
 
     visit_Rgga = visit_Aggr
 
-    def visit_Sour(self, node, *args, **kwargs):
+    def visit_Sour(self, node, *args, **kwargs) -> _Type:
         if kwargs["direction"] == "top-down":
             x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             y = node.__class__(x, nettype="edge")
@@ -154,7 +159,7 @@ class FixNetType(Visitor):
 
     visit_Targ = visit_Sour
 
-    def visit_Readout(self, node, *args, **kwargs):
+    def visit_Readout(self, node, *args, **kwargs) -> _Type:
         if kwargs["direction"] == "top-down":
             x = yield (node.operands[0], args, kwargs | {"nettype": "node"})
             y = node.__class__(x, nettype="scalar")
@@ -169,7 +174,7 @@ class FixNetType(Visitor):
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
-    def fix_nettype(self, node, *args, **kwargs):
+    def fix_nettype(self, node: Symbol, *args, **kwargs) -> Symbol:
         nettype = kwargs["nettype"]
         if node.nettype == nettype:
             return node
@@ -190,7 +195,7 @@ class FixNetType(Visitor):
                 f"Unsupported nettype conversion from {node.nettype} to {nettype}"
             )
 
-    def edge_to_node(self, node, *args, **kwargs):
+    def edge_to_node(self, node: Symbol, *args, **kwargs) -> Symbol:
         edge_to_node = kwargs["edge_to_node"]
         for method in edge_to_node:
             if method == "remove_targ" and isinstance(node, Targ):
@@ -203,7 +208,7 @@ class FixNetType(Visitor):
                 return Rgga(node)
         raise ValueError(f"No valid edge to node conversion method found for {node}")
 
-    def node_to_edge(self, node, *args, **kwargs):
+    def node_to_edge(self, node: Symbol, *args, **kwargs) -> Symbol:
         node_to_edge = kwargs["node_to_edge"]
         for method in node_to_edge:
             if method == "remove_aggr" and isinstance(node, Aggr):
@@ -216,7 +221,7 @@ class FixNetType(Visitor):
                 return Sour(node)
         raise ValueError(f"No valid node to edge conversion method found for {node}")
 
-    def edge_to_scalar(self, node, *args, **kwargs):
+    def edge_to_scalar(self, node: Symbol, *args, **kwargs) -> Symbol:
         edge_to_scalar = kwargs["edge_to_scalar"]
         for method in edge_to_scalar:
             if (
@@ -235,7 +240,7 @@ class FixNetType(Visitor):
                 return Readout(node)
         raise ValueError(f"No valid edge to scalar conversion method found for {node}")
 
-    def node_to_scalar(self, node, *args, **kwargs):
+    def node_to_scalar(self, node: Symbol, *args, **kwargs) -> Symbol:
         node_to_scalar = kwargs["node_to_scalar"]
         for method in node_to_scalar:
             if (
@@ -254,13 +259,13 @@ class FixNetType(Visitor):
                 return Readout(node)
         raise ValueError(f"No valid node to scalar conversion method found for {node}")
 
-    def scalar_to_node(self, node, *args, **kwargs):
+    def scalar_to_node(self, node: Symbol, *args, **kwargs) -> Symbol:
         return node
         # raise NotImplementedError(
         #     f"scalar_to_node not implemented for {type(node).__name__}"
         # )
 
-    def scalar_to_edge(self, node, *args, **kwargs):
+    def scalar_to_edge(self, node: Symbol, *args, **kwargs) -> Symbol:
         return node
         # raise NotImplementedError(
         #     f"scalar_to_edge not implemented for {type(node).__name__}"
