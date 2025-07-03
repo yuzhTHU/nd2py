@@ -89,6 +89,17 @@ def is_number(value, scalar_only=False):
         elif isinstance(value, (list, tuple, set)):
             return all(is_number(v, scalar_only=scalar_only) for v in value)
 
+def is_integer_number(x):
+    import math
+    import numbers
+    import numpy as np
+    # 排除 NaN 和 Inf
+    if isinstance(x, numbers.Number):
+        if math.isinf(x) or math.isnan(x):
+            return False
+        # 检查是否是整数（包括 float 表示的整数）
+        return float(x).is_integer() and np.abs(x) < 10
+    return False
 
 class SymbolMeta(type):
     def __repr__(cls):
@@ -348,33 +359,49 @@ class Symbol(metaclass=SymbolMeta):
 
         return GetCopy()(self)
 
-    def get_parameters(self, fitable_only: bool = False) -> List[float]:
+    def get_parameters(
+        self, fitable_only: bool = False, float_only: bool = False
+    ) -> List[float]:
         """Get the parameters of the Symbol.
         Args:
         - fitable_only: bool, whether to return only the fitable parameters
+        - float_only: bool, whether to return only the float parameters
         Returns:
         - List[float], a list of parameters
         """
         params = []
         for op in self.iter_preorder():
-            if is_number(op) and (not fitable_only or op.fitable):
+            if (
+                is_number(op)
+                and (not fitable_only or op.fitable)
+                and (not float_only or not is_integer_number(op.value))
+            ):
                 params.append(op.value)
         return params
 
-    def set_parameters(self, params: List[float], fitable_only: bool = False):
+    def set_parameters(
+        self, params: List[float], fitable_only: bool = False, float_only: bool = False
+    ):
         """Set the parameters of the Symbol.
         Args:
         - params: List[float], a list of parameters
         - fitable_only: bool, whether to set only the fitable parameters
+        - float_only: bool, whether to set only the float parameters
         """
-        if len(params) != len(self.get_parameters(fitable_only=fitable_only)):
+        if len(params) != len(
+            self.get_parameters(fitable_only=fitable_only, float_only=float_only)
+        ):
             raise ValueError(
-                f"params length {len(params)} does not match the number of parameters {len(self.get_parameters(fitable_only=fitable_only))}"
+                f"params length {len(params)} does not match the number of parameters {len(self.get_parameters(fitable_only=fitable_only, float_only=float_only))} "
             )
 
         param_iter = iter(params)
         for op in self.iter_preorder():
-            if is_number(op) and (not fitable_only or op.fitable):
+            if (
+                is_number(op)
+                and (not fitable_only or op.fitable)
+                and (not float_only or not is_integer_number(op.value))
+            ):
                 op.value = next(param_iter)
 
     def to_str(
