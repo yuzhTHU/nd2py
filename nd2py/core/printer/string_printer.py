@@ -63,7 +63,16 @@ class StringPrinter(Visitor):
         if kwargs.get("raw", False):
             return f'Number({np.array(node.value).tolist()}, "{node.nettype}", {node.fitable})'
         if kwargs.get("skeleton", False):
-            return rf"\square" if kwargs.get("latex") else "C"
+            if node.nettype == "scalar":
+                return rf"C" if kwargs.get("latex") else "C"
+            elif node.nettype == "node":
+                return rf"C_n" if kwargs.get("latex") else f"Cn"
+            elif node.nettype == "edge":
+                return rf"C_e" if kwargs.get("latex") else f"Ce"
+            else:
+                raise ValueError(
+                    f"Unknown nettype: {node.nettype}. Expected 'scalar', 'node', or 'edge'."
+                )
         if isinstance(node.value, torch.Tensor):
             content = np.array(node.value.tolist())
         else:
