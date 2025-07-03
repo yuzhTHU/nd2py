@@ -4,7 +4,7 @@ from copy import deepcopy
 from functools import reduce
 from typing import List, Literal, Optional, Tuple, Set
 from .context.check_nettype import check_nettype
-
+from .context.set_fitable import set_fitable
 
 __all__ = [
     "NetType",
@@ -579,10 +579,12 @@ class Empty(Symbol):
 class Number(Symbol):
     n_operands = 0
 
-    def __init__(self, value, nettype: NetType = "scalar", fitable=True):
+    def __init__(self, value, nettype: NetType = "scalar", fitable=None):
         super().__init__(nettype=nettype)
         if isinstance(value, Number):
             value = value.value
+        if fitable is None:
+            fitable = set_fitable()
         self.value = value
         self.fitable = fitable
 
