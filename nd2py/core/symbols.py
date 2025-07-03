@@ -5,6 +5,7 @@ from functools import reduce
 from typing import List, Literal, Optional, Tuple, Set
 from .context.check_nettype import check_nettype
 from .context.set_fitable import set_fitable
+from .context.warn_once import warn_once
 
 __all__ = [
     "NetType",
@@ -54,15 +55,6 @@ __all__ = [
 ]
 
 NetType = Literal["node", "edge", "scalar"]
-
-
-def _warn_once(warn_name, maxsize=1):
-    """This function is used to limit the number of times a warning is issued"""
-    if not hasattr(_warn_once, warn_name):
-        setattr(_warn_once, warn_name, 0)
-    else:
-        setattr(_warn_once, warn_name, getattr(_warn_once, warn_name) + 1)
-    return getattr(_warn_once, warn_name) < maxsize
 
 
 def is_number(value, scalar_only=False):
@@ -130,7 +122,7 @@ class Symbol(metaclass=SymbolMeta):
                 operands[idx] = op = op.copy()
                 # Do not print warnings for Variable, since this scenerio is rather common.
                 if not isinstance(op, Variable):
-                    if _warn_once("subexpression_with_parent"):
+                    if warn_once("subexpression_with_parent"):
                         warnings.warn(
                             f"The object '{op}' cannot serve as a subexpression in multiple locations. It will be copied to avoid this behavior.",
                             category=UserWarning,
@@ -173,7 +165,7 @@ class Symbol(metaclass=SymbolMeta):
             and implied_nettype is not None
             and self.nettype != implied_nettype
         ):
-            if _warn_once("inconsistent_nettype"):
+            if warn_once("inconsistent_nettype"):
                 warnings.warn(
                     f'You are trying to create a {type(self).__name__} with nettype "{self.nettype}" '
                     f"but the operands imply a different nettype: {implied_nettype}. "
@@ -340,7 +332,7 @@ class Symbol(metaclass=SymbolMeta):
             # Replace the whold expression of self with other
             # This operation is allowed but may cause problems, especially when self is an item of a list
             # in which user need to update the list with the return value manually.
-            if _warn_once("replace_root_expression"):
+            if warn_once("replace_root_expression"):
                 warnings.warn(
                     "You are replacing the root expression itself. Make sure to reassign the result, "
                     "otherwise external references (e.g. in lists or variables) still point to the old object.",
@@ -908,8 +900,8 @@ class Readout(Symbol):
             raise ValueError(
                 f"Invalid number of operands for {cls.__name__}: expected {cls.n_operands}, got {len(operand_types)}"
             )
-        if operand_types[0] == "scalar" and _warn_once("readout_scalar"):
-            if _warn_once("inconsistent_nettype"):
+        if operand_types[0] == "scalar" and warn_once("readout_scalar"):
+            if warn_once("inconsistent_nettype"):
                 warnings.warn(
                     f"Trying to apply {cls.__name__} to a 'scalar' variable, which have no effect. ",
                     category=UserWarning,
