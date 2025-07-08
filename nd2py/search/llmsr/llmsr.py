@@ -31,7 +31,7 @@ def _softmax(logprob: np.ndarray, tau: float = 1.0) -> np.ndarray:
     return prob
 
 
-def render_markdown(text: str, width=80) -> str:
+def render_markdown(text: str, width=120, theme="staroffice") -> str:
     from rich.console import Console
     from rich.markdown import Markdown
     from rich.syntax import Syntax
@@ -44,7 +44,7 @@ def render_markdown(text: str, width=80) -> str:
             lang, code = match.groups()
             start, end = match.span()
             md = Markdown(text[current:start])
-            code = Syntax(code, lang or "text", word_wrap=True, line_numbers=True)
+            code = Syntax(code, lang or "text", word_wrap=True, line_numbers=True, theme=theme)
             console.print(md)
             console.print(code)
             current = end
@@ -53,7 +53,7 @@ def render_markdown(text: str, width=80) -> str:
     return capture.get()
 
 
-def render_python(text: str, width=80, highlight_lines=[]) -> str:
+def render_python(text: str, width=120, highlight_lines=[], theme="staroffice") -> str:
     from rich.console import Console
     from rich.markdown import Markdown
     from rich.syntax import Syntax
@@ -63,7 +63,7 @@ def render_python(text: str, width=80, highlight_lines=[]) -> str:
         code = Syntax(
             text,
             "python",
-            theme="monokai",
+            theme=theme,
             word_wrap=True,
             line_numbers=True,
             highlight_lines=highlight_lines,
