@@ -81,10 +81,12 @@ def is_number(value, scalar_only=False):
         elif isinstance(value, (list, tuple, set)):
             return all(is_number(v, scalar_only=scalar_only) for v in value)
 
+
 def is_integer_number(x):
     import math
     import numbers
     import numpy as np
+
     # 排除 NaN 和 Inf
     if isinstance(x, numbers.Number):
         if math.isinf(x) or math.isnan(x):
@@ -92,6 +94,7 @@ def is_integer_number(x):
         # 检查是否是整数（包括 float 表示的整数）
         return float(x).is_integer() and np.abs(x) < 10
     return False
+
 
 class SymbolMeta(type):
     def __repr__(cls):
@@ -583,6 +586,37 @@ class Symbol(metaclass=SymbolMeta):
             node_to_scalar=node_to_scalar,
             scalar_to_node=scalar_to_node,
             scalar_to_edge=scalar_to_edge,
+        )
+
+    def simplify(
+        self,
+        transform_constant_subtree: bool = True,
+        remove_useless_readout: bool = True,
+        remove_nested_sin: bool = False,
+        remove_nested_cos: bool = False,
+        remove_nested_tanh: bool = False,
+        remove_nested_sigmoid: bool = False,
+        remove_nested_sqrt: bool = False,
+        remove_nested_sqrtabs: bool = False,
+        remove_nested_exp: bool = False,
+        remove_nested_log: bool = False,
+        remove_nested_logabs: bool = False,
+    ):
+        from .transform.simplify import Simplify
+
+        return Simplify()(
+            self,
+            transform_constant_subtree=transform_constant_subtree,
+            remove_useless_readout=remove_useless_readout,
+            remove_nested_sin=remove_nested_sin,
+            remove_nested_cos=remove_nested_cos,
+            remove_nested_tanh=remove_nested_tanh,
+            remove_nested_sigmoid=remove_nested_sigmoid,
+            remove_nested_sqrt=remove_nested_sqrt,
+            remove_nested_sqrtabs=remove_nested_sqrtabs,
+            remove_nested_exp=remove_nested_exp,
+            remove_nested_log=remove_nested_log,
+            remove_nested_logabs=remove_nested_logabs,
         )
 
 
