@@ -48,7 +48,12 @@ class SplitByMul(Visitor):
         result1 = yield (x1, args, kwargs)
         result2 = yield (x2, args, kwargs)
         for idx, item in enumerate(result2):
-            result2[idx] = Inv(item) if not isinstance(item, Inv) else item.operands[0]
+            if isinstance(item, Number):
+                result2[idx] = Number(1 / item.value, nettype=item.nettype, fitable=item.nettype)
+            elif isinstance(item, Inv):
+                result2[idx] = item.operands[0]
+            else:
+                result2[idx] = Inv(item)
         result = result1 + result2
         if kwargs.get("merge_coefficients"):
             result = self.merge_coefficients(result, *args, **kwargs)

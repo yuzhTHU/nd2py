@@ -1,7 +1,7 @@
 from typing import List, Generator, Tuple, Dict, Type
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
-from functools import partial
+from functools import partialmethod
 
 _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
 _SendType = List[Symbol]  # List of symbols
@@ -55,7 +55,7 @@ class Simplify(Visitor):
         return node.__class__(*results)
 
     def remove_nested_unary(
-        self, unary: Type[Symbol], node: Symbol, *args, **kwargs
+        self, node: Symbol, *args, unary: Type[Symbol]=None, **kwargs
     ) -> _Type:
         x = node.operands[0]
         result = yield (x, args, kwargs)
@@ -69,15 +69,15 @@ class Simplify(Visitor):
                 return result
         return unary(result)
 
-    visit_Sin = partial(remove_nested_unary, unary=Sin)
-    visit_Cos = partial(remove_nested_unary, unary=Cos)
-    visit_Tanh = partial(remove_nested_unary, unary=Tanh)
-    visit_Sigmoid = partial(remove_nested_unary, unary=Sigmoid)
-    visit_Sqrt = partial(remove_nested_unary, unary=Sqrt)
-    visit_SqrtAbs = partial(remove_nested_unary, unary=SqrtAbs)
-    visit_Exp = partial(remove_nested_unary, unary=Exp)
-    visit_Log = partial(remove_nested_unary, unary=Log)
-    visit_LogAbs = partial(remove_nested_unary, unary=LogAbs)
+    visit_Sin = partialmethod(remove_nested_unary, unary=Sin)
+    visit_Cos = partialmethod(remove_nested_unary, unary=Cos)
+    visit_Tanh = partialmethod(remove_nested_unary, unary=Tanh)
+    visit_Sigmoid = partialmethod(remove_nested_unary, unary=Sigmoid)
+    visit_Sqrt = partialmethod(remove_nested_unary, unary=Sqrt)
+    visit_SqrtAbs = partialmethod(remove_nested_unary, unary=SqrtAbs)
+    visit_Exp = partialmethod(remove_nested_unary, unary=Exp)
+    visit_Log = partialmethod(remove_nested_unary, unary=Log)
+    visit_LogAbs = partialmethod(remove_nested_unary, unary=LogAbs)
 
     def visit_Readout(self, node: Readout, *args, **kwargs) -> _Type:
         x = node.operands[0]
@@ -103,6 +103,8 @@ class Simplify(Visitor):
         results = []
         for x in node.split_by_add(split_by_sub=True, merge_bias=True):
             result = yield (x, args, kwargs)
+            if isinstance(result, Number) and result.value == 0:
+                continue
             results.append(result)
 
         if len(results) == 1:

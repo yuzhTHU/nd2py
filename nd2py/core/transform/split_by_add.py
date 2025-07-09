@@ -73,7 +73,9 @@ class SplitByAdd(Visitor):
         result2 = yield (x2, args, kwargs)
         if not kwargs.get("remove_coefficients"):
             for idx, item in enumerate(result2):
-                if not isinstance(item, Neg):
+                if isinstance(item, Number):
+                    result2[idx] = Number(-item.value, nettype=item.nettype, fitable=item.nettype)
+                elif not isinstance(item, Neg):
                     result2[idx] = Neg(item)
                 else:
                     result2[idx] = item.operands[0]
@@ -118,7 +120,7 @@ class SplitByAdd(Visitor):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
             elif isinstance(item, Number):
-                result[idx] = Inv(x2)
+                result[idx] = Number(1/x2.value, nettype=x2.nettype, fitable=x2.nettype)
             elif isinstance(x2, Number):
                 result[idx] = item
             else:
@@ -137,7 +139,7 @@ class SplitByAdd(Visitor):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
             if isinstance(item, Number):
-                result[idx] = Number(-item.value)
+                result[idx] = Number(-item.value, nettype=item.nettype, fitable=item.nettype)
             elif isinstance(item, Neg):
                 result[idx] = item.operands[0]
             else:
