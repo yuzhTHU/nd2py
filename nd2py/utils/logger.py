@@ -13,13 +13,15 @@ class LogFormatter(logging.Formatter):
     color_dict = {
         "DEBUG": "\033[0;37m{}\033[0m",
         "INFO": "\033[0;34m{}\033[0m",
-        "NOTE": "\033[1;32m{}\033[0m",
-        "WARNING": "\033[0;30;43m{}\033[0m",
+        "NOTE": "\033[1;38;5;46m{}\033[0m",
+        "WARNING": "\033[1;48;5;220m{}\033[0m",
         "ERROR": "\033[0;30;41m{}\033[0m",
         "CRITICAL": "\033[0;30;45m{}\033[0m",
     }
 
-    def __init__(self, exp_name, colorful=False, start_time=None, time_format="%y-%m-%d %H:%M:%S"):
+    def __init__(
+        self, exp_name, colorful=False, start_time=None, time_format="%y-%m-%d %H:%M:%S"
+    ):
         super().__init__()
         self.exp_name = exp_name
         self.colorful = colorful
@@ -39,7 +41,8 @@ class LogFormatter(logging.Formatter):
             path = os.path.relpath(record.pathname, os.getcwd())
             prefix += f" ({path}:{record.lineno})"
         message = record.getMessage() or ""
-        message = message.replace("\n", "\n" + " " * len(prefix + " "))
+        # message = message.replace("\n", "\n" + " " * len(prefix + " "))
+        message = message.replace("\n", "\n" + " " * 8)
         if self.colorful:
             return (
                 self.color_dict.get(record.levelname, "{}").format(prefix)
@@ -47,7 +50,7 @@ class LogFormatter(logging.Formatter):
                 + message
             )
         else:
-            return prefix + " " + re.sub(r'\033\[[\d;]+m', '', message)
+            return prefix + " " + re.sub(r"\033\[[\d;]+m", "", message)
 
 
 def init_logger(
@@ -88,7 +91,9 @@ def init_logger(
     console_handler = logging.StreamHandler()
     console_handler.setLevel(getattr(logging, info_level.upper()))
     console_handler.setFormatter(
-        LogFormatter(exp_name, colorful=True, start_time=start_time, time_format="%b%d %H:%M:%S")
+        LogFormatter(
+            exp_name, colorful=True, start_time=start_time, time_format="%b%d %H:%M:%S"
+        )
     )
     logger.addHandler(console_handler)
 
@@ -99,11 +104,16 @@ def init_logger(
             mode="a",
             maxBytes=int(file_max_size_MB * 1024 * 1024),
             backupCount=file_backup_count,
-            encoding='utf-8'
+            encoding="utf-8",
         )
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(
-            LogFormatter(exp_name, colorful=False, start_time=start_time, time_format="%b%d %H:%M:%S")
+            LogFormatter(
+                exp_name,
+                colorful=False,
+                start_time=start_time,
+                time_format="%b%d %H:%M:%S",
+            )
         )
         logger.addHandler(file_handler)
 
