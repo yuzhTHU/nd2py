@@ -120,7 +120,7 @@ class SplitByAdd(Visitor):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
             elif isinstance(item, Number):
-                result[idx] = Number(1/x2.value, nettype=x2.nettype, fitable=x2.nettype)
+                result[idx] = Inv(x2)
             elif isinstance(x2, Number):
                 result[idx] = item
             else:
