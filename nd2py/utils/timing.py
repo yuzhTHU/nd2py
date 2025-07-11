@@ -5,7 +5,7 @@ Lightweight timing utilities for optional performance diagnostics.
 import time
 from typing import Literal
 
-__all__ = ["Timer", "AbsTimer", "NamedTimer"]
+__all__ = ["Timer", "AbsTimer", "NamedTimer", "ParallelTimer"]
 
 
 def time_str(seconds, unit="iter"):
@@ -168,6 +168,68 @@ class NamedTimer(Timer):
     @property
     def time(self):
         return sum(self._time.values())
+
+    @property
+    def count(self):
+        return sum(self._count.values())
+
+
+class ParallelTimer(Timer):
+    def __init__(
+        self, unit="iter", mode: Literal["pace", "speed", "counter", "timer"] = "pace"
+    ):
+        self._count = {}
+        self._time = {}
+        self._start_time = {}
+        self.unit = unit
+        self.mode = mode
+        self.start_time = time.time()
+
+    def __str__(self):
+        msg_list = {}
+        pct_list = {}
+        if not self._time:
+            return 'None'
+        for k in self._time:
+            msg_list[k] = to_str(self._count[k], self._time[k], self.unit, self.mode)
+            if self.mode == "pace":
+                pct_list[k] = self._time[k] / self.time if self.time > 0 else 0
+                prefix = to_str(self.count, self.time, self.unit, "timer")
+            elif self.mode == "speed":
+                pct_list[k] = self._count[k] / self.count if self.count > 0 else 0
+                prefix = to_str(self.count, self.time, self.unit, "counter")
+            elif self.mode == "counter":
+                pct_list[k] = self._time[k] / self.time if self.time > 0 else 0
+                prefix = to_str(self.count, self.time, self.unit, "counter")
+            elif self.mode == "timer":
+                pct_list[k] = self._count[k] / self.count if self.count > 0 else 0
+                prefix = to_str(self.count, self.time, self.unit, "timer")
+        detail = []
+        for k in sorted(self._time.keys(), key=pct_list.get, reverse=True):
+            detail.append(f"{k}={msg_list[k]}[{pct_list[k]:.0%}]")
+        return f'{prefix} ({"; ".join(detail)})'
+
+    def add(self, name, n=1):
+        if name not in self._time:
+            self._time[name] = self._count[name] = 0
+            self._start_time[name] = self.start_time
+        self._time[name] += time.time() - self._start_time[name]
+        self._count[name] += n
+        self._start_time[name] = time.time()
+
+    def clear(self, reset=True):
+        self._count = {}
+        self._time = {}
+        if reset:
+            self.start_time = time.time()
+            self._start_time = {}
+
+    def total_time(self):
+        return self.time
+
+    @property
+    def time(self):
+        return time.time() - self.start_time
 
     @property
     def count(self):

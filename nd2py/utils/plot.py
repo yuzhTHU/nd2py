@@ -1,5 +1,6 @@
 import os
 import re
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -525,3 +526,11 @@ def adjust_text(texts, ax, step=0.01, max_iterations=100, mode="xy"):
         update(j)
         if (overlap == 0).all():
             break
+
+
+def use_chinese_font(fontpath="/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"):
+    from matplotlib import rcParams
+    from matplotlib.font_manager import FontProperties
+    font_prop = FontProperties(fname=fontpath)
+    rcParams['font.family'] = font_prop.get_name()
+    rcParams['axes.unicode_minus'] = False

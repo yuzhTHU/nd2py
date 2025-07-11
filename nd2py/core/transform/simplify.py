@@ -55,7 +55,7 @@ class Simplify(Visitor):
         return node.__class__(*results)
 
     def remove_nested_unary(
-        self, node: Symbol, *args, unary: Type[Symbol]=None, **kwargs
+        self, node: Symbol, *args, unary: Type[Symbol] = None, **kwargs
     ) -> _Type:
         x = node.operands[0]
         result = yield (x, args, kwargs)
@@ -101,11 +101,21 @@ class Simplify(Visitor):
 
     def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
         results = []
-        for x in node.split_by_add(split_by_sub=True, merge_bias=True):
+        for x in node.split_by_add(split_by_sub=True):
             result = yield (x, args, kwargs)
             if isinstance(result, Number) and result.value == 0:
                 continue
             results.append(result)
+
+        if len(results) > 1:
+            add = Add(*results)
+            results = add.split_by_add(split_by_sub=True, merge_bias=True)
+            if (
+                len(results) > 1
+                and isinstance(results[0], Number)
+                and results[0].value == 0
+            ):
+                results = results[1:]
 
         if len(results) == 1:
             return results[0]
