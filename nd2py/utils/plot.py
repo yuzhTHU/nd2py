@@ -4,6 +4,8 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from matplotlib import rcParams
+from matplotlib.font_manager import FontProperties
 from typing import List, Dict, Literal, Tuple
 from .attr_dict import AttrDict
 
@@ -14,6 +16,8 @@ __all__ = [
     "plotOD",
     "clear_svg",
     "load_font",
+    "use_chinese_font",
+    "merge_axes",
 ]
 
 
@@ -529,8 +533,17 @@ def adjust_text(texts, ax, step=0.01, max_iterations=100, mode="xy"):
 
 
 def use_chinese_font(fontpath="/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"):
-    from matplotlib import rcParams
-    from matplotlib.font_manager import FontProperties
     font_prop = FontProperties(fname=fontpath)
-    rcParams['font.family'] = font_prop.get_name()
-    rcParams['axes.unicode_minus'] = False
+    rcParams["font.family"] = font_prop.get_name()
+    rcParams["axes.unicode_minus"] = False
+
+
+def merge_axes(axes):
+    xmin = min(ax.get_position().x0 for ax in axes)
+    xmax = max(ax.get_position().x1 for ax in axes)
+    ymin = min(ax.get_position().y0 for ax in axes)
+    ymax = max(ax.get_position().y1 for ax in axes)
+    merged_ax = plt.gca().figure.add_axes([xmin, ymin, xmax - xmin, ymax - ymin])
+    for ax in axes:
+        ax.remove()  # Remove the old axes to avoid overlap
+    return merged_ax
