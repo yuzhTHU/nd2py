@@ -214,3 +214,17 @@ class Simplify(Visitor):
             return result.operands[1] / result.operands[0]
 
         return Inv(result)
+
+    def visit_Aggr(self, node: Aggr, *args, **kwargs) -> _Type:
+        x = node.operands[0]
+        result = yield (x, args, kwargs)
+
+        # if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        #     return Number(Aggr(result).eval())
+
+        if result.nettype == "scalar":
+            # D = Number(Aggr(1).eval(), nettype='node')
+            D = Aggr(1)
+            return D * result
+
+        return Aggr(result)
