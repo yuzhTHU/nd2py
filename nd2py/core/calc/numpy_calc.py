@@ -271,8 +271,8 @@ class NumpyCalc(Visitor):
             return y
         else:
             y = np.zeros((*x.shape[:-1], num_nodes))
-            for k, j in enumerate(edge_list[1]):
-                y[..., j] += x[..., k]
+            idx = (slice(None),) * (x.ndim - 1) + (edge_list[1],)
+            np.add.at(y, idx, x)
             return y
 
     @unpack_operands()
@@ -294,8 +294,8 @@ class NumpyCalc(Visitor):
             return y
         else:
             y = np.zeros((*x.shape[:-1], num_nodes))
-            for k, i in enumerate(edge_list[0]):
-                y[..., i] += x[..., k]
+            idx = (slice(None),) * (x.ndim - 1) + (edge_list[0],)
+            np.add.at(y, idx, x)
             return y
 
     @unpack_operands()
