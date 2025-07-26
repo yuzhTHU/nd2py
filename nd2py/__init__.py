@@ -1,4 +1,4 @@
-from .core.context.check_nettype import no_nettype_check
+from .core.context.check_nettype import no_nettype_check, set_nettype_check
 from .core.context.set_fitable import no_set_fitable
 from .core.context.warn_once import no_warn
 from .core.symbols import *

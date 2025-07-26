@@ -1,7 +1,7 @@
 import threading
 import contextlib
 
-__all__ = ["check_nettype", "no_nettype_check"]
+__all__ = ["check_nettype", "no_nettype_check", "set_nettype_check"]
 
 _local = threading.local()
 _local.check_nettype = True
@@ -17,3 +17,6 @@ def no_nettype_check():
         yield
     finally:
         _local.check_nettype = prev
+
+def set_nettype_check(value: bool):
+    _local.check_nettype = value
