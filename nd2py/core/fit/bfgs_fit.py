@@ -43,6 +43,12 @@ class BFGSFit(BaseEstimator, RegressorMixin):
 
         # 1. 收集需要优化的 Number 节点
         numbers = collect_numbers(expression)
+        if len(numbers) == 0:
+            self.n_iter_ = 0
+            self.loss_ = None
+            self.success_ = True
+            self.message_ = "No parameters to optimize."
+            return self
 
         # 2. 打平成参数向量
         init_vals = np.array([n.value for n in numbers], dtype=float)
