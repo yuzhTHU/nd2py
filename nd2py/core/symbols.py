@@ -7,52 +7,19 @@ from .context.check_nettype import check_nettype
 from .context.set_fitable import set_fitable
 from .context.warn_once import warn_once
 
+# fmt: off
 __all__ = [
-    "NetType",
-    "Symbol",
-    "Empty",
-    "Number",
-    "Variable",
-    "Add",
-    "Sub",
-    "Mul",
-    "Div",
-    "Pow",
-    "Max",
-    "Min",
-    "Sin",
-    "Cos",
-    "Tan",
-    "Sec",
-    "Csc",
-    "Cot",
-    "Log",
-    "LogAbs",
-    "Exp",
-    "Abs",
-    "Neg",
-    "Inv",
-    "Sqrt",
-    "SqrtAbs",
-    "Pow2",
-    "Pow3",
-    "Arcsin",
-    "Arccos",
-    "Arctan",
-    "Sinh",
-    "Cosh",
-    "Tanh",
-    "Coth",
-    "Sech",
-    "Csch",
-    "Sigmoid",
-    "Regular",
-    "Sour",
-    "Targ",
-    "Aggr",
-    "Rgga",
-    "Readout",
+    "NetType", "Symbol", "Empty", "Number", "Variable",
+    "Add", "Sub", "Mul", "Div", "Pow", "Max", "Min", 
+    "Sin", "Cos", "Tan", "Sec", "Csc", "Cot", 
+    "Log", "LogAbs", "Exp", "Abs", "Neg", "Inv", 
+    "Sqrt", "SqrtAbs", "Pow2", "Pow3",
+    "Arcsin", "Arccos", "Arctan",
+    "Sinh", "Cosh", "Tanh", "Coth", "Sech", "Csch",
+    "Sigmoid", "Regular",
+    "Sour", "Targ", "Aggr", "Rgga", "Readout",
 ]
+# fmt: on
 
 NetType = Literal["node", "edge", "scalar"]
 
@@ -347,6 +314,28 @@ class Symbol(metaclass=SymbolMeta):
         child.parent.operands[child_idx] = other
         other.parent, child.parent = child.parent, None
         return self
+
+    def path_to(self, child: "Symbol") -> str:
+        """Get the path from self to child."""
+        def iter(f, path=tuple([])):
+            if f is child: return path
+            for idx, op in enumerate(f.operands):
+                result = iter(op, path + (idx,))
+                if result is not None:
+                    return result
+        path = iter(self)
+        return path
+            
+    def get_path(self, path: Tuple[int]) -> 'Symbol':
+        """Get the subexpression at the specified path."""
+        current = self
+        for idx in path:
+            if not (0 <= idx < len(current.operands)):
+                raise IndexError(
+                    f"Index {idx} out of range for operands of {current} with {len(current.operands)} operands."
+                )
+            current = current.operands[idx]
+        return current
 
     def copy(self):
         """Create a deep copy of the Symbol. The result will not inherit self.parent"""
