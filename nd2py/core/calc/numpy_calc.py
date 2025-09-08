@@ -136,7 +136,8 @@ class NumpyCalc(Visitor):
 
     @unpack_operands()
     def visit_Log(self, node: Log, x, *args, **kwargs):
-        return np.log(x)
+        eps = kwargs.get("use_eps")
+        return np.log(x + eps * (x == 0))
 
     @unpack_operands()
     def visit_LogAbs(self, node: LogAbs, x, *args, **kwargs):
