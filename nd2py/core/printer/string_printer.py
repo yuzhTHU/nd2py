@@ -79,12 +79,15 @@ class StringPrinter(Visitor):
             content = np.array(node.value)
         fmt = kwargs.get("number_format", "")
         if isinstance(content, (numbers.Number)) or content.size == 1:
-            if np.ndim(content) > 0:
-                content = content[0]
-            if int(content) == content:
-                content = str(int(content))
-            else:
-                content = f"{content:{fmt}}"
+            try:
+                if np.ndim(content) > 0:
+                    content = content[0]
+                if int(content) == content:
+                    content = str(int(content))
+                else:
+                    content = f"{content:{fmt}}"
+            except:
+                content = str(content)
         elif kwargs.get("latex", False):
             content = rf"\left<{np.mean(content):{fmt}}\right>"
         else:
