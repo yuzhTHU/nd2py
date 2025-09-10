@@ -6,6 +6,14 @@ class FoldConstant(Visitor):
     """
     访问器，用于将表达式中不含 Number 的子表达式折叠为 Constant。
     """
+    def __init__(
+        self,
+        fold_fitable:bool=True,
+        fold_constant:bool=True,
+    ):
+        self.fold_fitable = fold_fitable
+        self.fold_constant = fold_constant
+
     def __call__(self,
                  node:Symbol,
                  vars:Dict):
@@ -24,9 +32,12 @@ class FoldConstant(Visitor):
             X.append(x)
         node2 = node.__class__(*X)
         node2.nettype = node.nettype
-        if all(isinstance(x, Number) and not x.fitable for x in X):
+        if self.fold_constant and  all(isinstance(x, Number) and not x.fitable for x in X):
             y = node2.eval(*args, **kwargs)
             return Number(y, fitable=False, nettype=node2.nettype)
+        if self.fold_fitable and all(isinstance(x, Number) and x.fitable for x in X):
+            y = node2.eval(*args, **kwargs)
+            return Number(y, fitable=True, nettype=node2.nettype)
         return node2
     
     def visit_Empty(self, node:Symbol, *args, **kwargs):
@@ -38,5 +49,7 @@ class FoldConstant(Visitor):
 
     def visit_Variable(self, node:Variable, *args, **kwargs):
         yield from yield_nothing()
+        if node.name not in kwargs.get('vars', {}):
+            return node
         y = node.eval(*args, **kwargs)
         return Number(y, fitable=False, nettype=node.nettype)
