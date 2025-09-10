@@ -39,9 +39,10 @@ def get_fig(
     fontsize=7,
     lw=0.5,
     gridspec=False,
+    font_family="Arial",
     **kwargs,
 ):
-    plt.rcParams["font.family"] = "Arial"
+    plt.rcParams["font.family"] = font_family
     plt.rcParams["font.size"] = fontsize
     plt.rcParams["axes.labelsize"] = fontsize
     plt.rcParams["axes.titlesize"] = fontsize
