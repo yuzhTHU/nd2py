@@ -7,7 +7,7 @@ from .fold_constant import FoldConstant
 
 
 def collect_numbers(expression):
-    return [op for op in expression.iter_preorder() if isinstance(op, Number)]
+    return [op for op in expression.iter_preorder() if isinstance(op, Number) and op.fitable]
 
 
 class BFGSFit(BaseEstimator, RegressorMixin):

@@ -24,3 +24,7 @@ class GetCopy(Visitor):
     def visit_Variable(self, node, *args, **kwargs):
         yield from yield_nothing()
         return node.__class__(node.name, nettype=node.nettype)
+
+    def visit_Empty(self, node, *args, **kwargs):
+        yield from yield_nothing()
+        return node.__class__(nettype=node.nettype)
