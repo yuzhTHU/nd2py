@@ -1,7 +1,7 @@
 import ast
 import importlib
 from typing import Dict
-from ..symbols import Symbol, Variable
+from ..symbols import Symbol, Number, Variable
 from ..functions import *
 
 __all__ = ["parse"]
@@ -59,4 +59,7 @@ def parse(
         #     f"Name conflict between variables and callables: {duplicate_keys}"
         # )
         Warning(f"Name conflict between variables and callables: {duplicate_keys}")
-    return eval(expression, {}, {**callables, **variables})
+    result = eval(expression, {}, {**callables, **variables})
+    if isinstance(result, (int, float)):
+        result = Number(result)
+    return result
