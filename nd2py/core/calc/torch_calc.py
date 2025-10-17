@@ -34,6 +34,7 @@ def unpack_operands(
             for op in node.operands:
                 x = yield (op, args, kwargs)
                 X.append(x)
+            X = list(torch.broadcast_tensors(*X))
             if not mask_out_nan:
                 return func(self, node, *X, *args, **kwargs)
             if double_check_nan:
@@ -295,19 +296,19 @@ class TorchCalc(Visitor):
         device = kwargs.get("device")
 
         if isinstance(x, numbers.Number) or x.size == 1:
-            y = torch.zeros((num_nodes,), device=device)
-            y.scatter_add_(edge_list[1], x, dim=-1)
+            y = torch.zeros((num_nodes,), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[1].expand_as(x), src=x)
             return y
         elif node.operands[0].nettype == "scalar":
             if x.shape[-1] != 1:
                 x = x[..., None]
-            y = torch.zeros((num_nodes,), device=device)
-            y.scatter_add_(edge_list[1], 1, dim=-1)
+            y = torch.zeros((num_nodes,), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[1].expand_as(x), src=1)
             y = y * x
             return y
         else:
-            y = np.zeros((*x.shape[:-1], num_nodes))
-            y.scatter_add_(edge_list[1], x, dim=-1)
+            y = torch.zeros((*x.shape[:-1], num_nodes), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[1].expand_as(x), src=x)
             return y
 
     @unpack_operands()
@@ -318,19 +319,19 @@ class TorchCalc(Visitor):
         device = kwargs.get("device")
 
         if isinstance(x, numbers.Number) or x.size == 1:
-            y = torch.zeros((num_nodes,), device=device)
-            y.scatter_add_(edge_list[0], x, dim=-1)
+            y = torch.zeros((num_nodes,), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[0].expand_as(x), src=x)
             return y
         elif node.operands[0].nettype == "scalar":
             if x.shape[-1] != 1:
                 x = x[..., None]
-            y = torch.zeros((num_nodes,), device=device)
-            y.scatter_add_(edge_list[0], 1, dim=-1)
+            y = torch.zeros((num_nodes,), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[0].expand_as(x), src=1)
             y = y * x
             return y
         else:
-            y = np.zeros((*x.shape[:-1], num_nodes))
-            y.scatter_add_(edge_list[0], x, dim=-1)
+            y = torch.zeros((*x.shape[:-1], num_nodes), dtype=x.dtype, device=device)
+            y = torch.scatter_add(y, dim=-1, index=edge_list[0].expand_as(x), src=x)
             return y
 
     @unpack_operands()
