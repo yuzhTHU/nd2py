@@ -2,6 +2,7 @@ import os
 import re
 import random
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib import rcParams
@@ -59,6 +60,25 @@ def get_fig(
     plt.rcParams["grid.linewidth"] = lw
     plt.rcParams["pdf.fonttype"] = 42
     plt.rcParams["svg.fonttype"] = "none"
+
+    sns.set_theme(
+        context=None,  # 或 "paper" / "talk" / "poster" / "notebook"
+        style=None,   # 或 "white", "darkgrid" 等
+        font=font_family,
+        font_scale=fontsize / 10,  # 比例调节字体大小
+        rc={
+            "lines.linewidth": lw,
+            "axes.linewidth": lw,
+            "xtick.major.width": lw,
+            "ytick.major.width": lw,
+            "grid.linewidth": lw,
+            "axes.titlesize": fontsize,
+            "axes.labelsize": fontsize,
+            "xtick.labelsize": fontsize,
+            "ytick.labelsize": fontsize,
+            "legend.fontsize": fontsize,
+        }
+    )
 
     LM = LM * fontsize / 72
     RM = RM * fontsize / 72
