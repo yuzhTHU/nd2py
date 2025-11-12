@@ -44,7 +44,7 @@ class GPLearnGenerator:
     def generate_node(self, nettype: Set[Literal["node", "edge", "scalar"]]) -> Symbol:
         symbol_nettypes = []
         for sym in self.symbols:
-            for nt in nettype & sym.nettype_range():
+            for nt in sorted(nettype & sym.nettype_range()):
                 symbol_nettypes.append((sym, nt))
         symbol, nettype = self._rng.choice(symbol_nettypes)
         node = symbol(nettype=nettype)
