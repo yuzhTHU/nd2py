@@ -20,13 +20,15 @@ class LogFormatter(logging.Formatter):
     }
 
     def __init__(
-        self, exp_name, colorful=False, start_time=None, time_format="%y-%m-%d %H:%M:%S"
+        self, exp_name, colorful=False, start_time=None, time_format="%y-%m-%d %H:%M:%S",
+        show_lineno_for=["WARNING", "ERROR", "CRITICAL"],
     ):
         super().__init__()
         self.exp_name = exp_name
         self.colorful = colorful
         self.start_time = start_time or time.time()
         self.time_format = time_format
+        self.show_lineno_for = show_lineno_for
 
     def format(self, record):
         prefixes = [
@@ -37,7 +39,7 @@ class LogFormatter(logging.Formatter):
             str(timedelta(seconds=record.created - self.start_time)),
         ]
         prefix = f"[{'|'.join([str(p) for p in prefixes if str(p).strip()])}]"
-        if record.levelname in ["WARNING", "ERROR", "CRITICAL"]:
+        if record.levelname in self.show_lineno_for:
             path = os.path.relpath(record.pathname, os.getcwd())
             prefix += f" ({path}:{record.lineno})"
         message = record.getMessage() or ""
@@ -62,6 +64,7 @@ def init_logger(
     ] = "info",
     file_max_size_MB: float = 50.0,
     file_backup_count: int = 100,
+    show_lineno_for_all_levels: bool = False,
 ):
     """Initialize the logger for the package.
     Args:
@@ -88,11 +91,15 @@ def init_logger(
     logger.propagate = False
     logger.handlers = []
 
+    show_lineno_for = ["WARNING", "ERROR", "CRITICAL"]
+    if show_lineno_for_all_levels:
+        show_lineno_for.extend(["DEBUG", "INFO", "NOTE"])
     console_handler = logging.StreamHandler()
     console_handler.setLevel(getattr(logging, info_level.upper()))
     console_handler.setFormatter(
         LogFormatter(
-            exp_name, colorful=True, start_time=start_time, time_format="%b%d %H:%M:%S"
+            exp_name, colorful=True, start_time=start_time, time_format="%b%d %H:%M:%S",
+            show_lineno_for=show_lineno_for,
         )
     )
     logger.addHandler(console_handler)
@@ -109,10 +116,8 @@ def init_logger(
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(
             LogFormatter(
-                exp_name,
-                colorful=False,
-                start_time=start_time,
-                time_format="%b%d %H:%M:%S",
+                exp_name, colorful=False, start_time=start_time, time_format="%b%d %H:%M:%S",
+                show_lineno_for=show_lineno_for,
             )
         )
         logger.addHandler(file_handler)

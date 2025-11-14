@@ -2,7 +2,6 @@ import ast
 import importlib
 from typing import Dict
 from ..symbols import Symbol, Number, Variable
-from ..functions import *
 
 __all__ = ["parse"]
 
@@ -31,6 +30,8 @@ def get_variables_and_callables(code: str):
 
 module = importlib.import_module("..functions", package=__package__)
 default_callables = {name: getattr(module, name) for name in module.__all__}
+module = importlib.import_module("..symbols", package=__package__)
+default_callables |= {name: getattr(module, name) for name in module.__all__}
 
 
 def parse(

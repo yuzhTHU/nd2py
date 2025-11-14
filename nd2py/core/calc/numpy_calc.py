@@ -261,7 +261,7 @@ class NumpyCalc(Visitor):
 
         if isinstance(x, numbers.Number) or x.size == 1:
             y = np.zeros((num_nodes,))
-            np.add.at(y, edge_list[1], x)
+            np.add.at(y, edge_list[1], float(x))
             return y
         elif node.operands[0].nettype == "scalar" or x.shape[-1] == 1:
             if x.shape[-1] != 1:
