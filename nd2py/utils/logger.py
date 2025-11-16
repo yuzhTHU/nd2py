@@ -12,6 +12,7 @@ __all__ = ["init_logger"]
 class LogFormatter(logging.Formatter):
     color_dict = {
         "DEBUG": "\033[0;37m{}\033[0m",
+        "TRACE": "\033[1;448;5;240m{}\033[0m",
         "INFO": "\033[0;34m{}\033[0m",
         "NOTE": "\033[1;38;5;46m{}\033[0m",
         "WARNING": "\033[1;48;5;220m{}\033[0m",
@@ -21,7 +22,7 @@ class LogFormatter(logging.Formatter):
 
     def __init__(
         self, exp_name, colorful=False, start_time=None, time_format="%y-%m-%d %H:%M:%S",
-        show_lineno_for=["WARNING", "ERROR", "CRITICAL"],
+        show_lineno_for=["TRACE", "WARNING", "ERROR", "CRITICAL"],
     ):
         super().__init__()
         self.exp_name = exp_name
@@ -55,12 +56,24 @@ class LogFormatter(logging.Formatter):
             return prefix + " " + re.sub(r"\033\[[\d;]+m", "", message)
 
 
+# Logging level between INFO and WARNING, used for log something important but not unexpected.
+def note(self, message, *args, **kwargs):
+    if self.isEnabledFor(25):
+        self._log(25, message, args, **kwargs)
+
+
+# Logging level between DEBUG and INFO, used for warn something unexpected but not important.
+def trace(self, message, *args, **kwargs):
+    if self.isEnabledFor(15):
+        self._log(15, message, args, **kwargs)
+
+
 def init_logger(
     package_name: str,
     exp_name: str = None,
     log_file: str = None,
     info_level: Literal[
-        "debug", "info", "note", "warning", "error", "critical"
+        "debug", "trace", "info", "note", "warning", "error", "critical"
     ] = "info",
     file_max_size_MB: float = 50.0,
     file_backup_count: int = 100,
@@ -77,21 +90,19 @@ def init_logger(
     """
     start_time = time.time()
 
-    # Logging level between INFO and WARNING, used for log something important but not unexpected.
-    def note(self, message, *args, **kwargs):
-        if self.isEnabledFor(25):
-            self._log(25, message, args, **kwargs)
-
     logging.addLevelName(25, "NOTE")
     logging.Logger.note = note
     logging.NOTE = 25
+    logging.addLevelName(15, "TRACE")
+    logging.Logger.trace = trace
+    logging.TRACE = 15
 
     logger = logging.getLogger(package_name)
     logger.setLevel(logging.DEBUG)
     logger.propagate = False
     logger.handlers = []
 
-    show_lineno_for = ["WARNING", "ERROR", "CRITICAL"]
+    show_lineno_for = ["TRACE", "WARNING", "ERROR", "CRITICAL"]
     if show_lineno_for_all_levels:
         show_lineno_for.extend(["DEBUG", "INFO", "NOTE"])
     console_handler = logging.StreamHandler()
