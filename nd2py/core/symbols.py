@@ -343,6 +343,26 @@ class Symbol(metaclass=SymbolMeta):
 
         return GetCopy()(self)
 
+    def get_numbers(
+        self, fitable_only: bool = False, float_only: bool = False
+    ) -> List['Number']:
+        """Get the Numbers in the Symbol.
+        Args:
+        - fitable_only: bool, whether to return only the fitable Numbers
+        - float_only: bool, whether to return only the float Numbers
+        Returns:
+        - List[Number], a list of Numbers
+        """
+        numbers = []
+        for op in self.iter_preorder():
+            if (
+                is_number(op)
+                and (not fitable_only or op.fitable)
+                and (not float_only or not is_integer_number(op.value))
+            ):
+                numbers.append(op)
+        return numbers
+
     def get_parameters(
         self, fitable_only: bool = False, float_only: bool = False
     ) -> List[float]:
