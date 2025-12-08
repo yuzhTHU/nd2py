@@ -344,7 +344,7 @@ class Symbol(metaclass=SymbolMeta):
         return GetCopy()(self)
 
     def get_numbers(
-        self, fitable_only: bool = False, float_only: bool = False
+        self, fitable_only: bool = False, float_only: bool = False, scalar_only: bool = False
     ) -> List['Number']:
         """Get the Numbers in the Symbol.
         Args:
@@ -356,7 +356,7 @@ class Symbol(metaclass=SymbolMeta):
         numbers = []
         for op in self.iter_preorder():
             if (
-                is_number(op)
+                is_number(op, scalar_only=scalar_only)
                 and (not fitable_only or op.fitable)
                 and (not float_only or not is_integer_number(op.value))
             ):
