@@ -55,7 +55,7 @@ class IterPreorder(Visitor):
         # If yielded is not a tuple, treat it as visit result
         return not (isinstance(yielded, tuple) and len(yielded) == 3)
 
-    def generic_visit(self, node: "Symbol", *args, **kwargs):
+    def generic_visit(self, node: Symbol, *args, **kwargs):
         yield node  # Preorder: yield self first
         for operand in node.operands:
             yield (operand, args, kwargs)

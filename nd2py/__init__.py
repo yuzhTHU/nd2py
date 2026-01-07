@@ -16,6 +16,7 @@ from .core.transform.fix_nettype import FixNetType
 from .core.parse.parser import parse
 from . import utils
 from .search.gp import GP, GPLearnGenerator
+from .search.mcts import MCTS
 from .search.llmsr import LLMSR
 
 Constant = lambda x, *args, **kwargs: Number(x, *args, **kwargs, fitable=False)

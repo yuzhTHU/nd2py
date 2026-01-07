@@ -422,9 +422,7 @@ class GP(BaseEstimator, RegressorMixin):
             child.eqtree = child.eqtree.replace(node, sym)
         return child
 
-    def set_fitness(
-        self, individual: Individual, X: Dict[str, np.ndarray], y: np.ndarray
-    ) -> Individual:
+    def set_fitness(self, individual: Individual, X: Dict[str, np.ndarray], y: np.ndarray):
         individual.complexity = len(individual.eqtree)
         self.named_timer.add("drop")
         y_pred = individual.eqtree.eval(

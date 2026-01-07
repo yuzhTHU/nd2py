@@ -1,5 +1,6 @@
 from typing import Literal, Generator, Tuple, Dict, List
 from ..symbols import *
+from ..nettype import NetType
 from ..base_visitor import Visitor, yield_nothing
 
 _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
