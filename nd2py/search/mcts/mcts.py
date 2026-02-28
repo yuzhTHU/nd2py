@@ -318,7 +318,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         # empty_list = [i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)]
         if len(state.eqtree) + op.n_operands > self.max_len:
             return False
-        if not e.replaceable_nettype() & op.nettype_range():
+        if not e.replaceable_nettype() & op.nettype_range:
             return False
         # if (e is None and op is None) ^ (len(empty_list) == 0): return False
         return True
@@ -336,7 +336,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         loader = []
         for e in empty_list:
             for op in self.binary + self.unary + self.variables:
-                if e.nettype not in op.nettype_range():
+                if e.nettype not in op.nettype_range:
                     continue
                 if isinstance(op, type):
                     op = op(nettype=e.nettype)
@@ -359,7 +359,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         for _ in range(1000):
             e = random.choice(empty_list)
             op = random.choice(op_list)
-            if e.nettype not in op.nettype_range():
+            if e.nettype not in op.nettype_range:
                 continue
             if isinstance(op, type):
                 op = op(nettype=e.nettype)

@@ -164,8 +164,8 @@ class LLMSR(BaseEstimator, RegressorMixin):
 
         self.islands = self.init_islands(data)
         self.start_time = time.time()
-        self.speed_timer.clear(reset=True)
-        self.token_timer.clear(reset=True)
+        self.speed_timer.clear(reset_last_add_time=True)
+        self.token_timer.clear(reset_last_add_time=True)
         for n_iter in range(1, 1 + self.n_iter):
             self.islands = self.evolve(self.islands, data, n_iter=n_iter)
 

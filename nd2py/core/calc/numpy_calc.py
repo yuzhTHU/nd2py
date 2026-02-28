@@ -106,6 +106,10 @@ class NumpyCalc(Visitor):
     @unpack_operands()
     def visit_Min(self, node: Min, x1, x2, *args, **kwargs):
         return np.minimum(x1, x2)
+    
+    @unpack_operands()
+    def visit_Identity(self, node: Identity, x, *args, **kwargs):
+        return x
 
     @unpack_operands()
     def visit_Sin(self, node: Sin, x, *args, **kwargs):

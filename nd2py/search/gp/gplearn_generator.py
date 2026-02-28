@@ -41,19 +41,16 @@ class GPLearnGenerator:
         if any(kwargs):
             _logger.warning(f"Unused arguments: {kwargs}")
 
-    def generate_node(self, nettype: Set[Literal["node", "edge", "scalar"]]) -> Symbol:
-        symbol_nettypes = []
-        for sym in self.symbols:
-            for nt in sorted(nettype & sym.nettype_range()):
-                symbol_nettypes.append((sym, nt))
-        symbol, nettype = self._rng.choice(symbol_nettypes)
-        node = symbol(nettype=nettype)
+    def generate_node(self, nettypes: Set[Literal["node", "edge", "scalar"]]) -> Symbol:
+        symbols = [sym for sym in self.symbols if (nettypes & sym.nettype_range)]
+        symbol = self._rng.choice(symbols)
+        node = symbol() # 不用指定 nettype, 由 .infer_nettype() 自行推断即可
         return node
 
-    def generate_leaf(
-        self, nettype: Set[Literal["node", "edge", "scalar"]]
+    def generate_leaf( # TODO: 太糟糕了
+        self, nettypes: Set[Literal["node", "edge", "scalar"]]
     ) -> Number | Variable:
-        leafs = [var for var in self.variables if var.nettype in nettype]
+        leafs = [var for var in self.variables if var.nettype in nettypes]
 
         if self.const_range is not None:
             const_range = self.const_range
@@ -63,30 +60,26 @@ class GPLearnGenerator:
             const_range = None
 
         if const_range is not None:
-            if nettype == "scalar" or self.scalar_number_only or self._rng.integers(2):
-                number = Number(self._rng.uniform(*const_range), nettype="scalar")
-            elif nettype == "node":
-                number = Number(
-                    self._rng.uniform(*const_range, (self.num_nodes,)), nettype="node"
-                )
-            elif nettype == "edge":
-                number = Number(
-                    self._rng.uniform(*const_range, (len(self.edge_list[0]),)),
-                    nettype="edge",
-                )
-            else:
-                raise ValueError(
-                    f"Unknown nettype: {nettype}. Supported types are 'scalar', 'node', and 'edge'."
-                )
-            leafs = leafs + [number]
+            if "scalar" in nettypes:
+                values = self._rng.uniform(*const_range)
+                number = Number(values, nettype="scalar")
+                leafs = leafs + [number]
+            if "node" in nettypes and not self.scalar_number_only:
+                values = self._rng.uniform(*const_range, (self.num_nodes,))
+                number = Number(values, nettype="node")
+                leafs = leafs + [number]
+            if "edge" in nettypes and not self.scalar_number_only:
+                values = self._rng.uniform(*const_range, (len(self.edge_list[0]),))
+                number = Number(values, nettype="edge")
+                leafs = leafs + [number]
 
-        return self._rng.choice(leafs)
+        return self._rng.choice([var for var in leafs if var.nettype in nettypes])
 
     def generate_eqtree(
-        self, nettype: Set[Literal["node", "edge", "scalar"]]
+        self, nettypes: Set[Literal["node", "edge", "scalar"]]
     ) -> Symbol:
-        if isinstance(nettype, str):
-            nettype = {nettype}
+        if isinstance(nettypes, str):
+            nettypes = {nettypes}
 
         full_tree = self._rng.random() < self.full_prob
         max_depth = self._rng.integers(*self.depth_range)
@@ -97,16 +90,19 @@ class GPLearnGenerator:
         )
 
         # Start a eqtree with a function to avoid degenerative eqtrees
-        eqtree = self.generate_node(nettype)
+        eqtree = self.generate_node(nettypes)
+        eqtree.nettype = nettypes & eqtree.nettype_range
         empty_nodes_and_depth = [(i, 1) for i in eqtree.operands]
 
         while empty_nodes_and_depth:
             empty_node, depth = empty_nodes_and_depth.pop(0)
             if (depth < max_depth) and (self._rng.random() < op_prob):
-                node = self.generate_node(empty_node.replaceable_nettype())
+                node = self.generate_node(empty_node.possible_nettypes)
                 eqtree.replace(empty_node, node)
                 empty_nodes_and_depth.extend([(i, depth + 1) for i in node.operands])
             else:  # Variable or Number
-                leaf = self.generate_leaf(empty_node.replaceable_nettype())
+                leaf = self.generate_leaf(empty_node.possible_nettypes)
                 eqtree.replace(empty_node, leaf)
+        
+        eqtree.nettype = None # 生成时不强制指定 nettype, 由 .infer_nettype() 自行推断即可
         return eqtree

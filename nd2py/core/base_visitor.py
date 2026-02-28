@@ -1,5 +1,9 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
-from .symbols import Symbol
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING: # 避免循环引用，仅用于类型检查
+    from .symbols import Symbol
 
 
 def yield_nothing():

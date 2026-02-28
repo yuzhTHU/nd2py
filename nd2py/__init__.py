@@ -1,4 +1,4 @@
-from .core.context.check_nettype import no_nettype_check, set_nettype_check
+from .core.context.nettype_inference import no_nettype_inference, set_nettype_inference
 from .core.context.set_fitable import no_set_fitable
 from .core.context.copy_value import no_copy_value
 from .core.context.warn_once import no_warn

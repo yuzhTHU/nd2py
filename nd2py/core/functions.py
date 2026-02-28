@@ -1,53 +1,62 @@
-from .symbols import *
+from functools import reduce
+from . import symbols as symbols
 
-# fmt: off
 __all__ = [
-    'add', 'sub', 'mul', 'div', 'pow', 'max', 'min',
-    'sin', 'cos', 'tan', 'sec', 'csc', 'cot', 'log',
-    'inv', 'sqrt', 'sqrtabs', 'pow2', 'pow3',
-    'logabs', 'exp', 'sigmoid', 'regular',
-    'abs', 'neg', 'arcsin', 'arccos', 'arctan', 
-    'sinh', 'cosh', 'tanh', 'sech', 'csch',
-    'phi_s', 'phi_t', 'rho',
-    'sour', 'targ', 'aggr', 'rgga', 'readout',
+    "add", "sub", "mul", "div", "pow", "max", "min",
+    "sin", "cos", "tan", "sec", "csc", "cot", "arcsin", "arccos", "arctan",
+    "log", "logabs", "exp", "abs", "neg", "inv", "sqrt", "sqrtabs", "pow2", "pow3",
+    "sinh", "cosh", "tanh", "sech", "csch", "sigmoid", "reg", "regular",
+    "sour", "phi_s", "targ", "phi_t", "aggr", "rho", "rgga", "readout",
+    "sum", "prod", "maximum", "minimum",
 ]
-# fmt: on
 
-add = lambda x, y: Add(x, y)
-sub = lambda x, y: Sub(x, y)
-mul = lambda x, y: Mul(x, y)
-div = lambda x, y: Div(x, y)
-pow = lambda x, y: Pow(x, y)
-max = lambda x, y: Max(x, y)
-min = lambda x, y: Min(x, y)
-sin = lambda x: Sin(x)
-cos = lambda x: Cos(x)
-tan = lambda x: Tan(x)
-sec = lambda x: Sec(x)
-csc = lambda x: Csc(x)
-cot = lambda x: Cot(x)
-log = lambda x: Log(x)
-logabs = lambda x: LogAbs(x)
-exp = lambda x: Exp(x)
-abs = lambda x: Abs(x)
-neg = lambda x: Neg(x)
-inv = lambda x: Inv(x)
-sqrt = lambda x: Sqrt(x)
-sqrtabs = lambda x: SqrtAbs(x)
-pow2 = lambda x: Pow2(x)
-pow3 = lambda x: Pow3(x)
-arcsin = lambda x: Arcsin(x)
-arccos = lambda x: Arccos(x)
-arctan = lambda x: Arctan(x)
-sinh = lambda x: Sinh(x)
-cosh = lambda x: Cosh(x)
-tanh = lambda x: Tanh(x)
-sech = lambda x: Sech(x)
-csch = lambda x: Csch(x)
-sigmoid = lambda x: Sigmoid(x)
-regular = lambda x, y: Regular(x, y)
-sour = phi_s = lambda x: Sour(x)
-targ = phi_t = lambda x: Targ(x)
-aggr = rho = lambda x: Aggr(x)
-rgga = lambda x: Rgga(x)
-readout = lambda x: Readout(x)
+add = symbols.Add
+sub = symbols.Sub
+mul = symbols.Mul
+div = symbols.Div
+pow = symbols.Pow
+max = symbols.Max
+min = symbols.Min
+sin = symbols.Sin
+cos = symbols.Cos
+tan = symbols.Tan
+sec = symbols.Sec
+csc = symbols.Csc
+cot = symbols.Cot
+log = symbols.Log
+logabs = symbols.LogAbs
+exp = symbols.Exp
+abs = symbols.Abs
+neg = symbols.Neg
+inv = symbols.Inv
+sqrt = symbols.Sqrt
+sqrtabs = symbols.SqrtAbs
+pow2 = symbols.Pow2
+pow3 = symbols.Pow3
+arcsin = symbols.Arcsin
+arccos = symbols.Arccos
+arctan = symbols.Arctan
+sinh = symbols.Sinh
+cosh = symbols.Cosh
+tanh = symbols.Tanh
+sech = symbols.Sech
+csch = symbols.Csch
+sigmoid = symbols.Sigmoid
+reg = regular = symbols.Regular
+sour = phi_s = symbols.Sour
+targ = phi_t = symbols.Targ
+aggr = rho = symbols.Aggr
+rgga = symbols.Rgga
+readout = symbols.Readout
+
+def sum(*operands):
+    return reduce(add, operands)
+
+def prod(*operands):
+    return reduce(mul, operands)
+
+def maximum(*operands):
+    return reduce(max, operands)
+
+def minimum(*operands):
+    return reduce(min, operands)

@@ -13,14 +13,16 @@ def test_nettype_gp():
     vars = {'x': np.random.rand(100, num_nodes), 'y': np.random.rand(100, num_edges)}
     node = x + nd.aggr(y * nd.sour(x))
 
-    est = nd.GP(variables=[x,y],
-                n_iter=30, 
-                random_state=42, 
-                binary=[nd.Add, nd.Mul], 
-                unary=[nd.Aggr, nd.Sour],
-                edge_list=edge_list,
-                num_nodes=num_nodes,
-                nettype='node')
+    est = nd.GP(
+        variables=[x,y],
+        n_iter=30, 
+        random_state=42, 
+        binary=[nd.Add, nd.Mul], 
+        unary=[nd.Aggr, nd.Sour],
+        edge_list=edge_list,
+        num_nodes=num_nodes,
+        nettype='node'
+    )
     X = vars
     y = node.eval(vars, edge_list=edge_list, num_nodes=num_nodes)
     est.fit(X, y)

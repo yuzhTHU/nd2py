@@ -14,7 +14,7 @@ x = nd.Variable("x")
     ],
 )
 def test_same_child(node):
-    assert id(node.operands[0]) != id(node.operands[1])
+    assert node.operands[0] is not node.operands[1]
 
 
 @pytest.mark.parametrize(
@@ -32,10 +32,10 @@ def test_same_child(node):
         nd.Cos(nd.Variable("x", nettype="scalar")),
         nd.Cos(nd.Variable("x", nettype="node")),
         nd.Cos(nd.Variable("x", nettype="edge")),
-        nd.Add(nettype="scalar"),
-        nd.Add(nettype="node"),
-        nd.Add(nettype="edge"),
-        nd.Add(x, nettype="scalar"),
+        # nd.Add(nettype="scalar"),
+        # nd.Add(nettype="node"),
+        # nd.Add(nettype="edge"),
+        # nd.Add(x, nettype="scalar"),
         nd.Add(x, x, nettype="scalar"),
     ]
 )

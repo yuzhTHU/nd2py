@@ -10,14 +10,6 @@ from ..context.warn_once import warn_once
 class Add(Symbol):
     n_operands = 2
 
-    def __init__(self, *operands, nettype: NetType = None):
-        if len(operands) < 2:
-            operands = list(operands) + [
-                Empty(nettype=None) for _ in range(2 - len(operands))
-            ]
-        other = reduce(lambda x, y: Add(x, y), operands[:-1])
-        super().__init__(other, operands[-1], nettype=nettype)
-
 
 class Sub(Symbol):
     n_operands = 2
@@ -25,14 +17,6 @@ class Sub(Symbol):
 
 class Mul(Symbol):
     n_operands = 2
-
-    def __init__(self, *operands, nettype: NetType = None):
-        if len(operands) < 2:
-            operands = list(operands) + [
-                Empty(nettype=None) for _ in range(2 - len(operands))
-            ]
-        other = reduce(lambda x, y: Mul(x, y), operands[:-1])
-        super().__init__(other, operands[-1], nettype=nettype)
 
 
 class Div(Symbol):
@@ -46,25 +30,13 @@ class Pow(Symbol):
 class Max(Symbol):
     n_operands = 2
 
-    def __init__(self, *operands, nettype: NetType = None):
-        if len(operands) < 2:
-            operands = list(operands) + [
-                Empty(nettype=None) for _ in range(2 - len(operands))
-            ]
-        other = reduce(lambda x, y: Max(x, y), operands[:-1])
-        super().__init__(other, operands[-1], nettype=nettype)
-
 
 class Min(Symbol):
     n_operands = 2
 
-    def __init__(self, *operands, nettype: NetType = None):
-        if len(operands) < 2:
-            operands = list(operands) + [
-                Empty(nettype=None) for _ in range(2 - len(operands))
-            ]
-        other = reduce(lambda x, y: Min(x, y), operands[:-1])
-        super().__init__(other, operands[-1], nettype=nettype)
+
+class Identity(Symbol):
+    n_operands = 1
 
 
 class Sin(Symbol):
@@ -179,40 +151,13 @@ class Sour(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(
-        cls, operand_types: Optional[List[NetType]] = None
-    ) -> Optional[NetType]:
-        """Determine the nettype of this Symbol based on its operands."""
-        if len(operand_types) != cls.n_operands:
+    def map_nettype(cls, *children_nettypes: NetType) -> Optional[NetType]:
+        if len(children_nettypes) != cls.n_operands:
             raise ValueError(
-                f"Invalid number of operands for {cls.__name__}: expected {cls.n_operands}, got {len(operand_types)}"
+                f"Invalid number of operands for {cls.__name__}: "
+                f"expected {cls.n_operands}, got {len(children_nettypes)}"
             )
-        if operand_types[0] == "edge":
-            return "invalid"
-        return "edge"
-
-    @classmethod
-    def nettype_range(cls) -> Set[NetType]:
-        """Possible nettypes of this Symbol under all operand nettype combinations."""
-        return {"edge"}
-
-    def replaceable_nettype(self, child: "Symbol" = None, strict=False) -> Set[NetType]:
-        """Nettypes that can be used to replace this subexpression (or its child if specified)."""
-        if child is not None and child not in self.operands:
-            raise ValueError(
-                f"Cannot get replaceable nettype for {child} because it is not a subexpression of {self}"
-            )
-        if strict:
-            raise NotImplementedError(
-                f"{type(self).__name__}.replaceable_nettype() is not implemented for strict mode"
-            )
-        if child is not None:
-            # Changed here: because the operand of Sour and itself have different nettypes
-            return {"node", "scalar"}
-        elif self.parent is not None:
-            return self.parent.replaceable_nettype(self, strict=strict)
-        else:
-            return {self.nettype, "scalar"}
+        return "edge" if children_nettypes[0] != "edge" else None
 
 
 class Targ(Sour):
@@ -223,41 +168,13 @@ class Aggr(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(
-        cls, operand_types: Optional[List[NetType]] = None
-    ) -> Optional[NetType]:
-        """Determine the nettype of this Symbol based on its operands."""
-        if len(operand_types) != cls.n_operands:
+    def map_nettype(cls, *children_nettypes: NetType) -> Optional[NetType]:
+        if len(children_nettypes) != cls.n_operands:
             raise ValueError(
-                f"Invalid number of operands for {cls.__name__}: expected {cls.n_operands}, got {len(operand_types)}"
+                f"Invalid number of operands for {cls.__name__}: "
+                f"expected {cls.n_operands}, got {len(children_nettypes)}"
             )
-        if operand_types[0] == "node":
-            return "invalid"
-        return "node"
-
-    @classmethod
-    def nettype_range(cls) -> Set[NetType]:
-        """Possible nettypes of this Symbol under all operand nettype combinations."""
-        return {"node"}
-
-    def replaceable_nettype(self, child: "Symbol" = None, strict=False) -> Set[NetType]:
-        """Nettypes that can be used to replace this subexpression (or its child if specified)."""
-        if child is not None and child not in self.operands:
-            raise ValueError(
-                f"Cannot get replaceable nettype for {child} because it is not a subexpression of {self}"
-            )
-        if strict:
-            raise NotImplementedError(
-                f"{type(self).__name__}.replaceable_nettype() is not implemented for strict mode"
-            )
-        if child is not None:
-            # Changed here: because the operand of Aggr and itself have different nettypes
-            return {"edge", "scalar"}
-        elif self.parent is not None:
-            return self.parent.replaceable_nettype(self, strict=strict)
-        else:
-            return {self.nettype, "scalar"}
-
+        return "node" if children_nettypes[0] != "node" else None
 
 class Rgga(Aggr):
     pass
@@ -267,42 +184,10 @@ class Readout(Symbol):
     n_operands = 1
 
     @classmethod
-    def map_nettype(
-        cls, operand_types: Optional[List[NetType]] = None
-    ) -> Optional[NetType]:
-        """Determine the nettype of this Symbol based on its operands."""
-        if len(operand_types) != cls.n_operands:
+    def map_nettype(cls, *children_nettypes: NetType) -> Optional[NetType]:
+        if len(children_nettypes) != cls.n_operands:
             raise ValueError(
-                f"Invalid number of operands for {cls.__name__}: expected {cls.n_operands}, got {len(operand_types)}"
+                f"Invalid number of operands for {cls.__name__}: "
+                f"expected {cls.n_operands}, got {len(children_nettypes)}"
             )
-        if operand_types[0] == "scalar" and warn_once("readout_scalar"):
-            if warn_once("inconsistent_nettype"):
-                warnings.warn(
-                    f"Trying to apply {cls.__name__} to a 'scalar' variable, which have no effect. ",
-                    category=UserWarning,
-                    stacklevel=2,
-                )
         return "scalar"
-
-    @classmethod
-    def nettype_range(cls) -> Set[NetType]:
-        """Possible nettypes of this Symbol under all operand nettype combinations."""
-        return {"scalar"}
-
-    def replaceable_nettype(self, child: "Symbol" = None, strict=False) -> Set[NetType]:
-        """Nettypes that can be used to replace this subexpression (or its child if specified)."""
-        if child is not None and child not in self.operands:
-            raise ValueError(
-                f"Cannot get replaceable nettype for {child} because it is not a subexpression of {self}"
-            )
-        if strict:
-            raise NotImplementedError(
-                f"{type(self).__name__}.replaceable_nettype() is not implemented for strict mode"
-            )
-        if child is not None:
-            # scalar is possible to replace its operand, but not recommended
-            return {"node", "edge", "scalar"}
-        elif self.parent is not None:
-            return self.parent.replaceable_nettype(self, strict=strict)
-        else:
-            return {self.nettype, "scalar"}

@@ -1,6 +1,7 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from ..base_visitor import Visitor, yield_nothing
 from ... import Symbol, Number, Variable
+
 
 class FoldConstant(Visitor):
     """
@@ -14,15 +15,24 @@ class FoldConstant(Visitor):
         self.fold_fitable = fold_fitable
         self.fold_constant = fold_constant
 
-    def __call__(self,
-                 node:Symbol,
-                 vars:Dict):
+    def __call__(
+        self,
+        node:Symbol,
+        vars: dict = {},
+        edge_list: Tuple[List[int], List[int]] = None,
+        num_nodes: int = None,
+    ):
         """
         Args:
         - node (Symbol): 要访问的节点。
         - vars (Dict): 变量字典，包含所有变量的值。
         """
-        return super().__call__(node, vars)
+        return super().__call__(
+            node, 
+            vars=vars,
+            edge_list=edge_list,
+            num_nodes=num_nodes,
+        )
 
     def generic_visit(self, node, *args, **kwargs):
         yield from yield_nothing()
@@ -30,9 +40,8 @@ class FoldConstant(Visitor):
         for op in node.operands:
             x = yield (op, args, kwargs)
             X.append(x)
-        node2 = node.__class__(*X)
-        node2.nettype = node.nettype
-        if self.fold_constant and  all(isinstance(x, Number) and not x.fitable for x in X):
+        node2 = node.__class__(*X, nettype=node.nettype)
+        if self.fold_constant and all(isinstance(x, Number) and not x.fitable for x in X):
             y = node2.eval(*args, **kwargs)
             return Number(y, fitable=False, nettype=node2.nettype)
         if self.fold_fitable and all(isinstance(x, Number) and x.fitable for x in X):

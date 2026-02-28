@@ -1,7 +1,7 @@
 from typing import List, Generator, Tuple, Dict, Type
 from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
-from functools import partialmethod
+from functools import partialmethod, reduce
 
 _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
 _SendType = List[Symbol]  # List of symbols
@@ -108,7 +108,7 @@ class Simplify(Visitor):
             results.append(result)
 
         if len(results) > 1:
-            add = Add(*results)
+            add = reduce(Add, results)
             results = add.split_by_add(split_by_sub=True, merge_bias=True)
             if (
                 len(results) > 1
@@ -161,13 +161,13 @@ class Simplify(Visitor):
         elif len(den) == 1:
             den = den[0]
         else:
-            den = Mul(*den)
+            den = reduce(Mul, den)
         if len(num) == 0:
             num = None
         elif len(num) == 1:
             num = num[0]
         else:
-            num = Mul(*num)
+            num = reduce(Mul, num)
         if den is None:
             return num
         elif num is None:

@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Set
+from typing import Set, Optional
 from .symbols import Symbol, is_number
 from ..nettype import NetType
 from ..context.set_fitable import set_fitable
@@ -24,7 +24,5 @@ class Number(Symbol):
         elif isinstance(other, Number):
             return np.all(self.value == other.value)
 
-    def nettype_range(self) -> Set[NetType]:
-        # Since it has no operands, it cannot give a nettype different
-        # from self.nettype by adjusting operands nettype combinations.
-        return {self.nettype}
+    def map_nettype(self) -> Optional[NetType]:
+        return self.nettype

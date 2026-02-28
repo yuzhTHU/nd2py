@@ -5,3 +5,4 @@ from .metrics import *
 from .plot import *
 from .timing import *
 from .utils import *
+from .classproperty import classproperty

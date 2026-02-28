@@ -10,6 +10,7 @@ from .operands import (
     Pow,
     Max,
     Min,
+    Identity,
     Sin,
     Cos,
     Tan,

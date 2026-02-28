@@ -8,14 +8,14 @@ np.random.seed(42)
 x, y, z = nd.variables('x y z', nettype='scalar')
 vars = {'x': np.random.rand(100, 1), 'y': np.random.rand(100, 1), 'z': np.random.rand(100, 1)}
 
-@pytest.mark.parametrize("gp_cls,flags,node,vars", [
-    (nd.GP, dict(variables=[x,y], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin]), x*y, vars),
-    (nd.GP, dict(variables=[x,y,z], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin]), (x+y)*z, vars),
-    (nd.GP, dict(variables=[x,y,z], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin]), nd.sin(x+y)*z, vars),
-    (nd.GP, dict(variables=[x], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin]), nd.sin(2*x), vars),
+@pytest.mark.parametrize("flags,node,vars", [
+    (dict(variables=[x,y],   n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), x*y,           vars),
+    (dict(variables=[x,y,z], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), (x+y)*z,       vars),
+    (dict(variables=[x,y,z], n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), nd.sin(x+y)*z, vars),
+    (dict(variables=[x],     n_iter=30, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), nd.sin(2*x),   vars),
 ])
-def test_gp(gp_cls, flags, node, vars):
-    est = gp_cls(**flags)
+def test_gp(flags, node, vars):
+    est = nd.GP(**flags)
     X = vars
     y = node.eval(vars)
     est.fit(X, y)
