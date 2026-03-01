@@ -1,11 +1,13 @@
-from typing import List, Generator, Tuple, Dict
-from ..symbols import *
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
+from typing import List, Generator, Tuple, Dict, TYPE_CHECKING
 from ..base_visitor import Visitor, yield_nothing
-
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = List[Symbol]  # List of symbols
-_ReturnType = List[Symbol]  # Merged list of symbols
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = List[Symbol]  # List of symbols
+    _ReturnType = List[Symbol]  # Merged list of symbols
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class SplitByAdd(Visitor):
@@ -73,9 +75,11 @@ class SplitByAdd(Visitor):
         result2 = yield (x2, args, kwargs)
         if not kwargs.get("remove_coefficients"):
             for idx, item in enumerate(result2):
-                if isinstance(item, Number):
+                if type(item).__name__ == 'Number':
+                    Number = self._get_symbol('Number')
                     result2[idx] = Number(-item.value, nettype=item.nettype, fitable=item.nettype)
-                elif not isinstance(item, Neg):
+                elif not type(item).__name__ == 'Neg':
+                    Neg = self._get_symbol('Neg')
                     result2[idx] = Neg(item)
                 else:
                     result2[idx] = item.operands[0]
@@ -98,9 +102,9 @@ class SplitByAdd(Visitor):
             for jtem in result2:
                 if not kwargs.get("remove_coefficients"):
                     result.append(item * jtem)
-                elif isinstance(item, Number):
+                elif type(item).__name__ == 'Number':
                     result.append(jtem)
-                elif isinstance(jtem, Number):
+                elif type(jtem).__name__ == 'Number':
                     result.append(item)
                 else:
                     result.append(item * jtem)
@@ -119,9 +123,9 @@ class SplitByAdd(Visitor):
         for idx, item in enumerate(result):
             if not kwargs.get("remove_coefficients"):
                 result[idx] = item / x2
-            elif isinstance(item, Number):
-                result[idx] = Inv(x2)
-            elif isinstance(x2, Number):
+            elif type(item).__name__ == 'Number':
+                result[idx] = 1 / x2
+            elif type(x2).__name__ == 'Number':
                 result[idx] = item
             else:
                 result[idx] = item / x2
@@ -138,15 +142,18 @@ class SplitByAdd(Visitor):
         if kwargs.get("merge_bias"):
             result = self.merge_bias(result, *args, **kwargs)
         for idx, item in enumerate(result):
-            if isinstance(item, Number):
+            if type(item).__name__ == 'Number':
+                Number = self._get_symbol('Number')
                 result[idx] = Number(-item.value, nettype=item.nettype, fitable=item.nettype)
-            elif isinstance(item, Neg):
+            elif type(item).__name__ == 'Neg':
                 result[idx] = item.operands[0]
             else:
+                Neg = self._get_symbol('Neg')
                 result[idx] = Neg(item)
         return result
 
     def visit_Sour(self, node: Sour, *args, **kwargs) -> _Type:
+        Sour = self._get_symbol("Sour")
         yield from yield_nothing()
         if not kwargs.get("expand_sour"):
             return [node]
@@ -159,6 +166,7 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Targ(self, node: Targ, *args, **kwargs) -> _Type:
+        Targ = self._get_symbol("Targ")
         yield from yield_nothing()
         if not kwargs.get("expand_targ"):
             return [node]
@@ -171,6 +179,7 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Aggr(self, node: Aggr, *args, **kwargs) -> _Type:
+        Aggr = self._get_symbol("Aggr")
         yield from yield_nothing()
         if not kwargs.get("expand_aggr"):
             return [node]
@@ -182,6 +191,7 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Rgga(self, node: Rgga, *args, **kwargs) -> _Type:
+        Rgga = self._get_symbol("Rgga")
         yield from yield_nothing()
         if not kwargs.get("expand_rgga"):
             return [node]
@@ -193,6 +203,7 @@ class SplitByAdd(Visitor):
         return result
 
     def visit_Readout(self, node: Readout, *args, **kwargs) -> _Type:
+        Readout = self._get_symbol("Readout")
         yield from yield_nothing()
         if not kwargs.get("expand_readout"):
             return [node]
@@ -211,9 +222,10 @@ class SplitByAdd(Visitor):
 
     def merge_bias(self, items: List[Symbol], *args, **kwargs) -> List[Symbol]:
         """Merge bias terms in the node."""
-        is_bias = [isinstance(item, Number) for item in items]
+        is_bias = [type(item).__name__ == 'Number' for item in items]
         if not any(is_bias):
             return items
+        Number = self._get_symbol('Number')
         bias = Number(sum(item.value for item, flag in zip(items, is_bias) if flag))
         if kwargs.get("remove_coefficients"):
             bias = Number(1.0)

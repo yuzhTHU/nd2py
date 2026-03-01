@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import ast
 import importlib
 from typing import Dict
@@ -28,11 +29,18 @@ def get_variables_and_callables(code: str):
     return variables, callables
 
 
-module = importlib.import_module("..functions", package=__package__)
-default_callables = {name: getattr(module, name) for name in module.__all__}
+# module = importlib.import_module("..symbols", package=__package__)
+# default_callables = {name: getattr(module, name) for name in module.__all__}
 # module = importlib.import_module("..symbols", package=__package__)
 # default_callables |= {name: getattr(module, name) for name in module.__all__}
-
+module = importlib.import_module("..symbols", package=__package__)
+default_callables = {
+    name: getattr(module, name) 
+    for name in dir(module) 
+    # 1. 过滤掉以 '_' 开头的私有属性和内置魔法属性（如 __name__, __doc__）
+    # 2. 确保获取到的是可调用的对象（类或函数），这能自动过滤掉意外暴露的子模块
+    if not name.startswith('_') and callable(getattr(module, name))
+}
 
 def parse(
     expression: str,

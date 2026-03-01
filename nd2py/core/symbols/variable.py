@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from typing import Set, Optional
 from .symbols import Symbol
 from ..nettype import NetType

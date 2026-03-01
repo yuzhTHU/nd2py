@@ -1,14 +1,16 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import torch
 import numbers
 import numpy as np
-from typing import Generator, Tuple, Dict, List
-from ..symbols import *
+from typing import Generator, Tuple, Dict, List, TYPE_CHECKING
 from ..base_visitor import Visitor, yield_nothing
-
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = str
-_ReturnType = str
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = str
+    _ReturnType = str
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class StringPrinter(Visitor):
@@ -114,7 +116,7 @@ class StringPrinter(Visitor):
     def visit_Sub(self, node: Sub, *args, **kwargs) -> _Type:
         x1 = yield (node.operands[0], args, kwargs)
         x2 = yield (node.operands[1], args, kwargs)
-        if node.operands[1].__class__ in [Add, Sub]:
+        if type(node.operands[1]).__name__ in ['Add', 'Sub']:
             x2 = (
                 rf"\left({x2}\right)"
                 if kwargs.get("latex", False) and r"\left" in x2
@@ -125,20 +127,20 @@ class StringPrinter(Visitor):
     def visit_Mul(self, node: Mul, *args, **kwargs) -> _Type:
         x1 = yield (node.operands[0], args, kwargs)
         x2 = yield (node.operands[1], args, kwargs)
-        if node.operands[0].__class__ in [Add, Sub]:
+        if type(node.operands[0]).__name__ in ['Add', 'Sub']:
             x1 = (
                 rf"\left({x1}\right)"
                 if kwargs.get("latex", False) and r"\left" in x1
                 else f"({x1})"
             )
-        if node.operands[1].__class__ in [Add, Sub]:
+        if type(node.operands[1]).__name__ in ['Add', 'Sub']:
             x2 = (
                 rf"\left({x2}\right)"
                 if kwargs.get("latex", False) and r"\left" in x2
                 else f"({x2})"
             )
         if kwargs.get("omit_mul_sign", False):
-            if node.operands[1].__class__ in [Add, Sub]:
+            if type(node.operands[1]).__name__ in ['Add', 'Sub']:
                 return f"{x1}{x2}"
             if isinstance(node.operands[0], Number) and isinstance(
                 node.operands[1], Variable
@@ -153,13 +155,13 @@ class StringPrinter(Visitor):
         x2 = yield (node.operands[1], args, kwargs)
         if kwargs.get("latex", False):
             return rf"\frac{{{x1}}}{{{x2}}}"
-        if node.operands[0].__class__ in [Add, Sub]:
+        if type(node.operands[0]).__name__ in ['Add', 'Sub']:
             x1 = (
                 rf"\left({x1}\right)"
                 if kwargs.get("latex", False) and r"\left" in x1
                 else f"({x1})"
             )
-        if node.operands[1].__class__ in [Add, Sub, Mul, Div, Inv]:
+        if type(node.operands[1]).__name__ in ['Add', 'Sub', 'Mul', 'Div', 'Inv']:
             x2 = (
                 rf"\left({x2}\right)"
                 if kwargs.get("latex", False) and r"\left" in x2
@@ -170,16 +172,8 @@ class StringPrinter(Visitor):
     def visit_Pow(self, node: Pow, *args, **kwargs) -> _Type:
         x1 = yield (node.operands[0], args, kwargs)
         x2 = yield (node.operands[1], args, kwargs)
-        if node.operands[0].__class__ in [
-            Add,
-            Sub,
-            Mul,
-            Div,
-            Pow,
-            Neg,
-            Inv,
-            Pow2,
-            Pow3,
+        if type(node.operands[0]).__name__ in [
+            'Add', 'Sub', 'Mul', 'Div', 'Pow', 'Neg', 'Inv', 'Pow2', 'Pow3',
         ]:
             x1 = (
                 rf"\left({x1}\right)"
@@ -188,7 +182,7 @@ class StringPrinter(Visitor):
             )
         if kwargs.get("latex", False):
             return rf"{x1}^{{{x2}}}"
-        if node.operands[1].__class__ in [Add, Sub, Mul, Div, Inv]:
+        if type(node.operands[1]).__name__ in ['Add', 'Sub', 'Mul', 'Div', 'Inv']:
             x2 = (
                 rf"\left({x2}\right)"
                 if kwargs.get("latex", False) and r"\left" in x2
@@ -198,7 +192,7 @@ class StringPrinter(Visitor):
 
     def visit_Neg(self, node: Neg, *args, **kwargs) -> _Type:
         x = yield (node.operands[0], args, kwargs)
-        if node.operands[0].__class__ in [Add, Sub]:
+        if type(node.operands[0]).__name__ in ['Add', 'Sub']:
             x = f"({x})"
         return f"-{x}"
 
@@ -206,38 +200,22 @@ class StringPrinter(Visitor):
         x = yield (node.operands[0], args, kwargs)
         if kwargs.get("latex", False):
             return rf"\frac{{1}}{{{x}}}"
-        if node.operands[0].__class__ in [Add, Sub, Mul, Div]:
+        if type(node.operands[0]).__name__ in ['Add', 'Sub', 'Mul', 'Div']:
             x = f"({x})"
         return f"1 / {x}"
 
     def visit_Pow2(self, node: Pow2, *args, **kwargs) -> _Type:
         x = yield (node.operands[0], args, kwargs)
-        if node.operands[0].__class__ in [
-            Add,
-            Sub,
-            Mul,
-            Div,
-            Pow,
-            Neg,
-            Inv,
-            Pow2,
-            Pow3,
+        if type(node.operands[0]).__name__ in [
+            'Add', 'Sub', 'Mul', 'Div', 'Pow', 'Neg', 'Inv', 'Pow2', 'Pow3',
         ]:
             x = f"({x})"
         return f"{x} ** 2" if not kwargs.get("latex", False) else f"{x}^2"
 
     def visit_Pow3(self, node: Pow3, *args, **kwargs) -> _Type:
         x = yield (node.operands[0], args, kwargs)
-        if node.operands[0].__class__ in [
-            Add,
-            Sub,
-            Mul,
-            Div,
-            Pow,
-            Neg,
-            Inv,
-            Pow2,
-            Pow3,
+        if type(node.operands[0]).__name__ in [
+            'Add', 'Sub', 'Mul', 'Div', 'Pow', 'Neg', 'Inv', 'Pow2', 'Pow3',
         ]:
             x = f"({x})"
         return f"{x} ** 3" if not kwargs.get("latex", False) else f"{x}^3"

@@ -18,7 +18,7 @@ s = nd.Variable('s', nettype='scalar')
     ((2 * n * 2), {}, 4 * n),
     ((1 + e + 1), {}, 2 + e),
     ((1 + e - 1), {}, e),
-    ((1 + e - e - 1), {}, e - -e),
+    ((1 + e - e - 1), {}, e - e), # 现在还没有那么智能
     ((2 * x / 2 * e), {}, 1 * x * e),
     ((nd.sin(nd.sin(x) * 2 + 2)), {'remove_nested_sin': True}, 2 + 2 * nd.sin(x)),
     ((nd.exp(nd.exp(x) * 2 + 2)), {'remove_nested_exp': True}, 2 + 2 * nd.exp(x)),

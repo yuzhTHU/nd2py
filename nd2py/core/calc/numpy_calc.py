@@ -1,11 +1,14 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import numbers
 import warnings
 import functools
 import traceback
 import numpy as np
-from typing import List, Tuple
-from ..symbols import *
+from typing import List, Tuple, TYPE_CHECKING
 from ..base_visitor import Visitor, yield_nothing
+if TYPE_CHECKING:
+    from ..symbols import *
 
 
 # Decorator to unpack operands for operations

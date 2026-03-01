@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from copy import deepcopy
 from ..base_visitor import Visitor, yield_nothing
 from ..context.copy_value import get_copy_value

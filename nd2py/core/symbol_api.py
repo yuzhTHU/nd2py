@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 from typing import List, Tuple, Literal, TYPE_CHECKING
 
@@ -37,7 +38,7 @@ class SymbolAPIMixin:
         - latex:bool=False, whether to return the latex format
         - skeleton:bool=False, whether to ignore the concrete values of Number
         """
-        from .printer.string_printer import StringPrinter
+        from .converter import StringPrinter
 
         return StringPrinter()(
             self,
@@ -55,7 +56,7 @@ class SymbolAPIMixin:
         - flat:bool=False, whether to flat the Add and Mul
         - omit_mul_sign:bool=False, whether to omit the multiplication sign
         """
-        from .printer.tree_printer import TreePrinter
+        from .converter import TreePrinter
 
         return TreePrinter()(
             self, number_format=number_format, flat=flat, skeleton=skeleton
@@ -77,7 +78,7 @@ class SymbolAPIMixin:
             if not provided, it will be inferred from edge_list
         - use_eps: a small value to avoid division by zero
         """
-        from .calc.numpy_calc import NumpyCalc
+        from .calc import NumpyCalc
 
         return NumpyCalc()(
             self, vars=vars, edge_list=edge_list, num_nodes=num_nodes, use_eps=use_eps

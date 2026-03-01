@@ -1,14 +1,16 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import torch
 import numbers
 import numpy as np
-from typing import Generator, Tuple, Dict, List
-from ..symbols import *
+from typing import Generator, Tuple, Dict, List, TYPE_CHECKING
 from ..base_visitor import Visitor, yield_nothing
-
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = str
-_ReturnType = str
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = str
+    _ReturnType = str
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class TreePrinter(Visitor):

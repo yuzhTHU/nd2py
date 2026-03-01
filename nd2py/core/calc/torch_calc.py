@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import torch

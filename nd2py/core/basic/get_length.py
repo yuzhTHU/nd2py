@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from ..base_visitor import Visitor, yield_nothing
 
 

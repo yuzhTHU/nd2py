@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import warnings
 from abc import ABCMeta
 from typing import List, Literal, Tuple, Any, Set, Optional
@@ -121,7 +122,7 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
         return self.to_str()
 
     def __len__(self):
-        from ..basic.get_length import GetLength
+        from ..basic import GetLength
 
         return GetLength()(self)
 
@@ -195,7 +196,7 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
 
     def copy(self):
         """Create a deep copy of the Symbol. The result will not inherit self.parent"""
-        from ..basic.get_copy import GetCopy
+        from ..basic import GetCopy
 
         return GetCopy()(self)
 

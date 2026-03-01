@@ -10,3 +10,4 @@ __pycache__/
 /htmlcov/
 /playground/
 /.vscode/
+/debug.py

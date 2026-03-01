@@ -2,7 +2,7 @@ import logging
 import numpy as np
 from typing import Tuple, Optional, List, Dict, Literal, Set
 from numpy.random import RandomState, default_rng
-from ...core.symbols import *
+from ...core import symbols as sb
 
 __all__ = ["GPLearnGenerator"]
 _logger = logging.getLogger(__name__)
@@ -11,9 +11,9 @@ _logger = logging.getLogger(__name__)
 class GPLearnGenerator:
     def __init__(
         self,
-        variables: List[Variable],
-        binary: List[Symbol] = [Add, Sub, Mul, Div, Max, Min],
-        unary: List[Symbol] = [Sqrt, Log, Abs, Neg, Inv, Sin, Cos, Tan],
+        variables: List[sb.Variable],
+        binary: List[str|sb.Symbol] = [sb.Add, sb.Sub, sb.Mul, sb.Div, sb.Max, sb.Min],
+        unary: List[str|sb.Symbol] = [sb.Sqrt, sb.Log, sb.Abs, sb.Neg, sb.Inv, sb.Sin, sb.Cos, sb.Tan],
         full_prob: float = 0.5,
         depth_range: Tuple[int, int] = (2, 6),
         const_range: Tuple[float, float] = None,
@@ -41,7 +41,7 @@ class GPLearnGenerator:
         if any(kwargs):
             _logger.warning(f"Unused arguments: {kwargs}")
 
-    def generate_node(self, nettypes: Set[Literal["node", "edge", "scalar"]]) -> Symbol:
+    def generate_node(self, nettypes: Set[Literal["node", "edge", "scalar"]]) -> sb.Symbol:
         symbols = [sym for sym in self.symbols if (nettypes & sym.nettype_range)]
         symbol = self._rng.choice(symbols)
         node = symbol() # 不用指定 nettype, 由 .infer_nettype() 自行推断即可
@@ -49,7 +49,7 @@ class GPLearnGenerator:
 
     def generate_leaf( # TODO: 太糟糕了
         self, nettypes: Set[Literal["node", "edge", "scalar"]]
-    ) -> Number | Variable:
+    ) -> sb.Number | sb.Variable:
         leafs = [var for var in self.variables if var.nettype in nettypes]
 
         if self.const_range is not None:
@@ -62,22 +62,22 @@ class GPLearnGenerator:
         if const_range is not None:
             if "scalar" in nettypes:
                 values = self._rng.uniform(*const_range)
-                number = Number(values, nettype="scalar")
+                number = sb.Number(values, nettype="scalar")
                 leafs = leafs + [number]
             if "node" in nettypes and not self.scalar_number_only:
                 values = self._rng.uniform(*const_range, (self.num_nodes,))
-                number = Number(values, nettype="node")
+                number = sb.Number(values, nettype="node")
                 leafs = leafs + [number]
             if "edge" in nettypes and not self.scalar_number_only:
                 values = self._rng.uniform(*const_range, (len(self.edge_list[0]),))
-                number = Number(values, nettype="edge")
+                number = sb.Number(values, nettype="edge")
                 leafs = leafs + [number]
 
         return self._rng.choice([var for var in leafs if var.nettype in nettypes])
 
     def generate_eqtree(
         self, nettypes: Set[Literal["node", "edge", "scalar"]]
-    ) -> Symbol:
+    ) -> sb.Symbol:
         if isinstance(nettypes, str):
             nettypes = {nettypes}
 

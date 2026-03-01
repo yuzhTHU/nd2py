@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 import warnings
 from typing import TYPE_CHECKING, Set, Optional, List, Tuple

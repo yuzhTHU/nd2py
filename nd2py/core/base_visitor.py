@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
@@ -52,3 +53,12 @@ class Visitor(ABC):
     def generic_visit(self, node: Symbol, *args, **kwargs):
         msg = f"generic_visit not implemented for {type(self).__name__}"
         raise NotImplementedError(msg)
+
+    _SYMBOL_CACHE = {}
+
+    @classmethod
+    def _get_symbol(cls, name):
+        if name not in cls._SYMBOL_CACHE:
+            from . import symbols
+            cls._SYMBOL_CACHE[name] = getattr(symbols, name)
+        return cls._SYMBOL_CACHE[name]

@@ -1,3 +1,4 @@
+from __future__ import annotations
 import json
 import time
 import random
@@ -9,9 +10,9 @@ import sympy as sp
 import nd2py as nd
 import pandas as pd
 from tqdm import tqdm
-from typing import List, Generator, Tuple, Dict, Optional, Literal
+from typing import List, Generator, Tuple, Dict, Optional, Literal, TYPE_CHECKING
 from nd2py.utils import seed_all, Timer, NamedTimer, R2_score, ParallelTimer
-from ...core.symbols import *
+from ...core import symbols as sb
 
 __all__ = ["MCTS"]
 
@@ -108,9 +109,9 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
 
     def __init__(
         self,
-        variables: List[Variable],
-        binary: List[Symbol] = [Add, Sub, Mul, Div, Max, Min],
-        unary: List[Symbol] = [Sqrt, Log, Abs, Neg, Inv, Sin, Cos, Tan],
+        variables: List[sb.Variable],
+        binary: List[sb.Symbol] = [sb.Add, sb.Sub, sb.Mul, sb.Div, sb.Max, sb.Min],
+        unary: List[sb.Symbol] = [sb.Sqrt, sb.Log, sb.Abs, sb.Neg, sb.Inv, sb.Sin, sb.Cos, sb.Tan],
         max_params: int = 2,
         const_range: Tuple[float, float] = (-1.0, 1.0),
         depth_range: Tuple[int, int] = (2, 6),
