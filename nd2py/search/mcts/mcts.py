@@ -208,7 +208,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
             raise ValueError(f"Unknown type: {type(X)}")
 
         # Root Node
-        self.MC_tree = Node(nd.Empty(nettype=self.nettype))
+        self.MC_tree = Node(nd.Identity(nd.Empty(), nettype=self.nettype))
 
         # Search
         stop = False
@@ -256,6 +256,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
             _early_stop = (
                 (iter == self.n_iter)
                 or self.time_limit and (self.para_timer.time > self.time_limit)
+                or best_node.r2 >= 0.99999
             )
                                     
             if (
@@ -319,7 +320,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         # empty_list = [i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)]
         if len(state.eqtree) + op.n_operands > self.max_len:
             return False
-        if not e.replaceable_nettype() & op.nettype_range:
+        if not (e.possible_nettypes & op.nettype_range):
             return False
         # if (e is None and op is None) ^ (len(empty_list) == 0): return False
         return True
@@ -336,15 +337,13 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
 
         loader = []
         for e in empty_list:
-            for op in self.binary + self.unary + self.variables:
-                if e.nettype not in op.nettype_range:
-                    continue
-                if isinstance(op, type):
-                    op = op(nettype=e.nettype)
-                    for operand in op.operands:
-                        replaceable_nettype = op.replaceable_nettype(operand)
-                        operand.nettype = random.choice(list(replaceable_nettype))
-                loader.append((e, op))
+            for op in self.binary + self.unary:
+                if not (e.possible_nettypes & op.nettype_range): continue
+                loader.append((e, op()))
+            for var in self.variables:
+                if var.nettype not in e.possible_nettypes: continue
+                loader.append((e, var))
+
         if shuffle:
             random.shuffle(loader)
         for e, op in loader:
@@ -360,13 +359,10 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         for _ in range(1000):
             e = random.choice(empty_list)
             op = random.choice(op_list)
-            if e.nettype not in op.nettype_range:
+            if not (e.possible_nettypes & op.nettype_range):
                 continue
             if isinstance(op, type):
-                op = op(nettype=e.nettype)
-                for operand in op.operands:
-                    replaceable_nettype = op.replaceable_nettype(operand)
-                    operand.nettype = random.choice(list(replaceable_nettype))
+                op = op()
             if self.check_valid_action(state, (e, op)):
                 break
         else:
@@ -379,9 +375,8 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
             i for i in state2.eqtree.iter_preorder() if isinstance(i, nd.Empty)
         ]
         for e in empty_list:
-            operands = [var for var in self.variables if var.nettype in e.replaceable_nettype()]
-            if not operands:
-                continue
+            operands = [var for var in self.variables if var.nettype in e.possible_nettypes]
+            if not operands: continue
             op = random.choice(operands)
             state2.eqtree = state2.eqtree.replace(e, op)
         return state2

@@ -38,9 +38,9 @@ class BFGSFit(BaseEstimator, RegressorMixin):
 
         if self.fold_constant:
             fold = FoldConstant(fold_fitable=True, fold_constant=False)
-            self.expression = fold(self.expression, vars={})
+            self.expression = fold(self.expression, vars={}, edge_list=self.edge_list, num_nodes=self.num_nodes)
             fold = FoldConstant(fold_fitable=False, fold_constant=True)
-            expression = fold(self.expression, vars=X)
+            expression = fold(self.expression, vars=X, edge_list=self.edge_list, num_nodes=self.num_nodes)
         else:
             expression = self.expression
 
