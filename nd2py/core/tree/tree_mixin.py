@@ -24,12 +24,12 @@ class TreeMixin:
 
     def iter_preorder(self):
         """Non-recursive preorder traversal of the Symbol tree using an explicit stack."""
-        from ..iteration.iter_preorder import IterPreorder
+        from .iter_preorder import IterPreorder
         return IterPreorder()(self)
 
     def iter_postorder(self):
         """Postorder traversal of the Symbol tree."""
-        from ..iteration.iter_postorder import IterPostorder
+        from .iter_postorder import IterPostorder
         return IterPostorder()(self)
 
     def replace(self, child: "Symbol", other: "Symbol"):
