@@ -63,6 +63,22 @@ e = nd.Variable("e", nettype="edge")
             {"expand_targ": True, "expand_mul": True},
             [x * z, nd.targ(n) * z],
         ),
+
+        # 基础减法与负号测试
+        (x - y, {"split_by_sub": True}, [x, -y]),
+        (-(x + y), {}, [-x, -y]),
+        (-(x - y), {"split_by_sub": True}, [-x, y]),
+        
+        # 测试 Number 负号与 fitable 传参问题 (需确保代码中已修复 fitable 赋值)
+        (x - nd.Number(2.0, fitable=True), {"split_by_sub": True}, [x, -nd.Number(2.0, fitable=True)]),
+        
+        # 测试偏置合并 (merge_bias)
+        (x + nd.Number(1.0) + y + nd.Number(2.0), {"merge_bias": True}, [x, y, nd.Number(3.0)]),
+        (x - nd.Number(2.0), {"split_by_sub": True, "merge_bias": True}, [x, nd.Number(-2.0)]),
+        
+        # 混合：展开图算子 + 移除系数
+        (nd.aggr(2 * x + y), {"expand_aggr": True, "remove_coefficients": True}, [nd.aggr(x), nd.aggr(y)]),
+
     ],
 )
 def test_split_by_add(node, flags, expected):

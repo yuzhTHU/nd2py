@@ -56,7 +56,8 @@ class SplitByMul(Visitor):
             elif type(item).__name__ == 'Inv':
                 result2[idx] = item.operands[0]
             else:
-                result2[idx] = 1 / item
+                Inv = self._get_symbol('Inv')
+                result2[idx] = Inv(item)
         result = result1 + result2
         if kwargs.get("merge_coefficients"):
             result = self.merge_coefficients(result, *args, **kwargs)
