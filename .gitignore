@@ -1,4 +1,4 @@
-*.py[co]
+*.py[cod]
 __pycache__/
 *.egg-info/
 .pytest_cache/
@@ -6,3 +6,7 @@ __pycache__/
 
 /venv/
 /myenv/
+/.coverage
+/htmlcov/
+/playground/
+/.vscode/
