@@ -4,7 +4,6 @@ from typing import Tuple, Optional, List, Dict, Literal, Set
 from numpy.random import RandomState, default_rng
 from ...core import symbols as sb
 
-__all__ = ["GPLearnGenerator"]
 _logger = logging.getLogger(__name__)
 
 

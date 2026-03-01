@@ -14,8 +14,6 @@ from typing import List, Generator, Tuple, Dict, Optional, Literal, TYPE_CHECKIN
 from nd2py.utils import seed_all, Timer, NamedTimer, R2_score, ParallelTimer
 from ...core import symbols as sb
 
-__all__ = ["MCTS"]
-
 
 def simplify(eq: nd.Symbol):
     try:

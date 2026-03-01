@@ -14,7 +14,6 @@ from sklearn.base import BaseEstimator, RegressorMixin
 from .gplearn_generator import GPLearnGenerator
 from ... import BFGSFit
 
-__all__ = ["GP"]
 _logger = logging.getLogger(__name__)
 
 

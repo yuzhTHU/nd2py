@@ -12,9 +12,9 @@ y = nd.Variable('y', nettype='edge')
 vars = {'x': np.random.rand(100, num_nodes), 'y': np.random.rand(100, num_edges)}
 
 @pytest.mark.parametrize("flags,node", [
-    (dict(variables=[x,y], n_iter=30, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y * nd.sour(x))            ),
-    (dict(variables=[x,y], n_iter=30, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y)                         ),
-    (dict(variables=[x,y], n_iter=30, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(nd.sour(x) * nd.targ(x))   ),
+    (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y * nd.sour(x))            ),
+    (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y)                         ),
+    (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(nd.sour(x) * nd.targ(x))   ),
 ])
 def test_nettype_mcts(flags, node):
     est = nd.MCTS(**flags, edge_list=edge_list, num_nodes=num_nodes, random_state=42)

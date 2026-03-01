@@ -6,3 +6,5 @@ from .plot import *
 from .timing import *
 from .utils import *
 from .classproperty import classproperty
+from .render_markdown import render_markdown
+from .render_python import render_python
