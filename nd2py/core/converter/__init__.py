@@ -7,3 +7,5 @@ This module provides utilities for converting between different representations 
 from .parser import parse
 from .string_printer import StringPrinter
 from .tree_printer import TreePrinter
+from .from_preorder import from_preorder
+from .from_postorder import from_postorder

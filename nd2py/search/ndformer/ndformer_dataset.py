@@ -3,6 +3,8 @@ import numpy as np
 import torch
 import torch.utils.data as D
 from typing import Optional
+from .ndformer_config import NDformerConfig
+
 
 class InfiniteSampler(D.Sampler):
     # 无限生成索引，用于 DataLoader(sampler=InfiniteSampler())
@@ -10,12 +12,11 @@ class InfiniteSampler(D.Sampler):
         return itertools.count()
 
 class NDformerDataset(D.Dataset):
-    def __init__(self, eq_generator, data_generator, tokenizer, max_dim_node: int = 10, max_dim_edge: int = 10, n_samples: Optional[int] = None):
+    def __init__(self, config: NDformerConfig, eq_generator, data_generator, tokenizer, n_samples: Optional[int] = None):
+        self.config = config
         self.eq_generator = eq_generator
         self.data_generator = data_generator
         self.tokenizer = tokenizer
-        self.max_dim_node = max_dim_node
-        self.max_dim_edge = max_dim_edge
         self.n_samples = n_samples
     
     def __len__(self):

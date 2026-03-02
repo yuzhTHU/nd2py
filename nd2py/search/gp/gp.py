@@ -11,7 +11,7 @@ from typing import List, Tuple, Dict, Generator, Optional, Literal, Set
 from ...core import symbols as sb
 from ...utils.timing import Timer, NamedTimer
 from sklearn.base import BaseEstimator, RegressorMixin
-from .gplearn_generator import GPLearnGenerator
+from ...generator.eq.gplearn_generator import GPLearnGenerator
 from ... import BFGSFit
 
 _logger = logging.getLogger(__name__)
