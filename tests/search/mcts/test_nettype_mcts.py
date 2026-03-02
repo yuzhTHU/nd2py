@@ -11,6 +11,7 @@ x = nd.Variable('x', nettype='node')
 y = nd.Variable('y', nettype='edge')
 vars = {'x': np.random.rand(100, num_nodes), 'y': np.random.rand(100, num_edges)}
 
+@pytest.mark.slow
 @pytest.mark.parametrize("flags,node", [
     (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y * nd.sour(x))            ),
     (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(y)                         ),

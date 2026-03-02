@@ -8,6 +8,7 @@ np.random.seed(42)
 x, y, z = nd.variables('x y z', nettype='scalar')
 vars = {'x': np.random.rand(100, 1), 'y': np.random.rand(100, 1), 'z': np.random.rand(100, 1)}
 
+@pytest.mark.slow
 @pytest.mark.parametrize("flags,node,vars", [
     (dict(variables=[x,y],   n_iter=100, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), x+y,           vars),
     (dict(variables=[x,y],   n_iter=100, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), x*y,           vars),

@@ -8,12 +8,12 @@ version = "2.4.0"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
 requires-python = ">=3.8"
+# 主依赖：不包含 torch 和 torch_geometric
 dependencies = [
   "tqdm>=4.66",
   "pytest>=8.3",
   "numpy>=1.20",
   "scipy>=1.14",
-  "torch>=1.12",
   "pandas>=2.2",
   "scikit-learn>=1.5",
   "setproctitle",
@@ -26,10 +26,24 @@ dependencies = [
   "pyperclip"
 ]
 
+# 可选依赖定义
+[project.optional-dependencies]
+nn = [
+  "torch>=1.12",
+  "torch_geometric>=2.0"  # 建议加上版本号限制
+]
+all = [
+  "nd2py[nn]"  # 直接引用当前包的 nn 分组，避免重复写依赖列表
+]
+
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-q"
 testpaths = ["tests"]
+# 新增这行，注册 slow 标记
+markers = [
+    "slow: marks tests as slow (integration tests)",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
