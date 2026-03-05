@@ -1,71 +1,86 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import itertools
 import numpy as np
 import torch
 import torch.utils.data as D
 from typing import Optional
+from ... import core as nd
+from ...generator import GPLearnGenerator
 from .ndformer_config import NDformerConfig
-
+from .ndformer_generator import NDformerGraphGenerator, NDformerDataGenerator
+from .ndformer_tokenizer import NDformerTokenizer
 
 class InfiniteSampler(D.Sampler):
     # 无限生成索引，用于 DataLoader(sampler=InfiniteSampler())
     def __iter__(self):
         return itertools.count()
 
+
 class NDformerDataset(D.Dataset):
-    def __init__(self, config: NDformerConfig, eq_generator, data_generator, tokenizer, n_samples: Optional[int] = None):
+    def __init__(
+        self, 
+        config: NDformerConfig,
+        eq_generator: GPLearnGenerator, 
+        topo_generator: NDformerGraphGenerator,
+        data_generator: NDformerDataGenerator, 
+        tokenizer: NDformerTokenizer, 
+        n_samples: Optional[int] = None, 
+    ):
         self.config = config
         self.eq_generator = eq_generator
+        self.topo_generator = topo_generator
         self.data_generator = data_generator
         self.tokenizer = tokenizer
         self.n_samples = n_samples
-    
+
     def __len__(self):
         # 如果 n_samples 为 None, 实际的无限循环由 InfiniteSampler 接管
         return self.n_samples
 
     def __getitem__(self, idx):
-        sample_num = 200
-        eq = self.eq_generator.sample()
-        variables = eq.get_variables()
-        edge_list, num_nodes, data_dict = self.data_generator.sample(eq, sample_num=sample_num)
-        num_edges = edge_list.shape[1]
+        eqtree = self.eq_generator.sample(nettypes={"node", "edge", "scalar"})
+        edge_list, num_nodes = self.topo_generator.sample()
+        data_dict, target = self.data_generator.sample(eqtree, edge_list=edge_list, num_nodes=num_nodes, sample_num=200)
+        num_edges = len(edge_list[0])
+        sample_num = target.shape[0]
         
-        data_node = np.zeros((sample_num, num_nodes, self.max_dim_node), dtype=np.float32)
-        for i, var in enumerate(var for var in variables if var.nettype == 'node'):
-            data_node[:, :, i] = data_dict[var]  # 假设 data_dict[var] 形状为 (sample_num, num_nodes)
+        vars_dict = {var.name: var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)}
+        data_node = np.zeros((sample_num, num_nodes, self.config.max_var_num + 1), dtype=np.float32)
+        for i, var_name in enumerate(var_name for var_name, var in vars_dict.items() if var.nettype == 'node'):
+            data_node[:, :, i] = data_dict[var_name]  # 假设 data_dict[var] 形状为 (sample_num, num_nodes)
             
-        data_edge = np.zeros((sample_num, num_edges, self.max_dim_edge), dtype=np.float32)
-        for i, var in enumerate(var for var in variables if var.nettype == 'edge'):
-            data_edge[:, :, i] = data_dict[var]  # 假设 data_dict[var] 形状为 (sample_num, num_edges)
+        data_edge = np.zeros((sample_num, num_edges, self.config.max_var_num + 1), dtype=np.float32)
+        for i, var_name in enumerate(var_name for var_name, var in vars_dict.items() if var.nettype == 'edge'):
+            data_edge[:, :, i] = data_dict[var_name]  # 假设 data_dict[var] 形状为 (sample_num, num_edges)
         
         # 将公式结果写入最后一个特征通道
-        if eq.nettype == 'node':
-            data_node[:, :, -1] = eq.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
-        elif eq.nettype == 'edge':
-            data_edge[:, :, -1] = eq.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
+        if eqtree.nettype == 'node':
+            data_node[:, :, -1] = eqtree.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
+        elif eqtree.nettype == 'edge':
+            data_edge[:, :, -1] = eqtree.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
         else:
-            raise ValueError(f'Unsupported nettype: {eq.nettype}')
+            raise ValueError(f'Unsupported nettype: {eqtree.nettype}')
 
         # ==========================================
         # 核心新增：利用 Tokenizer 切分 partial_eq
         # ==========================================
         # 假设 encode 返回的是 List[int]
-        tokens = self.tokenizer.encode(eq) 
-        eq_samples = []
+        tokens, _, _ = self.tokenizer.encode(eqtree, mode='token_id') 
         # 将一个完整序列 [A, B, C, D] 切分为多对 (前缀, 预测目标)
         # 例如: ([A], B), ([A, B], C), ([A, B, C], D)
+        partial_eqs = []
+        next_tokens = []
         for i in range(1, len(tokens)):
-            partial_eq = tokens[:i]
-            next_token = tokens[i]
-            eq_samples.append((partial_eq, next_token))
+            partial_eqs.append(tokens[:i])
+            next_tokens.append(tokens[i])
 
         return {
             'edge_list': edge_list,    # (2, NodeNum)
-            'data_node': data_node,    # (SampleNum, NodeNum, max_dim_node)
-            'data_edge': data_edge,    # (SampleNum, EdgeNum, max_dim_edge)
-            'num_nodes': num_nodes,
-            'num_edges': num_edges,
-            'eq_samples': eq_samples   # List[Tuple[List[int], int]]
+            'data_node': data_node,    # (SampleNum, NodeNum, max_var_num)
+            'data_edge': data_edge,    # (SampleNum, EdgeNum, max_var_num)
+            'num_nodes': num_nodes,    # int
+            'partial_eqs': partial_eqs,   # List[List[int]]
+            'next_tokens': next_tokens,   # List[int]
         }
 
     def collate_fn(self, batch):
@@ -96,10 +111,12 @@ class NDformerDataset(D.Dataset):
             node_offset += num_nodes
 
             # 2. 收集公式序列并构建映射桥梁
-            for partial_eq, next_token in item['eq_samples']:
+            for partial_eq in item['partial_eqs']:
                 batched_partial_eq.append(torch.tensor(partial_eq, dtype=torch.long))
-                batched_next_token.append(next_token)
                 seq2graph_idx.append(graph_idx) # 记录该序列属于当前 graph_idx
+
+            for next_token in item['next_tokens']:
+                batched_next_token.append(next_token)
 
         # ==========================================
         # 合并图数据 (纯稀疏形态，无需 Pad)
@@ -133,10 +150,11 @@ class NDformerDataset(D.Dataset):
             "edge_list": final_edge_list,
             "data_node": final_data_node,
             "data_edge": final_data_edge,
-            "node_batch_idx": final_node_batch_idx, # <--- 极度重要，GNN 跑完后用它转 Dense
-            "partial_eq": padded_partial_eq,
-            "next_token": final_next_token,
+            "num_nodes": sum([item['num_nodes'] for item in batch]),  # batch 中的图数量
+            "partial_eqs": padded_partial_eq,
+            "next_tokens": final_next_token,
             "eq_pad_mask": eq_pad_mask,
+            "node_batch_idx": final_node_batch_idx, # <--- 极度重要，GNN 跑完后用它转 Dense
             "seq2graph_idx": final_seq2graph_idx    # <--- 一对多映射的桥梁
         }
     

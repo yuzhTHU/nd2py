@@ -12,10 +12,12 @@ import pandas as pd
 from tqdm import tqdm
 from typing import List, Generator, Tuple, Dict, Optional, Literal, TYPE_CHECKING
 from nd2py.utils import seed_all, Timer, NamedTimer, R2_score, ParallelTimer
-from ...core import symbols as sb
+from ... import core as nd
+if TYPE_CHECKING:
+    from ...core import *
 
 
-def simplify(eq: nd.Symbol):
+def simplify(eq: Symbol):
     try:
         expr = sp.parse_expr(eq.to_str())
         expr = sp.simplify(expr)
@@ -25,7 +27,7 @@ def simplify(eq: nd.Symbol):
 
 
 class Node:
-    def __init__(self, eqtree: nd.Symbol):
+    def __init__(self, eqtree: Symbol):
         # Formula part
         self.eqtree = eqtree
         self.fitted_eqtree = None
@@ -107,9 +109,9 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
 
     def __init__(
         self,
-        variables: List[sb.Variable],
-        binary: List[sb.Symbol] = [sb.Add, sb.Sub, sb.Mul, sb.Div, sb.Max, sb.Min],
-        unary: List[sb.Symbol] = [sb.Sqrt, sb.Log, sb.Abs, sb.Neg, sb.Inv, sb.Sin, sb.Cos, sb.Tan],
+        variables: List[Variable],
+        binary: List[Symbol] = [nd.Add, nd.Sub, nd.Mul, nd.Div, nd.Max, nd.Min],
+        unary: List[Symbol] = [nd.Sqrt, nd.Log, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan],
         max_params: int = 2,
         const_range: Tuple[float, float] = (-1.0, 1.0),
         depth_range: Tuple[int, int] = (2, 6),
@@ -299,9 +301,9 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
             vars=X, edge_list=self.edge_list, num_nodes=self.num_nodes
         )
 
-    def action(self, state: Node, action: Tuple[nd.Symbol, nd.Symbol]) -> Node:
+    def action(self, state: Node, action: Tuple[Symbol, Symbol]) -> Node:
         """
-        将 action[0]:nd.Empty 替换为 action[1]:nd.Symbol
+        将 action[0]:nd.Empty 替换为 action[1]:Symbol
         """
         state2 = state.copy()
         e, op = action
@@ -312,7 +314,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         return state2
 
     def check_valid_action(
-        self, state: Node, action: Tuple[nd.Symbol, nd.Symbol]
+        self, state: Node, action: Tuple[Symbol, Symbol]
     ) -> bool:
         e, op = action
         # empty_list = [i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)]
@@ -325,7 +327,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
 
     def iter_valid_action(
         self, state: Node, shuffle=False
-    ) -> Generator[Tuple[nd.Symbol, nd.Symbol], None, None]:
+    ) -> Generator[Tuple[Symbol, Symbol], None, None]:
         empty_list = [
             i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)
         ]
@@ -348,7 +350,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
             if self.check_valid_action(state, (e, op)):
                 yield e, op
 
-    def pick_valid_action(self, state: Node) -> Tuple[nd.Symbol, nd.Symbol]:
+    def pick_valid_action(self, state: Node) -> Tuple[Symbol, Symbol]:
         empty_list = [
             i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)
         ]

@@ -27,11 +27,12 @@ class GNNLayer(nn.Module):
                                 if edge_dim != out_dim else nn.Identity()
 
     # ⚠️ 移除了 A，并将 G 改名为 edge_list 以防混淆
-    def forward(self, v, e, edge_list):
+    def forward(self, v, e, edge_list, num_nodes):
         """
         - v: [N, V, node_dim]      (N: SampleNum, V: TotalNodes)
         - e: [N, E, edge_dim]      (N: SampleNum, E: TotalEdges)
         - edge_list: [2, E]        (第0行: source, 第1行: target)
+        - num_nodes: [N]           (每个样本的节点数量)
         - return: [N, V, out_dim], [N, E, out_dim]
         """
         N, V, _ = v.shape
@@ -44,7 +45,6 @@ class GNNLayer(nn.Module):
         # 2. 提取特征: [N, E, node_dim]
         v_sour = v[:, sour_idx, :] 
         v_term = v[:, term_idx, :] 
-        
         x = torch.cat([v_sour, v_term, e], dim=-1)
 
         # 3. 计算节点消息
@@ -87,9 +87,9 @@ class GNN(nn.Module):
         self.dropout = nn.Dropout(p=dropout)
 
     # ⚠️ 保持输入接口的干净
-    def forward(self, v, e, edge_list):
+    def forward(self, v, e, edge_list, num_nodes):
         for net in self.GNN_layers:
-            v, e = net(v, e, edge_list)
+            v, e = net(v, e, edge_list, num_nodes)
             v = self.dropout(v)
             e = self.dropout(e)
         return v, e

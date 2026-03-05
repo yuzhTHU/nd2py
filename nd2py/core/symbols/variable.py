@@ -3,6 +3,8 @@ from typing import Set, Optional
 from .symbols import Symbol
 from ..nettype import NetType, ALL_NETTYPES
 
+__all__ = ["Variable"]
+
 
 class Variable(Symbol):
     n_operands = 0

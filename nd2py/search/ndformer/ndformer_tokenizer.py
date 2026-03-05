@@ -1,13 +1,10 @@
-from __future__ import annotations
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import json
 import warnings
 import numpy as np
-from typing import List, Dict, Tuple, Optional, Literal, TYPE_CHECKING
-from ...core import symbols
-from ...core.converter import from_preorder
+from typing import List, Dict, Tuple, Optional, Literal
+from ... import core as nd
 from .ndformer_config import NDformerConfig
-if TYPE_CHECKING:
-    from ...core.symbols import *
 
 
 class NumberTokenizer:
@@ -80,7 +77,7 @@ class NumberTokenizer:
 
 
 class NDformerTokenizer:
-    def __init__(self, config: NDformerConfig, variables: Optional[List[Symbol]] = None):
+    def __init__(self, config: NDformerConfig, variables: Optional[List[nd.Symbol]] = None):
         self.config = config
 
         # Special Tokens        
@@ -91,8 +88,8 @@ class NDformerTokenizer:
 
         # Variable Tokens
         self.variables = (
-            [symbols.Variable(f'n{i}', nettype='node') for i in range(1, 1+config.max_var_num)] +
-            [symbols.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)]
+            [nd.Variable(f'n{i}', nettype='node') for i in range(1, 1+config.max_var_num)] +
+            [nd.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)]
         ) if variables is None else variables
         self.node_var_tokens = [f'NODEVAR_{i}' for i in range(1, 1+config.max_var_num)]
         self.edge_var_tokens = [f'EDGEVAR_{i}' for i in range(1, 1+config.max_var_num)]
@@ -144,15 +141,15 @@ class NDformerTokenizer:
     @property
     def unk_token_id(self): return self.token2id[self.unk_token]
 
-    def encode(self, eqtree: Symbol, mode:Literal['token', 'token_id']='token') -> Tuple[List[int], List[int], List[int]]:
+    def encode(self, eqtree: nd.Symbol, mode:Literal['token', 'token_id']='token') -> Tuple[List[int], List[int], List[int]]:
         tokens = []
         parents = []
         nettypes = []
         symbol_list = list(eqtree.iter_preorder())
         for symbol in symbol_list:
-            if isinstance(symbol, symbols.Variable):
+            if isinstance(symbol, nd.Variable):
                 tokens.append(self.variable_mapping[symbol.name])
-            elif isinstance(symbol, symbols.Number):
+            elif isinstance(symbol, nd.Number):
                 tokens.extend(self.num_tokenizer.encode(symbol.value, mode='token'))
             else:
                 tokens.append(type(symbol).__name__)
@@ -173,7 +170,7 @@ class NDformerTokenizer:
         else:
             return tokens, parents, nettypes
     
-    def decode(self, tokens: List[str], parents: List[str], nettypes: List[str], mode:Literal['token', 'token_id']='token') -> Symbol:
+    def decode(self, tokens: List[str], parents: List[str], nettypes: List[str], mode:Literal['token', 'token_id']='token') -> nd.Symbol:
         if mode == 'token_id':
             tokens = [self.id2token[token_id] for token_id in tokens]
         
@@ -182,15 +179,15 @@ class NDformerTokenizer:
             if token in [self.sos_token, self.pad_token, self.eos_token]:
                 continue
             if token in ['+', '-']:
-                symbol = symbols.Number(self.num_tokenizer.decode([token, next(tokens), next(tokens)], mode='token')[0])
+                symbol = nd.Number(self.num_tokenizer.decode([token, next(tokens), next(tokens)], mode='token')[0])
             elif token in self.i_variable_mapping:
-                symbol = symbols.Variable(self.i_variable_mapping[token])
+                symbol = nd.Variable(self.i_variable_mapping[token])
             elif token in self.config.operands:
-                symbol = getattr(symbols, token)()
+                symbol = getattr(nd, token)()
             else:
                 raise ValueError(f"Unknown token during decoding: {token}")
             preorder.append(symbol)
-        eqtree = from_preorder(preorder)
+        eqtree = nd.from_preorder(preorder)
         return eqtree
     
 

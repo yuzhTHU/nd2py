@@ -1,6 +1,10 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from functools import reduce
 from .operands import *
+from .variable import Variable
+from .number import Number
+from .empty import Empty
+from ..nettype import NetType
 
 __all__ = [
     "add", "sub", "mul", "div", "pow", "max", "min",
@@ -8,7 +12,7 @@ __all__ = [
     "log", "logabs", "exp", "abs", "neg", "inv", "sqrt", "sqrtabs", "pow2", "pow3",
     "sinh", "cosh", "tanh", "sech", "csch", "sigmoid", "reg", "regular",
     "sour", "phi_s", "targ", "phi_t", "aggr", "rho", "rgga", "readout",
-    "sum", "prod", "maximum", "minimum",
+    "sum", "prod", "maximum", "minimum", "Constant", "variables"
 ]
 
 add = Add
@@ -61,3 +65,20 @@ def maximum(*operands):
 
 def minimum(*operands):
     return reduce(min, operands)
+
+
+def Constant(value, nettype: NetType = "scalar") -> Number:
+    """
+    一个工厂函数，返回一个 fitable 为 False 的 Number 对象。
+    """
+    return Number(value, nettype=nettype, fitable=False)
+
+def variables(vars, *args, **kwargs):
+    """
+    一个工厂函数，返回一个或多个 Variable 对象。
+    如果 vars 中包含空格，则认为是多个变量的名字，并返回一个列表；否则认为是单个变量的名字，并返回一个 Variable 对象。
+    """
+    if isinstance(vars, str) and " " in vars:
+        return [Variable(v, *args, **kwargs) for v in vars.split(" ") if v]
+    else:
+        return Variable(vars, *args, **kwargs)

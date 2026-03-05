@@ -1,9 +1,14 @@
-from dataclasses import dataclass
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from typing import List, Tuple
+from dataclasses import dataclass
+
 
 @dataclass
 class NDformerConfig:
     d_emb: int = 512
+    d_ff: int = 2048
+    n_head: int = 8
+    
     dropout: float = 0.1
     d_data_feat: int = 16 # sign bit (1) + exponent bits (5) + mantissa bits (10)
     n_node_vars: int = 6
@@ -32,3 +37,15 @@ class NDformerConfig:
         'Sigmoid', 'Regular',
         'Sour', 'Targ', 'Aggr', 'Rgga', 'Readout',
     )
+
+    min_data_num: int = 100
+    max_data_num: int = 200
+    min_node_num: int = 10
+    max_node_num: int = 100
+    min_edge_num: int = 20
+    max_edge_num: int = 600
+
+    min_var_val: int = -10
+    max_var_val: int = 10
+    min_coeff_val: int = -20
+    max_coeff_val: int = 20

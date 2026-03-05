@@ -3,6 +3,8 @@ from typing import Optional
 from .symbols import Symbol
 from ..nettype import NetType
 
+__all__ = ["Empty"]
+
 
 class Empty(Symbol):
     n_operands = 0

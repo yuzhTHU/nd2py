@@ -5,6 +5,8 @@ from .symbols import Symbol, is_number
 from ..nettype import NetType
 from ..context.set_fitable import set_fitable
 
+__all__ = ["Number"]
+
 
 class Number(Symbol):
     n_operands = 0
@@ -12,7 +14,7 @@ class Number(Symbol):
     def __init__(self, value, nettype: NetType = "scalar", fitable=None):
         super().__init__(nettype=nettype)
         if isinstance(value, Number):
-            fitable = fitable or value.fitable
+            if fitable is None: fitable = value.fitable
             value = value.value
         if fitable is None:
             fitable = set_fitable()

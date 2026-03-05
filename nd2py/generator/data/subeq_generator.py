@@ -1,9 +1,8 @@
 import random
 import numpy as np
 from ...core.symbols import Variable
-
-
 from .gmm_generator import GMMGenerator
+
 
 class SubeqGenerator(GMMGenerator):
     """

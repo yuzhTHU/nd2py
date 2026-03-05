@@ -1,7 +1,7 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from typing import Dict, List, Tuple
 from ..base_visitor import Visitor, yield_nothing
-from ... import Symbol, Number, Variable
+from ..symbols import Symbol, Number, Variable
 
 
 class FoldConstant(Visitor):
