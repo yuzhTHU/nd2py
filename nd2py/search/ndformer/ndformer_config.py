@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 @dataclass
 class NDformerConfig:
-    d_emb: int = 512
-    d_ff: int = 2048
+    d_emb: int = 128
+    d_ff: int = 128*4
     n_head: int = 8
     
     dropout: float = 0.1

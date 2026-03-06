@@ -55,7 +55,8 @@ class NumberTokenizer:
     def encode(self, value: float | List[float], mode:Literal['token', 'token_id']='token') -> List[str|int]:
         if isinstance(value, float):
             value = [value]
-        sign, mantissa, exponent = self._split_float(np.array(value))
+        value = np.clip(value, -self.MAX_VALUE, self.MAX_VALUE)
+        sign, mantissa, exponent = self._split_float(value)
         sign_tokens = np.where(sign, '-', '+')
         mantissa_tokens = np.array(['N' + str(x).zfill(self.n_mantissa) for x in mantissa])
         exponent_tokens = np.array([f'E{x:+03d}' for x in exponent])
@@ -189,7 +190,23 @@ class NDformerTokenizer:
             preorder.append(symbol)
         eqtree = nd.from_preorder(preorder)
         return eqtree
+
+    def encode_array(self, data: np.ndarray, mode: Literal['token', 'token_id'] = 'token_id'):
+        """专门用于将纯浮点数组转换为 token 或 token_id"""
+        shape = data.shape
+        tokens = self.num_tokenizer.encode(data.astype(float).reshape(-1)) 
+        if mode == 'token_id':
+            token_ids = [self.token2id[token] for token in tokens]
+            return np.array(token_ids).reshape(*shape, 3)
+        return np.array(tokens).reshape(*shape, 3)
     
+    def decode_array(self, tokens: np.ndarray, mode: Literal['token', 'token_id'] = 'token_id'):
+        """专门用于将 token 或 token_id 数组转换回纯浮点数组"""
+        if mode == 'token_id':
+            tokens = np.vectorize(lambda x: self.id2token.get(x, self.unk_token))(tokens)
+        flat_tokens = tokens.reshape(-1, 3)
+        values = [self.num_tokenizer.decode(token_list, mode='token')[0] for token_list in flat_tokens]
+        return np.array(values).reshape(tokens.shape[:-1])
 
     def to_dict(self) -> dict:
         """导出核心配置以供序列化"""
