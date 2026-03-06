@@ -1,10 +1,113 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import warnings
 import numpy as np
 import networkx as nx
-from typing import List, Tuple, Literal
+from numpy.random import default_rng
+from typing import Tuple, List, Literal, Set, TYPE_CHECKING
 from ... import core as nd
 from .ndformer_config import NDformerConfig
+if TYPE_CHECKING:
+    from ...core.nettype import NetType
+    from ...core.symbols import *
+
+class NDformerEqtreeGenerator:
+    def __init__(
+        self,
+        variables: List[Variable],
+        binary: List[str|Symbol] = [nd.Add, nd.Sub, nd.Mul, nd.Div],
+        unary: List[str|Symbol] = [nd.Sqrt, nd.Log, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan],
+        full_prob: float = 0.5,
+        depth_range: Tuple[int, int] = (2, 6),
+        const_range: Tuple[float, float] = None,
+        edge_list: Tuple[List[int], List[int]] = None,
+        num_nodes: int = None,
+        scalar_number_only=True,
+    ):
+        self.binary = binary
+        self.unary = unary
+        self.symbols = self.binary + self.unary
+        self.variables = variables
+        self.full_prob = full_prob
+        self.depth_range = depth_range
+        self.const_range = const_range
+        self.scalar_number_only = scalar_number_only
+
+        if num_nodes is None and edge_list is not None:
+            num_nodes = np.reshape(edge_list, (-1,)).max() + 1
+        self.num_nodes = num_nodes
+        self.edge_list = edge_list
+
+    def generate_node(self, nettypes: Set[NetType], _rng: np.random_Generator = None) -> Symbol:
+        if _rng is None:
+            _rng = default_rng()
+        symbols = [sym for sym in self.symbols if (nettypes & sym.nettype_range)]
+        symbol = _rng.choice(symbols)
+        node = symbol() # 不用指定 nettype, 由 .infer_nettype() 自行推断即可
+        return node
+
+    def generate_leaf(self, nettypes: Set[NetType], _rng: np.random.Generator = None) -> Number | Variable:
+        if _rng is None:
+            _rng = default_rng()
+        leafs = [var for var in self.variables if var.nettype in nettypes]
+
+        if self.const_range is not None:
+            const_range = self.const_range
+        elif len(leafs) == 0:
+            const_range = (-1, 1)
+        else:
+            const_range = None
+
+        if const_range is not None:
+            if "scalar" in nettypes:
+                values = _rng.uniform(*const_range)
+                number = nd.Number(values, nettype="scalar")
+                leafs = leafs + [number]
+            if "node" in nettypes and not self.scalar_number_only:
+                values = _rng.uniform(*const_range, (self.num_nodes,))
+                number = nd.Number(values, nettype="node")
+                leafs = leafs + [number]
+            if "edge" in nettypes and not self.scalar_number_only:
+                values = _rng.uniform(*const_range, (len(self.edge_list[0]),))
+                number = nd.Number(values, nettype="edge")
+                leafs = leafs + [number]
+
+        return _rng.choice([var for var in leafs if var.nettype in nettypes])
+
+    def sample(
+        self, 
+        nettypes: Set[NetType] = "scalar", 
+        assign_root_nettypes=True,
+        _rng: np.random.Generator = None,
+    ) -> Symbol:
+        if _rng is None:
+            _rng = default_rng()
+        if isinstance(nettypes, str):
+            nettypes = {nettypes}
+
+        full_tree = _rng.random() < self.full_prob
+        max_depth = _rng.integers(*self.depth_range)
+        op_prob = 1.0 if full_tree else len(self.symbols) / (len(self.variables) + len(self.symbols))
+
+        # Start a eqtree with a function to avoid degenerative eqtrees
+        eqtree = self.generate_node(nettypes, _rng=_rng)
+        eqtree.nettype = nettypes & eqtree.nettype_range
+        empty_nodes_and_depth = [(i, 1) for i in eqtree.operands]
+
+        while empty_nodes_and_depth:
+            empty_node, depth = empty_nodes_and_depth.pop(0)
+            if (depth < max_depth) and (_rng.random() < op_prob):
+                node = self.generate_node(empty_node.possible_nettypes, _rng=_rng)
+                eqtree.replace(empty_node, node)
+                empty_nodes_and_depth.extend([(i, depth + 1) for i in node.operands])
+            else:  # Variable or Number
+                leaf = self.generate_leaf(empty_node.possible_nettypes, _rng=_rng)
+                eqtree.replace(empty_node, leaf)
+
+        if not assign_root_nettypes:
+            eqtree.nettype = None 
+        return eqtree
+
 
 class NDformerGraphGenerator:
     def __init__(self, config: NDformerConfig):
@@ -13,7 +116,7 @@ class NDformerGraphGenerator:
         self.min_edge_num = config.min_edge_num
         self.max_edge_num = config.max_edge_num
 
-    def sample(self, topology:Literal['ER', 'BA', 'WS', 'Complete'] = None, **kwargs):
+    def sample(self, topology:Literal['ER', 'BA', 'WS', 'Complete'] = None, _rng: np.random.Generator = None, **kwargs):
         """
         Arguments:
         - V: node num
@@ -33,49 +136,59 @@ class NDformerGraphGenerator:
         - edge_list: (2, E), edge list
         - num_nodes: int, node num
         """
+        if _rng is None:
+            _rng = default_rng()
         if topology is None:
-            topology = np.random.choice(['ER', 'BA', 'WS', 'Complete'], p=[0.3, 0.3, 0.3, 0.1])
+            topology = _rng.choice(['ER', 'BA', 'WS', 'Complete'], p=[0.3, 0.3, 0.3, 0.1])
         if topology == 'ER':
-            edge_list, num_nodes = self.generate_ER_graph(**kwargs)
+            edge_list, num_nodes = self.generate_ER_graph(_rng=_rng, **kwargs)
         elif topology == 'BA':
-            edge_list, num_nodes = self.generate_BA_graph(**kwargs)
+            edge_list, num_nodes = self.generate_BA_graph(_rng=_rng, **kwargs)
         elif topology == 'WS':
-            edge_list, num_nodes = self.generate_WS_graph(**kwargs)
+            edge_list, num_nodes = self.generate_WS_graph(_rng=_rng, **kwargs)
         elif topology == 'Complete':
-            edge_list, num_nodes = self.generate_complete_graph(**kwargs)
+            edge_list, num_nodes = self.generate_complete_graph(_rng=_rng, **kwargs)
         else:
             raise ValueError(f'Unknown graph topology {topology}')
         return edge_list, num_nodes
 
-    def generate_ER_graph(self, V=None, E=None, directed=None):
-        if V is None: V = np.random.randint(self.min_node_num, self.max_node_num)
-        if E is None: E = np.random.randint(self.min_edge_num, self.max_edge_num)
-        if directed is None: directed = np.random.randint(0, 2)
+    def generate_ER_graph(self, V=None, E=None, directed=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
+        if V is None: V = _rng.integers(self.min_node_num, self.max_node_num)
+        if E is None: E = _rng.integers(self.min_edge_num, self.max_edge_num)
+        if directed is None: directed = _rng.integers(0, 2)
         p = E / (V * (V-1))
-        graph = nx.erdos_renyi_graph(V, p, directed=directed)
+        graph = nx.erdos_renyi_graph(V, p, directed=directed, seed=_rng)
         edge_list = np.array(graph.edges()).T.tolist()
         num_nodes = graph.number_of_nodes()
         return edge_list, num_nodes
 
-    def generate_BA_graph(self, V=None, m=None):
-        if V is None: V = np.random.randint(self.min_node_num, self.max_node_num)
-        if m is None: m = np.random.choice([1, 2, 3])
-        graph = nx.barabasi_albert_graph(V, m)
-        edge_list = np.array(graph.edges()).T.tolist()
-        num_nodes = graph.number_of_nodes()
-        return edge_list, num_nodes
-    
-    def generate_WS_graph(self, V=None, k=None, p=None):
-        if V is None: V = np.random.randint(self.min_node_num, self.max_node_num)
-        if k is None: k = np.random.choice([2, 4, 6])
-        if p is None: p = np.random.uniform(0.1, 0.9)
-        graph = nx.watts_strogatz_graph(V, k, p)
+    def generate_BA_graph(self, V=None, m=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
+        if V is None: V = _rng.integers(self.min_node_num, self.max_node_num)
+        if m is None: m = _rng.choice([1, 2, 3])
+        graph = nx.barabasi_albert_graph(V, m, seed=_rng)
         edge_list = np.array(graph.edges()).T.tolist()
         num_nodes = graph.number_of_nodes()
         return edge_list, num_nodes
 
-    def generate_complete_graph(self, V=None):
-        if V is None: V = np.random.randint(self.min_node_num, min(self.max_node_num, int(np.sqrt(self.max_edge_num))) + 1)
+    def generate_WS_graph(self, V=None, k=None, p=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
+        if V is None: V = _rng.integers(self.min_node_num, self.max_node_num)
+        if k is None: k = _rng.choice([2, 4, 6])
+        if p is None: p = _rng.uniform(0.1, 0.9)
+        graph = nx.watts_strogatz_graph(V, k, p, seed=_rng)
+        edge_list = np.array(graph.edges()).T.tolist()
+        num_nodes = graph.number_of_nodes()
+        return edge_list, num_nodes
+
+    def generate_complete_graph(self, V=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
+        if V is None: V = _rng.integers(self.min_node_num, min(self.max_node_num, int(np.sqrt(self.max_edge_num))) + 1)
         graph = nx.complete_graph(V)
         edge_list = np.array(graph.edges()).T.tolist()
         num_nodes = graph.number_of_nodes()
@@ -98,6 +211,7 @@ class NDformerDataGenerator:
         edge_list: Tuple[List[int], List[int]] = None, 
         num_nodes: int = None, 
         sample_num: int = None,
+        _rng: np.random.Generator = None,
         **kwargs
     ):
         """
@@ -113,14 +227,16 @@ class NDformerDataGenerator:
                 e1/e2/e3/e4/e5: np.ndarray, (N, E)
             )
         """
+        if _rng is None:
+            _rng = default_rng()
         if sample_num is None:
-            sample_num = np.random.randint(self.min_data_num, self.max_data_num + 1)
+            sample_num = _rng.integers(self.min_data_num, self.max_data_num + 1)
         if num_nodes is None and edge_list is not None:
             num_nodes = np.reshape(edge_list, (-1,)).max() + 1
         # 采样公式中的数值常数
         for node in eqtree.iter_preorder():
             if isinstance(node, nd.Number):
-                node.value = np.random.uniform(self.min_coeff_val, self.max_coeff_val)
+                node.value = _rng.uniform(self.min_coeff_val, self.max_coeff_val)
         # 解析要采样的变量
         variables = [var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)]
         var_dims = []
@@ -141,11 +257,11 @@ class NDformerDataGenerator:
             # current_batch_size = max(10, 2 * needed_num)
             current_batch_size = needed_num
             if dist_type == 'GMM':
-                samples = self.generate_GMM_data(size=(current_batch_size, sum(var_dims)), **kwargs)
+                samples = self.generate_GMM_data(size=(current_batch_size, sum(var_dims)), _rng=_rng, **kwargs)
             elif dist_type == 'Uniform':
-                samples = self.generate_uniform_data(size=(current_batch_size, sum(var_dims)), **kwargs)
+                samples = self.generate_uniform_data(size=(current_batch_size, sum(var_dims)), _rng=_rng, **kwargs)
             elif dist_type == 'Gaussian':
-                samples = self.generate_normal_data(size=(current_batch_size, sum(var_dims)), **kwargs)
+                samples = self.generate_normal_data(size=(current_batch_size, sum(var_dims)), _rng=_rng, **kwargs)
             else:
                 raise ValueError(f'Unknown data generation dist_type: {dist_type}')
             split_arrays = np.split(samples, np.cumsum(var_dims)[:-1], axis=1)
@@ -169,28 +285,34 @@ class NDformerDataGenerator:
             final_target = np.concatenate(collected_targets, axis=0)[:sample_num]
         return final_vars, final_target
 
-    def generate_normal_data(self, size, mean=None, std=None):
+    def generate_normal_data(self, size, mean=None, std=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
         if mean is None: mean = (self.min_var_val + self.max_var_val) / 2
         if std is None: std = (self.max_var_val - self.min_var_val) / 6  # 99.7% data within [min_var_val, max_var_val]
-        return np.random.normal(loc=mean, scale=std, size=size)
-    
-    def generate_uniform_data(self, size, low=None, high=None):
+        return _rng.normal(loc=mean, scale=std, size=size)
+
+    def generate_uniform_data(self, size, low=None, high=None, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
         if low is None: low = self.min_var_val
         if high is None: high = self.max_var_val
-        return np.random.uniform(low=low, high=high, size=size)
-    
-    def generate_GMM_data(self, size, L=1):
+        return _rng.uniform(low=low, high=high, size=size)
+
+    def generate_GMM_data(self, size, L=1, _rng: np.random.Generator = None):
+        if _rng is None:
+            _rng = default_rng()
         if not isinstance(size, tuple) or len(size) != 2:
             raise ValueError("Size must be a tuple of (N, D)")
         N, D = size
-        K = np.random.randint(1, 11)
-        pi = np.random.rand(K)
-        sigma_Z = np.random.uniform(0.0, 10.0, (K,))
-        sigma_X = np.random.uniform(0.0, 3.0, (K,))
-        A = np.random.uniform(-1.0, 1.0, (D, L, K))
-        b = np.random.uniform(-10.0, 10.0, (D, K))
-        C = np.random.choice(K, (N,), p=pi / pi.sum())
-        Z = np.random.normal(0, sigma_Z, (N, L, K))
-        n = np.random.normal(0, sigma_X, (N, D, K))
+        K = _rng.integers(1, 11)
+        pi = _rng.random(K)
+        sigma_Z = _rng.uniform(0.0, 10.0, (K,))
+        sigma_X = _rng.uniform(0.0, 3.0, (K,))
+        A = _rng.uniform(-1.0, 1.0, (D, L, K))
+        b = _rng.uniform(-10.0, 10.0, (D, K))
+        C = _rng.choice(K, (N,), p=pi / pi.sum())
+        Z = _rng.normal(0, sigma_Z, (N, L, K))
+        n = _rng.normal(0, sigma_X, (N, D, K))
         X = np.einsum('DlK,NlK->NDK', A, Z) + b + n
         return np.choose(C, X.transpose(2, 1, 0)).transpose(1, 0)

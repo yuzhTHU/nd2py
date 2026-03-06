@@ -23,32 +23,35 @@ _logger = logging.getLogger("nd2py.ndformer_train")
 
 
 def load_dataset(args, config, tokenizer):
-    eq_generator = nd.generator.GPLearnGenerator(tokenizer.variables)
+    eqtree_generator = nd.search.ndformer.NDformerEqtreeGenerator(tokenizer.variables, depth_range=(1, 3))
     topo_generator = nd.search.ndformer.NDformerGraphGenerator(config)
     data_generator = nd.search.ndformer.NDformerDataGenerator(config)
     train_dataset = NDformerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eq_generator=eq_generator, 
+        eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=36,
+        n_samples=24,
+        random_state=args.random_state,
     )
     eval_dataset = NDformerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eq_generator=eq_generator, 
+        eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=36,
+        n_samples=24,
+        random_state=args.random_state,
     )
     test_dataset = NDformerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eq_generator=eq_generator, 
+        eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=36,
+        n_samples=24,
+        random_state=args.random_state,
     )
     train_loader = D.DataLoader(
         train_dataset, 
@@ -87,7 +90,6 @@ def load_model(args, config, tokenizer):
         f"Trainable: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}\n"
         f"Total: {sum(p.numel() for p in model.parameters()):,}"
     )
-    
     return model,optimizer,criterion
 
 
@@ -112,7 +114,7 @@ def reload_checkpoint(args, model, optimizer):
             for key in sorted(set(saved_args.keys()) | set(vars(args).keys())):
                 if key in [
                     'device', 'save_dir', 'save_path', 'command', 'name', 'exp_name',
-                    'seed', 'reload_checkpoint', 'test_before_train', 'test_per_epoch',
+                    'random_state', 'reload_checkpoint', 'test_before_train', 'test_per_epoch',
                 ]: continue
                 val1 = saved_args.get(key, None)
                 val2 = getattr(args, key, None)
@@ -133,20 +135,20 @@ def reload_checkpoint(args, model, optimizer):
 
 
 def log_train_record(args, train_records, timer):
-    return (
+    return nd.utils.tag2ansi(
         f"[Epoch {train_records['epoch']}/{args.epochs}] "
-        f"Train Loss={train_records['loss']:.4f}, "
-        f"Train Accuracy={train_records['accuracy']:.2%}, "
-        f"Time Usage={timer.to_str()}"
+        f"[#66CCFF]Train Loss[reset]={train_records['loss']:.4f}, "
+        f"[#66CCFF]Train Accuracy[reset]={train_records['accuracy']:.2%}, "
+        f"[#66CCFF]Time Usage[reset]={timer.to_str()}"
     )
 
 
 def log_test_record(args, test_records, timer):
-    return (
+    return nd.utils.tag2ansi(
         f"[Epoch {test_records['epoch']}/{args.epochs}] "
-        f"Eval Loss={test_records['loss']:.4f}, "
-        f"Eval Accuracy={test_records['accuracy']:.2%}, "
-        f"Time Usage={timer.to_str()}"
+        f"[#66CCFF]Eval Loss[reset]={test_records['loss']:.4f}, "
+        f"[#66CCFF]Eval Accuracy[reset]={test_records['accuracy']:.2%}, "
+        f"[#66CCFF]Time Usage[reset]={timer.to_str()}"
     )
 
 
@@ -175,28 +177,26 @@ def main(args):
 
             records = defaultdict(list)
             for batch_idx, batch_dict in enumerate(pbar := tqdm(train_loader, leave=False, dynamic_ncols=True)):
-                # 将数据迁移到 GPU
                 for k, v in batch_dict.items():
                     if isinstance(v, torch.Tensor):
                         batch_dict[k] = v.to(args.device)
                 torch.cuda.synchronize()
-                timer.add('Generate-Data')
+                timer.add('Prepare-Data')
 
-                optimizer.zero_grad()
                 logits = model(batch_dict) # (B_seq, seq_len, n_words)
                 torch.cuda.synchronize()
-                timer.add('Drop1')
+                timer.add('Forward')
                 
-                # ⚠️ 取序列最后一个位置的预测结果
                 targets = batch_dict["next_tokens"] # (B_seq,)
                 loss = criterion(logits, targets)
+                optimizer.zero_grad()
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0) # 建议加上梯度裁剪防爆炸
+                if True:
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
                 optimizer.step()
                 torch.cuda.synchronize()
                 timer.add('Backward')
                 
-                # 统计
                 preds = logits.argmax(dim=-1) # (B_seq,)
                 records['loss'].extend([loss.item()] * targets.size(0))
                 records['correct'].extend((preds == targets).detach().cpu().tolist())
@@ -208,8 +208,8 @@ def main(args):
                 'loss': sum(records['loss']) / len(records['loss']),
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
-            _logger.info(log_train_record(args, train_records, timer))
             timer.add('train')
+            _logger.info(log_train_record(args, train_records, timer))
         else:
             train_records = None
 
@@ -237,7 +237,7 @@ def main(args):
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
             timer.add('eval')
-
+            _logger.info(log_test_record(args, test_records, timer))
         else:
             test_records = None
 
@@ -261,7 +261,7 @@ def main(args):
             }, save_path)
             _logger.info(nd.utils.tag2ansi(f"Checkpoint saved to [underline green]{save_path}[reset]."))
             timer.add('save_checkpoint')
-        
+
         # 定期保存
         if set(str(epoch)[1:]) == {'0'}:
             # 只在 epoch=10,20,...,100,...,1000,... 时保存
@@ -294,27 +294,10 @@ def main(args):
                 _logger.note(nd.utils.tag2ansi(f"Best model saved to [underline green]{save_path}[reset]"))
             else:
                 patience -= 1
-                # _logger.info(nd.utils.tag2ansi(
-                #     f"Patience left: [brightred]{patience}/{args.patience}[reset] ("
-                #     f"[bold underline orange]best Accuracy={best_records['accuracy']:.2%}[reset] "
-                #     f"at epoch [#66CCFF]{best_records['epoch']}[reset]. "
-                #     f"[#66CCFF]ADE={np.mean(best_records['ade']):.4f}, "
-                #     f"[#66CCFF]FDE={np.mean(best_records['fde']):.4f}, "
-                #     f"[#66CCFF]X_ERROR (normal)={np.nanmean(best_records['norm_err']):.4f}, "
-                #     f"[#66CCFF]Y_ERROR (tangential)={np.nanmean(best_records['tan_err']):.4f}, "
-                #     f"[#66CCFF]Collision-Ped={np.mean(best_records['collision_ped']) - (base := np.mean(best_records['collision_ped_base'])):.2%} (+{base:.2%}), "
-                #     f"[#66CCFF]Collision-Veh={np.mean(best_records['collision_veh']) - (base := np.mean(best_records['collision_veh_base'])):.2%} (+{base:.2%}), "
-                #     f"[#66CCFF]Collision-Map={np.mean(best_records['collision_map']) - (base := np.mean(best_records['collision_map_base'])):.2%} (+{base:.2%}), "
-                #     f"[#66CCFF]Collision-Ped2={np.mean(best_records['collision_ped2']):.2%}, "
-                #     f"[#66CCFF]Collision-Veh2={np.mean(best_records['collision_veh2']):.2%}, "
-                #     f"[#66CCFF]Collision-Map2={np.mean(best_records['collision_map2']):.2%}, "
-                #     f"[#66CCFF]AvgLen={np.mean(best_records['trajlen']):.4f}, "
-                #     f"[#66CCFF]Loss={np.mean(best_records['loss']):.4f}, "
-                #     f"[#66CCFF]PedNum={np.mean(best_records['ped_num']):.1f}, "
-                #     f"[#66CCFF]VehNum={np.mean(best_records['veh_num']):.1f}), "
-                #     f"[#66CCFF]RolloutTime={np.mean(best_records['rollout_time'])*1000:.2f}ms "
-                #     f"([bold underline orange]FPS={1/np.mean(best_records['rollout_time']):.2f} Hz[reset])"
-                # ))
+                _logger.info(
+                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [lightred]{patience}/{args.patience}[reset].\n") + 
+                    log_test_record(args, test_records, timer)
+                )
             timer.add('save_best')
 
         # 打印用时
@@ -323,7 +306,7 @@ def main(args):
         peak = torch.cuda.max_memory_allocated(args.device) / 1024 / 1024 / 1024
         _logger.info(nd.utils.tag2ansi(
             f"[pink][Epoch {epoch}/{args.epochs}] finished. "
-            f"Time Usage={timer}, "
+            f"Time Usage={timer.to_str()}, "
             f"CUDA ({args.device}) usage: allocated={allocated:.1f}GiB, peak={peak:.1f}GiB, reserved={reserved:.1f}GiB"
             # f"adjust reserved memory from {reserved_raw/1024:.1f}GiB to {reserved_new/1024:.1f}GiB"
             "[reset]"
@@ -387,7 +370,7 @@ if __name__ == "__main__":
     parser.add_argument("--name", type=str, default="train", help="实验任务名称，用于生成实验ID")
     parser.add_argument("--exp_name", type=str, default=None, help="手动指定实验名称（若指定则覆盖自动生成的名称）")
     parser.add_argument("--device", type=str, default="auto", help="计算设备，可选 'cpu', 'cuda:0' 或 'auto'（自动选择显存充足的 GPU）")
-    parser.add_argument("--seed", type=int, default=None, help="随机种子，固定以复现实验结果")
+    parser.add_argument("--random_state", type=int, default=None, help="随机种子，固定以复现实验结果")
     parser.add_argument("--save_dir", type=str, default="./logs/train", help="日志和模型权重的保存根目录")
     parser.add_argument("--debug", action="store_true", help="是否开启调试模式（输出更多日志，不保存部分文件）")
     parser.add_argument("--num_workers", type=int, default=0, help="DataLoader 的工作线程数（0 表示主线程）")
@@ -396,7 +379,7 @@ if __name__ == "__main__":
     parser.add_argument('--n_samples', type=int, default=None, help="训练样本数量，默认为 None 表示无限生成样本")
     
     # 训练超参数
-    parser.add_argument("--batch_size", type=int, default=8, help="训练批次大小")
+    parser.add_argument("--batch_size", type=int, default=24, help="训练批次大小")
     parser.add_argument("--lr", type=float, default=2e-4, help="学习率 (Learning Rate)")
     parser.add_argument("--epochs", type=int, default=10000, help="最大训练轮数")
     parser.add_argument('--patience', type=int, default=20, help="Early Stopping 的耐心值（多少个 epoch 验证集指标不提升则停止）")
@@ -437,15 +420,21 @@ if __name__ == "__main__":
         log_file=save_path / "info.log",
         info_level="debug" if args.debug else "info",
     )
+    nd.utils.init_logger(
+        "nd2py",
+        exp_name=args.exp_name,
+        log_file=save_path / "info.log",
+        info_level="debug" if args.debug else "info",
+    )
 
     ## Warm Unknown Args
     if unknown:
         _logger.warning(f"Unknown args: {unknown}")
 
-    ## Set Seed
-    if args.seed is None:
-        args.seed = random.randint(1, 10000)
-    nd.utils.seed_all(args.seed)
+    ## Set random_state
+    if args.random_state is None:
+        args.random_state = random.randint(1, 10000)
+    nd.utils.seed_all(args.random_state)
     ## Set Command
     args.command = ' '.join(map(shlex.quote, [sys.executable, *sys.argv]))
     ## Select GPU

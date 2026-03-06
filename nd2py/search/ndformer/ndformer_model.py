@@ -15,7 +15,7 @@ from ... import utils
 
 # See https://github.com/pytorch/pytorch/issues/100469
 warnings.filterwarnings("ignore", message="Converting mask without torch.bool dtype to bool; this will negatively affect performance. Prefer to use a boolean mask directly.")
-logger = logging.getLogger('ND2.Model')
+_logger = logging.getLogger('nd2py.ndformer_model')
 
 
 class NDformerModel(nn.Module):

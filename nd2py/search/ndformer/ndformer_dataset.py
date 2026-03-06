@@ -1,15 +1,18 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+import torch
+import logging
 import itertools
 import numpy as np
-import torch
 import torch.utils.data as D
 from typing import Optional
 from torch_geometric.data import Batch
 from ... import core as nd
-from ...generator import GPLearnGenerator
 from .ndformer_config import NDformerConfig
-from .ndformer_generator import NDformerGraphGenerator, NDformerDataGenerator
+from .ndformer_generator import NDformerEqtreeGenerator, NDformerGraphGenerator, NDformerDataGenerator
 from .ndformer_tokenizer import NDformerTokenizer
+
+_logger = logging.getLogger(f'nd2py.{__name__}')
+
 
 class InfiniteSampler(D.Sampler):
     # 无限生成索引，用于 DataLoader(sampler=InfiniteSampler())
@@ -21,29 +24,34 @@ class NDformerDataset(D.Dataset):
     def __init__(
         self, 
         config: NDformerConfig,
-        eq_generator: GPLearnGenerator, 
+        eqtree_generator: NDformerEqtreeGenerator, 
         topo_generator: NDformerGraphGenerator,
         data_generator: NDformerDataGenerator, 
         tokenizer: NDformerTokenizer, 
         n_samples: Optional[int] = None, 
+        random_state: Optional[int] = None
     ):
         self.config = config
-        self.eq_generator = eq_generator
+        self.eqtree_generator = eqtree_generator
         self.topo_generator = topo_generator
         self.data_generator = data_generator
         self.tokenizer = tokenizer
         self.n_samples = n_samples
+        self.random_state = random_state
 
     def __len__(self):
         # 如果 n_samples 为 None, 实际的无限循环由 InfiniteSampler 接管
         return self.n_samples
 
     def __getitem__(self, idx):
-        eqtree = self.eq_generator.sample(nettypes={"node", "edge", "scalar"})
-        edge_list, num_nodes = self.topo_generator.sample()
-        data_dict, target = self.data_generator.sample(eqtree, edge_list=edge_list, num_nodes=num_nodes, sample_num=200)
+        rng = np.random.default_rng((self.random_state, idx)) if self.random_state is not None else None
+        eqtree = self.eqtree_generator.sample(nettypes={"node", "edge", "scalar"}, _rng=rng)
+        edge_list, num_nodes = self.topo_generator.sample(_rng=rng)
+        data_dict, target = self.data_generator.sample(eqtree, edge_list=edge_list, num_nodes=num_nodes, sample_num=200, _rng=rng)
         num_edges = len(edge_list[0])
         sample_num = target.shape[0]
+
+        _logger.debug(f"Sampled eqtree: {eqtree.to_str(number_format='.2f')}")
         
         vars_dict = {var.name: var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)}
         data_node = np.zeros((sample_num, num_nodes, self.config.max_var_num + 1), dtype=np.float32)
@@ -65,10 +73,6 @@ class NDformerDataset(D.Dataset):
         data_node = self.tokenizer.encode_array(data_node, mode='token_id')
         data_edge = self.tokenizer.encode_array(data_edge, mode='token_id')
 
-        # ==========================================
-        # 核心新增：利用 Tokenizer 切分 partial_eq
-        # ==========================================
-        # 假设 encode 返回的是 List[int]
         tokens, _, _ = self.tokenizer.encode(eqtree, mode='token_id') 
         # 将一个完整序列 [A, B, C, D] 切分为多对 (前缀, 预测目标)
         # 例如: ([A], B), ([A, B], C), ([A, B, C], D)
