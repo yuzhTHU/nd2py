@@ -86,10 +86,27 @@ class GNN(nn.Module):
                                         [GNNLayer(d_emb, d_emb, d_emb) for _ in range(n_layers - 1)])
         self.dropout = nn.Dropout(p=dropout)
 
-    # ⚠️ 保持输入接口的干净
-    def forward(self, v, e, edge_list, num_nodes):
+    def fwd(self, v, e, edge_list, num_nodes):
         for net in self.GNN_layers:
             v, e = net(v, e, edge_list, num_nodes)
             v = self.dropout(v)
             e = self.dropout(e)
         return v, e
+
+    def forward(self, v, e, edge_list, num_nodes, chunk_size=None):
+        if chunk_size is None or chunk_size >= v.size(0):
+            return self.fwd(v, e, edge_list, num_nodes)
+        
+        v_out_list = []
+        e_out_list = []
+        for v_chunk, e_chunk in zip(
+            torch.split(v, chunk_size, dim=0), 
+            torch.split(e, chunk_size, dim=0)
+        ):
+            v_chunk_out, e_chunk_out = self.fwd(v_chunk, e_chunk, edge_list, num_nodes)
+            v_out_list.append(v_chunk_out)
+            e_out_list.append(e_chunk_out)
+        v_final = torch.cat(v_out_list, dim=0)
+        e_final = torch.cat(e_out_list, dim=0)
+        
+        return v_final, e_final
