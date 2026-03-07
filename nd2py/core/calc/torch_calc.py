@@ -24,12 +24,10 @@ def unpack_operands(
 ):
     """Decorator to unpack operands of a node and apply a function to them.
     Args:
-    - mask_out_nan: whether to replace NaN values in the input with fill_nan_input
-    - double_check_nan: whether to calculate the output for invalid inputs
-        Set to True can lead to performance degradation, but helps with operations like Div and Inv which map Non-nan to nan.
-    - fill_nan_input: value to replace NaN values in the input
-        This can be any value as long as 'func' does not map it to nan.
-    - fill_nan_output: value to replace NaN values in the output
+        mask_out_nan: whether to replace NaN values in the input with fill_nan_input
+        double_check_nan: whether to calculate the output for invalid inputs. Set to True can lead to performance degradation, but helps with operations like Div and Inv which map Non-nan to nan.
+        fill_nan_input: value to replace NaN values in the input This can be any value as long as 'func' does not map it to nan.
+        fill_nan_output: value to replace NaN values in the output
     """
 
     def decorator(func):
