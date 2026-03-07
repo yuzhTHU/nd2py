@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nd2py"
-version = "2.4.0"
+version = "3.0.0"
+readme = "README.md"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
 requires-python = ">=3.8"
 # 主依赖：不包含 torch 和 torch_geometric
 dependencies = [
   "tqdm>=4.66",
-  "pytest>=8.3",
   "numpy>=1.20",
   "scipy>=1.14",
   "pandas>=2.2",
@@ -32,8 +32,18 @@ nn = [
   "torch>=1.12",
   "torch_geometric>=2.0"  # 建议加上版本号限制
 ]
-all = [
-  "nd2py[nn]"  # 直接引用当前包的 nn 分组，避免重复写依赖列表
+# 文档构建依赖组
+docs = [
+  "sphinx",
+  "sphinx-book-theme",
+  "myst-parser",
+  "sphinx-autodoc-typehints"
+]
+# 开发与发包依赖组
+dev = [
+  "build",
+  "twine",
+  "pytest>=8.3", # pytest 其实也更适合放在 dev 里而不是主依赖里
 ]
 
 [tool.pytest.ini_options]

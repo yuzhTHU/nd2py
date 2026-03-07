@@ -1,0 +1,33 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]  # 只有你在 GitHub 上创建一个新的 Release 时才会触发发包
+
+jobs:
+  pypi-publish:
+    name: Build and publish to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/nd2py
+    permissions:
+      id-token: write  # 这是 Trusted Publisher 必须的权限
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install build tool
+        run: python -m pip install --upgrade build
+        
+      - name: Build a binary wheel and a source tarball
+        run: python -m build
+        
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
