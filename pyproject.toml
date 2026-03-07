@@ -8,7 +8,7 @@ version = "3.0.0"
 readme = "README.md"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 # 主依赖：不包含 torch 和 torch_geometric
 dependencies = [
   "tqdm>=4.66",
@@ -24,6 +24,14 @@ dependencies = [
   "dotenv",
   "requests",
   "pyperclip"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12", # 徽章主要看这一行
+    "License :: OSI Approved :: MIT License", # 建议加上你的授权协议
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
 # 可选依赖定义
