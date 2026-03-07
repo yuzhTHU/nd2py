@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core.tree package &#8212; nd2py  documentation</title>
+    <title>nd2py.core.tree package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,9 +348,35 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-iter-postorder-module">nd2py.core.tree.iter_postorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-iter-preorder-module">nd2py.core.tree.iter_preorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-tree-mixin-module">nd2py.core.tree.tree_mixin module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.iter_postorder">nd2py.core.tree.iter_postorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_postorder.IterPostorder"><code class="docutils literal notranslate"><span class="pre">IterPostorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_postorder.IterPostorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPostorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.iter_preorder">nd2py.core.tree.iter_preorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder"><code class="docutils literal notranslate"><span class="pre">IterPreorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder.is_yielded_node"><code class="docutils literal notranslate"><span class="pre">IterPreorder.is_yielded_node()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.tree_mixin">nd2py.core.tree.tree_mixin module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin"><code class="docutils literal notranslate"><span class="pre">TreeMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.n_operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.n_operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.parent"><code class="docutils literal notranslate"><span class="pre">TreeMixin.parent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_preorder()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_postorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_postorder()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.replace"><code class="docutils literal notranslate"><span class="pre">TreeMixin.replace()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.path_to"><code class="docutils literal notranslate"><span class="pre">TreeMixin.path_to()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.get_path"><code class="docutils literal notranslate"><span class="pre">TreeMixin.get_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -362,19 +388,110 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-tree-package">
-<h1>nd2py.core.tree package<a class="headerlink" href="#nd2py-core-tree-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core.tree">
+<span id="nd2py-core-tree-package"></span><h1>nd2py.core.tree package<a class="headerlink" href="#module-nd2py.core.tree" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-core-tree-iter-postorder-module">
-<h2>nd2py.core.tree.iter_postorder module<a class="headerlink" href="#nd2py-core-tree-iter-postorder-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.tree.iter_postorder">
+<span id="nd2py-core-tree-iter-postorder-module"></span><h2>nd2py.core.tree.iter_postorder module<a class="headerlink" href="#module-nd2py.core.tree.iter_postorder" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.tree.iter_postorder.IterPostorder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.tree.iter_postorder.</span></span><span class="sig-name descname"><span class="pre">IterPostorder</span></span><a class="reference internal" href="../_modules/nd2py/core/tree/iter_postorder.html#IterPostorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.iter_postorder.IterPostorder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nd2py.core.tree.iter_preorder.IterPreorder" title="nd2py.core.tree.iter_preorder.IterPreorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterPreorder</span></code></a></p>
+<p>Post-order iteration over a tree structure.
+Yields each node before its children.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.iter_postorder.IterPostorder.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/iter_postorder.html#IterPostorder.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.iter_postorder.IterPostorder.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="nd2py-core-tree-iter-preorder-module">
-<h2>nd2py.core.tree.iter_preorder module<a class="headerlink" href="#nd2py-core-tree-iter-preorder-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.tree.iter_preorder">
+<span id="nd2py-core-tree-iter-preorder-module"></span><h2>nd2py.core.tree.iter_preorder module<a class="headerlink" href="#module-nd2py.core.tree.iter_preorder" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.tree.iter_preorder.IterPreorder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.tree.iter_preorder.</span></span><span class="sig-name descname"><span class="pre">IterPreorder</span></span><a class="reference internal" href="../_modules/nd2py/core/tree/iter_preorder.html#IterPreorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.iter_preorder.IterPreorder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<p>Pre-order iteration over a tree structure.
+Yields each node before its children.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.iter_preorder.IterPreorder.is_yielded_node">
+<span class="sig-name descname"><span class="pre">is_yielded_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yielded</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/iter_preorder.html#IterPreorder.is_yielded_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.iter_preorder.IterPreorder.is_yielded_node" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.iter_preorder.IterPreorder.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/iter_preorder.html#IterPreorder.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.iter_preorder.IterPreorder.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="nd2py-core-tree-tree-mixin-module">
-<h2>nd2py.core.tree.tree_mixin module<a class="headerlink" href="#nd2py-core-tree-tree-mixin-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.tree.tree_mixin">
+<span id="nd2py-core-tree-tree-mixin-module"></span><h2>nd2py.core.tree.tree_mixin module<a class="headerlink" href="#module-nd2py.core.tree.tree_mixin" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.tree.tree_mixin.</span></span><span class="sig-name descname"><span class="pre">TreeMixin</span></span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Mixin 类：负责维护 Symbol 作为一棵符号树的结构关系 (parent, operands) 并提供树形操作方法。
+宿主类必须提供以下属性:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>self.n_operands</p></li>
+<li><p>self.parent</p></li>
+<li><p>self.operands</p></li>
+</ul>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.n_operands">
+<span class="sig-name descname"><span class="pre">n_operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.n_operands" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="s"><span class="pre">'Symbol'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.parent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.operands">
+<span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Symbol'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.operands" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder">
+<span class="sig-name descname"><span class="pre">iter_preorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin.iter_preorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder" title="Link to this definition">#</a></dt>
+<dd><p>Non-recursive preorder traversal of the Symbol tree using an explicit stack.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.iter_postorder">
+<span class="sig-name descname"><span class="pre">iter_postorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin.iter_postorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_postorder" title="Link to this definition">#</a></dt>
+<dd><p>Postorder traversal of the Symbol tree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin.replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.replace" title="Link to this definition">#</a></dt>
+<dd><p>Replace current expression (or subexpression denoted by child) with another expression.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.path_to">
+<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin.path_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.path_to" title="Link to this definition">#</a></dt>
+<dd><p>Get the path from self to child.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.tree.tree_mixin.TreeMixin.get_path">
+<span class="sig-name descname"><span class="pre">get_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></span><a class="reference internal" href="../_modules/nd2py/core/tree/tree_mixin.html#TreeMixin.get_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.tree.tree_mixin.TreeMixin.get_path" title="Link to this definition">#</a></dt>
+<dd><p>Get the subexpression at the specified path.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -424,9 +541,35 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-iter-postorder-module">nd2py.core.tree.iter_postorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-iter-preorder-module">nd2py.core.tree.iter_preorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-tree-tree-mixin-module">nd2py.core.tree.tree_mixin module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.iter_postorder">nd2py.core.tree.iter_postorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_postorder.IterPostorder"><code class="docutils literal notranslate"><span class="pre">IterPostorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_postorder.IterPostorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPostorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.iter_preorder">nd2py.core.tree.iter_preorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder"><code class="docutils literal notranslate"><span class="pre">IterPreorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder.is_yielded_node"><code class="docutils literal notranslate"><span class="pre">IterPreorder.is_yielded_node()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.iter_preorder.IterPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.tree.tree_mixin">nd2py.core.tree.tree_mixin module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin"><code class="docutils literal notranslate"><span class="pre">TreeMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.n_operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.n_operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.parent"><code class="docutils literal notranslate"><span class="pre">TreeMixin.parent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_preorder()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.iter_postorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_postorder()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.replace"><code class="docutils literal notranslate"><span class="pre">TreeMixin.replace()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.path_to"><code class="docutils literal notranslate"><span class="pre">TreeMixin.path_to()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.tree.tree_mixin.TreeMixin.get_path"><code class="docutils literal notranslate"><span class="pre">TreeMixin.get_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -451,7 +594,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

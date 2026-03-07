@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core package &#8212; nd2py  documentation</title>
+    <title>nd2py.core package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -357,7 +357,20 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-symbol-api-module">nd2py.core.symbol_api module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.symbol_api">nd2py.core.symbol_api module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_str"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.to_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_tree"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.to_tree()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.eval()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval_torch"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.eval_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_add"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.split_by_add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_mul"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.split_by_mul()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.fix_nettype"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.fix_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.simplify"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.simplify()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -369,16 +382,31 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-package">
-<h1>nd2py.core package<a class="headerlink" href="#nd2py-core-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core">
+<span id="nd2py-core-package"></span><h1>nd2py.core package<a class="headerlink" href="#module-nd2py.core" title="Link to this heading">#</a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.basic.html">nd2py.core.basic package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.basic.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.basic.html#nd2py-core-basic-get-copy-module">nd2py.core.basic.get_copy module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.basic.html#nd2py-core-basic-get-length-module">nd2py.core.basic.get_length module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.basic.html#module-nd2py.core.basic.get_copy">nd2py.core.basic.get_copy module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy"><code class="docutils literal notranslate"><span class="pre">GetCopy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetCopy.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.visit_Number"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.visit_Variable"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.visit_Empty"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Empty()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.basic.html#module-nd2py.core.basic.get_length">nd2py.core.basic.get_length module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_length.GetLength"><code class="docutils literal notranslate"><span class="pre">GetLength</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html#nd2py.core.basic.get_length.GetLength.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetLength.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.calc.html">nd2py.core.calc package</a><ul>
@@ -434,57 +462,565 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.calc.html#nd2py-core-calc-torch-calc-module">nd2py.core.calc.torch_calc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.calc.html#module-nd2py.core.calc.torch_calc">nd2py.core.calc.torch_calc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.unpack_operands"><code class="docutils literal notranslate"><span class="pre">unpack_operands()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc"><code class="docutils literal notranslate"><span class="pre">TorchCalc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.generic_visit"><code class="docutils literal notranslate"><span class="pre">TorchCalc.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Empty"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Number"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Variable"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Add"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sub"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Mul"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Div"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Pow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Max"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Min"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sin"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cos"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Cos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tan"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Tan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sec"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csc"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Csc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cot"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Cot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Log"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_LogAbs"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_LogAbs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Exp"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Abs"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Abs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Neg"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Neg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Inv"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Inv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sqrt"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_SqrtAbs"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_SqrtAbs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow2"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Pow2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow3"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Pow3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arcsin"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Arcsin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arccos"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Arccos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arctan"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Arctan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sinh"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cosh"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Cosh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tanh"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sech"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sech()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csch"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Csch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Coth"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Coth()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sigmoid"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Regular"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Regular()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sour"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Sour()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Targ"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Targ()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Aggr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Rgga()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Readout"><code class="docutils literal notranslate"><span class="pre">TorchCalc.visit_Readout()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.context.html">nd2py.core.context package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#nd2py-core-context-copy-value-module">nd2py.core.context.copy_value module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#nd2py-core-context-nettype-inference-module">nd2py.core.context.nettype_inference module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#nd2py-core-context-set-fitable-module">nd2py.core.context.set_fitable module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#nd2py-core-context-warn-once-module">nd2py.core.context.warn_once module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#module-nd2py.core.context.copy_value">nd2py.core.context.copy_value module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.copy_value.get_copy_value"><code class="docutils literal notranslate"><span class="pre">get_copy_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.copy_value.set_copy_value"><code class="docutils literal notranslate"><span class="pre">set_copy_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.copy_value.no_copy_value"><code class="docutils literal notranslate"><span class="pre">no_copy_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#module-nd2py.core.context.nettype_inference">nd2py.core.context.nettype_inference module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.nettype_inference.nettype_inference"><code class="docutils literal notranslate"><span class="pre">nettype_inference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.nettype_inference.no_nettype_inference"><code class="docutils literal notranslate"><span class="pre">no_nettype_inference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.nettype_inference.set_nettype_inference"><code class="docutils literal notranslate"><span class="pre">set_nettype_inference()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#module-nd2py.core.context.set_fitable">nd2py.core.context.set_fitable module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.set_fitable.set_fitable"><code class="docutils literal notranslate"><span class="pre">set_fitable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.set_fitable.no_set_fitable"><code class="docutils literal notranslate"><span class="pre">no_set_fitable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.context.html#module-nd2py.core.context.warn_once">nd2py.core.context.warn_once module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.warn_once.warn_once"><code class="docutils literal notranslate"><span class="pre">warn_once()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.context.html#nd2py.core.context.warn_once.no_warn"><code class="docutils literal notranslate"><span class="pre">no_warn()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.converter.html">nd2py.core.converter package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#nd2py-core-converter-from-postorder-module">nd2py.core.converter.from_postorder module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#nd2py-core-converter-from-preorder-module">nd2py.core.converter.from_preorder module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#nd2py-core-converter-parser-module">nd2py.core.converter.parser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#nd2py-core-converter-string-printer-module">nd2py.core.converter.string_printer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#nd2py-core-converter-tree-printer-module">nd2py.core.converter.tree_printer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#module-nd2py.core.converter.from_postorder">nd2py.core.converter.from_postorder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.from_postorder.FromPostorder"><code class="docutils literal notranslate"><span class="pre">FromPostorder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.from_postorder.from_postorder"><code class="docutils literal notranslate"><span class="pre">from_postorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#module-nd2py.core.converter.from_preorder">nd2py.core.converter.from_preorder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.from_preorder.FromPreorder"><code class="docutils literal notranslate"><span class="pre">FromPreorder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.from_preorder.FromPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">FromPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.from_preorder.from_preorder"><code class="docutils literal notranslate"><span class="pre">from_preorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#module-nd2py.core.converter.parser">nd2py.core.converter.parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.parser.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#module-nd2py.core.converter.string_printer">nd2py.core.converter.string_printer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter"><code class="docutils literal notranslate"><span class="pre">StringPrinter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">StringPrinter.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Sub"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Div"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Neg"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Neg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Inv"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Inv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow2"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow3"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Sour"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sour()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Targ"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Targ()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Aggr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Rgga()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.converter.html#module-nd2py.core.converter.tree_printer">nd2py.core.converter.tree_printer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter"><code class="docutils literal notranslate"><span class="pre">TreePrinter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">TreePrinter.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html#nd2py.core.converter.tree_printer.TreePrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Mul()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.nettype.html">nd2py.core.nettype package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.nettype.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.nettype.html#nd2py-core-nettype-inter-nettype-module">nd2py.core.nettype.inter_nettype module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.nettype.html#nd2py-core-nettype-nettype-mixin-module">nd2py.core.nettype.nettype_mixin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.nettype.html#module-nd2py.core.nettype.inter_nettype">nd2py.core.nettype.inter_nettype module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.inter_nettype.InferNettype"><code class="docutils literal notranslate"><span class="pre">InferNettype</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.inter_nettype.InferNettype.generic_visit"><code class="docutils literal notranslate"><span class="pre">InferNettype.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.nettype.html#module-nd2py.core.nettype.nettype_mixin">nd2py.core.nettype.nettype_mixin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.parent"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.operands"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.map_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.map_nettype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.__init__"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.possible_nettypes"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.possible_nettypes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.infer_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.infer_nettype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.get_nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.get_nettype_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype_range</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.symbols.html">nd2py.core.symbols package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-empty-module">nd2py.core.symbols.empty module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-functions-module">nd2py.core.symbols.functions module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-number-module">nd2py.core.symbols.number module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-operands-module">nd2py.core.symbols.operands module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-symbols-module">nd2py.core.symbols.symbols module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#nd2py-core-symbols-variable-module">nd2py.core.symbols.variable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.empty">nd2py.core.symbols.empty module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty"><code class="docutils literal notranslate"><span class="pre">Empty</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty.n_operands"><code class="docutils literal notranslate"><span class="pre">Empty.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty.__init__"><code class="docutils literal notranslate"><span class="pre">Empty.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty.map_nettype"><code class="docutils literal notranslate"><span class="pre">Empty.map_nettype()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.functions">nd2py.core.symbols.functions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.add"><code class="docutils literal notranslate"><span class="pre">add</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sub"><code class="docutils literal notranslate"><span class="pre">sub</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.mul"><code class="docutils literal notranslate"><span class="pre">mul</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.div"><code class="docutils literal notranslate"><span class="pre">div</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.pow"><code class="docutils literal notranslate"><span class="pre">pow</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.max"><code class="docutils literal notranslate"><span class="pre">max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.min"><code class="docutils literal notranslate"><span class="pre">min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sin"><code class="docutils literal notranslate"><span class="pre">sin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.cos"><code class="docutils literal notranslate"><span class="pre">cos</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.tan"><code class="docutils literal notranslate"><span class="pre">tan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sec"><code class="docutils literal notranslate"><span class="pre">sec</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.csc"><code class="docutils literal notranslate"><span class="pre">csc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.cot"><code class="docutils literal notranslate"><span class="pre">cot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.arcsin"><code class="docutils literal notranslate"><span class="pre">arcsin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.arccos"><code class="docutils literal notranslate"><span class="pre">arccos</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.arctan"><code class="docutils literal notranslate"><span class="pre">arctan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.log"><code class="docutils literal notranslate"><span class="pre">log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.logabs"><code class="docutils literal notranslate"><span class="pre">logabs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.exp"><code class="docutils literal notranslate"><span class="pre">exp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.abs"><code class="docutils literal notranslate"><span class="pre">abs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.neg"><code class="docutils literal notranslate"><span class="pre">neg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.inv"><code class="docutils literal notranslate"><span class="pre">inv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sqrt"><code class="docutils literal notranslate"><span class="pre">sqrt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sqrtabs"><code class="docutils literal notranslate"><span class="pre">sqrtabs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.pow2"><code class="docutils literal notranslate"><span class="pre">pow2</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.pow3"><code class="docutils literal notranslate"><span class="pre">pow3</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sinh"><code class="docutils literal notranslate"><span class="pre">sinh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.cosh"><code class="docutils literal notranslate"><span class="pre">cosh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.tanh"><code class="docutils literal notranslate"><span class="pre">tanh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sech"><code class="docutils literal notranslate"><span class="pre">sech</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.csch"><code class="docutils literal notranslate"><span class="pre">csch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.reg"><code class="docutils literal notranslate"><span class="pre">reg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.regular"><code class="docutils literal notranslate"><span class="pre">regular</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sour"><code class="docutils literal notranslate"><span class="pre">sour</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.phi_s"><code class="docutils literal notranslate"><span class="pre">phi_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.targ"><code class="docutils literal notranslate"><span class="pre">targ</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.phi_t"><code class="docutils literal notranslate"><span class="pre">phi_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.aggr"><code class="docutils literal notranslate"><span class="pre">aggr</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.rho"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.rgga"><code class="docutils literal notranslate"><span class="pre">rgga</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.readout"><code class="docutils literal notranslate"><span class="pre">readout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.sum"><code class="docutils literal notranslate"><span class="pre">sum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.prod"><code class="docutils literal notranslate"><span class="pre">prod()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.maximum"><code class="docutils literal notranslate"><span class="pre">maximum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.minimum"><code class="docutils literal notranslate"><span class="pre">minimum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.Constant"><code class="docutils literal notranslate"><span class="pre">Constant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.functions.variables"><code class="docutils literal notranslate"><span class="pre">variables()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.number">nd2py.core.symbols.number module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number"><code class="docutils literal notranslate"><span class="pre">Number</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number.n_operands"><code class="docutils literal notranslate"><span class="pre">Number.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number.__init__"><code class="docutils literal notranslate"><span class="pre">Number.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number.map_nettype"><code class="docutils literal notranslate"><span class="pre">Number.map_nettype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number.get_nettype_range"><code class="docutils literal notranslate"><span class="pre">Number.get_nettype_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number.nettype_range"><code class="docutils literal notranslate"><span class="pre">Number.nettype_range</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.operands">nd2py.core.symbols.operands module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Add"><code class="docutils literal notranslate"><span class="pre">Add</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Add.n_operands"><code class="docutils literal notranslate"><span class="pre">Add.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sub"><code class="docutils literal notranslate"><span class="pre">Sub</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sub.n_operands"><code class="docutils literal notranslate"><span class="pre">Sub.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Mul"><code class="docutils literal notranslate"><span class="pre">Mul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Mul.n_operands"><code class="docutils literal notranslate"><span class="pre">Mul.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Div"><code class="docutils literal notranslate"><span class="pre">Div</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Div.n_operands"><code class="docutils literal notranslate"><span class="pre">Div.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow"><code class="docutils literal notranslate"><span class="pre">Pow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow.n_operands"><code class="docutils literal notranslate"><span class="pre">Pow.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Max"><code class="docutils literal notranslate"><span class="pre">Max</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Max.n_operands"><code class="docutils literal notranslate"><span class="pre">Max.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Min"><code class="docutils literal notranslate"><span class="pre">Min</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Min.n_operands"><code class="docutils literal notranslate"><span class="pre">Min.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Identity.n_operands"><code class="docutils literal notranslate"><span class="pre">Identity.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sin"><code class="docutils literal notranslate"><span class="pre">Sin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sin.n_operands"><code class="docutils literal notranslate"><span class="pre">Sin.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cos"><code class="docutils literal notranslate"><span class="pre">Cos</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cos.n_operands"><code class="docutils literal notranslate"><span class="pre">Cos.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Tan"><code class="docutils literal notranslate"><span class="pre">Tan</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Tan.n_operands"><code class="docutils literal notranslate"><span class="pre">Tan.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sec"><code class="docutils literal notranslate"><span class="pre">Sec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sec.n_operands"><code class="docutils literal notranslate"><span class="pre">Sec.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Csc"><code class="docutils literal notranslate"><span class="pre">Csc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Csc.n_operands"><code class="docutils literal notranslate"><span class="pre">Csc.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cot"><code class="docutils literal notranslate"><span class="pre">Cot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cot.n_operands"><code class="docutils literal notranslate"><span class="pre">Cot.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arcsin"><code class="docutils literal notranslate"><span class="pre">Arcsin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arcsin.n_operands"><code class="docutils literal notranslate"><span class="pre">Arcsin.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arccos"><code class="docutils literal notranslate"><span class="pre">Arccos</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arccos.n_operands"><code class="docutils literal notranslate"><span class="pre">Arccos.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arctan"><code class="docutils literal notranslate"><span class="pre">Arctan</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Arctan.n_operands"><code class="docutils literal notranslate"><span class="pre">Arctan.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Log.n_operands"><code class="docutils literal notranslate"><span class="pre">Log.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.LogAbs"><code class="docutils literal notranslate"><span class="pre">LogAbs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.LogAbs.n_operands"><code class="docutils literal notranslate"><span class="pre">LogAbs.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Exp"><code class="docutils literal notranslate"><span class="pre">Exp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Exp.n_operands"><code class="docutils literal notranslate"><span class="pre">Exp.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Abs"><code class="docutils literal notranslate"><span class="pre">Abs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Abs.n_operands"><code class="docutils literal notranslate"><span class="pre">Abs.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Neg"><code class="docutils literal notranslate"><span class="pre">Neg</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Neg.n_operands"><code class="docutils literal notranslate"><span class="pre">Neg.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Inv"><code class="docutils literal notranslate"><span class="pre">Inv</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Inv.n_operands"><code class="docutils literal notranslate"><span class="pre">Inv.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sqrt"><code class="docutils literal notranslate"><span class="pre">Sqrt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sqrt.n_operands"><code class="docutils literal notranslate"><span class="pre">Sqrt.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.SqrtAbs"><code class="docutils literal notranslate"><span class="pre">SqrtAbs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.SqrtAbs.n_operands"><code class="docutils literal notranslate"><span class="pre">SqrtAbs.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow2"><code class="docutils literal notranslate"><span class="pre">Pow2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow2.n_operands"><code class="docutils literal notranslate"><span class="pre">Pow2.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow3"><code class="docutils literal notranslate"><span class="pre">Pow3</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow3.n_operands"><code class="docutils literal notranslate"><span class="pre">Pow3.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sinh"><code class="docutils literal notranslate"><span class="pre">Sinh</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sinh.n_operands"><code class="docutils literal notranslate"><span class="pre">Sinh.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cosh"><code class="docutils literal notranslate"><span class="pre">Cosh</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Cosh.n_operands"><code class="docutils literal notranslate"><span class="pre">Cosh.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Tanh"><code class="docutils literal notranslate"><span class="pre">Tanh</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Tanh.n_operands"><code class="docutils literal notranslate"><span class="pre">Tanh.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Coth"><code class="docutils literal notranslate"><span class="pre">Coth</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Coth.n_operands"><code class="docutils literal notranslate"><span class="pre">Coth.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sech"><code class="docutils literal notranslate"><span class="pre">Sech</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sech.n_operands"><code class="docutils literal notranslate"><span class="pre">Sech.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Csch"><code class="docutils literal notranslate"><span class="pre">Csch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Csch.n_operands"><code class="docutils literal notranslate"><span class="pre">Csch.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sigmoid"><code class="docutils literal notranslate"><span class="pre">Sigmoid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sigmoid.n_operands"><code class="docutils literal notranslate"><span class="pre">Sigmoid.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Regular"><code class="docutils literal notranslate"><span class="pre">Regular</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Regular.n_operands"><code class="docutils literal notranslate"><span class="pre">Regular.n_operands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sour"><code class="docutils literal notranslate"><span class="pre">Sour</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sour.n_operands"><code class="docutils literal notranslate"><span class="pre">Sour.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sour.map_nettype"><code class="docutils literal notranslate"><span class="pre">Sour.map_nettype()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Targ"><code class="docutils literal notranslate"><span class="pre">Targ</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Aggr"><code class="docutils literal notranslate"><span class="pre">Aggr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Aggr.n_operands"><code class="docutils literal notranslate"><span class="pre">Aggr.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Aggr.map_nettype"><code class="docutils literal notranslate"><span class="pre">Aggr.map_nettype()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Rgga"><code class="docutils literal notranslate"><span class="pre">Rgga</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Readout"><code class="docutils literal notranslate"><span class="pre">Readout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Readout.n_operands"><code class="docutils literal notranslate"><span class="pre">Readout.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Readout.map_nettype"><code class="docutils literal notranslate"><span class="pre">Readout.map_nettype()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.symbols">nd2py.core.symbols.symbols module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol"><code class="docutils literal notranslate"><span class="pre">Symbol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.n_operands"><code class="docutils literal notranslate"><span class="pre">Symbol.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.__init__"><code class="docutils literal notranslate"><span class="pre">Symbol.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.copy"><code class="docutils literal notranslate"><span class="pre">Symbol.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_numbers"><code class="docutils literal notranslate"><span class="pre">Symbol.get_numbers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_parameters"><code class="docutils literal notranslate"><span class="pre">Symbol.get_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.set_parameters"><code class="docutils literal notranslate"><span class="pre">Symbol.set_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.map_nettype"><code class="docutils literal notranslate"><span class="pre">Symbol.map_nettype()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.symbols.html#module-nd2py.core.symbols.variable">nd2py.core.symbols.variable module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable"><code class="docutils literal notranslate"><span class="pre">Variable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.n_operands"><code class="docutils literal notranslate"><span class="pre">Variable.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.__init__"><code class="docutils literal notranslate"><span class="pre">Variable.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.map_nettype"><code class="docutils literal notranslate"><span class="pre">Variable.map_nettype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.get_nettype_range"><code class="docutils literal notranslate"><span class="pre">Variable.get_nettype_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.nettype_range"><code class="docutils literal notranslate"><span class="pre">Variable.nettype_range</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.transform.html">nd2py.core.transform package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-bfgs-fit-module">nd2py.core.transform.bfgs_fit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-fix-nettype-module">nd2py.core.transform.fix_nettype module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-fold-constant-module">nd2py.core.transform.fold_constant module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-simplify-module">nd2py.core.transform.simplify module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-split-by-add-module">nd2py.core.transform.split_by_add module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#nd2py-core-transform-split-by-mul-module">nd2py.core.transform.split_by_mul module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.bfgs_fit">nd2py.core.transform.bfgs_fit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.collect_numbers"><code class="docutils literal notranslate"><span class="pre">collect_numbers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit"><code class="docutils literal notranslate"><span class="pre">BFGSFit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.__init__"><code class="docutils literal notranslate"><span class="pre">BFGSFit.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.fit"><code class="docutils literal notranslate"><span class="pre">BFGSFit.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.predict"><code class="docutils literal notranslate"><span class="pre">BFGSFit.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.fix_nettype">nd2py.core.transform.fix_nettype module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType"><code class="docutils literal notranslate"><span class="pre">FixNetType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.generic_visit"><code class="docutils literal notranslate"><span class="pre">FixNetType.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Number"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Variable"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_BinaryOp"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_BinaryOp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Add"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Sub"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Mul"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Div"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Pow"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Pow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Max"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Min"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Aggr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Rgga()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Sour"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Sour()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Targ"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Targ()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.visit_Readout"><code class="docutils literal notranslate"><span class="pre">FixNetType.visit_Readout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.fix_nettype"><code class="docutils literal notranslate"><span class="pre">FixNetType.fix_nettype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.edge_to_node"><code class="docutils literal notranslate"><span class="pre">FixNetType.edge_to_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.node_to_edge"><code class="docutils literal notranslate"><span class="pre">FixNetType.node_to_edge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.edge_to_scalar"><code class="docutils literal notranslate"><span class="pre">FixNetType.edge_to_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.node_to_scalar"><code class="docutils literal notranslate"><span class="pre">FixNetType.node_to_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.scalar_to_node"><code class="docutils literal notranslate"><span class="pre">FixNetType.scalar_to_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.scalar_to_edge"><code class="docutils literal notranslate"><span class="pre">FixNetType.scalar_to_edge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.fold_constant">nd2py.core.transform.fold_constant module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant"><code class="docutils literal notranslate"><span class="pre">FoldConstant</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.__init__"><code class="docutils literal notranslate"><span class="pre">FoldConstant.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.generic_visit"><code class="docutils literal notranslate"><span class="pre">FoldConstant.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Empty"><code class="docutils literal notranslate"><span class="pre">FoldConstant.visit_Empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Number"><code class="docutils literal notranslate"><span class="pre">FoldConstant.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Variable"><code class="docutils literal notranslate"><span class="pre">FoldConstant.visit_Variable()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.simplify">nd2py.core.transform.simplify module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify"><code class="docutils literal notranslate"><span class="pre">Simplify</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.generic_visit"><code class="docutils literal notranslate"><span class="pre">Simplify.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.remove_nested_unary"><code class="docutils literal notranslate"><span class="pre">Simplify.remove_nested_unary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Sin"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Sin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Cos"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Cos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Tanh"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Sigmoid"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Sqrt"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Sqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_SqrtAbs"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_SqrtAbs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Exp"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Log"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_LogAbs"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_LogAbs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Readout"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Readout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Number"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Variable"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Add"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Sub"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Mul"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Div"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Neg"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Neg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Inv"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Inv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.simplify.Simplify.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">Simplify.visit_Aggr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.split_by_add">nd2py.core.transform.split_by_add module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd"><code class="docutils literal notranslate"><span class="pre">SplitByAdd</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.generic_visit"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Add"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Sub"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Mul"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Div"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Neg"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Neg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Sour"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Sour()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Targ"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Targ()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Aggr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Rgga()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.visit_Readout"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.visit_Readout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_add.SplitByAdd.merge_bias"><code class="docutils literal notranslate"><span class="pre">SplitByAdd.merge_bias()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.transform.html#module-nd2py.core.transform.split_by_mul">nd2py.core.transform.split_by_mul module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul"><code class="docutils literal notranslate"><span class="pre">SplitByMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.generic_visit"><code class="docutils literal notranslate"><span class="pre">SplitByMul.generic_visit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.visit_Mul"><code class="docutils literal notranslate"><span class="pre">SplitByMul.visit_Mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.visit_Div"><code class="docutils literal notranslate"><span class="pre">SplitByMul.visit_Div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.merge_coefficients"><code class="docutils literal notranslate"><span class="pre">SplitByMul.merge_coefficients()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.core.tree.html">nd2py.core.tree package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#nd2py-core-tree-iter-postorder-module">nd2py.core.tree.iter_postorder module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#nd2py-core-tree-iter-preorder-module">nd2py.core.tree.iter_preorder module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#nd2py-core-tree-tree-mixin-module">nd2py.core.tree.tree_mixin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#module-nd2py.core.tree.iter_postorder">nd2py.core.tree.iter_postorder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.iter_postorder.IterPostorder"><code class="docutils literal notranslate"><span class="pre">IterPostorder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.iter_postorder.IterPostorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPostorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#module-nd2py.core.tree.iter_preorder">nd2py.core.tree.iter_preorder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.iter_preorder.IterPreorder"><code class="docutils literal notranslate"><span class="pre">IterPreorder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.iter_preorder.IterPreorder.is_yielded_node"><code class="docutils literal notranslate"><span class="pre">IterPreorder.is_yielded_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.iter_preorder.IterPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">IterPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.core.tree.html#module-nd2py.core.tree.tree_mixin">nd2py.core.tree.tree_mixin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin"><code class="docutils literal notranslate"><span class="pre">TreeMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.n_operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.n_operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.parent"><code class="docutils literal notranslate"><span class="pre">TreeMixin.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.operands"><code class="docutils literal notranslate"><span class="pre">TreeMixin.operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_preorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.iter_postorder"><code class="docutils literal notranslate"><span class="pre">TreeMixin.iter_postorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.replace"><code class="docutils literal notranslate"><span class="pre">TreeMixin.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.path_to"><code class="docutils literal notranslate"><span class="pre">TreeMixin.path_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.get_path"><code class="docutils literal notranslate"><span class="pre">TreeMixin.get_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -507,14 +1043,310 @@ document.write(`
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="nd2py.core.base_visitor.Visitor.generic_visit">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/base_visitor.html#Visitor.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.base_visitor.Visitor.generic_visit" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/base_visitor.html#Visitor.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.base_visitor.Visitor.generic_visit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="nd2py-core-symbol-api-module">
-<h2>nd2py.core.symbol_api module<a class="headerlink" href="#nd2py-core-symbol-api-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.symbol_api">
+<span id="nd2py-core-symbol-api-module"></span><h2>nd2py.core.symbol_api module<a class="headerlink" href="#module-nd2py.core.symbol_api" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.symbol_api.</span></span><span class="sig-name descname"><span class="pre">SymbolAPIMixin</span></span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Symbol API Mixin.</p>
+<p>该类集中管理 Symbol 对象对用户暴露的所有核心功能接口 (Facade)。
+所有具体逻辑均由底层的 Visitor 类实现。</p>
+<p>作为 Symbol 的父类混入，从而保证 symbols.py 的整洁与高可维护性。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_mul_sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_str" title="Link to this definition">#</a></dt>
+<dd><p>Return a string representation of the symbol expression.</p>
+<p>This is a thin wrapper around <code class="xref py py-class docutils literal notranslate"><span class="pre">StringPrinter</span></code> and can produce
+raw, LaTeX, or skeleton forms of the expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the internal raw
+representation instead of a prettified one. Defaults to False.</p></li>
+<li><p><strong>latex</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, format the expression as LaTeX.
+Defaults to False.</p></li>
+<li><p><strong>number_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format specifier used to print
+numeric constants (for example <code class="docutils literal notranslate"><span class="pre">&quot;0.2f&quot;</span></code>). Defaults to an
+empty string, which uses the default formatting.</p></li>
+<li><p><strong>omit_mul_sign</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, omit explicit
+multiplication signs (for example render <code class="docutils literal notranslate"><span class="pre">ab</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">a*b</span></code>). Defaults to False.</p></li>
+<li><p><strong>skeleton</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, ignore concrete numeric values
+and keep only the symbolic structure of the expression.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String representation of the symbol expression.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.to_tree">
+<span class="sig-name descname"><span class="pre">to_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.to_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_tree" title="Link to this definition">#</a></dt>
+<dd><p>Return an ASCII tree representation of the expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format specifier used to print
+numeric constants (for example <code class="docutils literal notranslate"><span class="pre">&quot;0.2f&quot;</span></code>). Defaults to an
+empty string, which uses the default formatting.</p></li>
+<li><p><strong>flat</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, flatten nested <code class="docutils literal notranslate"><span class="pre">Add</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Mul</span></code> nodes into a single level. Defaults to False.</p></li>
+<li><p><strong>skeleton</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, ignore concrete numeric values
+and keep only the symbolic structure of the expression.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Multi-line string visualising the expression tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval" title="Link to this definition">#</a></dt>
+<dd><p>Evaluate the expression numerically using NumPy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vars</strong> (<em>dict</em><em>, </em><em>optional</em>) – Mapping from variable names to their
+numerical values. Values can be scalars or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>
+objects. Defaults to an empty dictionary.</p></li>
+<li><p><strong>edge_list</strong> (<em>Tuple</em><em>[</em><em>List</em><em>[</em><em>int</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Pair of
+integer lists <code class="docutils literal notranslate"><span class="pre">(sources,</span> <span class="pre">targets)</span></code> describing directed
+edges in a graph. Node indices start from 0. If provided,
+this is used to parameterise graph-related symbols.</p></li>
+<li><p><strong>num_nodes</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of nodes in the underlying
+graph. If omitted, it may be inferred from <code class="docutils literal notranslate"><span class="pre">edge_list</span></code> when
+possible.</p></li>
+<li><p><strong>use_eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Small positive value added in
+denominators or other potentially unstable operations to avoid
+division by zero and improve numerical stability. Defaults to
+0.0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Numerical evaluation result of the
+expression, whose shape depends on the symbol and inputs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray | float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.eval_torch">
+<span class="sig-name descname"><span class="pre">eval_torch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.eval_torch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval_torch" title="Link to this definition">#</a></dt>
+<dd><p>Evaluate the expression numerically using PyTorch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vars</strong> (<em>dict</em><em>, </em><em>optional</em>) – Mapping from variable names to their
+numerical values. Values can be scalars or <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code>
+objects. Defaults to an empty dictionary.</p></li>
+<li><p><strong>edge_list</strong> (<em>Tuple</em><em>[</em><em>List</em><em>[</em><em>int</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Pair of
+integer lists <code class="docutils literal notranslate"><span class="pre">(sources,</span> <span class="pre">targets)</span></code> describing directed
+edges in a graph. Node indices start from 0. If provided,
+this is used to parameterise graph-related symbols.</p></li>
+<li><p><strong>num_nodes</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of nodes in the underlying
+graph. If omitted, it may be inferred from <code class="docutils literal notranslate"><span class="pre">edge_list</span></code> when
+possible.</p></li>
+<li><p><strong>use_eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Small positive value added in
+denominators or other potentially unstable operations to avoid
+division by zero and improve numerical stability. Defaults to
+0.0.</p></li>
+<li><p><strong>device</strong> (<em>str</em><em>, </em><em>optional</em>) – Target device on which tensors are
+allocated and computations are performed, such as <code class="docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code>
+or <code class="docutils literal notranslate"><span class="pre">&quot;cuda&quot;</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Numerical evaluation result of the expression.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.split_by_add">
+<span class="sig-name descname"><span class="pre">split_by_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_by_sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_mul</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_div</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_aggr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_rgga</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_sour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_targ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_readout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_coefficients</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Symbol'</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.split_by_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_add" title="Link to this definition">#</a></dt>
+<dd><p>Split an additive expression into its additive terms.</p>
+<p>The current symbol is treated as the root. Depending on the flags,
+this can also expand multiplication, division, aggregation and
+readout nodes before splitting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split_by_sub</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, treat subtraction nodes
+as additions when splitting, so that <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">-</span> <span class="pre">b</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">-b]</span></code>. Defaults to False.</p></li>
+<li><p><strong>expand_mul</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand <code class="docutils literal notranslate"><span class="pre">Mul</span></code> nodes before
+splitting. Defaults to False.</p></li>
+<li><p><strong>expand_div</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand <code class="docutils literal notranslate"><span class="pre">Div</span></code> nodes before
+splitting. Defaults to False.</p></li>
+<li><p><strong>expand_aggr</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand aggregation nodes
+(for example graph aggregators) before splitting. Defaults to
+False.</p></li>
+<li><p><strong>expand_rgga</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand RGGA-related nodes
+before splitting. Defaults to False.</p></li>
+<li><p><strong>expand_sour</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand source-related
+transformations before splitting. Defaults to False.</p></li>
+<li><p><strong>expand_targ</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, expand target-related
+transformations before splitting. Defaults to False.</p></li>
+<li><p><strong>expand_readout</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, push <code class="docutils literal notranslate"><span class="pre">Readout</span></code> inside
+additions, so that for example <code class="docutils literal notranslate"><span class="pre">Readout(a</span> <span class="pre">+</span> <span class="pre">b)</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">[Readout(a),</span> <span class="pre">Readout(b)]</span></code>. Defaults to False.</p></li>
+<li><p><strong>remove_coefficients</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, drop scalar
+coefficients from the resulting symbols. Defaults to False.</p></li>
+<li><p><strong>merge_bias</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, merge additive bias terms
+into neighbouring symbols when appropriate. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of symbols corresponding to each additive term.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol">Symbol</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.split_by_mul">
+<span class="sig-name descname"><span class="pre">split_by_mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_by_div</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_coefficients</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Symbol'</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.split_by_mul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_mul" title="Link to this definition">#</a></dt>
+<dd><p>Split a multiplicative expression into its multiplicative factors.</p>
+<p>The current symbol is treated as the root. Depending on the flags,
+this can also split divisions and optionally merge coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split_by_div</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, split divisions so that
+an expression like <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">/</span> <span class="pre">b</span></code> is treated as having factors
+<code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b]</span></code>. Defaults to False.</p></li>
+<li><p><strong>merge_coefficients</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, merge scalar
+coefficients into a single factor instead of returning them as
+separate symbols. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of symbols corresponding to each multiplicative
+factor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol">Symbol</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.fix_nettype">
+<span class="sig-name descname"><span class="pre">fix_nettype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nettype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NetType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'node'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'bottom-up'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'top-down'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top-down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_to_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['remove_targ',</span> <span class="pre">'remove_sour',</span> <span class="pre">'add_aggr',</span> <span class="pre">'add_rgga']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['remove_aggr',</span> <span class="pre">'remove_rgga',</span> <span class="pre">'add_targ',</span> <span class="pre">'add_sour']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_to_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['remove_sour',</span> <span class="pre">'remove_targ',</span> <span class="pre">'add_readout']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['remove_aggr',</span> <span class="pre">'remove_rgga',</span> <span class="pre">'add_readout']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar_to_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['keep']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar_to_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['keep']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.fix_nettype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.fix_nettype" title="Link to this definition">#</a></dt>
+<dd><p>Normalize nettypes of all symbols in the expression.</p>
+<p>This is useful in GP or LLM-based symbolic regression where equations
+are generated automatically and may contain inconsistent nettype
+annotations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nettype</strong> (<em>NetType</em><em>, </em><em>optional</em>) – Target nettype of the root symbol.
+Typical values include <code class="docutils literal notranslate"><span class="pre">&quot;node&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;edge&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;scalar&quot;</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;node&quot;</span></code>.</p></li>
+<li><p><strong>direction</strong> (<em>Literal</em><em>[</em><em>&quot;bottom-up&quot;</em><em>, </em><em>&quot;top-down&quot;</em><em>]</em><em>, </em><em>optional</em>) – Direction
+in which the fix is propagated through the expression tree.
+Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;top-down&quot;</span></code>.</p></li>
+<li><p><strong>edge_to_node</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting edge symbols to node symbols.</p></li>
+<li><p><strong>node_to_edge</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting node symbols to edge symbols.</p></li>
+<li><p><strong>edge_to_scalar</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting edge symbols to scalar symbols.</p></li>
+<li><p><strong>node_to_scalar</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting node symbols to scalar symbols.</p></li>
+<li><p><strong>scalar_to_node</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting scalar symbols to node symbols.</p></li>
+<li><p><strong>scalar_to_edge</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sequence of transformation
+rules applied when converting scalar symbols to edge symbols.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Root symbol of the expression with consistent nettypes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol">Symbol</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.symbol_api.SymbolAPIMixin.simplify">
+<span class="sig-name descname"><span class="pre">simplify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transform_constant_subtree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_useless_readout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_sin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_cos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_tanh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_sigmoid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_sqrt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_sqrtabs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_nested_logabs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/symbol_api.html#SymbolAPIMixin.simplify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.symbol_api.SymbolAPIMixin.simplify" title="Link to this definition">#</a></dt>
+<dd><p>Apply algebraic simplifications to the expression.</p>
+<p>Each flag controls whether a specific family of simplification rules
+is enabled. By default constant subtrees are folded and useless
+readout nodes are removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transform_constant_subtree</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, evaluate
+and replace constant-only subtrees with their numerical
+result. Defaults to True.</p></li>
+<li><p><strong>remove_useless_readout</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, eliminate
+redundant <code class="docutils literal notranslate"><span class="pre">Readout</span></code> nodes that do not affect the result.
+Defaults to True.</p></li>
+<li><p><strong>remove_nested_sin</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify expressions
+containing nested sine functions when possible. Defaults to
+False.</p></li>
+<li><p><strong>remove_nested_cos</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify expressions
+containing nested cosine functions when possible. Defaults to
+False.</p></li>
+<li><p><strong>remove_nested_tanh</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify
+expressions containing nested hyperbolic tangent functions
+when possible. Defaults to False.</p></li>
+<li><p><strong>remove_nested_sigmoid</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify
+expressions containing nested sigmoid functions when possible.
+Defaults to False.</p></li>
+<li><p><strong>remove_nested_sqrt</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify nested
+square root expressions when possible. Defaults to False.</p></li>
+<li><p><strong>remove_nested_sqrtabs</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify nested
+<code class="docutils literal notranslate"><span class="pre">sqrtabs</span></code>-like expressions when possible. Defaults to False.</p></li>
+<li><p><strong>remove_nested_exp</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify nested
+exponential expressions when possible. Defaults to False.</p></li>
+<li><p><strong>remove_nested_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify nested
+logarithm expressions when possible. Defaults to False.</p></li>
+<li><p><strong>remove_nested_logabs</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, simplify nested
+<code class="docutils literal notranslate"><span class="pre">logabs</span></code>-like expressions when possible. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A simplified version of the original symbol expression.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol">Symbol</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -573,7 +1405,20 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-symbol-api-module">nd2py.core.symbol_api module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.symbol_api">nd2py.core.symbol_api module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_str"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.to_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.to_tree"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.to_tree()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.eval()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.eval_torch"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.eval_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_add"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.split_by_add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.split_by_mul"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.split_by_mul()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.fix_nettype"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.fix_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.symbol_api.SymbolAPIMixin.simplify"><code class="docutils literal notranslate"><span class="pre">SymbolAPIMixin.simplify()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -598,7 +1443,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

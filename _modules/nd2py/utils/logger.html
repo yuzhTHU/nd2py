@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.utils.logger &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/utils/logger';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.utils.logger</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging.handlers</span><span class="w"> </span><span class="kn">import</span> <span class="n">RotatingFileHandler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;init_logger&quot;</span><span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LogFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="n">color_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;37m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRACE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;448;5;240m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;INFO&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;34m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;NOTE&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;38;5;46m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;WARNING&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;48;5;220m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;30;41m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CRITICAL&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;30;45m</span><span class="si">{}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">exp_name</span><span class="p">,</span> <span class="n">colorful</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="s2">&quot;%y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">show_lineno_for</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;TRACE&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">],</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp_name</span> <span class="o">=</span> <span class="n">exp_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colorful</span> <span class="o">=</span> <span class="n">colorful</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_format</span> <span class="o">=</span> <span class="n">time_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_lineno_for</span> <span class="o">=</span> <span class="n">show_lineno_for</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exp_name</span><span class="p">,</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># D, I, N, W, E, C</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_format</span><span class="p">),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">created</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)),</span>
+        <span class="p">]</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">prefixes</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()])</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">levelname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_lineno_for</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">pathname</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+            <span class="n">prefix</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">record</span><span class="o">.</span><span class="n">lineno</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="c1"># message = message.replace(&quot;\n&quot;, &quot;\n&quot; + &quot; &quot; * len(prefix + &quot; &quot;))</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorful</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+                <span class="o">+</span> <span class="n">message</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\033\[[\d;]+m&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+
+<span class="c1"># Logging level between INFO and WARNING, used for log something important but not unexpected.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEnabledFor</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="c1"># Logging level between DEBUG and INFO, used for warn something unexpected but not important.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEnabledFor</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="init_logger">
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.logger.init_logger">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_logger</span><span class="p">(</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">exp_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">info_level</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span>
+        <span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="s2">&quot;trace&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;note&quot;</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;critical&quot;</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span>
+    <span class="n">file_max_size_MB</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">,</span>
+    <span class="n">file_backup_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">show_lineno_for_all_levels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the logger for the package.</span>
+<span class="sd">    Args:</span>
+<span class="sd">    - package_name: The name of the package / project, used in loggin.getLogger({package_name}.{path}.{to}.{file}).</span>
+<span class="sd">    - exp_name: The name of the experiment, used in log prefix.</span>
+<span class="sd">    - log_file: The path to the log file. If None, no file logging is performed.</span>
+<span class="sd">    - info_level: The level of info logging. Can be one of &#39;debug&#39;, &#39;info&#39;, &#39;note&#39;, &#39;warning&#39;, &#39;error&#39;, &#39;critical&#39;.</span>
+<span class="sd">    - file_max_size_MB: The maximum size of the log file in MB. Default is 50MB.</span>
+<span class="sd">    - file_backup_count: The number of backup files to keep. Default is 100.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;NOTE&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">note</span> <span class="o">=</span> <span class="n">note</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">NOTE</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;TRACE&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">TRACE</span> <span class="o">=</span> <span class="mi">15</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">package_name</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">show_lineno_for</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TRACE&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">show_lineno_for_all_levels</span><span class="p">:</span>
+        <span class="n">show_lineno_for</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="s2">&quot;NOTE&quot;</span><span class="p">])</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">info_level</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
+        <span class="n">LogFormatter</span><span class="p">(</span>
+            <span class="n">exp_name</span><span class="p">,</span> <span class="n">colorful</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="s2">&quot;%b</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+            <span class="n">show_lineno_for</span><span class="o">=</span><span class="n">show_lineno_for</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">log_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">log_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">RotatingFileHandler</span><span class="p">(</span>
+            <span class="n">log_file</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+            <span class="n">maxBytes</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">file_max_size_MB</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span>
+            <span class="n">backupCount</span><span class="o">=</span><span class="n">file_backup_count</span><span class="p">,</span>
+            <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
+            <span class="n">LogFormatter</span><span class="p">(</span>
+                <span class="n">exp_name</span><span class="p">,</span> <span class="n">colorful</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="s2">&quot;%b</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+                <span class="n">show_lineno_for</span><span class="o">=</span><span class="n">show_lineno_for</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span></div>
+
+
+
+<span class="n">init_logger</span><span class="p">(</span><span class="s2">&quot;nd2py&quot;</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

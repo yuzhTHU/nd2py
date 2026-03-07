@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.generator package &#8212; nd2py  documentation</title>
+    <title>nd2py.generator package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -359,23 +359,80 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-generator-package">
-<h1>nd2py.generator package<a class="headerlink" href="#nd2py-generator-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.generator">
+<span id="nd2py-generator-package"></span><h1>nd2py.generator package<a class="headerlink" href="#module-nd2py.generator" title="Link to this heading">#</a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.generator.data.html">nd2py.generator.data package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.generator.data.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.data.html#nd2py-generator-data-gmm-generator-module">nd2py.generator.data.gmm_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.data.html#nd2py-generator-data-subeq-generator-module">nd2py.generator.data.subeq_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.data.html#module-nd2py.generator.data.gmm_generator">nd2py.generator.data.gmm_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator"><code class="docutils literal notranslate"><span class="pre">GMMGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">GMMGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.GMM"><code class="docutils literal notranslate"><span class="pre">GMMGenerator.GMM()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.generate_data"><code class="docutils literal notranslate"><span class="pre">GMMGenerator.generate_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.data.html#module-nd2py.generator.data.subeq_generator">nd2py.generator.data.subeq_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator"><code class="docutils literal notranslate"><span class="pre">SubeqGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">SubeqGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator.generate_data"><code class="docutils literal notranslate"><span class="pre">SubeqGenerator.generate_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.generator.eq.html">nd2py.generator.eq package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#nd2py-generator-eq-gplearn-generator-module">nd2py.generator.eq.gplearn_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#nd2py-generator-eq-metaai-generator-module">nd2py.generator.eq.metaai_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#nd2py-generator-eq-snip-generator-module">nd2py.generator.eq.snip_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#module-nd2py.generator.eq.gplearn_generator">nd2py.generator.eq.gplearn_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_node"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.generate_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_leaf"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.generate_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.sample"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.sample()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#module-nd2py.generator.eq.metaai_generator">nd2py.generator.eq.metaai_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.decompose"><code class="docutils literal notranslate"><span class="pre">decompose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_eqtree"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.generate_eqtree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.dist"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.dist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_leaf"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.generate_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_ops"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.generate_ops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_next_pos"><code class="docutils literal notranslate"><span class="pre">MetaAIGenerator.generate_next_pos()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.generator.eq.html#module-nd2py.generator.eq.snip_generator">nd2py.generator.eq.snip_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_eqtree"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator.generate_eqtree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_float"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator.generate_float()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.add_unaries"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator.add_unaries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.add_prefactors"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator.add_prefactors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2.__init__"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator2.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2.add_prefactors"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator2.add_prefactors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator3</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.__init__"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator3.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.generate_eqtree"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator3.generate_eqtree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.generate_float"><code class="docutils literal notranslate"><span class="pre">SNIPGenerator3.generate_float()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -453,7 +510,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

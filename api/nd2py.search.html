@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.search package &#8212; nd2py  documentation</title>
+    <title>nd2py.search package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -367,7 +367,29 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.gp.html">nd2py.search.gp package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.gp.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.gp.html#nd2py-search-gp-gp-module">nd2py.search.gp.gp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.gp.html#module-nd2py.search.gp.gp">nd2py.search.gp.gp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.Individual"><code class="docutils literal notranslate"><span class="pre">Individual</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.Individual.__init__"><code class="docutils literal notranslate"><span class="pre">Individual.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.Individual.copy"><code class="docutils literal notranslate"><span class="pre">Individual.copy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP"><code class="docutils literal notranslate"><span class="pre">GP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.__init__"><code class="docutils literal notranslate"><span class="pre">GP.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.fit"><code class="docutils literal notranslate"><span class="pre">GP.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.predict"><code class="docutils literal notranslate"><span class="pre">GP.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.evolve"><code class="docutils literal notranslate"><span class="pre">GP.evolve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.init_population"><code class="docutils literal notranslate"><span class="pre">GP.init_population()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.tournament"><code class="docutils literal notranslate"><span class="pre">GP.tournament()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.crossover"><code class="docutils literal notranslate"><span class="pre">GP.crossover()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.subtree_mutation"><code class="docutils literal notranslate"><span class="pre">GP.subtree_mutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.hoist_mutation"><code class="docutils literal notranslate"><span class="pre">GP.hoist_mutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.point_mutation"><code class="docutils literal notranslate"><span class="pre">GP.point_mutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.set_fitness"><code class="docutils literal notranslate"><span class="pre">GP.set_fitness()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.get_random_subtree"><code class="docutils literal notranslate"><span class="pre">GP.get_random_subtree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.llmsr.html">nd2py.search.llmsr package</a><ul>
@@ -467,7 +489,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

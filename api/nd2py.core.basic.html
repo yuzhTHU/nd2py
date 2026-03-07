@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core.basic package &#8212; nd2py  documentation</title>
+    <title>nd2py.core.basic package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,8 +348,23 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-basic-get-copy-module">nd2py.core.basic.get_copy module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-basic-get-length-module">nd2py.core.basic.get_length module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.basic.get_copy">nd2py.core.basic.get_copy module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy"><code class="docutils literal notranslate"><span class="pre">GetCopy</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetCopy.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Number"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Variable"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Empty"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Empty()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.basic.get_length">nd2py.core.basic.get_length module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_length.GetLength"><code class="docutils literal notranslate"><span class="pre">GetLength</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_length.GetLength.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetLength.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -361,16 +376,56 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-basic-package">
-<h1>nd2py.core.basic package<a class="headerlink" href="#nd2py-core-basic-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core.basic">
+<span id="nd2py-core-basic-package"></span><h1>nd2py.core.basic package<a class="headerlink" href="#module-nd2py.core.basic" title="Link to this heading">#</a></h1>
+<p>The implementation of basic functionality of Symbol as an object, including:
+- GetCopy: Deep copy a Symbol tree.
+- GetLength: Count the number of nodes in a Symbol tree.</p>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-core-basic-get-copy-module">
-<h2>nd2py.core.basic.get_copy module<a class="headerlink" href="#nd2py-core-basic-get-copy-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.basic.get_copy">
+<span id="nd2py-core-basic-get-copy-module"></span><h2>nd2py.core.basic.get_copy module<a class="headerlink" href="#module-nd2py.core.basic.get_copy" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_copy.GetCopy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.basic.get_copy.</span></span><span class="sig-name descname"><span class="pre">GetCopy</span></span><a class="reference internal" href="../_modules/nd2py/core/basic/get_copy.html#GetCopy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_copy.GetCopy" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_copy.GetCopy.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/basic/get_copy.html#GetCopy.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_copy.GetCopy.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_copy.GetCopy.visit_Number">
+<span class="sig-name descname"><span class="pre">visit_Number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/basic/get_copy.html#GetCopy.visit_Number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_copy.GetCopy.visit_Number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_copy.GetCopy.visit_Variable">
+<span class="sig-name descname"><span class="pre">visit_Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/basic/get_copy.html#GetCopy.visit_Variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_copy.GetCopy.visit_Variable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_copy.GetCopy.visit_Empty">
+<span class="sig-name descname"><span class="pre">visit_Empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/basic/get_copy.html#GetCopy.visit_Empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_copy.GetCopy.visit_Empty" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="nd2py-core-basic-get-length-module">
-<h2>nd2py.core.basic.get_length module<a class="headerlink" href="#nd2py-core-basic-get-length-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.basic.get_length">
+<span id="nd2py-core-basic-get-length-module"></span><h2>nd2py.core.basic.get_length module<a class="headerlink" href="#module-nd2py.core.basic.get_length" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_length.GetLength">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.basic.get_length.</span></span><span class="sig-name descname"><span class="pre">GetLength</span></span><a class="reference internal" href="../_modules/nd2py/core/basic/get_length.html#GetLength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_length.GetLength" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.basic.get_length.GetLength.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/basic/get_length.html#GetLength.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.basic.get_length.GetLength.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -420,8 +475,23 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-basic-get-copy-module">nd2py.core.basic.get_copy module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-basic-get-length-module">nd2py.core.basic.get_length module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.basic.get_copy">nd2py.core.basic.get_copy module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy"><code class="docutils literal notranslate"><span class="pre">GetCopy</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetCopy.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Number"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Variable"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_copy.GetCopy.visit_Empty"><code class="docutils literal notranslate"><span class="pre">GetCopy.visit_Empty()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.basic.get_length">nd2py.core.basic.get_length module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_length.GetLength"><code class="docutils literal notranslate"><span class="pre">GetLength</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.basic.get_length.GetLength.generic_visit"><code class="docutils literal notranslate"><span class="pre">GetLength.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -446,7 +516,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

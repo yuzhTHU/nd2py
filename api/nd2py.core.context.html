@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core.context package &#8212; nd2py  documentation</title>
+    <title>nd2py.core.context package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,10 +348,28 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-copy-value-module">nd2py.core.context.copy_value module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-nettype-inference-module">nd2py.core.context.nettype_inference module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-set-fitable-module">nd2py.core.context.set_fitable module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-warn-once-module">nd2py.core.context.warn_once module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.copy_value">nd2py.core.context.copy_value module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.get_copy_value"><code class="docutils literal notranslate"><span class="pre">get_copy_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.set_copy_value"><code class="docutils literal notranslate"><span class="pre">set_copy_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.no_copy_value"><code class="docutils literal notranslate"><span class="pre">no_copy_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.nettype_inference">nd2py.core.context.nettype_inference module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.nettype_inference"><code class="docutils literal notranslate"><span class="pre">nettype_inference()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.no_nettype_inference"><code class="docutils literal notranslate"><span class="pre">no_nettype_inference()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.set_nettype_inference"><code class="docutils literal notranslate"><span class="pre">set_nettype_inference()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.set_fitable">nd2py.core.context.set_fitable module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.set_fitable.set_fitable"><code class="docutils literal notranslate"><span class="pre">set_fitable()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.set_fitable.no_set_fitable"><code class="docutils literal notranslate"><span class="pre">no_set_fitable()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.warn_once">nd2py.core.context.warn_once module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.warn_once.warn_once"><code class="docutils literal notranslate"><span class="pre">warn_once()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.warn_once.no_warn"><code class="docutils literal notranslate"><span class="pre">no_warn()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -363,22 +381,74 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-context-package">
-<h1>nd2py.core.context package<a class="headerlink" href="#nd2py-core-context-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core.context">
+<span id="nd2py-core-context-package"></span><h1>nd2py.core.context package<a class="headerlink" href="#module-nd2py.core.context" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-core-context-copy-value-module">
-<h2>nd2py.core.context.copy_value module<a class="headerlink" href="#nd2py-core-context-copy-value-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.context.copy_value">
+<span id="nd2py-core-context-copy-value-module"></span><h2>nd2py.core.context.copy_value module<a class="headerlink" href="#module-nd2py.core.context.copy_value" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.copy_value.get_copy_value">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.copy_value.</span></span><span class="sig-name descname"><span class="pre">get_copy_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/copy_value.html#get_copy_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.copy_value.get_copy_value" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.copy_value.set_copy_value">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.copy_value.</span></span><span class="sig-name descname"><span class="pre">set_copy_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/copy_value.html#set_copy_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.copy_value.set_copy_value" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.copy_value.no_copy_value">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.copy_value.</span></span><span class="sig-name descname"><span class="pre">no_copy_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/copy_value.html#no_copy_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.copy_value.no_copy_value" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="nd2py-core-context-nettype-inference-module">
-<h2>nd2py.core.context.nettype_inference module<a class="headerlink" href="#nd2py-core-context-nettype-inference-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.context.nettype_inference">
+<span id="nd2py-core-context-nettype-inference-module"></span><h2>nd2py.core.context.nettype_inference module<a class="headerlink" href="#module-nd2py.core.context.nettype_inference" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.nettype_inference.nettype_inference">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.nettype_inference.</span></span><span class="sig-name descname"><span class="pre">nettype_inference</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/nettype_inference.html#nettype_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.nettype_inference.nettype_inference" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.nettype_inference.no_nettype_inference">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.nettype_inference.</span></span><span class="sig-name descname"><span class="pre">no_nettype_inference</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/nettype_inference.html#no_nettype_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.nettype_inference.no_nettype_inference" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.nettype_inference.set_nettype_inference">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.nettype_inference.</span></span><span class="sig-name descname"><span class="pre">set_nettype_inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/nettype_inference.html#set_nettype_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.nettype_inference.set_nettype_inference" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="nd2py-core-context-set-fitable-module">
-<h2>nd2py.core.context.set_fitable module<a class="headerlink" href="#nd2py-core-context-set-fitable-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.context.set_fitable">
+<span id="nd2py-core-context-set-fitable-module"></span><h2>nd2py.core.context.set_fitable module<a class="headerlink" href="#module-nd2py.core.context.set_fitable" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.set_fitable.set_fitable">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.set_fitable.</span></span><span class="sig-name descname"><span class="pre">set_fitable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/set_fitable.html#set_fitable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.set_fitable.set_fitable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.set_fitable.no_set_fitable">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.set_fitable.</span></span><span class="sig-name descname"><span class="pre">no_set_fitable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/set_fitable.html#no_set_fitable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.set_fitable.no_set_fitable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="nd2py-core-context-warn-once-module">
-<h2>nd2py.core.context.warn_once module<a class="headerlink" href="#nd2py-core-context-warn-once-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.context.warn_once">
+<span id="nd2py-core-context-warn-once-module"></span><h2>nd2py.core.context.warn_once module<a class="headerlink" href="#module-nd2py.core.context.warn_once" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.warn_once.warn_once">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.warn_once.</span></span><span class="sig-name descname"><span class="pre">warn_once</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warn_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/warn_once.html#warn_once"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.warn_once.warn_once" title="Link to this definition">#</a></dt>
+<dd><p>This function is used to limit the number of times a warning is issued</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.context.warn_once.no_warn">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.context.warn_once.</span></span><span class="sig-name descname"><span class="pre">no_warn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/context/warn_once.html#no_warn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.context.warn_once.no_warn" title="Link to this definition">#</a></dt>
+<dd><p>Context manager to suppress warnings temporarily</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -428,10 +498,28 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-copy-value-module">nd2py.core.context.copy_value module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-nettype-inference-module">nd2py.core.context.nettype_inference module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-set-fitable-module">nd2py.core.context.set_fitable module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-context-warn-once-module">nd2py.core.context.warn_once module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.copy_value">nd2py.core.context.copy_value module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.get_copy_value"><code class="docutils literal notranslate"><span class="pre">get_copy_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.set_copy_value"><code class="docutils literal notranslate"><span class="pre">set_copy_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.copy_value.no_copy_value"><code class="docutils literal notranslate"><span class="pre">no_copy_value()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.nettype_inference">nd2py.core.context.nettype_inference module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.nettype_inference"><code class="docutils literal notranslate"><span class="pre">nettype_inference()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.no_nettype_inference"><code class="docutils literal notranslate"><span class="pre">no_nettype_inference()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.nettype_inference.set_nettype_inference"><code class="docutils literal notranslate"><span class="pre">set_nettype_inference()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.set_fitable">nd2py.core.context.set_fitable module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.set_fitable.set_fitable"><code class="docutils literal notranslate"><span class="pre">set_fitable()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.set_fitable.no_set_fitable"><code class="docutils literal notranslate"><span class="pre">no_set_fitable()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.context.warn_once">nd2py.core.context.warn_once module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.warn_once.warn_once"><code class="docutils literal notranslate"><span class="pre">warn_once()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.context.warn_once.no_warn"><code class="docutils literal notranslate"><span class="pre">no_warn()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -456,7 +544,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

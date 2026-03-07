@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core.converter package &#8212; nd2py  documentation</title>
+    <title>nd2py.core.converter package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,11 +348,58 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-from-postorder-module">nd2py.core.converter.from_postorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-from-preorder-module">nd2py.core.converter.from_preorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-parser-module">nd2py.core.converter.parser module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-string-printer-module">nd2py.core.converter.string_printer module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-tree-printer-module">nd2py.core.converter.tree_printer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.from_postorder">nd2py.core.converter.from_postorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_postorder.FromPostorder"><code class="docutils literal notranslate"><span class="pre">FromPostorder</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_postorder.from_postorder"><code class="docutils literal notranslate"><span class="pre">from_postorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.from_preorder">nd2py.core.converter.from_preorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.FromPreorder"><code class="docutils literal notranslate"><span class="pre">FromPreorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.FromPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">FromPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.from_preorder"><code class="docutils literal notranslate"><span class="pre">from_preorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.parser">nd2py.core.converter.parser module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.parser.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.string_printer">nd2py.core.converter.string_printer module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter"><code class="docutils literal notranslate"><span class="pre">StringPrinter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">StringPrinter.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Empty()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sub"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sub()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Mul()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Div"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Div()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Neg"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Neg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Inv"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Inv()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow2"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow3"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow3()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sour"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sour()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Targ"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Targ()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Aggr()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Rgga()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.tree_printer">nd2py.core.converter.tree_printer module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter"><code class="docutils literal notranslate"><span class="pre">TreePrinter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">TreePrinter.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Empty()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Mul()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -364,25 +411,189 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-converter-package">
-<h1>nd2py.core.converter package<a class="headerlink" href="#nd2py-core-converter-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core.converter">
+<span id="nd2py-core-converter-package"></span><h1>nd2py.core.converter package<a class="headerlink" href="#module-nd2py.core.converter" title="Link to this heading">#</a></h1>
+<p>This module provides utilities for converting between different representations of symbolic expressions, including:
+- Parsing strings into symbolic expression trees.
+- Converting symbolic expression trees into string representations.</p>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-core-converter-from-postorder-module">
-<h2>nd2py.core.converter.from_postorder module<a class="headerlink" href="#nd2py-core-converter-from-postorder-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.converter.from_postorder">
+<span id="nd2py-core-converter-from-postorder-module"></span><h2>nd2py.core.converter.from_postorder module<a class="headerlink" href="#module-nd2py.core.converter.from_postorder" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.converter.from_postorder.FromPostorder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.from_postorder.</span></span><span class="sig-name descname"><span class="pre">FromPostorder</span></span><a class="reference internal" href="../_modules/nd2py/core/converter/from_postorder.html#FromPostorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.from_postorder.FromPostorder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.converter.from_postorder.from_postorder">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.from_postorder.</span></span><span class="sig-name descname"><span class="pre">from_postorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/from_postorder.html#from_postorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.from_postorder.from_postorder" title="Link to this definition">#</a></dt>
+<dd><p>Construct a Symbol tree from a list of Symbols in postorder traversal order.</p>
+</dd></dl>
+
 </section>
-<section id="nd2py-core-converter-from-preorder-module">
-<h2>nd2py.core.converter.from_preorder module<a class="headerlink" href="#nd2py-core-converter-from-preorder-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.converter.from_preorder">
+<span id="nd2py-core-converter-from-preorder-module"></span><h2>nd2py.core.converter.from_preorder module<a class="headerlink" href="#module-nd2py.core.converter.from_preorder" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.converter.from_preorder.FromPreorder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.from_preorder.</span></span><span class="sig-name descname"><span class="pre">FromPreorder</span></span><a class="reference internal" href="../_modules/nd2py/core/converter/from_preorder.html#FromPreorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.from_preorder.FromPreorder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.from_preorder.FromPreorder.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">following_nodes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/from_preorder.html#FromPreorder.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.from_preorder.FromPreorder.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.converter.from_preorder.from_preorder">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.from_preorder.</span></span><span class="sig-name descname"><span class="pre">from_preorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/from_preorder.html#from_preorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.from_preorder.from_preorder" title="Link to this definition">#</a></dt>
+<dd><p>Construct a Symbol tree from a list of Symbols in preorder traversal order.</p>
+</dd></dl>
+
 </section>
-<section id="nd2py-core-converter-parser-module">
-<h2>nd2py.core.converter.parser module<a class="headerlink" href="#nd2py-core-converter-parser-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.converter.parser">
+<span id="nd2py-core-converter-parser-module"></span><h2>nd2py.core.converter.parser module<a class="headerlink" href="#module-nd2py.core.converter.parser" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.core.converter.parser.parse">
+<span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.parser.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">callable</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/parser.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.parser.parse" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="nd2py-core-converter-string-printer-module">
-<h2>nd2py.core.converter.string_printer module<a class="headerlink" href="#nd2py-core-converter-string-printer-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.converter.string_printer">
+<span id="nd2py-core-converter-string-printer-module"></span><h2>nd2py.core.converter.string_printer module<a class="headerlink" href="#module-nd2py.core.converter.string_printer" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.string_printer.</span></span><span class="sig-name descname"><span class="pre">StringPrinter</span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Empty">
+<span class="sig-name descname"><span class="pre">visit_Empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty" title="nd2py.core.symbols.empty.Empty"><span class="pre">Empty</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Empty" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Number">
+<span class="sig-name descname"><span class="pre">visit_Number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number" title="nd2py.core.symbols.number.Number"><span class="pre">Number</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Variable">
+<span class="sig-name descname"><span class="pre">visit_Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><span class="pre">Variable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Variable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Add">
+<span class="sig-name descname"><span class="pre">visit_Add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Add" title="nd2py.core.symbols.operands.Add"><span class="pre">Add</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Add" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Sub">
+<span class="sig-name descname"><span class="pre">visit_Sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sub" title="nd2py.core.symbols.operands.Sub"><span class="pre">Sub</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Sub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sub" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Mul">
+<span class="sig-name descname"><span class="pre">visit_Mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Mul" title="nd2py.core.symbols.operands.Mul"><span class="pre">Mul</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Mul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Mul" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Div">
+<span class="sig-name descname"><span class="pre">visit_Div</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Div" title="nd2py.core.symbols.operands.Div"><span class="pre">Div</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Div"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Div" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Pow">
+<span class="sig-name descname"><span class="pre">visit_Pow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow" title="nd2py.core.symbols.operands.Pow"><span class="pre">Pow</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Pow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Neg">
+<span class="sig-name descname"><span class="pre">visit_Neg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Neg" title="nd2py.core.symbols.operands.Neg"><span class="pre">Neg</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Neg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Neg" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Inv">
+<span class="sig-name descname"><span class="pre">visit_Inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Inv" title="nd2py.core.symbols.operands.Inv"><span class="pre">Inv</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Inv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Inv" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Pow2">
+<span class="sig-name descname"><span class="pre">visit_Pow2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow2" title="nd2py.core.symbols.operands.Pow2"><span class="pre">Pow2</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Pow2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Pow3">
+<span class="sig-name descname"><span class="pre">visit_Pow3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Pow3" title="nd2py.core.symbols.operands.Pow3"><span class="pre">Pow3</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Pow3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow3" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Sour">
+<span class="sig-name descname"><span class="pre">visit_Sour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Sour" title="nd2py.core.symbols.operands.Sour"><span class="pre">Sour</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Sour"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sour" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Targ">
+<span class="sig-name descname"><span class="pre">visit_Targ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Targ" title="nd2py.core.symbols.operands.Targ"><span class="pre">Targ</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Targ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Targ" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Aggr">
+<span class="sig-name descname"><span class="pre">visit_Aggr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Aggr" title="nd2py.core.symbols.operands.Aggr"><span class="pre">Aggr</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Aggr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Aggr" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.string_printer.StringPrinter.visit_Rgga">
+<span class="sig-name descname"><span class="pre">visit_Rgga</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Rgga" title="nd2py.core.symbols.operands.Rgga"><span class="pre">Rgga</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/string_printer.html#StringPrinter.visit_Rgga"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Rgga" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="nd2py-core-converter-tree-printer-module">
-<h2>nd2py.core.converter.tree_printer module<a class="headerlink" href="#nd2py-core-converter-tree-printer-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.converter.tree_printer">
+<span id="nd2py-core-converter-tree-printer-module"></span><h2>nd2py.core.converter.tree_printer module<a class="headerlink" href="#module-nd2py.core.converter.tree_printer" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.converter.tree_printer.</span></span><span class="sig-name descname"><span class="pre">TreePrinter</span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.visit_Empty">
+<span class="sig-name descname"><span class="pre">visit_Empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.visit_Empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Empty" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.visit_Number">
+<span class="sig-name descname"><span class="pre">visit_Number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number" title="nd2py.core.symbols.number.Number"><span class="pre">Number</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.visit_Number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.visit_Variable">
+<span class="sig-name descname"><span class="pre">visit_Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><span class="pre">Variable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.visit_Variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Variable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.visit_Add">
+<span class="sig-name descname"><span class="pre">visit_Add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Add" title="nd2py.core.symbols.operands.Add"><span class="pre">Add</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.visit_Add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Add" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.converter.tree_printer.TreePrinter.visit_Mul">
+<span class="sig-name descname"><span class="pre">visit_Mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.operands.Mul" title="nd2py.core.symbols.operands.Mul"><span class="pre">Mul</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Type</span></span></span><a class="reference internal" href="../_modules/nd2py/core/converter/tree_printer.html#TreePrinter.visit_Mul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Mul" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -432,11 +643,58 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-from-postorder-module">nd2py.core.converter.from_postorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-from-preorder-module">nd2py.core.converter.from_preorder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-parser-module">nd2py.core.converter.parser module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-string-printer-module">nd2py.core.converter.string_printer module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-converter-tree-printer-module">nd2py.core.converter.tree_printer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.from_postorder">nd2py.core.converter.from_postorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_postorder.FromPostorder"><code class="docutils literal notranslate"><span class="pre">FromPostorder</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_postorder.from_postorder"><code class="docutils literal notranslate"><span class="pre">from_postorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.from_preorder">nd2py.core.converter.from_preorder module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.FromPreorder"><code class="docutils literal notranslate"><span class="pre">FromPreorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.FromPreorder.generic_visit"><code class="docutils literal notranslate"><span class="pre">FromPreorder.generic_visit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.from_preorder.from_preorder"><code class="docutils literal notranslate"><span class="pre">from_preorder()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.parser">nd2py.core.converter.parser module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.parser.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.string_printer">nd2py.core.converter.string_printer module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter"><code class="docutils literal notranslate"><span class="pre">StringPrinter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">StringPrinter.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Empty()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sub"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sub()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Mul()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Div"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Div()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Neg"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Neg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Inv"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Inv()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow2"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Pow3"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Pow3()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Sour"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Sour()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Targ"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Targ()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Aggr"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Aggr()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.string_printer.StringPrinter.visit_Rgga"><code class="docutils literal notranslate"><span class="pre">StringPrinter.visit_Rgga()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.converter.tree_printer">nd2py.core.converter.tree_printer module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter"><code class="docutils literal notranslate"><span class="pre">TreePrinter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.generic_visit"><code class="docutils literal notranslate"><span class="pre">TreePrinter.generic_visit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Empty"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Empty()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Number"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Variable"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Variable()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Add"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Add()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.converter.tree_printer.TreePrinter.visit_Mul"><code class="docutils literal notranslate"><span class="pre">TreePrinter.visit_Mul()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -461,7 +719,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

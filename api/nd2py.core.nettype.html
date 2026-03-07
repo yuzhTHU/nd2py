@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.core.nettype package &#8212; nd2py  documentation</title>
+    <title>nd2py.core.nettype package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,8 +348,28 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-nettype-inter-nettype-module">nd2py.core.nettype.inter_nettype module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-nettype-nettype-mixin-module">nd2py.core.nettype.nettype_mixin module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.nettype.inter_nettype">nd2py.core.nettype.inter_nettype module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.inter_nettype.InferNettype"><code class="docutils literal notranslate"><span class="pre">InferNettype</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.inter_nettype.InferNettype.generic_visit"><code class="docutils literal notranslate"><span class="pre">InferNettype.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.nettype.nettype_mixin">nd2py.core.nettype.nettype_mixin module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.parent"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.parent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.operands"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.map_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.map_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.__init__"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.possible_nettypes"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.possible_nettypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.infer_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.infer_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.get_nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.get_nettype_range()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype_range</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -361,16 +381,166 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-core-nettype-package">
-<h1>nd2py.core.nettype package<a class="headerlink" href="#nd2py-core-nettype-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.core.nettype">
+<span id="nd2py-core-nettype-package"></span><h1>nd2py.core.nettype package<a class="headerlink" href="#module-nd2py.core.nettype" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-core-nettype-inter-nettype-module">
-<h2>nd2py.core.nettype.inter_nettype module<a class="headerlink" href="#nd2py-core-nettype-inter-nettype-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.nettype.inter_nettype">
+<span id="nd2py-core-nettype-inter-nettype-module"></span><h2>nd2py.core.nettype.inter_nettype module<a class="headerlink" href="#module-nd2py.core.nettype.inter_nettype" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.nettype.inter_nettype.InferNettype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.nettype.inter_nettype.</span></span><span class="sig-name descname"><span class="pre">InferNettype</span></span><a class="reference internal" href="../_modules/nd2py/core/nettype/inter_nettype.html#InferNettype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.inter_nettype.InferNettype" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nd2py.core.html#nd2py.core.base_visitor.Visitor" title="nd2py.core.base_visitor.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a></p>
+<p>基于无栈遍历 (Stackless Traversal) 的类型推导访问器，
+采用两遍扫描法（自底向上 + 自顶向下），自动处理树上的节点类型约束传播。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.nettype.inter_nettype.InferNettype.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/nettype/inter_nettype.html#InferNettype.generic_visit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.inter_nettype.InferNettype.generic_visit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="nd2py-core-nettype-nettype-mixin-module">
-<h2>nd2py.core.nettype.nettype_mixin module<a class="headerlink" href="#nd2py-core-nettype-nettype-mixin-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.core.nettype.nettype_mixin">
+<span id="nd2py-core-nettype-nettype-mixin-module"></span><h2>nd2py.core.nettype.nettype_mixin module<a class="headerlink" href="#module-nd2py.core.nettype.nettype_mixin" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.core.nettype.nettype_mixin.</span></span><span class="sig-name descname"><span class="pre">NetTypeMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nettype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/nettype/nettype_mixin.html#NetTypeMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin that manages nettype candidates and constraint propagation.</p>
+<p>Symbols can carry a network type (nettype) describing their role in a
+computational graph, such as <code class="docutils literal notranslate"><span class="pre">&quot;node&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;edge&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;scalar&quot;</span></code>.
+This mixin tracks:</p>
+<ul class="simple">
+<li><p>User-assigned nettype anchors (hard constraints).</p></li>
+<li><p>The set of possible nettypes each symbol can take.</p></li>
+<li><p>Propagation of constraints across the expression tree.</p></li>
+</ul>
+<p>The host class (typically <code class="docutils literal notranslate"><span class="pre">Symbol</span></code>) is expected to provide:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">self.parent</span></code>: Reference to the parent symbol in the tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.operands</span></code>: List of child symbols.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.map_nettype(*children_nettypes:</span> <span class="pre">NetType)</span> <span class="pre">-&gt;</span> <span class="pre">Optional[NetType]</span></code>:
+Class method that maps child nettypes to a result nettype for the
+operator.</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.parent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.operands">
+<span class="sig-name descname"><span class="pre">operands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.operands" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.map_nettype">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map_nettype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">children_nettypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/nd2py/core/nettype/nettype_mixin.html#NetTypeMixin.map_nettype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.map_nettype" title="Link to this definition">#</a></dt>
+<dd><p>Map child nettypes to the operator’s resulting nettype.</p>
+<p>This method defines the nettype semantics of a symbol class. Concrete
+subclasses must implement their own mapping logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*children_nettypes</strong> (<em>NetType</em>) – Nettypes of each operand, in order.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Inferred nettype of the operator, or <code class="docutils literal notranslate"><span class="pre">None</span></code>
+if the combination is invalid or cannot be resolved.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[NetType]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nettype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/nettype/nettype_mixin.html#NetTypeMixin.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize nettype state for a symbol-like object.</p>
+<p>The initial nettype can be provided as a single value or a set of
+allowed values. When specified, it acts as a hard constraint (anchor)
+that guides later nettype inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nettype</strong> (<em>Optional</em><em>[</em><em>NetType</em><em> | </em><em>Set</em><em>[</em><em>NetType</em><em>]</em><em>]</em>) – Initial nettype
+constraint. If a string in <code class="docutils literal notranslate"><span class="pre">ALL_NETTYPES</span></code>, it is converted
+to a singleton set; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, all nettypes are initially
+allowed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.possible_nettypes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">possible_nettypes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.possible_nettypes" title="Link to this definition">#</a></dt>
+<dd><p>Return the set of possible nettypes for this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current candidate nettypes that are consistent with
+all known constraints.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Set[NetType]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nettype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype" title="Link to this definition">#</a></dt>
+<dd><p>Return the resolved nettype if unique.</p>
+<p>When the candidate set contains exactly one element, this property
+returns that nettype. Otherwise it returns <code class="docutils literal notranslate"><span class="pre">None</span></code> to indicate that
+the nettype is still ambiguous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Unique nettype if determined, otherwise
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[NetType]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.infer_nettype">
+<span class="sig-name descname"><span class="pre">infer_nettype</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/core/nettype/nettype_mixin.html#NetTypeMixin.infer_nettype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.infer_nettype" title="Link to this definition">#</a></dt>
+<dd><p>Infer possible nettypes for the entire expression tree.</p>
+<p>This method uses the currently assigned nettype constraints as
+anchors and propagates them through the symbol tree to update
+<code class="docutils literal notranslate"><span class="pre">_possible_nettypes</span></code> of all involved symbols.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.get_nettype_range">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_nettype_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/core/nettype/nettype_mixin.html#NetTypeMixin.get_nettype_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.get_nettype_range" title="Link to this definition">#</a></dt>
+<dd><p>Compute and cache the full nettype range for this operator class.</p>
+<p>The nettype range is the set of all possible result nettypes that can
+be produced by this operator, over all combinations of valid child
+nettypes. The result is cached on the class to avoid recomputation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Set of all nettypes that this operator can yield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Set[NetType]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype_range">
+<span class="sig-name descname"><span class="pre">nettype_range</span></span><a class="headerlink" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype_range" title="Link to this definition">#</a></dt>
+<dd><p>自定义的类属性装饰器。
+允许通过 ClassName.property_name 直接获取动态计算的类属性，
+同时也支持 instance.property_name。</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -420,8 +590,28 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-nettype-inter-nettype-module">nd2py.core.nettype.inter_nettype module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-core-nettype-nettype-mixin-module">nd2py.core.nettype.nettype_mixin module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.nettype.inter_nettype">nd2py.core.nettype.inter_nettype module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.inter_nettype.InferNettype"><code class="docutils literal notranslate"><span class="pre">InferNettype</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.inter_nettype.InferNettype.generic_visit"><code class="docutils literal notranslate"><span class="pre">InferNettype.generic_visit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.core.nettype.nettype_mixin">nd2py.core.nettype.nettype_mixin module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.parent"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.parent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.operands"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.operands</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.map_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.map_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.__init__"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.possible_nettypes"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.possible_nettypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.infer_nettype"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.infer_nettype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.get_nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.get_nettype_range()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.core.nettype.nettype_mixin.NetTypeMixin.nettype_range"><code class="docutils literal notranslate"><span class="pre">NetTypeMixin.nettype_range</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -446,7 +636,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

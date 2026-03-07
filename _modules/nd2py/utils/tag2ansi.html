@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.utils.tag2ansi &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/utils/tag2ansi';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.utils.tag2ansi</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tag2ansi&quot;</span><span class="p">]</span>
+
+<span class="n">RESET_CODE</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">}</span>
+
+<span class="n">STYLE_TABLE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dim&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;italic&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;underline&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blink&quot;</span><span class="p">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reverse&quot;</span><span class="p">:</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hidden&quot;</span><span class="p">:</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;strike&quot;</span><span class="p">:</span> <span class="s2">&quot;9&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">COLOR_TABLE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;black&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="s2">&quot;31&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="s2">&quot;33&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blue&quot;</span><span class="p">:</span> <span class="s2">&quot;34&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;magenta&quot;</span><span class="p">:</span> <span class="s2">&quot;35&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cyan&quot;</span><span class="p">:</span> <span class="s2">&quot;36&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;white&quot;</span><span class="p">:</span> <span class="s2">&quot;37&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightblack&quot;</span><span class="p">:</span> <span class="s2">&quot;90&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightred&quot;</span><span class="p">:</span> <span class="s2">&quot;91&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightgreen&quot;</span><span class="p">:</span> <span class="s2">&quot;92&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightyellow&quot;</span><span class="p">:</span> <span class="s2">&quot;93&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightblue&quot;</span><span class="p">:</span> <span class="s2">&quot;94&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightmagenta&quot;</span><span class="p">:</span> <span class="s2">&quot;95&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightcyan&quot;</span><span class="p">:</span> <span class="s2">&quot;96&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brightwhite&quot;</span><span class="p">:</span> <span class="s2">&quot;97&quot;</span><span class="p">,</span>
+    <span class="c1"># --- 扩展常用颜色 (256色或TrueColor) ---</span>
+    <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;208&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pink&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;213&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hotpink&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;205&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;purple&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;129&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;violet&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;177&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brown&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;94&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;olive&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;100&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lime&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;118&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;teal&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;30&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;navy&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;19&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gold&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;220&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;silver&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;250&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gray&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;245&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;darkgray&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;240&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lightgray&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;252&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indigo&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;57&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;coral&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;203&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;skyblue&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;117&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;turquoise&quot;</span><span class="p">:</span> <span class="s2">&quot;38;5;45&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    支持 [bold+red], [italic+#FFAA00], [color123]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">STYLE_TABLE</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[</span><span class="si">{</span><span class="n">STYLE_TABLE</span><span class="p">[</span><span class="n">part</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span>
+        <span class="k">elif</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">COLOR_TABLE</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[</span><span class="si">{</span><span class="n">COLOR_TABLE</span><span class="p">[</span><span class="n">part</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span>
+        <span class="k">elif</span> <span class="n">part</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">))</span>
+                <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">idx</span> <span class="o">&lt;=</span> <span class="mi">255</span>
+                <span class="n">seq</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[38;5;</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">m&quot;</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">part</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">seq</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[38;2;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">;</span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">;</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">m&quot;</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">seq</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_matching_paren</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;)&quot;</span><span class="p">:</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span> <span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span> <span class="s2">&quot;[&quot;</span><span class="p">}</span>
+    <span class="n">opens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pairs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">closes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pairs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:],</span> <span class="n">start</span><span class="o">=</span><span class="n">start_idx</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">opens</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">closes</span> <span class="ow">and</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">pairs</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">==</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stack</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">auto_insert_reset</span><span class="p">(</span><span class="n">segment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset_pos</span> <span class="o">:=</span> <span class="n">segment</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;[reset]&quot;</span><span class="p">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">segment</span><span class="p">[:</span><span class="n">reset_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment</span><span class="p">[</span><span class="n">reset_pos</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;[reset]&quot;</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="n">stripped</span> <span class="o">:=</span> <span class="n">segment</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="n">segment</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">first_char</span> <span class="o">:=</span> <span class="n">stripped</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">isalnum</span><span class="p">():</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z0-9/_-]&quot;</span><span class="p">,</span> <span class="n">stripped</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">segment</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">stripped</span><span class="p">)</span>
+        <span class="n">insert_at</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">segment</span><span class="p">[:</span><span class="n">insert_at</span><span class="p">]</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment</span><span class="p">[</span><span class="n">insert_at</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">first_char</span> <span class="ow">in</span> <span class="s2">&quot;({[&quot;</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">stripped</span><span class="p">)</span>
+        <span class="n">match_idx</span> <span class="o">=</span> <span class="n">find_matching_paren</span><span class="p">(</span><span class="n">segment</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match_idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">segment</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">segment</span><span class="p">[:</span> <span class="n">match_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment</span><span class="p">[</span><span class="n">match_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">segment</span> <span class="o">+</span> <span class="n">RESET_CODE</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="tag2ansi">
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.tag2ansi.tag2ansi">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tag2ansi</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    将 [tag1 tag2] 转换为 ANSI 码并智能插入 reset。</span>
+<span class="sd">    支持多种颜色定义方式、样式组合、自动闭合。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[(?!reset)([a-zA-Z0-9+#]+(?: [a-zA-Z0-9+#]+)*)\]&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">last_end</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">active_tag</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+
+        <span class="c1"># 先加前一段</span>
+        <span class="k">if</span> <span class="n">last_end</span> <span class="o">&lt;</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">seg</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">last_end</span><span class="p">:</span><span class="n">start</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">active_tag</span><span class="p">:</span>
+                <span class="n">seg</span> <span class="o">=</span> <span class="n">auto_insert_reset</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+        <span class="n">last_end</span> <span class="o">=</span> <span class="n">end</span>
+
+        <span class="c1"># 当前标签</span>
+        <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;reset&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RESET_CODE</span><span class="p">)</span>
+            <span class="n">active_tag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">=</span> <span class="n">parse_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+                <span class="n">active_tag</span> <span class="o">=</span> <span class="n">tag</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># 收尾</span>
+    <span class="k">if</span> <span class="n">last_end</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">seg</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">last_end</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">active_tag</span><span class="p">:</span>
+            <span class="n">seg</span> <span class="o">=</span> <span class="n">auto_insert_reset</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.search.gp.gp &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/search/gp/gp';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.search.gp.gp</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomState</span><span class="p">,</span> <span class="n">default_rng</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...</span><span class="w"> </span><span class="kn">import</span> <span class="n">core</span> <span class="k">as</span> <span class="n">nd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...utils.timing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Timer</span><span class="p">,</span> <span class="n">NamedTimer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...generator.eq.gplearn_generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPLearnGenerator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...</span><span class="w"> </span><span class="kn">import</span> <span class="n">BFGSFit</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">...core</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Individual">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Individual</span><span class="p">:</span>
+<div class="viewcode-block" id="Individual.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Identity</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Sentinel Node (Identity) Missing! Got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">eqtree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">complexity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Individual(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+<div class="viewcode-block" id="Individual.copy">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual.copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Individual&quot;</span><span class="p">:</span>
+        <span class="n">copy</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">copy</span><span class="o">.</span><span class="n">complexity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">complexity</span>
+        <span class="n">copy</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span>
+        <span class="n">copy</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+        <span class="k">return</span> <span class="n">copy</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GP">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GP</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genetic Programming-based Symbolic Regression</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GP.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Variable</span><span class="p">],</span>
+        <span class="n">binary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Add</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Sub</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Mul</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Div</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Max</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Min</span><span class="p">],</span>
+        <span class="n">unary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Sqrt</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Log</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Abs</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Neg</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Inv</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Sin</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Cos</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Tan</span><span class="p">],</span>
+        <span class="n">max_params</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">elitism_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">tournament_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+        <span class="n">p_crossover</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">p_subtree_mutation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">p_hoist_mutation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">p_point_mutation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">p_point_replace</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">const_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="n">depth_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">full_prob</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;scalar&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">log_per_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
+        <span class="n">log_per_sec</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
+        <span class="n">log_detailed_speed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">use_tqdm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a genetic-programming-based symbolic regression estimator.</span>
+
+<span class="sd">        This configures the function set, search hyperparameters, logging</span>
+<span class="sd">        behavior, and optional graph structure used for nettype-aware</span>
+<span class="sd">        expressions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            variables (List[Variable]): List of input variables that can be</span>
+<span class="sd">                used in generated expressions.</span>
+<span class="sd">            binary (List[Symbol], optional): Binary operator symbols available</span>
+<span class="sd">                to the GP (for example ``Add``, ``Sub``, ``Mul``). Defaults to</span>
+<span class="sd">                a standard arithmetic and min/max set.</span>
+<span class="sd">            unary (List[Symbol], optional): Unary operator symbols available</span>
+<span class="sd">                to the GP (for example ``Sqrt``, ``Log``, ``Sin``). Defaults</span>
+<span class="sd">                to a standard set of common functions.</span>
+<span class="sd">            max_params (int, optional): Maximum number of numeric parameters</span>
+<span class="sd">                (``Number`` nodes) allowed in an expression. Defaults to 2.</span>
+<span class="sd">            elitism_k (int, optional): Number of top individuals carried over</span>
+<span class="sd">                unchanged between generations. Defaults to 10.</span>
+<span class="sd">            population_size (int, optional): Number of individuals in each</span>
+<span class="sd">                generation. Defaults to 1000.</span>
+<span class="sd">            tournament_size (int, optional): Number of individuals competing</span>
+<span class="sd">                in each tournament during parent selection. Defaults to 20.</span>
+<span class="sd">            p_crossover (float, optional): Probability of applying subtree</span>
+<span class="sd">                crossover. Defaults to 0.9.</span>
+<span class="sd">            p_subtree_mutation (float, optional): Probability of applying</span>
+<span class="sd">                subtree mutation. Defaults to 0.01.</span>
+<span class="sd">            p_hoist_mutation (float, optional): Probability of applying hoist</span>
+<span class="sd">                mutation. Defaults to 0.01.</span>
+<span class="sd">            p_point_mutation (float, optional): Probability of applying point</span>
+<span class="sd">                mutation. Defaults to 0.01.</span>
+<span class="sd">            p_point_replace (float, optional): Probability of replacing a</span>
+<span class="sd">                node during point mutation. Defaults to 0.05.</span>
+<span class="sd">            const_range (Tuple[float, float], optional): Range from which</span>
+<span class="sd">                random constants are sampled. Defaults to ``(-1.0, 1.0)``.</span>
+<span class="sd">            depth_range (Tuple[int, int], optional): Minimum and maximum tree</span>
+<span class="sd">                depth for randomly generated expressions. Defaults to</span>
+<span class="sd">                ``(2, 6)``.</span>
+<span class="sd">            full_prob (float, optional): Probability of using the &quot;full&quot;</span>
+<span class="sd">                method rather than &quot;grow&quot; when generating random trees.</span>
+<span class="sd">                Defaults to 0.5.</span>
+<span class="sd">            nettype (Optional[Literal[&quot;node&quot;, &quot;edge&quot;, &quot;scalar&quot;]], optional):</span>
+<span class="sd">                Nettype of the target expression, used when working with graph</span>
+<span class="sd">                data. Defaults to ``&quot;scalar&quot;``.</span>
+<span class="sd">            n_jobs (int, optional): Number of parallel jobs used for evolving</span>
+<span class="sd">                the population. If ``None``, evolution is run in a single</span>
+<span class="sd">                process. Defaults to ``None``.</span>
+<span class="sd">            log_per_iter (float, optional): Log progress every ``log_per_iter``</span>
+<span class="sd">                iterations; use ``float(&quot;inf&quot;)`` to disable iteration-based</span>
+<span class="sd">                logging. Defaults to ``float(&quot;inf&quot;)``.</span>
+<span class="sd">            log_per_sec (float, optional): Log progress every ``log_per_sec``</span>
+<span class="sd">                seconds; use ``float(&quot;inf&quot;)`` to disable time-based logging.</span>
+<span class="sd">                Defaults to ``float(&quot;inf&quot;)``.</span>
+<span class="sd">            log_detailed_speed (bool, optional): If True, include detailed</span>
+<span class="sd">                timing information for individual steps in logs. Defaults to</span>
+<span class="sd">                False.</span>
+<span class="sd">            save_path (str, optional): File path to which JSON lines of</span>
+<span class="sd">                per-iteration records are appended. If ``None``, records are</span>
+<span class="sd">                not written to disk. Defaults to ``None``.</span>
+<span class="sd">            random_state (Optional[int], optional): Seed for the internal RNG</span>
+<span class="sd">                to make runs reproducible. Defaults to ``None``.</span>
+<span class="sd">            n_iter (int, optional): Maximum number of evolution iterations.</span>
+<span class="sd">                Defaults to 100.</span>
+<span class="sd">            use_tqdm (bool, optional): If True, wrap the main evolution loop</span>
+<span class="sd">                with a ``tqdm`` progress bar. Defaults to False.</span>
+<span class="sd">            edge_list (Tuple[List[int], List[int]], optional): Optional graph</span>
+<span class="sd">                edge list ``(sources, targets)`` used when evaluating graph</span>
+<span class="sd">                operators. If provided and ``num_nodes`` is ``None``, the</span>
+<span class="sd">                number of nodes is inferred. Defaults to ``None``.</span>
+<span class="sd">            num_nodes (int, optional): Number of nodes in the underlying</span>
+<span class="sd">                graph. If ``None`` and ``edge_list`` is provided, it is</span>
+<span class="sd">                inferred from the edges. Defaults to ``None``.</span>
+<span class="sd">            **kwargs: Additional unused keyword arguments; a warning is logged</span>
+<span class="sd">                if any are provided.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: If the sum of mutation and crossover probabilities</span>
+<span class="sd">                exceeds 1.0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">num_nodes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edge_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">edge_list</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">binary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unary</span> <span class="o">=</span> <span class="n">unary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_params</span> <span class="o">=</span> <span class="n">max_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elitism_k</span> <span class="o">=</span> <span class="n">elitism_k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nettype</span> <span class="o">=</span> <span class="n">nettype</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_crossover</span> <span class="o">=</span> <span class="n">p_crossover</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_subtree_mutation</span> <span class="o">=</span> <span class="n">p_subtree_mutation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_hoist_mutation</span> <span class="o">=</span> <span class="n">p_hoist_mutation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_point_mutation</span> <span class="o">=</span> <span class="n">p_point_mutation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_point_replace</span> <span class="o">=</span> <span class="n">p_point_replace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const_range</span> <span class="o">=</span> <span class="n">const_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_range</span> <span class="o">=</span> <span class="n">depth_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_prob</span> <span class="o">=</span> <span class="n">full_prob</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">=</span> <span class="n">population_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tournament_size</span> <span class="o">=</span> <span class="n">tournament_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;crossover&quot;</span><span class="p">:</span> <span class="n">p_crossover</span><span class="p">,</span>  <span class="c1"># replace a subtree of parents with a subtree of another parent</span>
+            <span class="s2">&quot;subtree-mutation&quot;</span><span class="p">:</span> <span class="n">p_subtree_mutation</span><span class="p">,</span>  <span class="c1"># replace a subtree of parent with a random tree</span>
+            <span class="s2">&quot;hoist-mutation&quot;</span><span class="p">:</span> <span class="n">p_hoist_mutation</span><span class="p">,</span>  <span class="c1"># select a random subtree of parent</span>
+            <span class="s2">&quot;point-mutation&quot;</span><span class="p">:</span> <span class="n">p_point_mutation</span><span class="p">,</span>  <span class="c1"># replace a random node of parent with a symbol of same arity</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_point_replace</span> <span class="o">=</span> <span class="n">p_point_replace</span>
+        <span class="k">assert</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span><span class="p">[</span><span class="s2">&quot;reproduction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">generator</span> <span class="o">=</span> <span class="n">GPLearnGenerator</span><span class="p">(</span>
+            <span class="n">variables</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span>
+            <span class="n">binary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span>
+            <span class="n">unary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">,</span>
+            <span class="n">const_range</span><span class="o">=</span><span class="n">const_range</span><span class="p">,</span>
+            <span class="n">depth_range</span><span class="o">=</span><span class="n">depth_range</span><span class="p">,</span>
+            <span class="n">full_prob</span><span class="o">=</span><span class="n">full_prob</span><span class="p">,</span>
+            <span class="n">rng</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="p">,</span>
+            <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">,</span>
+            <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_per_iter</span> <span class="o">=</span> <span class="n">log_per_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_per_sec</span> <span class="o">=</span> <span class="n">log_per_sec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_detailed_speed</span> <span class="o">=</span> <span class="n">log_detailed_speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed_timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span> <span class="o">=</span> <span class="n">NamedTimer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span> <span class="o">=</span> <span class="n">use_tqdm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span> <span class="o">=</span> <span class="n">edge_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span> <span class="o">=</span> <span class="n">num_nodes</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Unknown args: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GP.fit">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.fit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the GP model to training data by evolving expression trees.</span>
+
+<span class="sd">        The input features can be provided as a NumPy array, a pandas</span>
+<span class="sd">        ``DataFrame``, or a dictionary mapping variable names to arrays. The</span>
+<span class="sd">        method runs the evolutionary loop, tracks the best individual, and</span>
+<span class="sd">        stores its expression tree in ``self.eqtree``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            X (ndarray | DataFrame | Dict[str, ndarray]): Input features with</span>
+<span class="sd">                shape ``(n_samples, n_dims)`` or an equivalent mapping from</span>
+<span class="sd">                variable names to 1D arrays.</span>
+<span class="sd">            y (ndarray | Series): Target values with shape ``(n_samples,)``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GP: The fitted estimator instance.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If ``X`` is of an unsupported type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:])}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">reset_last_add_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed_timer</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">reset_last_add_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_population</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">),</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">:</span>
+                <span class="n">population</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)(</span>
+                    <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evolve</span><span class="p">)(</span>
+                        <span class="n">population</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">population</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">speed_timer</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+            <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">best</span><span class="o">.</span><span class="n">eqtree</span>
+
+            <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">iter</span><span class="o">=</span><span class="nb">iter</span><span class="p">,</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                <span class="n">fitness</span><span class="o">=</span><span class="n">best</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span>
+                <span class="n">complexity</span><span class="o">=</span><span class="n">best</span><span class="o">.</span><span class="n">complexity</span><span class="p">,</span>
+                <span class="n">mse</span><span class="o">=</span><span class="n">best</span><span class="o">.</span><span class="n">accuracy</span><span class="p">,</span>
+                <span class="n">r2</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">best</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">var</span><span class="p">()),</span>
+                <span class="n">eqtree</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">best</span><span class="p">),</span>
+                <span class="n">population_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="nb">iter</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_iter</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_sec</span>
+            <span class="p">):</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Iter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;iter&quot;</span><span class="p">]</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Fitness&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;fitness&quot;</span><span class="p">]</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Complexity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;complexity&quot;</span><span class="p">]</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;MSE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;mse&quot;</span><span class="p">]</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;R2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;r2&quot;</span><span class="p">]</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Best equation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;eqtree&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_detailed_speed</span><span class="p">:</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Speed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed_timer</span><span class="p">)</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="p">)</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Population size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;population_size&quot;</span><span class="p">]</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[4m</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="se">\033</span><span class="s2">[0m: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">speed_timer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+            <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span> <span class="k">else</span> <span class="n">v</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">best</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Early stopping at iter </span><span class="si">{</span><span class="nb">iter</span><span class="si">}</span><span class="s2"> with accuracy </span><span class="si">{</span><span class="n">best</span><span class="o">.</span><span class="n">accuracy</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">best</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="p">)</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;postprocess&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="GP.predict">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.predict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict target values for ``X`` using the best evolved expression tree.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model not fitted yet&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;x_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+            <span class="nb">vars</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">num_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GP.evolve">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.evolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evolve</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">],</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">children_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">elitism_k</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evolve a population for one generation and return the offspring.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">children_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">children_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span>
+        <span class="k">if</span> <span class="n">elitism_k</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">elitism_k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elitism_k</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">children_size</span> <span class="o">&gt;</span> <span class="n">elitism_k</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;children_size </span><span class="si">{</span><span class="n">children_size</span><span class="si">}</span><span class="s2"> must be greater than elitism_k </span><span class="si">{</span><span class="n">elitism_k</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">top_k</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="n">elitism_k</span><span class="p">]</span>
+        <span class="n">children</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">top_k</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tournament</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">children_size</span> <span class="o">-</span> <span class="n">elitism_k</span><span class="p">),</span>
+            <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method_probs</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;crossover&quot;</span><span class="p">:</span>
+                <span class="n">donor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tournament</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">donor</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;subtree-mutation&quot;</span><span class="p">:</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subtree_mutation</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;hoist-mutation&quot;</span><span class="p">:</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hoist_mutation</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;point-mutation&quot;</span><span class="p">:</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_mutation</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;reproduction&quot;</span><span class="p">:</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span>
+                <span class="ow">and</span> <span class="mi">0</span>
+                <span class="o">&lt;</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">op</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Number&#39;</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">())</span>
+                <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_params</span>
+            <span class="p">):</span>
+                <span class="n">bfgs_fit</span> <span class="o">=</span> <span class="n">BFGSFit</span><span class="p">(</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">num_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span>
+                <span class="p">)</span>
+                <span class="n">bfgs_fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">bfgs_fit</span><span class="o">.</span><span class="n">expression</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;evolve&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_fitness</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;evaluate&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">children</span></div>
+
+
+<div class="viewcode-block" id="GP.init_population">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.init_population">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_population</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the first population of individuals from the generator.&quot;&quot;&quot;</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="p">):</span>
+            <span class="n">eqtree</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="n">empty</span><span class="o">:=</span><span class="n">nd</span><span class="o">.</span><span class="n">Empty</span><span class="p">(),</span> <span class="n">nettype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span>
+            <span class="n">random_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">nettypes</span><span class="o">=</span><span class="n">eqtree</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">,</span> <span class="n">assign_root_nettypes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">eqtree</span> <span class="o">=</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">empty</span><span class="p">,</span> <span class="n">random_tree</span><span class="p">)</span>
+            <span class="n">individual</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_fitness</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">population</span></div>
+
+
+<div class="viewcode-block" id="GP.tournament">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.tournament">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tournament</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">],</span> <span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Select individuals from the population via tournament selection.&quot;&quot;&quot;</span>
+        <span class="n">tournaments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="n">population</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tournament_size</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">winners</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">max</span><span class="p">(</span><span class="n">tournament</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span> <span class="k">for</span> <span class="n">tournament</span> <span class="ow">in</span> <span class="n">tournaments</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">winners</span></div>
+
+
+<div class="viewcode-block" id="GP.crossover">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.crossover">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">,</span> <span class="n">donor</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by replacing a subtree of ``parent`` with one from ``donor``.&quot;&quot;&quot;</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_subtree</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">_subtree</span><span class="o">:=</span><span class="n">nd</span><span class="o">.</span><span class="n">Empty</span><span class="p">())</span>
+        <span class="n">donored_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_subtree</span><span class="p">(</span><span class="n">donor</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nettypes</span><span class="o">=</span><span class="n">_subtree</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">)</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_subtree</span><span class="p">,</span> <span class="n">donored_tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child</span></div>
+
+
+<div class="viewcode-block" id="GP.subtree_mutation">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.subtree_mutation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subtree_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by replacing a random subtree with a newly generated random tree.&quot;&quot;&quot;</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_subtree</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">_subtree</span><span class="o">:=</span><span class="n">nd</span><span class="o">.</span><span class="n">Empty</span><span class="p">())</span>
+        <span class="n">random_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">nettypes</span><span class="o">=</span><span class="n">_subtree</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">,</span> <span class="n">assign_root_nettypes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_subtree</span><span class="p">,</span> <span class="n">random_tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child</span></div>
+
+
+<div class="viewcode-block" id="GP.hoist_mutation">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.hoist_mutation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hoist_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by hoisting a randomly chosen subtree to the root.&quot;&quot;&quot;</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_subtree</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">nettypes</span><span class="o">=</span><span class="n">eqtree</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">)</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">subtree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child</span></div>
+
+
+<div class="viewcode-block" id="GP.point_mutation">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.point_mutation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">point_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by performing point mutation with random symbol replacements or insertions.&quot;&quot;&quot;</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">child</span>
+        <span class="n">mutate_nodes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">node</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">iter_postorder</span><span class="p">()</span>  <span class="c1"># Use postorder to ensure we mutate deeper nodes first</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_point_replace</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">mutate_nodes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">n_operands</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># if self._rng.integers(0, 1):</span>
+                <span class="n">sym</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">generate_leaf</span><span class="p">(</span><span class="n">nettype</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span>
+                <span class="c1"># else:</span>
+                <span class="c1">#     sym = self._rng.choice(self.unary)(node.copy())</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">n_operands</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">child_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">nettype</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">]</span>
+                <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">sym</span>
+                    <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span>
+                    <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">map_nettype</span><span class="p">(</span><span class="o">*</span><span class="n">child_types</span><span class="p">)</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">possible_nettypes</span>
+                <span class="p">]</span>
+                <span class="n">sym</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">nodes</span><span class="p">)(</span><span class="o">*</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">n_operands</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># if self._rng.integers(0, 1):</span>
+                <span class="n">child_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">nettype</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">]</span>
+                <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">sym</span>
+                    <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span>
+                    <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">map_nettype</span><span class="p">(</span><span class="o">*</span><span class="n">child_types</span><span class="p">)</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">possible_nettypes</span>
+                <span class="p">]</span>
+                <span class="k">assert</span> <span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;No possible nettype for </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">child_types</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">sym</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">nodes</span><span class="p">)(</span><span class="o">*</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">)</span>
+                <span class="c1"># else:</span>
+                <span class="c1">#     sym = self._rng.choice(self.unary)(node.copy())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown arity: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">n_operands</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">sym</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child</span></div>
+
+
+<div class="viewcode-block" id="GP.set_fitness">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.set_fitness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute and assign complexity, accuracy, and fitness for an individual.&quot;&quot;&quot;</span>
+        <span class="n">individual</span><span class="o">.</span><span class="n">complexity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">eqtree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;drop&quot;</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+            <span class="nb">vars</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">num_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;evaluate.calc&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
+            <span class="n">individual</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+            <span class="mf">0.999</span><span class="o">**</span><span class="n">individual</span><span class="o">.</span><span class="n">complexity</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">individual</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">fitness</span><span class="p">):</span>
+            <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="GP.get_random_subtree">
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.get_random_subtree">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_random_subtree</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span> <span class="o">|</span> <span class="n">Symbol</span><span class="p">,</span>
+        <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;scalar&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample a subtree from an individual following the GPlearn/Koza (1992) node-selection strategy.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">Individual</span><span class="p">):</span>
+            <span class="n">individual</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">eqtree</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nettypes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">nettypes</span> <span class="o">=</span> <span class="p">{</span><span class="n">nettypes</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">nettypes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">individual</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">()]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">individual</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">nettype</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">:</span>
+                    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">op</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;edge&quot;</span> <span class="ow">and</span> <span class="s2">&quot;node&quot;</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">nd</span><span class="o">.</span><span class="n">Aggr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">:</span>
+                        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Aggr</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">nd</span><span class="o">.</span><span class="n">Rgga</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">:</span>
+                        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Rgga</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">op</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span> <span class="ow">and</span> <span class="s2">&quot;edge&quot;</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">nd</span><span class="o">.</span><span class="n">Sour</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">:</span>
+                        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Sour</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">nd</span><span class="o">.</span><span class="n">Targ</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">:</span>
+                        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Targ</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">nettypes</span><span class="o">=</span><span class="n">nettypes</span><span class="p">,</span> <span class="n">assign_root_nettypes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">n_operands</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">])</span>
+        <span class="n">subtree</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">probs</span> <span class="o">/</span> <span class="n">probs</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">subtree</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

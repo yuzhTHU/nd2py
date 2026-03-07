@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.core.symbols.symbols &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/core/symbols/symbols';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.core.symbols.symbols</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..context.warn_once</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn_once</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..symbol_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymbolAPIMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..tree.tree_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">TreeMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..nettype.nettype_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetTypeMixin</span><span class="p">,</span> <span class="n">NetType</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_number</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">scalar_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the value is a number or a numpy array&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.number</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+
+    <span class="k">if</span> <span class="n">scalar_only</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s2">&quot;biufc&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;scalar&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s2">&quot;biufc&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_number</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">scalar_only</span><span class="o">=</span><span class="n">scalar_only</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_integer_number</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+    <span class="c1"># 排除 NaN 和 Inf</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># 检查是否是整数（包括 float 表示的整数）</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SymbolMeta</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
+
+
+<div class="viewcode-block" id="Symbol">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Symbol</span><span class="p">(</span><span class="n">NetTypeMixin</span><span class="p">,</span> <span class="n">TreeMixin</span><span class="p">,</span> <span class="n">SymbolAPIMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">SymbolMeta</span><span class="p">):</span>
+    <span class="n">n_operands</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Symbol.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">operands</span><span class="p">,</span> <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="o">|</span><span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a Symbol node.</span>
+
+<span class="sd">        This constructor sets the nettype, sanitizes and attaches child</span>
+<span class="sd">        operands, and then triggers a nettype inference pass on the whole</span>
+<span class="sd">        expression tree.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *operands: Child operands of this symbol. The number of operands</span>
+<span class="sd">                must match ``n_operands`` of the concrete subclass. Non-symbol</span>
+<span class="sd">                scalar values are automatically wrapped as ``Number`` symbols.</span>
+<span class="sd">            nettype (Optional[NetType | Set[NetType]]): Nettype constraint for</span>
+<span class="sd">                this symbol, such as ``&quot;node&quot;``, ``&quot;edge&quot;``, or ``&quot;scalar&quot;``,</span>
+<span class="sd">                or a set of allowed nettypes. If provided, it is propagated</span>
+<span class="sd">                through the tree by ``infer_nettype()``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">NetTypeMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">)</span>
+
+        <span class="c1"># 连接父代 (这里自底向上创建符号树, 没有 parent 需要连接)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># 处理并连接子代 (子代在 _sanitize_operands 中被连接到父代)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_operands</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span>
+
+        <span class="c1"># 触发全树的 nettype 更新以传播约束 (如果有的话)</span>
+        <span class="c1"># 大规模构造符号树时可能导致重复 inference 产生性能问题, 需要结合 no_nettype_inference 上下文管理器并在最后手动调用 infer_nettype() 以优化性能</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infer_nettype</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_operands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert raw operands into a standardized list of ``Symbol`` objects.</span>
+
+<span class="sd">        This method fills missing operands with ``Empty``, wraps numeric values</span>
+<span class="sd">        as ``Number`` symbols, and ensures that each child has a unique parent</span>
+<span class="sd">        by copying shared subexpressions when necessary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operands (List[Symbol]): Raw operand list passed to the</span>
+<span class="sd">                constructor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Symbol]: Sanitized list of operands attached to this symbol.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the number of operands does not match</span>
+<span class="sd">                ``self.n_operands``.</span>
+<span class="sd">            TypeError: If an operand is neither a ``Symbol`` nor a valid</span>
+<span class="sd">                numeric value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.empty</span><span class="w"> </span><span class="kn">import</span> <span class="n">Empty</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.number</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.variable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Variable</span>
+
+        <span class="n">operands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span>
+
+        <span class="c1"># 如果 operands 数量不对，尝试用 Empty 补全</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_operands</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">operands</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">operands</span> <span class="o">=</span> <span class="p">[</span><span class="n">Empty</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_operands</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_operands</span><span class="si">}</span><span class="s2"> operands in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># 类型转换与检查</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">operands</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">is_number</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">scalar_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="n">operands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid operand type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">op</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected Symbol or number.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># 所有权检查以保持树形结构</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">operands</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">warn_once</span><span class="p">(</span><span class="s2">&quot;subexpression_with_parent&quot;</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The object &#39;</span><span class="si">{</span><span class="n">child</span><span class="si">}</span><span class="s2">&#39; cannot serve as a subexpression in multiple locations. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;It will be copied to avoid this behavior.&quot;</span><span class="p">,</span>
+                        <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+                        <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="n">operands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">operands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">operands</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_str</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_str</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..basic</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetLength</span>
+
+        <span class="k">return</span> <span class="n">GetLength</span><span class="p">()(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Add</span>
+
+        <span class="k">return</span> <span class="n">Add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Add</span>
+
+        <span class="k">return</span> <span class="n">Add</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sub</span>
+
+        <span class="k">return</span> <span class="n">Sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sub</span>
+
+        <span class="k">return</span> <span class="n">Sub</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mul</span>
+
+        <span class="k">return</span> <span class="n">Mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mul</span>
+
+        <span class="k">return</span> <span class="n">Mul</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Div</span>
+
+        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Div</span>
+
+        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pow2</span><span class="p">,</span> <span class="n">Pow3</span><span class="p">,</span> <span class="n">Sqrt</span><span class="p">,</span> <span class="n">Inv</span><span class="p">,</span> <span class="n">Pow</span>
+
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="mf">2.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Pow2</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="mf">3.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Pow3</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pow</span>
+
+        <span class="k">return</span> <span class="n">Pow</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Neg</span>
+
+        <span class="k">return</span> <span class="n">Neg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.operands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Inv</span>
+
+        <span class="k">return</span> <span class="n">Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Symbol.copy">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a deep copy of this symbol.</span>
+
+<span class="sd">        The copied symbol has the same tree structure and values as the</span>
+<span class="sd">        original but does not share ``parent`` links, so it can be safely</span>
+<span class="sd">        inserted into a different expression tree.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Symbol: A deep copy of the current symbol.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..basic</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetCopy</span>
+
+        <span class="k">return</span> <span class="n">GetCopy</span><span class="p">()(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Symbol.get_numbers">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_numbers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_numbers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">float_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">scalar_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Number&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Collect all ``Number`` nodes contained in this symbol.</span>
+
+<span class="sd">        Traverses the expression tree in preorder and returns all numeric</span>
+<span class="sd">        nodes that satisfy the given filters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fitable_only (bool, optional): If True, return only numbers</span>
+<span class="sd">                marked as fitable (trainable) parameters. Defaults to False.</span>
+<span class="sd">            float_only (bool, optional): If True, exclude integer-like values</span>
+<span class="sd">                (for example exponents that should remain fixed). Defaults to</span>
+<span class="sd">                False.</span>
+<span class="sd">            scalar_only (bool, optional): If True, only consider scalar</span>
+<span class="sd">                numbers (nettype ``&quot;scalar&quot;``). Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Number]: List of numeric symbol nodes that match the filters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">is_number</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">scalar_only</span><span class="o">=</span><span class="n">scalar_only</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">fitable_only</span> <span class="ow">or</span> <span class="n">op</span><span class="o">.</span><span class="n">fitable</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">float_only</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_integer_number</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="n">numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numbers</span></div>
+
+
+<div class="viewcode-block" id="Symbol.get_parameters">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_parameters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return numeric parameter values contained in this symbol.</span>
+
+<span class="sd">        This is a convenience wrapper over :meth:`get_numbers` that extracts</span>
+<span class="sd">        the underlying scalar values from ``Number`` nodes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fitable_only (bool, optional): If True, return only parameters</span>
+<span class="sd">                associated with fitable numbers. Defaults to False.</span>
+<span class="sd">            float_only (bool, optional): If True, exclude integer-like</span>
+<span class="sd">                parameters. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[float]: Flat list of parameter values in traversal order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">is_number</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">fitable_only</span> <span class="ow">or</span> <span class="n">op</span><span class="o">.</span><span class="n">fitable</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">float_only</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_integer_number</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">params</span></div>
+
+
+<div class="viewcode-block" id="Symbol.set_parameters">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.set_parameters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_parameters</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign new numeric parameter values to this symbol.</span>
+
+<span class="sd">        The values in ``params`` are consumed in the same order as produced</span>
+<span class="sd">        by :meth:`get_parameters` with the same filter options.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (List[float]): New parameter values to assign.</span>
+<span class="sd">            fitable_only (bool, optional): If True, only update fitable</span>
+<span class="sd">                parameters and leave others unchanged. Defaults to False.</span>
+<span class="sd">            float_only (bool, optional): If True, only update non-integer</span>
+<span class="sd">                parameters. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the length of ``params`` does not match the number</span>
+<span class="sd">                of parameters selected by the filters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_parameters</span><span class="p">(</span><span class="n">fitable_only</span><span class="o">=</span><span class="n">fitable_only</span><span class="p">,</span> <span class="n">float_only</span><span class="o">=</span><span class="n">float_only</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;params length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2"> does not match the number of parameters </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameters</span><span class="p">(</span><span class="n">fitable_only</span><span class="o">=</span><span class="n">fitable_only</span><span class="p">,</span><span class="w"> </span><span class="n">float_only</span><span class="o">=</span><span class="n">float_only</span><span class="p">))</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">param_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">is_number</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">fitable_only</span> <span class="ow">or</span> <span class="n">op</span><span class="o">.</span><span class="n">fitable</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">float_only</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_integer_number</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="n">op</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">param_iter</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Symbol.map_nettype">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.map_nettype">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_nettype</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">children_nettypes</span><span class="p">:</span> <span class="n">NetType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default nettype mapping rule for symbol subclasses.</span>
+
+<span class="sd">        The default behavior enforces that ``&quot;node&quot;`` and ``&quot;edge&quot;`` nettypes</span>
+<span class="sd">        cannot be mixed. If only scalars are present, the result is</span>
+<span class="sd">        ``&quot;scalar&quot;``; otherwise it follows the presence of ``&quot;node&quot;`` or</span>
+<span class="sd">        ``&quot;edge&quot;``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *children_nettypes (NetType): Nettypes of the child operands.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[NetType]: Inferred nettype for the parent symbol, or</span>
+<span class="sd">            ``None`` if the combination is invalid or cannot be determined.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the number of child nettypes does not match</span>
+<span class="sd">                ``cls.n_operands``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">children_nettypes</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">n_operands</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid number of operands for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;expected </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">n_operands</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">children_nettypes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;node&quot;</span> <span class="ow">in</span> <span class="n">children_nettypes</span> <span class="ow">and</span> <span class="s2">&quot;edge&quot;</span> <span class="ow">in</span> <span class="n">children_nettypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># node 和 edge 不能相互运算</span>
+        <span class="k">elif</span> <span class="s2">&quot;node&quot;</span> <span class="ow">in</span> <span class="n">children_nettypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;node&quot;</span> <span class="c1"># 有 node 时返回 node</span>
+        <span class="k">elif</span> <span class="s2">&quot;edge&quot;</span> <span class="ow">in</span> <span class="n">children_nettypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;edge&quot;</span> <span class="c1"># 有 edge 时返回 edge</span>
+        <span class="k">elif</span> <span class="s2">&quot;scalar&quot;</span> <span class="ow">in</span> <span class="n">children_nettypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;scalar&quot;</span> <span class="c1"># 只有 scalar 时返回 scalar</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1"># 没有有效的 nettype</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

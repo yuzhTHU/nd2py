@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview: module code &#8212; nd2py  documentation</title>
+    <title>Overview: module code &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -131,7 +131,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -147,7 +147,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -226,7 +226,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -302,7 +302,57 @@ document.write(`
                   
   <h1>All modules for which code is available</h1>
 <ul><li><a href="nd2py/core/base_visitor.html">nd2py.core.base_visitor</a></li>
+<li><a href="nd2py/core/basic/get_copy.html">nd2py.core.basic.get_copy</a></li>
+<li><a href="nd2py/core/basic/get_length.html">nd2py.core.basic.get_length</a></li>
 <li><a href="nd2py/core/calc/numpy_calc.html">nd2py.core.calc.numpy_calc</a></li>
+<li><a href="nd2py/core/calc/torch_calc.html">nd2py.core.calc.torch_calc</a></li>
+<li><a href="nd2py/core/context/copy_value.html">nd2py.core.context.copy_value</a></li>
+<li><a href="nd2py/core/context/nettype_inference.html">nd2py.core.context.nettype_inference</a></li>
+<li><a href="nd2py/core/context/set_fitable.html">nd2py.core.context.set_fitable</a></li>
+<li><a href="nd2py/core/context/warn_once.html">nd2py.core.context.warn_once</a></li>
+<li><a href="nd2py/core/converter/from_postorder.html">nd2py.core.converter.from_postorder</a></li>
+<li><a href="nd2py/core/converter/from_preorder.html">nd2py.core.converter.from_preorder</a></li>
+<li><a href="nd2py/core/converter/parser.html">nd2py.core.converter.parser</a></li>
+<li><a href="nd2py/core/converter/string_printer.html">nd2py.core.converter.string_printer</a></li>
+<li><a href="nd2py/core/converter/tree_printer.html">nd2py.core.converter.tree_printer</a></li>
+<li><a href="nd2py/core/nettype/inter_nettype.html">nd2py.core.nettype.inter_nettype</a></li>
+<li><a href="nd2py/core/nettype/nettype_mixin.html">nd2py.core.nettype.nettype_mixin</a></li>
+<li><a href="nd2py/core/symbol_api.html">nd2py.core.symbol_api</a></li>
+<li><a href="nd2py/core/symbols/empty.html">nd2py.core.symbols.empty</a></li>
+<li><a href="nd2py/core/symbols/functions.html">nd2py.core.symbols.functions</a></li>
+<li><a href="nd2py/core/symbols/number.html">nd2py.core.symbols.number</a></li>
+<li><a href="nd2py/core/symbols/operands.html">nd2py.core.symbols.operands</a></li>
+<li><a href="nd2py/core/symbols/symbols.html">nd2py.core.symbols.symbols</a></li>
+<li><a href="nd2py/core/symbols/variable.html">nd2py.core.symbols.variable</a></li>
+<li><a href="nd2py/core/transform/bfgs_fit.html">nd2py.core.transform.bfgs_fit</a></li>
+<li><a href="nd2py/core/transform/fix_nettype.html">nd2py.core.transform.fix_nettype</a></li>
+<li><a href="nd2py/core/transform/fold_constant.html">nd2py.core.transform.fold_constant</a></li>
+<li><a href="nd2py/core/transform/simplify.html">nd2py.core.transform.simplify</a></li>
+<li><a href="nd2py/core/transform/split_by_add.html">nd2py.core.transform.split_by_add</a></li>
+<li><a href="nd2py/core/transform/split_by_mul.html">nd2py.core.transform.split_by_mul</a></li>
+<li><a href="nd2py/core/tree/iter_postorder.html">nd2py.core.tree.iter_postorder</a></li>
+<li><a href="nd2py/core/tree/iter_preorder.html">nd2py.core.tree.iter_preorder</a></li>
+<li><a href="nd2py/core/tree/tree_mixin.html">nd2py.core.tree.tree_mixin</a></li>
+<li><a href="nd2py/generator/data/gmm_generator.html">nd2py.generator.data.gmm_generator</a></li>
+<li><a href="nd2py/generator/data/subeq_generator.html">nd2py.generator.data.subeq_generator</a></li>
+<li><a href="nd2py/generator/eq/gplearn_generator.html">nd2py.generator.eq.gplearn_generator</a></li>
+<li><a href="nd2py/generator/eq/metaai_generator.html">nd2py.generator.eq.metaai_generator</a></li>
+<li><a href="nd2py/generator/eq/snip_generator.html">nd2py.generator.eq.snip_generator</a></li>
+<li><a href="nd2py/search/gp/gp.html">nd2py.search.gp.gp</a></li>
+<li><a href="nd2py/utils/attr_dict.html">nd2py.utils.attr_dict</a></li>
+<li><a href="nd2py/utils/auto_gpu.html">nd2py.utils.auto_gpu</a></li>
+<li><a href="nd2py/utils/classproperty.html">nd2py.utils.classproperty</a></li>
+<li><a href="nd2py/utils/fix_parser.html">nd2py.utils.fix_parser</a></li>
+<li><a href="nd2py/utils/logger.html">nd2py.utils.logger</a></li>
+<li><a href="nd2py/utils/metrics.html">nd2py.utils.metrics</a></li>
+<li><a href="nd2py/utils/nn/gnn.html">nd2py.utils.nn.gnn</a></li>
+<li><a href="nd2py/utils/nn/positional_encoding.html">nd2py.utils.nn.positional_encoding</a></li>
+<li><a href="nd2py/utils/plot.html">nd2py.utils.plot</a></li>
+<li><a href="nd2py/utils/render_markdown.html">nd2py.utils.render_markdown</a></li>
+<li><a href="nd2py/utils/render_python.html">nd2py.utils.render_python</a></li>
+<li><a href="nd2py/utils/tag2ansi.html">nd2py.utils.tag2ansi</a></li>
+<li><a href="nd2py/utils/timing.html">nd2py.utils.timing</a></li>
+<li><a href="nd2py/utils/utils.html">nd2py.utils.utils</a></li>
 </ul>
 
                 </article>
@@ -341,7 +391,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

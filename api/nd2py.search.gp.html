@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nd2py.search.gp package &#8212; nd2py  documentation</title>
+    <title>nd2py.search.gp package &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/documentation_options.js?v=8bb39fa6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">nd2py  documentation</p>
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -148,7 +148,7 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -227,7 +227,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/your-username/nd2py" target="_blank"
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -348,7 +348,29 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-search-gp-gp-module">nd2py.search.gp.gp module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.search.gp.gp">nd2py.search.gp.gp module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual"><code class="docutils literal notranslate"><span class="pre">Individual</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual.__init__"><code class="docutils literal notranslate"><span class="pre">Individual.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual.copy"><code class="docutils literal notranslate"><span class="pre">Individual.copy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP"><code class="docutils literal notranslate"><span class="pre">GP</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.__init__"><code class="docutils literal notranslate"><span class="pre">GP.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.fit"><code class="docutils literal notranslate"><span class="pre">GP.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.predict"><code class="docutils literal notranslate"><span class="pre">GP.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.evolve"><code class="docutils literal notranslate"><span class="pre">GP.evolve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.init_population"><code class="docutils literal notranslate"><span class="pre">GP.init_population()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.tournament"><code class="docutils literal notranslate"><span class="pre">GP.tournament()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.crossover"><code class="docutils literal notranslate"><span class="pre">GP.crossover()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.subtree_mutation"><code class="docutils literal notranslate"><span class="pre">GP.subtree_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.hoist_mutation"><code class="docutils literal notranslate"><span class="pre">GP.hoist_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.point_mutation"><code class="docutils literal notranslate"><span class="pre">GP.point_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.set_fitness"><code class="docutils literal notranslate"><span class="pre">GP.set_fitness()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.get_random_subtree"><code class="docutils literal notranslate"><span class="pre">GP.get_random_subtree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -360,13 +382,210 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-search-gp-package">
-<h1>nd2py.search.gp package<a class="headerlink" href="#nd2py-search-gp-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.search.gp">
+<span id="nd2py-search-gp-package"></span><h1>nd2py.search.gp package<a class="headerlink" href="#module-nd2py.search.gp" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="nd2py-search-gp-gp-module">
-<h2>nd2py.search.gp.gp module<a class="headerlink" href="#nd2py-search-gp-gp-module" title="Link to this heading">#</a></h2>
+<section id="module-nd2py.search.gp.gp">
+<span id="nd2py-search-gp-gp-module"></span><h2>nd2py.search.gp.gp module<a class="headerlink" href="#module-nd2py.search.gp.gp" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.Individual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.search.gp.gp.</span></span><span class="sig-name descname"><span class="pre">Individual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eqtree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#Individual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.Individual" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.Individual.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eqtree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#Individual.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.Individual.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.Individual.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#Individual.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.Individual.copy" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nd2py.search.gp.gp.</span></span><span class="sig-name descname"><span class="pre">GP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">RegressorMixin</span></code></p>
+<p>Genetic Programming-based Symbolic Regression</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><span class="pre">Variable</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[Add,</span> <span class="pre">Sub,</span> <span class="pre">Mul,</span> <span class="pre">Div,</span> <span class="pre">Max,</span> <span class="pre">Min]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[Sqrt,</span> <span class="pre">Log,</span> <span class="pre">Abs,</span> <span class="pre">Neg,</span> <span class="pre">Inv,</span> <span class="pre">Sin,</span> <span class="pre">Cos,</span> <span class="pre">Tan]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tournament_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_subtree_mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_hoist_mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_point_mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_point_replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(-1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(2,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nettype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scalar'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_per_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_per_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_detailed_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tqdm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize a genetic-programming-based symbolic regression estimator.</p>
+<p>This configures the function set, search hyperparameters, logging
+behavior, and optional graph structure used for nettype-aware
+expressions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variables</strong> (<em>List</em><em>[</em><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><em>Variable</em></a><em>]</em>) – List of input variables that can be
+used in generated expressions.</p></li>
+<li><p><strong>binary</strong> (<em>List</em><em>[</em><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><em>Symbol</em></a><em>]</em><em>, </em><em>optional</em>) – Binary operator symbols available
+to the GP (for example <code class="docutils literal notranslate"><span class="pre">Add</span></code>, <code class="docutils literal notranslate"><span class="pre">Sub</span></code>, <code class="docutils literal notranslate"><span class="pre">Mul</span></code>). Defaults to
+a standard arithmetic and min/max set.</p></li>
+<li><p><strong>unary</strong> (<em>List</em><em>[</em><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><em>Symbol</em></a><em>]</em><em>, </em><em>optional</em>) – Unary operator symbols available
+to the GP (for example <code class="docutils literal notranslate"><span class="pre">Sqrt</span></code>, <code class="docutils literal notranslate"><span class="pre">Log</span></code>, <code class="docutils literal notranslate"><span class="pre">Sin</span></code>). Defaults
+to a standard set of common functions.</p></li>
+<li><p><strong>max_params</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of numeric parameters
+(<code class="docutils literal notranslate"><span class="pre">Number</span></code> nodes) allowed in an expression. Defaults to 2.</p></li>
+<li><p><strong>elitism_k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of top individuals carried over
+unchanged between generations. Defaults to 10.</p></li>
+<li><p><strong>population_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of individuals in each
+generation. Defaults to 1000.</p></li>
+<li><p><strong>tournament_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of individuals competing
+in each tournament during parent selection. Defaults to 20.</p></li>
+<li><p><strong>p_crossover</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of applying subtree
+crossover. Defaults to 0.9.</p></li>
+<li><p><strong>p_subtree_mutation</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of applying
+subtree mutation. Defaults to 0.01.</p></li>
+<li><p><strong>p_hoist_mutation</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of applying hoist
+mutation. Defaults to 0.01.</p></li>
+<li><p><strong>p_point_mutation</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of applying point
+mutation. Defaults to 0.01.</p></li>
+<li><p><strong>p_point_replace</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of replacing a
+node during point mutation. Defaults to 0.05.</p></li>
+<li><p><strong>const_range</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Range from which
+random constants are sampled. Defaults to <code class="docutils literal notranslate"><span class="pre">(-1.0,</span> <span class="pre">1.0)</span></code>.</p></li>
+<li><p><strong>depth_range</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Minimum and maximum tree
+depth for randomly generated expressions. Defaults to
+<code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">6)</span></code>.</p></li>
+<li><p><strong>full_prob</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of using the “full”
+method rather than “grow” when generating random trees.
+Defaults to 0.5.</p></li>
+<li><p><strong>nettype</strong> (<em>Optional</em><em>[</em><em>Literal</em><em>[</em><em>&quot;node&quot;</em><em>, </em><em>&quot;edge&quot;</em><em>, </em><em>&quot;scalar&quot;</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Nettype of the target expression, used when working with graph
+data. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;scalar&quot;</span></code>.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of parallel jobs used for evolving
+the population. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, evolution is run in a single
+process. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>log_per_iter</strong> (<em>float</em><em>, </em><em>optional</em>) – Log progress every <code class="docutils literal notranslate"><span class="pre">log_per_iter</span></code>
+iterations; use <code class="docutils literal notranslate"><span class="pre">float(&quot;inf&quot;)</span></code> to disable iteration-based
+logging. Defaults to <code class="docutils literal notranslate"><span class="pre">float(&quot;inf&quot;)</span></code>.</p></li>
+<li><p><strong>log_per_sec</strong> (<em>float</em><em>, </em><em>optional</em>) – Log progress every <code class="docutils literal notranslate"><span class="pre">log_per_sec</span></code>
+seconds; use <code class="docutils literal notranslate"><span class="pre">float(&quot;inf&quot;)</span></code> to disable time-based logging.
+Defaults to <code class="docutils literal notranslate"><span class="pre">float(&quot;inf&quot;)</span></code>.</p></li>
+<li><p><strong>log_detailed_speed</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, include detailed
+timing information for individual steps in logs. Defaults to
+False.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – File path to which JSON lines of
+per-iteration records are appended. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, records are
+not written to disk. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>random_state</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Seed for the internal RNG
+to make runs reproducible. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of evolution iterations.
+Defaults to 100.</p></li>
+<li><p><strong>use_tqdm</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, wrap the main evolution loop
+with a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar. Defaults to False.</p></li>
+<li><p><strong>edge_list</strong> (<em>Tuple</em><em>[</em><em>List</em><em>[</em><em>int</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Optional graph
+edge list <code class="docutils literal notranslate"><span class="pre">(sources,</span> <span class="pre">targets)</span></code> used when evaluating graph
+operators. If provided and <code class="docutils literal notranslate"><span class="pre">num_nodes</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the
+number of nodes is inferred. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>num_nodes</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of nodes in the underlying
+graph. If <code class="docutils literal notranslate"><span class="pre">None</span></code> and <code class="docutils literal notranslate"><span class="pre">edge_list</span></code> is provided, it is
+inferred from the edges. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Additional unused keyword arguments; a warning is logged
+if any are provided.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the sum of mutation and crossover probabilities
+    exceeds 1.0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">pd.Series</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the GP model to training data by evolving expression trees.</p>
+<p>The input features can be provided as a NumPy array, a pandas
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, or a dictionary mapping variable names to arrays. The
+method runs the evolutionary loop, tracks the best individual, and
+stores its expression tree in <code class="docutils literal notranslate"><span class="pre">self.eqtree</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>ndarray</em><em> | </em><em>DataFrame</em><em> | </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>ndarray</em><em>]</em>) – Input features with
+shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_dims)</span></code> or an equivalent mapping from
+variable names to 1D arrays.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em><em> | </em><em>Series</em>) – Target values with shape <code class="docutils literal notranslate"><span class="pre">(n_samples,)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fitted estimator instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nd2py.search.gp.gp.GP" title="nd2py.search.gp.gp.GP">GP</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">X</span></code> is of an unsupported type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict target values for <code class="docutils literal notranslate"><span class="pre">X</span></code> using the best evolved expression tree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.evolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.evolve" title="Link to this definition">#</a></dt>
+<dd><p>Evolve a population for one generation and return the offspring.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.init_population">
+<span class="sig-name descname"><span class="pre">init_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.init_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.init_population" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the first population of individuals from the generator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.tournament">
+<span class="sig-name descname"><span class="pre">tournament</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.tournament"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.tournament" title="Link to this definition">#</a></dt>
+<dd><p>Select individuals from the population via tournament selection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">donor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.crossover" title="Link to this definition">#</a></dt>
+<dd><p>Create a child by replacing a subtree of <code class="docutils literal notranslate"><span class="pre">parent</span></code> with one from <code class="docutils literal notranslate"><span class="pre">donor</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.subtree_mutation">
+<span class="sig-name descname"><span class="pre">subtree_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.subtree_mutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.subtree_mutation" title="Link to this definition">#</a></dt>
+<dd><p>Create a child by replacing a random subtree with a newly generated random tree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.hoist_mutation">
+<span class="sig-name descname"><span class="pre">hoist_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.hoist_mutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.hoist_mutation" title="Link to this definition">#</a></dt>
+<dd><p>Create a child by hoisting a randomly chosen subtree to the root.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.point_mutation">
+<span class="sig-name descname"><span class="pre">point_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.point_mutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.point_mutation" title="Link to this definition">#</a></dt>
+<dd><p>Create a child by performing point mutation with random symbol replacements or insertions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.set_fitness">
+<span class="sig-name descname"><span class="pre">set_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.set_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.set_fitness" title="Link to this definition">#</a></dt>
+<dd><p>Compute and assign complexity, accuracy, and fitness for an individual.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.search.gp.gp.GP.get_random_subtree">
+<span class="sig-name descname"><span class="pre">get_random_subtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nd2py.search.gp.gp.Individual" title="nd2py.search.gp.gp.Individual"><span class="pre">Individual</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">nettypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'node'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edge'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'scalar'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol" title="nd2py.core.symbols.symbols.Symbol"><span class="pre">Symbol</span></a></span></span><a class="reference internal" href="../_modules/nd2py/search/gp/gp.html#GP.get_random_subtree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.gp.gp.GP.get_random_subtree" title="Link to this definition">#</a></dt>
+<dd><p>Sample a subtree from an individual following the GPlearn/Koza (1992) node-selection strategy.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -416,7 +635,29 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-search-gp-gp-module">nd2py.search.gp.gp module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.search.gp.gp">nd2py.search.gp.gp module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual"><code class="docutils literal notranslate"><span class="pre">Individual</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual.__init__"><code class="docutils literal notranslate"><span class="pre">Individual.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.Individual.copy"><code class="docutils literal notranslate"><span class="pre">Individual.copy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP"><code class="docutils literal notranslate"><span class="pre">GP</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.__init__"><code class="docutils literal notranslate"><span class="pre">GP.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.fit"><code class="docutils literal notranslate"><span class="pre">GP.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.predict"><code class="docutils literal notranslate"><span class="pre">GP.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.evolve"><code class="docutils literal notranslate"><span class="pre">GP.evolve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.init_population"><code class="docutils literal notranslate"><span class="pre">GP.init_population()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.tournament"><code class="docutils literal notranslate"><span class="pre">GP.tournament()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.crossover"><code class="docutils literal notranslate"><span class="pre">GP.crossover()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.subtree_mutation"><code class="docutils literal notranslate"><span class="pre">GP.subtree_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.hoist_mutation"><code class="docutils literal notranslate"><span class="pre">GP.hoist_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.point_mutation"><code class="docutils literal notranslate"><span class="pre">GP.point_mutation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.set_fitness"><code class="docutils literal notranslate"><span class="pre">GP.set_fitness()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.gp.gp.GP.get_random_subtree"><code class="docutils literal notranslate"><span class="pre">GP.get_random_subtree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -441,7 +682,7 @@ By YuMeow
 
   <p class="copyright">
     
-      © Copyright 2024, YuMeow.
+      © Copyright 2026, YuMeow.
       <br/>
     
   </p>

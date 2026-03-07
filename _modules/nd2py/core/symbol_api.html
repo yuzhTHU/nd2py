@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.core.symbol_api &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/core/symbol_api';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.core.symbol_api</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.symbols</span><span class="w"> </span><span class="kn">import</span> <span class="n">Symbol</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.nettype</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetType</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="SymbolAPIMixin">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SymbolAPIMixin</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Symbol API Mixin.</span>
+<span class="sd">    </span>
+<span class="sd">    该类集中管理 Symbol 对象对用户暴露的所有核心功能接口 (Facade)。</span>
+<span class="sd">    所有具体逻辑均由底层的 Visitor 类实现。</span>
+<span class="sd">    </span>
+<span class="sd">    作为 Symbol 的父类混入，从而保证 symbols.py 的整洁与高可维护性。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SymbolAPIMixin.to_str">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.to_str">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_str</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">raw</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">latex</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">omit_mul_sign</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">skeleton</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the symbol expression.</span>
+
+<span class="sd">        This is a thin wrapper around :class:`StringPrinter` and can produce</span>
+<span class="sd">        raw, LaTeX, or skeleton forms of the expression.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raw (bool, optional): If True, return the internal raw</span>
+<span class="sd">                representation instead of a prettified one. Defaults to False.</span>
+<span class="sd">            latex (bool, optional): If True, format the expression as LaTeX.</span>
+<span class="sd">                Defaults to False.</span>
+<span class="sd">            number_format (str, optional): Format specifier used to print</span>
+<span class="sd">                numeric constants (for example ``&quot;0.2f&quot;``). Defaults to an</span>
+<span class="sd">                empty string, which uses the default formatting.</span>
+<span class="sd">            omit_mul_sign (bool, optional): If True, omit explicit</span>
+<span class="sd">                multiplication signs (for example render ``ab`` instead of</span>
+<span class="sd">                ``a*b``). Defaults to False.</span>
+<span class="sd">            skeleton (bool, optional): If True, ignore concrete numeric values</span>
+<span class="sd">                and keep only the symbolic structure of the expression.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: String representation of the symbol expression.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringPrinter</span>
+
+        <span class="k">return</span> <span class="n">StringPrinter</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span>
+            <span class="n">latex</span><span class="o">=</span><span class="n">latex</span><span class="p">,</span>
+            <span class="n">number_format</span><span class="o">=</span><span class="n">number_format</span><span class="p">,</span>
+            <span class="n">omit_mul_sign</span><span class="o">=</span><span class="n">omit_mul_sign</span><span class="p">,</span>
+            <span class="n">skeleton</span><span class="o">=</span><span class="n">skeleton</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.to_tree">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.to_tree">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">skeleton</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return an ASCII tree representation of the expression.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            number_format (str, optional): Format specifier used to print</span>
+<span class="sd">                numeric constants (for example ``&quot;0.2f&quot;``). Defaults to an</span>
+<span class="sd">                empty string, which uses the default formatting.</span>
+<span class="sd">            flat (bool, optional): If True, flatten nested ``Add`` and</span>
+<span class="sd">                ``Mul`` nodes into a single level. Defaults to False.</span>
+<span class="sd">            skeleton (bool, optional): If True, ignore concrete numeric values</span>
+<span class="sd">                and keep only the symbolic structure of the expression.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Multi-line string visualising the expression tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">TreePrinter</span>
+
+        <span class="k">return</span> <span class="n">TreePrinter</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="n">number_format</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="n">flat</span><span class="p">,</span> <span class="n">skeleton</span><span class="o">=</span><span class="n">skeleton</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.eval">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.eval">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eval</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">vars</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the expression numerically using NumPy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vars (dict, optional): Mapping from variable names to their</span>
+<span class="sd">                numerical values. Values can be scalars or ``numpy.ndarray``</span>
+<span class="sd">                objects. Defaults to an empty dictionary.</span>
+<span class="sd">            edge_list (Tuple[List[int], List[int]], optional): Pair of</span>
+<span class="sd">                integer lists ``(sources, targets)`` describing directed</span>
+<span class="sd">                edges in a graph. Node indices start from 0. If provided,</span>
+<span class="sd">                this is used to parameterise graph-related symbols.</span>
+<span class="sd">            num_nodes (int, optional): Number of nodes in the underlying</span>
+<span class="sd">                graph. If omitted, it may be inferred from ``edge_list`` when</span>
+<span class="sd">                possible.</span>
+<span class="sd">            use_eps (float, optional): Small positive value added in</span>
+<span class="sd">                denominators or other potentially unstable operations to avoid</span>
+<span class="sd">                division by zero and improve numerical stability. Defaults to</span>
+<span class="sd">                0.0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray | float: Numerical evaluation result of the</span>
+<span class="sd">            expression, whose shape depends on the symbol and inputs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumpyCalc</span>
+
+        <span class="k">return</span> <span class="n">NumpyCalc</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span> <span class="n">use_eps</span><span class="o">=</span><span class="n">use_eps</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.eval_torch">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.eval_torch">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eval_torch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">vars</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the expression numerically using PyTorch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vars (dict, optional): Mapping from variable names to their</span>
+<span class="sd">                numerical values. Values can be scalars or ``torch.Tensor``</span>
+<span class="sd">                objects. Defaults to an empty dictionary.</span>
+<span class="sd">            edge_list (Tuple[List[int], List[int]], optional): Pair of</span>
+<span class="sd">                integer lists ``(sources, targets)`` describing directed</span>
+<span class="sd">                edges in a graph. Node indices start from 0. If provided,</span>
+<span class="sd">                this is used to parameterise graph-related symbols.</span>
+<span class="sd">            num_nodes (int, optional): Number of nodes in the underlying</span>
+<span class="sd">                graph. If omitted, it may be inferred from ``edge_list`` when</span>
+<span class="sd">                possible.</span>
+<span class="sd">            use_eps (float, optional): Small positive value added in</span>
+<span class="sd">                denominators or other potentially unstable operations to avoid</span>
+<span class="sd">                division by zero and improve numerical stability. Defaults to</span>
+<span class="sd">                0.0.</span>
+<span class="sd">            device (str, optional): Target device on which tensors are</span>
+<span class="sd">                allocated and computations are performed, such as ``&quot;cpu&quot;``</span>
+<span class="sd">                or ``&quot;cuda&quot;``. Defaults to ``&quot;cpu&quot;``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.Tensor: Numerical evaluation result of the expression.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.calc.torch_calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">TorchCalc</span>
+
+        <span class="k">return</span> <span class="n">TorchCalc</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span>
+            <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">,</span>
+            <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span>
+            <span class="n">use_eps</span><span class="o">=</span><span class="n">use_eps</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.split_by_add">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.split_by_add">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_by_add</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">split_by_sub</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_mul</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_div</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_aggr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_rgga</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_sour</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_targ</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">expand_readout</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_coefficients</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">merge_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split an additive expression into its additive terms.</span>
+
+<span class="sd">        The current symbol is treated as the root. Depending on the flags,</span>
+<span class="sd">        this can also expand multiplication, division, aggregation and</span>
+<span class="sd">        readout nodes before splitting.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            split_by_sub (bool, optional): If True, treat subtraction nodes</span>
+<span class="sd">                as additions when splitting, so that ``a - b`` becomes</span>
+<span class="sd">                ``[a, -b]``. Defaults to False.</span>
+<span class="sd">            expand_mul (bool, optional): If True, expand ``Mul`` nodes before</span>
+<span class="sd">                splitting. Defaults to False.</span>
+<span class="sd">            expand_div (bool, optional): If True, expand ``Div`` nodes before</span>
+<span class="sd">                splitting. Defaults to False.</span>
+<span class="sd">            expand_aggr (bool, optional): If True, expand aggregation nodes</span>
+<span class="sd">                (for example graph aggregators) before splitting. Defaults to</span>
+<span class="sd">                False.</span>
+<span class="sd">            expand_rgga (bool, optional): If True, expand RGGA-related nodes</span>
+<span class="sd">                before splitting. Defaults to False.</span>
+<span class="sd">            expand_sour (bool, optional): If True, expand source-related</span>
+<span class="sd">                transformations before splitting. Defaults to False.</span>
+<span class="sd">            expand_targ (bool, optional): If True, expand target-related</span>
+<span class="sd">                transformations before splitting. Defaults to False.</span>
+<span class="sd">            expand_readout (bool, optional): If True, push ``Readout`` inside</span>
+<span class="sd">                additions, so that for example ``Readout(a + b)`` becomes</span>
+<span class="sd">                ``[Readout(a), Readout(b)]``. Defaults to False.</span>
+<span class="sd">            remove_coefficients (bool, optional): If True, drop scalar</span>
+<span class="sd">                coefficients from the resulting symbols. Defaults to False.</span>
+<span class="sd">            merge_bias (bool, optional): If True, merge additive bias terms</span>
+<span class="sd">                into neighbouring symbols when appropriate. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Symbol]: List of symbols corresponding to each additive term.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.transform.split_by_add</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitByAdd</span>
+
+        <span class="k">return</span> <span class="n">SplitByAdd</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">split_by_sub</span><span class="o">=</span><span class="n">split_by_sub</span><span class="p">,</span>
+            <span class="n">expand_mul</span><span class="o">=</span><span class="n">expand_mul</span><span class="p">,</span>
+            <span class="n">expand_div</span><span class="o">=</span><span class="n">expand_div</span><span class="p">,</span>
+            <span class="n">expand_aggr</span><span class="o">=</span><span class="n">expand_aggr</span><span class="p">,</span>
+            <span class="n">expand_rgga</span><span class="o">=</span><span class="n">expand_rgga</span><span class="p">,</span>
+            <span class="n">expand_sour</span><span class="o">=</span><span class="n">expand_sour</span><span class="p">,</span>
+            <span class="n">expand_targ</span><span class="o">=</span><span class="n">expand_targ</span><span class="p">,</span>
+            <span class="n">expand_readout</span><span class="o">=</span><span class="n">expand_readout</span><span class="p">,</span>
+            <span class="n">remove_coefficients</span><span class="o">=</span><span class="n">remove_coefficients</span><span class="p">,</span>
+            <span class="n">merge_bias</span><span class="o">=</span><span class="n">merge_bias</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.split_by_mul">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.split_by_mul">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_by_mul</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">split_by_div</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">merge_coefficients</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split a multiplicative expression into its multiplicative factors.</span>
+
+<span class="sd">        The current symbol is treated as the root. Depending on the flags,</span>
+<span class="sd">        this can also split divisions and optionally merge coefficients.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            split_by_div (bool, optional): If True, split divisions so that</span>
+<span class="sd">                an expression like ``a / b`` is treated as having factors</span>
+<span class="sd">                ``[a, b]``. Defaults to False.</span>
+<span class="sd">            merge_coefficients (bool, optional): If True, merge scalar</span>
+<span class="sd">                coefficients into a single factor instead of returning them as</span>
+<span class="sd">                separate symbols. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Symbol]: List of symbols corresponding to each multiplicative</span>
+<span class="sd">            factor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.transform.split_by_mul</span><span class="w"> </span><span class="kn">import</span> <span class="n">SplitByMul</span>
+
+        <span class="k">return</span> <span class="n">SplitByMul</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">split_by_div</span><span class="o">=</span><span class="n">split_by_div</span><span class="p">,</span>
+            <span class="n">merge_coefficients</span><span class="o">=</span><span class="n">merge_coefficients</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.fix_nettype">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.fix_nettype">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fix_nettype</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">nettype</span><span class="p">:</span> <span class="n">NetType</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;bottom-up&quot;</span><span class="p">,</span> <span class="s2">&quot;top-down&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;top-down&quot;</span><span class="p">,</span>
+        <span class="n">edge_to_node</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;remove_targ&quot;</span><span class="p">,</span> <span class="s2">&quot;remove_sour&quot;</span><span class="p">,</span> <span class="s2">&quot;add_aggr&quot;</span><span class="p">,</span> <span class="s2">&quot;add_rgga&quot;</span><span class="p">],</span>
+        <span class="n">node_to_edge</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;remove_aggr&quot;</span><span class="p">,</span> <span class="s2">&quot;remove_rgga&quot;</span><span class="p">,</span> <span class="s2">&quot;add_targ&quot;</span><span class="p">,</span> <span class="s2">&quot;add_sour&quot;</span><span class="p">],</span>
+        <span class="n">edge_to_scalar</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;remove_sour&quot;</span><span class="p">,</span> <span class="s2">&quot;remove_targ&quot;</span><span class="p">,</span> <span class="s2">&quot;add_readout&quot;</span><span class="p">],</span>
+        <span class="n">node_to_scalar</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;remove_aggr&quot;</span><span class="p">,</span> <span class="s2">&quot;remove_rgga&quot;</span><span class="p">,</span> <span class="s2">&quot;add_readout&quot;</span><span class="p">],</span>
+        <span class="n">scalar_to_node</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;keep&quot;</span><span class="p">],</span>
+        <span class="n">scalar_to_edge</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;keep&quot;</span><span class="p">],</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize nettypes of all symbols in the expression.</span>
+
+<span class="sd">        This is useful in GP or LLM-based symbolic regression where equations</span>
+<span class="sd">        are generated automatically and may contain inconsistent nettype</span>
+<span class="sd">        annotations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            nettype (NetType, optional): Target nettype of the root symbol.</span>
+<span class="sd">                Typical values include ``&quot;node&quot;``, ``&quot;edge&quot;`` and</span>
+<span class="sd">                ``&quot;scalar&quot;``. Defaults to ``&quot;node&quot;``.</span>
+<span class="sd">            direction (Literal[&quot;bottom-up&quot;, &quot;top-down&quot;], optional): Direction</span>
+<span class="sd">                in which the fix is propagated through the expression tree.</span>
+<span class="sd">                Defaults to ``&quot;top-down&quot;``.</span>
+<span class="sd">            edge_to_node (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting edge symbols to node symbols.</span>
+<span class="sd">            node_to_edge (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting node symbols to edge symbols.</span>
+<span class="sd">            edge_to_scalar (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting edge symbols to scalar symbols.</span>
+<span class="sd">            node_to_scalar (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting node symbols to scalar symbols.</span>
+<span class="sd">            scalar_to_node (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting scalar symbols to node symbols.</span>
+<span class="sd">            scalar_to_edge (List[str], optional): Sequence of transformation</span>
+<span class="sd">                rules applied when converting scalar symbols to edge symbols.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Symbol: Root symbol of the expression with consistent nettypes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.transform.fix_nettype</span><span class="w"> </span><span class="kn">import</span> <span class="n">FixNetType</span>
+
+        <span class="k">return</span> <span class="n">FixNetType</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">,</span>
+            <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
+            <span class="n">edge_to_node</span><span class="o">=</span><span class="n">edge_to_node</span><span class="p">,</span>
+            <span class="n">node_to_edge</span><span class="o">=</span><span class="n">node_to_edge</span><span class="p">,</span>
+            <span class="n">edge_to_scalar</span><span class="o">=</span><span class="n">edge_to_scalar</span><span class="p">,</span>
+            <span class="n">node_to_scalar</span><span class="o">=</span><span class="n">node_to_scalar</span><span class="p">,</span>
+            <span class="n">scalar_to_node</span><span class="o">=</span><span class="n">scalar_to_node</span><span class="p">,</span>
+            <span class="n">scalar_to_edge</span><span class="o">=</span><span class="n">scalar_to_edge</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SymbolAPIMixin.simplify">
+<a class="viewcode-back" href="../../../api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.simplify">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simplify</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">transform_constant_subtree</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">remove_useless_readout</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">remove_nested_sin</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_cos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_tanh</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_sigmoid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_sqrt</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_sqrtabs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_exp</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_nested_logabs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply algebraic simplifications to the expression.</span>
+
+<span class="sd">        Each flag controls whether a specific family of simplification rules</span>
+<span class="sd">        is enabled. By default constant subtrees are folded and useless</span>
+<span class="sd">        readout nodes are removed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transform_constant_subtree (bool, optional): If True, evaluate</span>
+<span class="sd">                and replace constant-only subtrees with their numerical</span>
+<span class="sd">                result. Defaults to True.</span>
+<span class="sd">            remove_useless_readout (bool, optional): If True, eliminate</span>
+<span class="sd">                redundant ``Readout`` nodes that do not affect the result.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">            remove_nested_sin (bool, optional): If True, simplify expressions</span>
+<span class="sd">                containing nested sine functions when possible. Defaults to</span>
+<span class="sd">                False.</span>
+<span class="sd">            remove_nested_cos (bool, optional): If True, simplify expressions</span>
+<span class="sd">                containing nested cosine functions when possible. Defaults to</span>
+<span class="sd">                False.</span>
+<span class="sd">            remove_nested_tanh (bool, optional): If True, simplify</span>
+<span class="sd">                expressions containing nested hyperbolic tangent functions</span>
+<span class="sd">                when possible. Defaults to False.</span>
+<span class="sd">            remove_nested_sigmoid (bool, optional): If True, simplify</span>
+<span class="sd">                expressions containing nested sigmoid functions when possible.</span>
+<span class="sd">                Defaults to False.</span>
+<span class="sd">            remove_nested_sqrt (bool, optional): If True, simplify nested</span>
+<span class="sd">                square root expressions when possible. Defaults to False.</span>
+<span class="sd">            remove_nested_sqrtabs (bool, optional): If True, simplify nested</span>
+<span class="sd">                ``sqrtabs``-like expressions when possible. Defaults to False.</span>
+<span class="sd">            remove_nested_exp (bool, optional): If True, simplify nested</span>
+<span class="sd">                exponential expressions when possible. Defaults to False.</span>
+<span class="sd">            remove_nested_log (bool, optional): If True, simplify nested</span>
+<span class="sd">                logarithm expressions when possible. Defaults to False.</span>
+<span class="sd">            remove_nested_logabs (bool, optional): If True, simplify nested</span>
+<span class="sd">                ``logabs``-like expressions when possible. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Symbol: A simplified version of the original symbol expression.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.transform.simplify</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simplify</span>
+
+        <span class="k">return</span> <span class="n">Simplify</span><span class="p">()(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">transform_constant_subtree</span><span class="o">=</span><span class="n">transform_constant_subtree</span><span class="p">,</span>
+            <span class="n">remove_useless_readout</span><span class="o">=</span><span class="n">remove_useless_readout</span><span class="p">,</span>
+            <span class="n">remove_nested_sin</span><span class="o">=</span><span class="n">remove_nested_sin</span><span class="p">,</span>
+            <span class="n">remove_nested_cos</span><span class="o">=</span><span class="n">remove_nested_cos</span><span class="p">,</span>
+            <span class="n">remove_nested_tanh</span><span class="o">=</span><span class="n">remove_nested_tanh</span><span class="p">,</span>
+            <span class="n">remove_nested_sigmoid</span><span class="o">=</span><span class="n">remove_nested_sigmoid</span><span class="p">,</span>
+            <span class="n">remove_nested_sqrt</span><span class="o">=</span><span class="n">remove_nested_sqrt</span><span class="p">,</span>
+            <span class="n">remove_nested_sqrtabs</span><span class="o">=</span><span class="n">remove_nested_sqrtabs</span><span class="p">,</span>
+            <span class="n">remove_nested_exp</span><span class="o">=</span><span class="n">remove_nested_exp</span><span class="p">,</span>
+            <span class="n">remove_nested_log</span><span class="o">=</span><span class="n">remove_nested_log</span><span class="p">,</span>
+            <span class="n">remove_nested_logabs</span><span class="o">=</span><span class="n">remove_nested_logabs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

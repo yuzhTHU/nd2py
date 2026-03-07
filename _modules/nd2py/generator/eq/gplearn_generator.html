@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.generator.eq.gplearn_generator &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/generator/eq/gplearn_generator';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.generator.eq.gplearn_generator</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomState</span><span class="p">,</span> <span class="n">default_rng</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...</span><span class="w"> </span><span class="kn">import</span> <span class="n">core</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">...core.nettype</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetType</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">...core.symbols</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="GPLearnGenerator">
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GPLearnGenerator</span><span class="p">:</span>
+<div class="viewcode-block" id="GPLearnGenerator.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Variable</span><span class="p">],</span>
+        <span class="n">binary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="o">|</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">Add</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Sub</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Mul</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Div</span><span class="p">],</span>
+        <span class="n">unary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="o">|</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">Sqrt</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Log</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Abs</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Neg</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Inv</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Sin</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Cos</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Tan</span><span class="p">],</span>
+        <span class="n">full_prob</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">depth_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">const_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rng</span><span class="p">:</span> <span class="n">RandomState</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scalar_number_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">binary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unary</span> <span class="o">=</span> <span class="n">unary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_prob</span> <span class="o">=</span> <span class="n">full_prob</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_range</span> <span class="o">=</span> <span class="n">depth_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const_range</span> <span class="o">=</span> <span class="n">const_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scalar_number_only</span> <span class="o">=</span> <span class="n">scalar_number_only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">rng</span> <span class="ow">or</span> <span class="n">default_rng</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">num_nodes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edge_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">edge_list</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span> <span class="o">=</span> <span class="n">num_nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span> <span class="o">=</span> <span class="n">edge_list</span></div>
+
+
+<div class="viewcode-block" id="GPLearnGenerator.generate_node">
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_node">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">sym</span> <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="k">if</span> <span class="p">(</span><span class="n">nettypes</span> <span class="o">&amp;</span> <span class="n">sym</span><span class="o">.</span><span class="n">nettype_range</span><span class="p">)]</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">symbol</span><span class="p">()</span> <span class="c1"># 不用指定 nettype, 由 .infer_nettype() 自行推断即可</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="GPLearnGenerator.generate_leaf">
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_leaf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">Variable</span><span class="p">:</span>
+        <span class="n">leafs</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">const_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">const_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">const_range</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">leafs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">const_range</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">const_range</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">const_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;scalar&quot;</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">const_range</span><span class="p">)</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">)</span>
+                <span class="n">leafs</span> <span class="o">=</span> <span class="n">leafs</span> <span class="o">+</span> <span class="p">[</span><span class="n">number</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;node&quot;</span> <span class="ow">in</span> <span class="n">nettypes</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalar_number_only</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">const_range</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">,))</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+                <span class="n">leafs</span> <span class="o">=</span> <span class="n">leafs</span> <span class="o">+</span> <span class="p">[</span><span class="n">number</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;edge&quot;</span> <span class="ow">in</span> <span class="n">nettypes</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalar_number_only</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">const_range</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),))</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;edge&quot;</span><span class="p">)</span>
+                <span class="n">leafs</span> <span class="o">=</span> <span class="n">leafs</span> <span class="o">+</span> <span class="p">[</span><span class="n">number</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">leafs</span> <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="GPLearnGenerator.sample">
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.sample">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">,</span> 
+        <span class="n">assign_root_nettypes</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nettypes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">nettypes</span> <span class="o">=</span> <span class="p">{</span><span class="n">nettypes</span><span class="p">}</span>
+
+        <span class="n">full_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_prob</span>
+        <span class="n">max_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_range</span><span class="p">)</span>
+        <span class="n">op_prob</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">full_tree</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">))</span>
+
+        <span class="c1"># Start a eqtree with a function to avoid degenerative eqtrees</span>
+        <span class="n">eqtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_node</span><span class="p">(</span><span class="n">nettypes</span><span class="p">)</span>
+        <span class="n">eqtree</span><span class="o">.</span><span class="n">nettype</span> <span class="o">=</span> <span class="n">nettypes</span> <span class="o">&amp;</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">nettype_range</span>
+        <span class="n">empty_nodes_and_depth</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">]</span>
+
+        <span class="k">while</span> <span class="n">empty_nodes_and_depth</span><span class="p">:</span>
+            <span class="n">empty_node</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">empty_nodes_and_depth</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;</span> <span class="n">max_depth</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">op_prob</span><span class="p">):</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_node</span><span class="p">(</span><span class="n">empty_node</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">)</span>
+                <span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">empty_node</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                <span class="n">empty_nodes_and_depth</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># Variable or Number</span>
+                <span class="n">leaf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_leaf</span><span class="p">(</span><span class="n">empty_node</span><span class="o">.</span><span class="n">possible_nettypes</span><span class="p">)</span>
+                <span class="n">eqtree</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">empty_node</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">assign_root_nettypes</span><span class="p">:</span>
+            <span class="n">eqtree</span><span class="o">.</span><span class="n">nettype</span> <span class="o">=</span> <span class="kc">None</span> 
+        <span class="k">return</span> <span class="n">eqtree</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
