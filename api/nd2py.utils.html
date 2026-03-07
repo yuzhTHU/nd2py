@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>nd2py.utils package &#8212; nd2py  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/nd2py.utils';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nd2py.utils.nn package" href="nd2py.utils.nn.html" />
+    <link rel="prev" title="nd2py.search.ndformer package" href="nd2py.search.ndformer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">nd2py</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="nd2py.html">nd2py package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 current active has-children"><a class="current reference internal" href="#">nd2py.utils package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/your-username/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/nd2py.utils.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>nd2py.utils package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-attr-dict-module">nd2py.utils.attr_dict module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-auto-gpu-module">nd2py.utils.auto_gpu module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-classproperty-module">nd2py.utils.classproperty module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-fix-parser-module">nd2py.utils.fix_parser module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-logger-module">nd2py.utils.logger module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-metrics-module">nd2py.utils.metrics module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-plot-module">nd2py.utils.plot module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-render-markdown-module">nd2py.utils.render_markdown module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-render-python-module">nd2py.utils.render_python module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-softmax-module">nd2py.utils.softmax module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-tag2ansi-module">nd2py.utils.tag2ansi module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-timing-module">nd2py.utils.timing module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-utils-module">nd2py.utils.utils module</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="nd2py-utils-package">
+<h1>nd2py.utils package<a class="headerlink" href="#nd2py-utils-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nd2py.utils.nn.html">nd2py.utils.nn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#nd2py-utils-nn-gnn-module">nd2py.utils.nn.gnn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#nd2py-utils-nn-positional-encoding-module">nd2py.utils.nn.positional_encoding module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-attr-dict-module">
+<h2>nd2py.utils.attr_dict module<a class="headerlink" href="#nd2py-utils-attr-dict-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-auto-gpu-module">
+<h2>nd2py.utils.auto_gpu module<a class="headerlink" href="#nd2py-utils-auto-gpu-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-classproperty-module">
+<h2>nd2py.utils.classproperty module<a class="headerlink" href="#nd2py-utils-classproperty-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-fix-parser-module">
+<h2>nd2py.utils.fix_parser module<a class="headerlink" href="#nd2py-utils-fix-parser-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-logger-module">
+<h2>nd2py.utils.logger module<a class="headerlink" href="#nd2py-utils-logger-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-metrics-module">
+<h2>nd2py.utils.metrics module<a class="headerlink" href="#nd2py-utils-metrics-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-plot-module">
+<h2>nd2py.utils.plot module<a class="headerlink" href="#nd2py-utils-plot-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-render-markdown-module">
+<h2>nd2py.utils.render_markdown module<a class="headerlink" href="#nd2py-utils-render-markdown-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-render-python-module">
+<h2>nd2py.utils.render_python module<a class="headerlink" href="#nd2py-utils-render-python-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-softmax-module">
+<h2>nd2py.utils.softmax module<a class="headerlink" href="#nd2py-utils-softmax-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-tag2ansi-module">
+<h2>nd2py.utils.tag2ansi module<a class="headerlink" href="#nd2py-utils-tag2ansi-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-timing-module">
+<h2>nd2py.utils.timing module<a class="headerlink" href="#nd2py-utils-timing-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="nd2py-utils-utils-module">
+<h2>nd2py.utils.utils module<a class="headerlink" href="#nd2py-utils-utils-module" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nd2py.search.ndformer.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">nd2py.search.ndformer package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="nd2py.utils.nn.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">nd2py.utils.nn package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-attr-dict-module">nd2py.utils.attr_dict module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-auto-gpu-module">nd2py.utils.auto_gpu module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-classproperty-module">nd2py.utils.classproperty module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-fix-parser-module">nd2py.utils.fix_parser module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-logger-module">nd2py.utils.logger module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-metrics-module">nd2py.utils.metrics module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-plot-module">nd2py.utils.plot module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-render-markdown-module">nd2py.utils.render_markdown module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-render-python-module">nd2py.utils.render_python module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-softmax-module">nd2py.utils.softmax module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-tag2ansi-module">nd2py.utils.tag2ansi module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-timing-module">nd2py.utils.timing module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py-utils-utils-module">nd2py.utils.utils module</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
