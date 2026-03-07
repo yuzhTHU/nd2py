@@ -1,0 +1,54 @@
+name: Deploy Sphinx Documentation
+
+# 触发条件：当推送到 dev 或 main 分支时触发
+on:
+  push:
+    branches:
+      - dev
+      - main
+  # 允许在 GitHub 网页上手动触发
+  workflow_dispatch:
+
+# 设置权限，允许 GitHub Actions 将编译好的网页推送到 gh-pages 分支
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # 可以根据你的实际需求修改
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # 安装文档工具
+          pip install sphinx sphinx-book-theme myst-parser sphinx-autodoc-typehints
+          # 🚨 关键：以开发者模式安装 nd2py 本身，这样 Sphinx 才能读取到源码和 docstring
+          pip install -e .
+
+      # 4. 编译生成 HTML
+      - name: Build Sphinx docs
+        run: |
+          cd docs
+          # 生成 API 文档占位符 (防止有新增模块没被抓取)
+          sphinx-apidoc -o source/api ../nd2py -f -M
+          # 编译 HTML
+          make html
+
+      # 5. 将生成的 HTML 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build/html # 指向刚才编译出来的 HTML 目录
