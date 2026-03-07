@@ -12,8 +12,8 @@ y = nd.Variable('y', nettype='edge')
 vars = {'x': np.random.rand(100, num_nodes), 'y': np.random.rand(100, num_edges)}
 node = x + nd.aggr(y * nd.sour(x))
 
-est = nd.GP(variables=[x,y],
-            n_iter=30, 
+est = nd.MCTS(variables=[x,y],
+            n_iter=3000, 
             random_state=42, 
             binary=[nd.Add, nd.Mul], 
             unary=[nd.Aggr, nd.Sour],

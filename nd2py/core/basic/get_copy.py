@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from copy import deepcopy
 from ..base_visitor import Visitor, yield_nothing
 from ..context.copy_value import get_copy_value
@@ -14,7 +15,7 @@ class GetCopy(Visitor):
         for child in node.operands:
             child = yield child, args, kwargs
             children.append(child)
-        return node.__class__(*children)
+        return node.__class__(*children, nettype=node._assigned_nettypes)
 
     def visit_Number(self, node, *args, **kwargs):
         yield from yield_nothing()
@@ -24,13 +25,13 @@ class GetCopy(Visitor):
             )
         else:
             return node.__class__(
-                node.value, nettype=node.nettype, fitable=node.fitable
+                node.value, nettype=node._assigned_nettypes, fitable=node.fitable
             )
 
     def visit_Variable(self, node, *args, **kwargs):
         yield from yield_nothing()
-        return node.__class__(node.name, nettype=node.nettype)
+        return node.__class__(node.name, nettype=node._assigned_nettypes)
 
     def visit_Empty(self, node, *args, **kwargs):
         yield from yield_nothing()
-        return node.__class__(nettype=node.nettype)
+        return node.__class__(nettype=node._assigned_nettypes)

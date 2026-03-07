@@ -16,7 +16,7 @@ from numpy.random import default_rng
 from sklearn.base import BaseEstimator, RegressorMixin
 from typing import Dict, List, Tuple, Optional, Literal
 from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
-from ...utils import NamedTimer
+from ...utils import NamedTimer, render_markdown, render_python
 
 dotenv.load_dotenv()
 
@@ -29,47 +29,6 @@ def _softmax(logprob: np.ndarray, tau: float = 1.0) -> np.ndarray:
     prob = np.exp((logprob - np.max(logprob)) / tau)
     prob /= np.sum(prob)
     return prob
-
-
-def render_markdown(text: str, width=120, theme="staroffice") -> str:
-    from rich.console import Console
-    from rich.markdown import Markdown
-    from rich.syntax import Syntax
-
-    console = Console(record=True, width=width)
-    with console.capture() as capture:
-        matches = list(re.finditer(r"```(\w+)?\n(.*?)\n```", text, re.DOTALL))
-        current = 0
-        for match in matches:
-            lang, code = match.groups()
-            start, end = match.span()
-            md = Markdown(text[current:start])
-            code = Syntax(code, lang or "text", word_wrap=True, line_numbers=True, theme=theme)
-            console.print(md)
-            console.print(code)
-            current = end
-        if current < len(text):
-            console.print(Markdown(text[current:]))
-    return capture.get()
-
-
-def render_python(text: str, width=120, highlight_lines=[], theme="staroffice") -> str:
-    from rich.console import Console
-    from rich.markdown import Markdown
-    from rich.syntax import Syntax
-
-    console = Console(record=True, width=width)
-    with console.capture() as capture:
-        code = Syntax(
-            text,
-            "python",
-            theme=theme,
-            word_wrap=True,
-            line_numbers=True,
-            highlight_lines=highlight_lines,
-        )
-        console.print(code)
-    return capture.get()
 
 
 class Individual:
@@ -164,8 +123,8 @@ class LLMSR(BaseEstimator, RegressorMixin):
 
         self.islands = self.init_islands(data)
         self.start_time = time.time()
-        self.speed_timer.clear(reset=True)
-        self.token_timer.clear(reset=True)
+        self.speed_timer.clear(reset_last_add_time=True)
+        self.token_timer.clear(reset_last_add_time=True)
         for n_iter in range(1, 1 + self.n_iter):
             self.islands = self.evolve(self.islands, data, n_iter=n_iter)
 

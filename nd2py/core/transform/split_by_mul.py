@@ -1,12 +1,14 @@
-from typing import List, Generator, Tuple, Dict
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
+from typing import List, Generator, Tuple, Dict, TYPE_CHECKING
 from functools import reduce
-from ..symbols import *
 from ..base_visitor import Visitor, yield_nothing
-
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = List[Symbol]  # List of symbols
-_ReturnType = List[Symbol]  # Merged list of symbols
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = List[Symbol]  # List of symbols
+    _ReturnType = List[Symbol]  # Merged list of symbols
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class SplitByMul(Visitor):
@@ -48,11 +50,13 @@ class SplitByMul(Visitor):
         result1 = yield (x1, args, kwargs)
         result2 = yield (x2, args, kwargs)
         for idx, item in enumerate(result2):
-            if isinstance(item, Number):
+            if type(item).__name__ == 'Number':
+                Number = self._get_symbol('Number')
                 result2[idx] = Number(1 / item.value, nettype=item.nettype, fitable=item.nettype)
-            elif isinstance(item, Inv):
+            elif type(item).__name__ == 'Inv':
                 result2[idx] = item.operands[0]
             else:
+                Inv = self._get_symbol('Inv')
                 result2[idx] = Inv(item)
         result = result1 + result2
         if kwargs.get("merge_coefficients"):
@@ -61,9 +65,10 @@ class SplitByMul(Visitor):
 
     def merge_coefficients(self, items: List[Symbol], *args, **kwargs) -> List[Symbol]:
         """Merge coefficients from the symbols."""
-        is_coeff = [isinstance(item, Number) for item in items]
+        is_coeff = [type(item).__name__ == 'Number' for item in items]
         if not any(is_coeff):
             return items
+        Number = self._get_symbol('Number')
         coeff = Number(
             reduce(
                 lambda x, y: x * y,

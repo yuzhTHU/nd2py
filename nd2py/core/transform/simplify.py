@@ -1,12 +1,15 @@
-from typing import List, Generator, Tuple, Dict, Type
-from ..symbols import *
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
+from typing import List, Generator, Tuple, Dict, Type, TYPE_CHECKING
 from ..base_visitor import Visitor, yield_nothing
-from functools import partialmethod
+from functools import partialmethod, reduce
 
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = List[Symbol]  # List of symbols
-_ReturnType = List[Symbol]  # Merged list of symbols
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = List[Symbol]  # List of symbols
+    _ReturnType = List[Symbol]  # Merged list of symbols
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class Simplify(Visitor):
@@ -48,19 +51,22 @@ class Simplify(Visitor):
             results.append(result)
 
         if kwargs["transform_constant_subtree"] and all(
-            isinstance(result, Number) for result in results
+            type(result).__name__ == 'Number' for result in results
         ):
+            Number = self._get_symbol('Number')
             value = sum(result.value for result in results)
             return Number(value)
         return node.__class__(*results)
 
     def remove_nested_unary(
-        self, node: Symbol, *args, unary: Type[Symbol] = None, **kwargs
+        self, node: Symbol, *args, **kwargs
     ) -> _Type:
+        unary = type(node)
         x = node.operands[0]
         result = yield (x, args, kwargs)
 
-        if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        if kwargs["transform_constant_subtree"] and type(result).__name__ == 'Number':
+            Number = self._get_symbol('Number')
             return Number(unary(result).eval())
 
         if kwargs[f"remove_nested_{unary.__name__.lower()}"]:
@@ -69,21 +75,23 @@ class Simplify(Visitor):
                 return result
         return unary(result)
 
-    visit_Sin = partialmethod(remove_nested_unary, unary=Sin)
-    visit_Cos = partialmethod(remove_nested_unary, unary=Cos)
-    visit_Tanh = partialmethod(remove_nested_unary, unary=Tanh)
-    visit_Sigmoid = partialmethod(remove_nested_unary, unary=Sigmoid)
-    visit_Sqrt = partialmethod(remove_nested_unary, unary=Sqrt)
-    visit_SqrtAbs = partialmethod(remove_nested_unary, unary=SqrtAbs)
-    visit_Exp = partialmethod(remove_nested_unary, unary=Exp)
-    visit_Log = partialmethod(remove_nested_unary, unary=Log)
-    visit_LogAbs = partialmethod(remove_nested_unary, unary=LogAbs)
+    visit_Sin = remove_nested_unary
+    visit_Cos = remove_nested_unary
+    visit_Tanh = remove_nested_unary
+    visit_Sigmoid = remove_nested_unary
+    visit_Sqrt = remove_nested_unary
+    visit_SqrtAbs = remove_nested_unary
+    visit_Exp = remove_nested_unary
+    visit_Log = remove_nested_unary
+    visit_LogAbs = remove_nested_unary
 
     def visit_Readout(self, node: Readout, *args, **kwargs) -> _Type:
+        Readout = self._get_symbol("Readout")
         x = node.operands[0]
         result = yield (x, args, kwargs)
 
-        if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        if kwargs["transform_constant_subtree"] and type(result).__name__ == 'Number':
+            Number = self._get_symbol('Number')
             return Number(Readout(result).eval())
 
         if kwargs["remove_useless_readout"] and result.nettype == "scalar":
@@ -100,19 +108,20 @@ class Simplify(Visitor):
         return node
 
     def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
+        Add = self._get_symbol("Add")
         results = []
         for x in node.split_by_add(split_by_sub=True):
             result = yield (x, args, kwargs)
-            if isinstance(result, Number) and result.value == 0:
+            if type(result).__name__ == 'Number' and result.value == 0:
                 continue
             results.append(result)
 
         if len(results) > 1:
-            add = Add(*results)
+            add = reduce(Add, results)
             results = add.split_by_add(split_by_sub=True, merge_bias=True)
             if (
                 len(results) > 1
-                and isinstance(results[0], Number)
+                and type(results[0]).__name__ == 'Number'
                 and results[0].value == 0
             ):
                 results = results[1:]
@@ -120,8 +129,8 @@ class Simplify(Visitor):
         if len(results) == 1:
             return results[0]
 
-        is_neg = [isinstance(result, Neg) for result in results]
-        neg = [result for result, flag in zip(results, is_neg) if flag]
+        is_neg = [type(result).__name__ == 'Neg' for result in results]
+        neg = [result.operands[0] for result, flag in zip(results, is_neg) if flag]
         pos = [result for result, flag in zip(results, is_neg) if not flag]
         if len(neg) == 0:
             neg = None
@@ -145,6 +154,7 @@ class Simplify(Visitor):
     visit_Sub = visit_Add  # Subtraction is handled the same way as addition
 
     def visit_Mul(self, node: Mul, *args, **kwargs) -> _Type:
+        Mul = self._get_symbol("Mul")
         results = []
         for x in node.split_by_mul(split_by_div=True, merge_coefficients=True):
             result = yield (x, args, kwargs)
@@ -153,21 +163,21 @@ class Simplify(Visitor):
         if len(results) == 1:
             return results[0]
 
-        is_inv = [isinstance(result, Inv) for result in results]
-        den = [result for result, flag in zip(results, is_inv) if flag]
+        is_inv = [type(result).__name__ == 'Inv' for result in results]
+        den = [result.operands[0] for result, flag in zip(results, is_inv) if flag]
         num = [result for result, flag in zip(results, is_inv) if not flag]
         if len(den) == 0:
             den = None
         elif len(den) == 1:
             den = den[0]
         else:
-            den = Mul(*den)
+            den = reduce(Mul, den)
         if len(num) == 0:
             num = None
         elif len(num) == 1:
             num = num[0]
         else:
-            num = Mul(*num)
+            num = reduce(Mul, num)
         if den is None:
             return num
         elif num is None:
@@ -178,48 +188,53 @@ class Simplify(Visitor):
     visit_Div = visit_Mul  # Division is handled the same way as multiplication
 
     def visit_Neg(self, node: Neg, *args, **kwargs) -> _Type:
+        Neg = self._get_symbol("Neg")
         x = node.operands[0]
         result = yield (x, args, kwargs)
 
-        if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        if kwargs["transform_constant_subtree"] and type(result).__name__ == 'Number':
+            Number = self._get_symbol('Number')
             return Number(-result.value)
 
-        if isinstance(result, Neg):
+        if type(result).__name__ == 'Neg':
             return result.operands[0]
 
-        if isinstance(result, Sub):
+        if type(result).__name__ == 'Sub':
             return result.operands[1] - result.operands[0]
 
-        if isinstance(result, Mul) and isinstance(result.operands[0], Number):
+        if type(result).__name__ == 'Mul' and type(result.operands[0]).__name__ == 'Number':
             result.operands[0].value *= -1
             return result
 
-        if isinstance(result, Div) and isinstance(result.operands[0], Number):
+        if type(result).__name__ == 'Div' and type(result.operands[0]).__name__ == 'Number':
             result.operands[0].value *= -1
             return result
 
         return Neg(result)
 
     def visit_Inv(self, node: Inv, *args, **kwargs) -> _Type:
+        Inv = self._get_symbol("Inv")
         x = node.operands[0]
         result = yield (x, args, kwargs)
 
-        if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        if kwargs["transform_constant_subtree"] and type(result).__name__ == 'Number':
+            Number = self._get_symbol('Number')
             return Number(1 / result.value)
 
-        if isinstance(result, Inv):
+        if type(result).__name__ == 'Inv':
             return result.operands[0]
 
-        if isinstance(result, Div):
+        if type(result).__name__ == 'Div':
             return result.operands[1] / result.operands[0]
 
         return Inv(result)
 
     def visit_Aggr(self, node: Aggr, *args, **kwargs) -> _Type:
+        Aggr = self._get_symbol("Aggr")
         x = node.operands[0]
         result = yield (x, args, kwargs)
 
-        # if kwargs["transform_constant_subtree"] and isinstance(result, Number):
+        # if kwargs["transform_constant_subtree"] and type(result).__name__ == Number:
         #     return Number(Aggr(result).eval())
 
         if result.nettype == "scalar":

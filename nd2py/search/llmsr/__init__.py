@@ -1,1 +1,1 @@
-from .llmsr import *
+from .llmsr import LLMSR

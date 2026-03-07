@@ -1,10 +1,16 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import torch
 import numbers
 import functools
 import numpy as np
-from ..symbols import *
 from typing import List, Tuple
 from ..base_visitor import Visitor, yield_nothing
+
+if TYPE_CHECKING:
+    # 避免循环引用，仅用于类型检查
+    from ..symbols import *
 
 
 # Decorator to unpack operands for operations

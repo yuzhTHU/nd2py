@@ -1,11 +1,14 @@
-from typing import Literal, Generator, Tuple, Dict, List
-from ..symbols import *
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
+from typing import Literal, Generator, Tuple, Dict, List, TYPE_CHECKING
+from ..nettype import NetType
 from ..base_visitor import Visitor, yield_nothing
-
-_YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
-_SendType = Symbol
-_ReturnType = Symbol
-_Type = Generator[_YieldType, _SendType, _ReturnType]
+if TYPE_CHECKING:
+    from ..symbols import *
+    _YieldType = Tuple[Symbol, Tuple, Dict]  # (node, args, kwargs)
+    _SendType = Symbol
+    _ReturnType = Symbol
+    _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
 class FixNetType(Visitor):

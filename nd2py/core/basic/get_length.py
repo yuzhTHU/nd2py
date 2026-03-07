@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from ..base_visitor import Visitor, yield_nothing
 
 
@@ -5,7 +6,7 @@ class GetLength(Visitor):
     def __call__(self, node, *args, **kwargs):
         """Count the number of nodes in the tree."""
         return super().__call__(node, *args, **kwargs)
-    
+
     def generic_visit(self, node, *args, **kwargs):
         yield from yield_nothing()
         children = []

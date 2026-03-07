@@ -1,26 +1,19 @@
-from .core.context.check_nettype import no_nettype_check, set_nettype_check
-from .core.context.set_fitable import no_set_fitable
-from .core.context.copy_value import no_copy_value
-from .core.context.warn_once import no_warn
-from .core.symbols import *
-from .core.functions import *
-from .core.printer.string_printer import StringPrinter
-from .core.printer.tree_printer import TreePrinter
-from .core.calc.numpy_calc import NumpyCalc
-from .core.calc.torch_calc import TorchCalc
-from .core.fit.fold_constant import FoldConstant
-from .core.fit.bfgs_fit import BFGSFit
-from .core.transform.split_by_add import SplitByAdd
-from .core.transform.split_by_mul import SplitByMul
-from .core.transform.fix_nettype import FixNetType
-from .core.parse.parser import parse
-from . import utils
-from .search.gp import GP, GPLearnGenerator
-from .search.llmsr import LLMSR
+from .core import *
+from . import dataset, generator, search, utils
 
-Constant = lambda x, *args, **kwargs: Number(x, *args, **kwargs, fitable=False)
-variables = lambda vars, *args, **kwargs: (
-    [Variable(v, *args, **kwargs) for v in vars.split(" ") if v]
-    if " " in vars
-    else Variable(vars, *args, **kwargs)
-)
+# 定义模块级别的 __getattr__ 拦截
+def __getattr__(name):
+    if name == '__all__':
+        # Triggered when 'from nd2py import *' is used
+        import warnings
+        warnings.warn(
+            "Detected 'from nd2py import *'. WARNING: This will shadow standard Python built-in functions (such as 'sum').\n"
+            "It is strongly recommended to use explicit imports, e.g., 'from nd2py import sum' or 'import nd2py as nd'.",
+            category=UserWarning,
+            stacklevel=2
+        )
+        # 动态获取当前模块（__init__.py）中所有不以 '_' 开头的全局变量和模块
+        return [n for n in globals() if not n.startswith('_')]
+
+    # 对于其他不存在的属性，保持默认的报错行为
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")

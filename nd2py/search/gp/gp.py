@@ -1,3 +1,4 @@
+from __future__ import annotations
 import json
 import time
 import logging
@@ -7,19 +8,22 @@ import pandas as pd
 from numpy.random import RandomState, default_rng
 from tqdm import tqdm
 from joblib import Parallel, delayed
-from typing import List, Tuple, Dict, Generator, Optional, Literal, Set
-from ...core.symbols import *
+from typing import List, Tuple, Dict, Generator, Optional, Literal, Set, TYPE_CHECKING
+from ... import core as nd
 from ...utils.timing import Timer, NamedTimer
 from sklearn.base import BaseEstimator, RegressorMixin
-from .gplearn_generator import GPLearnGenerator
+from ...generator.eq.gplearn_generator import GPLearnGenerator
 from ... import BFGSFit
+if TYPE_CHECKING:
+    from ...core import *
 
-__all__ = ["GP"]
+
 _logger = logging.getLogger(__name__)
 
 
 class Individual:
     def __init__(self, eqtree: Symbol):
+        assert isinstance(eqtree, nd.Identity), f"Sentinel Node (Identity) Missing! Got {type(eqtree)}"
         self.eqtree = eqtree
         self.complexity = None
         self.accuracy = None
@@ -47,8 +51,8 @@ class GP(BaseEstimator, RegressorMixin):
     def __init__(
         self,
         variables: List[Variable],
-        binary: List[Symbol] = [Add, Sub, Mul, Div, Max, Min],
-        unary: List[Symbol] = [Sqrt, Log, Abs, Neg, Inv, Sin, Cos, Tan],
+        binary: List[Symbol] = [nd.Add, nd.Sub, nd.Mul, nd.Div, nd.Max, nd.Min],
+        unary: List[Symbol] = [nd.Sqrt, nd.Log, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan],
         max_params: int = 2,
         elitism_k: int = 10,
         population_size: int = 1000,
@@ -181,8 +185,8 @@ class GP(BaseEstimator, RegressorMixin):
         else:
             raise ValueError(f"Unknown type: {type(X)}")
 
-        self.named_timer.clear(reset=True)
-        self.speed_timer.clear(reset=True)
+        self.named_timer.clear(reset_last_add_time=True)
+        self.speed_timer.clear(reset_last_add_time=True)
         self.start_time = time.time()
         population = self.init_population(X, y)
         for iter in tqdm(range(1, 1 + self.n_iter), disable=not self.use_tqdm):
@@ -215,7 +219,7 @@ class GP(BaseEstimator, RegressorMixin):
             )
             if (
                 not iter % self.log_per_iter
-                or self.named_timer.total_time() > self.log_per_sec
+                or self.named_timer.time > self.log_per_sec
             ):
                 log = {}
                 log["Iter"] = record["iter"]
@@ -320,7 +324,7 @@ class GP(BaseEstimator, RegressorMixin):
             if (
                 self._rng.random() < 0.1
                 and 0
-                < sum(isinstance(op, Number) for op in child.eqtree.iter_preorder())
+                < sum(type(op).__name__ == 'Number' for op in child.eqtree.iter_preorder())
                 <= self.max_params
             ):
                 bfgs_fit = BFGSFit(
@@ -339,7 +343,9 @@ class GP(BaseEstimator, RegressorMixin):
     ) -> List[Individual]:
         population = []
         for _ in range(self.population_size):
-            eqtree = self.generator.generate_eqtree(nettype=self.nettype)
+            eqtree = nd.Identity(empty:=nd.Empty(), nettype=self.nettype)
+            random_tree = self.generator.sample(nettypes=eqtree.possible_nettypes, assign_root_nettypes=False)
+            eqtree = eqtree.replace(empty, random_tree)
             individual = Individual(eqtree)
             self.set_fitness(individual, X, y)
             population.append(individual)
@@ -357,33 +363,33 @@ class GP(BaseEstimator, RegressorMixin):
     def crossover(self, parent: Individual, donor: Individual) -> Individual:
         """Crossover: 用 donor 的某个子树替换 parent 的某个子树"""
         child = parent.copy()
-        removed_subtree = self.get_random_subtree(child)
-        donored_subtree = self.get_random_subtree(
-            donor, nettype=removed_subtree.replaceable_nettype()
-        )
-        child.eqtree = child.eqtree.replace(removed_subtree, donored_subtree)
+        subtree = self.get_random_subtree(child.eqtree.operands[0])
+        child.eqtree = child.eqtree.replace(subtree, _subtree:=nd.Empty())
+        donored_tree = self.get_random_subtree(donor.eqtree.operands[0], nettypes=_subtree.possible_nettypes)
+        child.eqtree = child.eqtree.replace(_subtree, donored_tree)
         return child
 
     def subtree_mutation(self, parent: Individual) -> Individual:
         """Subtree mutation: 用一个随机树替换某个子树"""
         child = parent.copy()
-        subtree = self.get_random_subtree(child)
-        child.eqtree = child.eqtree.replace(
-            subtree, self.generator.generate_eqtree(nettype=subtree.nettype)
-        )
+        subtree = self.get_random_subtree(child.eqtree.operands[0])
+        child.eqtree = child.eqtree.replace(subtree, _subtree:=nd.Empty())
+        random_tree = self.generator.sample(nettypes=_subtree.possible_nettypes, assign_root_nettypes=False)
+        child.eqtree = child.eqtree.replace(_subtree, random_tree)
         return child
 
     def hoist_mutation(self, parent: Individual) -> Individual:
         """Hoist mutation: 用某个子树替换根节点"""
         child = parent.copy()
-        child.eqtree = child.eqtree.replace(
-            child.eqtree, self.get_random_subtree(child, nettype=self.nettype)
-        )
+        eqtree = child.eqtree.operands[0]
+        subtree = self.get_random_subtree(eqtree, nettypes=eqtree.possible_nettypes)
+        child.eqtree = child.eqtree.replace(eqtree, subtree)
         return child
 
     def point_mutation(self, parent: Individual) -> Individual:
         """Point mutation: 用随机符号替换 / 插入某个节点"""
         child = parent.copy()
+        return child
         mutate_nodes = [
             node
             for node in child.eqtree.iter_postorder()  # Use postorder to ensure we mutate deeper nodes first
@@ -400,7 +406,7 @@ class GP(BaseEstimator, RegressorMixin):
                 nodes = [
                     sym
                     for sym in self.unary
-                    if sym.map_nettype(child_types) in node.replaceable_nettype()
+                    if sym.map_nettype(*child_types) in node.possible_nettypes
                 ]
                 sym = self._rng.choice(nodes)(*node.operands)
             elif node.n_operands == 2:
@@ -409,7 +415,7 @@ class GP(BaseEstimator, RegressorMixin):
                 nodes = [
                     sym
                     for sym in self.binary
-                    if sym.map_nettype(child_types) in node.replaceable_nettype()
+                    if sym.map_nettype(*child_types) in node.possible_nettypes
                 ]
                 assert (
                     len(nodes) > 0
@@ -422,9 +428,7 @@ class GP(BaseEstimator, RegressorMixin):
             child.eqtree = child.eqtree.replace(node, sym)
         return child
 
-    def set_fitness(
-        self, individual: Individual, X: Dict[str, np.ndarray], y: np.ndarray
-    ) -> Individual:
+    def set_fitness(self, individual: Individual, X: Dict[str, np.ndarray], y: np.ndarray):
         individual.complexity = len(individual.eqtree)
         self.named_timer.add("drop")
         y_pred = individual.eqtree.eval(
@@ -442,34 +446,34 @@ class GP(BaseEstimator, RegressorMixin):
     def get_random_subtree(
         self,
         individual: Individual | Symbol,
-        nettype: Set[Literal["node", "edge", "scalar"]] = None,
+        nettypes: Set[Literal["node", "edge", "scalar"]] = None,
     ) -> Symbol:
         """
         follow the same approach as GPlearn and Koza (1992) to choose functions 90% of the time and leaves 10% of the time.
         """
         if isinstance(individual, Individual):
             individual = individual.eqtree
-        if isinstance(nettype, str):
-            nettype = {nettype}
-        if nettype is None:
+        if isinstance(nettypes, str):
+            nettypes = {nettypes}
+        if nettypes is None:
             nodes = [op for op in individual.iter_preorder()]
         else:
             nodes = []
             for op in individual.iter_preorder():
-                if op.nettype in nettype or op.nettype == "scalar":
+                if op.nettype in nettypes:
                     nodes.append(op)
-                elif op.nettype == "edge" and "node" in nettype:
-                    if Aggr in self.unary:
-                        nodes.append(Aggr(op))
-                    if Rgga in self.unary:
-                        nodes.append(Rgga(op))
-                elif op.nettype == "node" and "edge" in nettype:
-                    if Sour in self.unary:
-                        nodes.append(Sour(op))
-                    if Targ in self.unary:
-                        nodes.append(Targ(op))
+                elif op.nettype == "edge" and "node" in nettypes:
+                    if nd.Aggr in self.unary:
+                        nodes.append(nd.Aggr(op))
+                    if nd.Rgga in self.unary:
+                        nodes.append(nd.Rgga(op))
+                elif op.nettype == "node" and "edge" in nettypes:
+                    if nd.Sour in self.unary:
+                        nodes.append(nd.Sour(op))
+                    if nd.Targ in self.unary:
+                        nodes.append(nd.Targ(op))
         if len(nodes) == 0:
-            return self.generator.generate_eqtree(nettype=nettype)
+            return self.generator.sample(nettypes=nettypes, assign_root_nettypes=False)
 
         probs = np.array([0.9 if node.n_operands > 0 else 0.1 for node in nodes])
         subtree = nodes[

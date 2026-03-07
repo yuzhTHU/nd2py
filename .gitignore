@@ -1,7 +1,18 @@
-*.py[co]
+*.py[cod]
 __pycache__/
 *.egg-info/
 .pytest_cache/
 .env
 
 /venv/
+/myenv/
+/.coverage
+/htmlcov/
+/playground/
+/.vscode/
+/debug.py
+/*.debug.py
+/logs/
+/venv.bak/
+/docs/build/
+/dist/

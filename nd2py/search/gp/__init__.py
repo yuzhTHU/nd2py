@@ -1,2 +1,2 @@
-from .gp import *
-from .gplearn_generator import *
+from .gp import GP
+from ...generator.eq.gplearn_generator import GPLearnGenerator
