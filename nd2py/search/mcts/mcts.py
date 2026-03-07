@@ -141,6 +141,88 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         eta=0.999,
         **kwargs,
     ):
+        """Initialize a Monte Carlo Tree Search symbolic regression estimator.
+
+        This configures the function set, search hyperparameters, logging
+        behavior, optional graph structure, and various data preprocessing
+        options used during MCTS-based exploration of expression trees.
+
+        Args:
+            variables (List[Variable]): List of input variables that can be
+                used in generated expressions.
+            binary (List[Symbol], optional): Binary operator symbols available
+                to the search (for example ``Add``, ``Sub``, ``Mul``). Defaults
+                to a standard arithmetic and min/max set.
+            unary (List[Symbol], optional): Unary operator symbols available to
+                the search (for example ``Sqrt``, ``Log``, ``Sin``). Defaults
+                to a standard set of common functions.
+            max_params (int, optional): Maximum number of numeric parameters
+                (``Number`` nodes) allowed in an expression. Defaults to 2.
+            const_range (Tuple[float, float], optional): Range from which
+                random constants are sampled. Defaults to ``(-1.0, 1.0)``.
+            depth_range (Tuple[int, int], optional): Minimum and maximum tree
+                depth for randomly generated expressions. Defaults to
+                ``(2, 6)``.
+            nettype (Optional[Literal["node", "edge", "scalar"]], optional):
+                Nettype of the target expression when working with graph data.
+                Defaults to ``"scalar"``.
+            log_per_iter (float, optional): Log progress every
+                ``log_per_iter`` iterations; use ``float("inf")`` to disable
+                iteration-based logging. Defaults to ``float("inf")``.
+            log_per_sec (float, optional): Log progress every ``log_per_sec``
+                seconds; use ``float("inf")`` to disable time-based logging.
+                Defaults to ``float("inf")``.
+            log_detailed_speed (bool, optional): If True, include detailed
+                timing information for individual steps in logs. Defaults to
+                False.
+            save_path (str, optional): Directory in which JSON lines of
+                per-iteration records are stored as ``records.jsonl``. If
+                ``None``, records are not written to disk. Defaults to
+                ``None``.
+            random_state (Optional[int], optional): Seed used to control
+                randomness for reproducible runs. Defaults to ``None``.
+            n_iter (int, optional): Maximum number of MCTS iterations.
+                Defaults to 100.
+            use_tqdm (bool, optional): If True, wrap the main search loop with
+                a ``tqdm`` progress bar. Defaults to False.
+            edge_list (Tuple[List[int], List[int]], optional): Optional graph
+                edge list ``(sources, targets)`` used when evaluating graph
+                operators. Defaults to ``None``.
+            num_nodes (int, optional): Number of nodes in the underlying
+                graph; if ``None``, it may be inferred elsewhere. Defaults to
+                ``None``.
+            time_limit (float, optional): Maximum wall-clock time (in seconds)
+                for the search; if exceeded, the search terminates early.
+                Defaults to ``None``.
+            sample_num (int, optional): Number of samples drawn when
+                evaluating or sampling candidate expressions. Defaults to 300.
+            keep_vars (bool, optional): If True, keep variable names instead of
+                renaming them during preprocessing. Defaults to False.
+            normalize_y (bool, optional): If True, normalize target values
+                before fitting. Defaults to False.
+            normalize_X (bool, optional): If True, normalize input features
+                before fitting. Defaults to False.
+            remove_abnormal (bool, optional): If True, attempt to remove
+                abnormal samples before training. Defaults to False.
+            train_eval_split (float, optional): Fraction of data used for
+                training; the remainder may be used for evaluation. Defaults
+                to 1.0.
+            child_num (int, optional): Maximum number of child nodes expanded
+                from a node during expansion. Defaults to 50.
+            n_playout (int, optional): Number of rollouts performed from a
+                node during simulation. Defaults to 100.
+            d_playout (int, optional): Maximum depth of each simulation
+                rollout. Defaults to 10.
+            max_len (int, optional): Maximum allowed expression length; used
+                to constrain actions. Defaults to 30.
+            c (float, optional): Exploration constant used in the UCT formula
+                during selection. Defaults to 1.41.
+            eta (float, optional): Complexity penalty factor used in the
+                reward function, where larger ``eta`` discounts complex
+                expressions less. Defaults to 0.999.
+            **kwargs: Additional unused keyword arguments; a warning is logged
+                if any are provided.
+        """
         self.eqtree = None
         self.variables = variables
         self.binary = binary
@@ -193,10 +275,25 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         X: np.ndarray | pd.DataFrame | Dict[str, np.ndarray],
         y: np.ndarray | pd.Series,
     ):
-        """
+        """Fit the MCTS model to training data by exploring expression trees.
+
+        The input features can be provided as a NumPy array, a pandas
+        ``DataFrame``, or a dictionary mapping variable names to arrays. The
+        method builds a Monte Carlo search tree, repeatedly performs
+        selection–expansion–simulation–backpropagation steps, and tracks the
+        best discovered symbolic expression in ``self.eqtree``.
+
         Args:
-            X: (n_samples, n_dims)
-            y: (n_samples,)
+            X (ndarray | DataFrame | Dict[str, ndarray]): Input features with
+                shape ``(n_samples, n_dims)`` or an equivalent mapping from
+                variable names to 1D arrays.
+            y (ndarray | Series): Target values with shape ``(n_samples,)``.
+
+        Returns:
+            MCTS: The fitted estimator instance.
+
+        Raises:
+            ValueError: If ``X`` is of an unsupported type.
         """
         if isinstance(X, np.ndarray):
             X = {var.name: x for var, x in zip(self.variables, X[..., :])}
@@ -281,12 +378,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
     def predict(
         self, X: np.ndarray | pd.DataFrame | Dict[str, np.ndarray]
     ) -> np.ndarray:
-        """
-        Args:
-            X: (n_samples, n_dims)
-        Returns:
-            y: (n_samples,)
-        """
+        """Predict target values for ``X`` using the best expression found by MCTS."""
         if self.eqtree is None:
             raise ValueError("Model not fitted yet")
         if isinstance(X, np.ndarray):
@@ -302,9 +394,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         )
 
     def action(self, state: Node, action: Tuple[Symbol, Symbol]) -> Node:
-        """
-        将 action[0]:nd.Empty 替换为 action[1]:Symbol
-        """
+        """Apply an action to a state by replacing an empty placeholder with a symbol."""
         state2 = state.copy()
         e, op = action
         if e is None and op is None:
@@ -316,6 +406,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
     def check_valid_action(
         self, state: Node, action: Tuple[Symbol, Symbol]
     ) -> bool:
+        """Return whether a proposed action is valid under length and nettype constraints."""
         e, op = action
         # empty_list = [i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)]
         if len(state.eqtree) + op.n_operands > self.max_len:
@@ -328,6 +419,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
     def iter_valid_action(
         self, state: Node, shuffle=False
     ) -> Generator[Tuple[Symbol, Symbol], None, None]:
+        """Iterate over all valid actions from a given state, optionally in random order."""
         empty_list = [
             i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)
         ]
@@ -351,6 +443,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
                 yield e, op
 
     def pick_valid_action(self, state: Node) -> Tuple[Symbol, Symbol]:
+        """Randomly sample a single valid action from the current state."""
         empty_list = [
             i for i in state.eqtree.iter_preorder() if isinstance(i, nd.Empty)
         ]
@@ -370,6 +463,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         return e, op
 
     def fill_to_complete(self, state: Node) -> Node:
+        """Fill all remaining empty leaves in a state with compatible variables."""
         state2 = state.copy()
         empty_list = [
             i for i in state2.eqtree.iter_preorder() if isinstance(i, nd.Empty)
@@ -382,12 +476,14 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         return state2
 
     def select(self, root: Node) -> Node:
+        """Select a leaf node from the tree using the UCT rule."""
         node = root
         while node.children:
             node = max(node.children, key=lambda x: x.UCT(self.c))
         return node
 
     def expand(self, node: Node, X: Dict[str, np.ndarray], y: np.ndarray) -> Node:
+        """Expand a node by generating child states and return one child for simulation."""
         for idx, action in enumerate(self.iter_valid_action(node, shuffle=True)):
             child = self.action(node, action)
             child.parent = node
@@ -402,6 +498,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
     def simulate(
         self, node: Node, X: Dict[str, np.ndarray], y: np.ndarray
     ) -> Tuple[Node, float]:
+        """Run playout simulations from a node and return the best simulated state and reward."""
         if getattr(node, "reward", None) is not None:
             return node.reward, node
         best = None
@@ -428,12 +525,14 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         return best.reward, best
 
     def backpropagate(self, node: Node, reward: float):
+        """Backpropagate a reward up the tree, updating visit counts and value estimates."""
         while node:
             node.N += 1
             node.Q += reward
             node = node.parent
 
     def set_reward(self, node: Node, X: Dict[str, np.ndarray], y: np.ndarray):
+        """Fit parameters, evaluate an expression, and assign reward and diagnostics to a node."""
         self.view_timer.add(1)
 
         if any(isinstance(i, nd.Empty) for i in node.eqtree.iter_preorder()):

@@ -59,6 +59,21 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
     n_operands = None
 
     def __init__(self, *operands, nettype: Optional[NetType|Set[NetType]] = None):
+        """Initialize a Symbol node.
+
+        This constructor sets the nettype, sanitizes and attaches child
+        operands, and then triggers a nettype inference pass on the whole
+        expression tree.
+
+        Args:
+            *operands: Child operands of this symbol. The number of operands
+                must match ``n_operands`` of the concrete subclass. Non-symbol
+                scalar values are automatically wrapped as ``Number`` symbols.
+            nettype (Optional[NetType | Set[NetType]]): Nettype constraint for
+                this symbol, such as ``"node"``, ``"edge"``, or ``"scalar"``,
+                or a set of allowed nettypes. If provided, it is propagated
+                through the tree by ``infer_nettype()``.
+        """
         NetTypeMixin.__init__(self, nettype=nettype)
 
         # 连接父代 (这里自底向上创建符号树, 没有 parent 需要连接)
@@ -72,7 +87,25 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
         self.infer_nettype()
 
     def _sanitize_operands(self, operands: List["Symbol"]) -> List["Symbol"]:
-        """将输入的 operands 转换为标准的 Symbol 列表"""
+        """Convert raw operands into a standardized list of ``Symbol`` objects.
+
+        This method fills missing operands with ``Empty``, wraps numeric values
+        as ``Number`` symbols, and ensures that each child has a unique parent
+        by copying shared subexpressions when necessary.
+
+        Args:
+            operands (List[Symbol]): Raw operand list passed to the
+                constructor.
+
+        Returns:
+            List[Symbol]: Sanitized list of operands attached to this symbol.
+
+        Raises:
+            ValueError: If the number of operands does not match
+                ``self.n_operands``.
+            TypeError: If an operand is neither a ``Symbol`` nor a valid
+                numeric value.
+        """
         from .empty import Empty
         from .number import Number
         from .variable import Variable
@@ -195,7 +228,15 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
         return Inv(self)
 
     def copy(self):
-        """Create a deep copy of the Symbol. The result will not inherit self.parent"""
+        """Return a deep copy of this symbol.
+
+        The copied symbol has the same tree structure and values as the
+        original but does not share ``parent`` links, so it can be safely
+        inserted into a different expression tree.
+
+        Returns:
+            Symbol: A deep copy of the current symbol.
+        """
         from ..basic import GetCopy
 
         return GetCopy()(self)
@@ -206,12 +247,22 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
         float_only: bool = False,
         scalar_only: bool = False,
     ) -> List["Number"]:
-        """Get the Numbers in the Symbol.
+        """Collect all ``Number`` nodes contained in this symbol.
+
+        Traverses the expression tree in preorder and returns all numeric
+        nodes that satisfy the given filters.
+
         Args:
-        - fitable_only: bool, whether to return only the fitable Numbers
-        - float_only: bool, whether to return only the float Numbers
+            fitable_only (bool, optional): If True, return only numbers
+                marked as fitable (trainable) parameters. Defaults to False.
+            float_only (bool, optional): If True, exclude integer-like values
+                (for example exponents that should remain fixed). Defaults to
+                False.
+            scalar_only (bool, optional): If True, only consider scalar
+                numbers (nettype ``"scalar"``). Defaults to False.
+
         Returns:
-        - List[Number], a list of Numbers
+            List[Number]: List of numeric symbol nodes that match the filters.
         """
         numbers = []
         for op in self.iter_preorder():
@@ -226,12 +277,19 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
     def get_parameters(
         self, fitable_only: bool = False, float_only: bool = False
     ) -> List[float]:
-        """Get the parameters of the Symbol.
+        """Return numeric parameter values contained in this symbol.
+
+        This is a convenience wrapper over :meth:`get_numbers` that extracts
+        the underlying scalar values from ``Number`` nodes.
+
         Args:
-        - fitable_only: bool, whether to return only the fitable parameters
-        - float_only: bool, whether to return only the float parameters
+            fitable_only (bool, optional): If True, return only parameters
+                associated with fitable numbers. Defaults to False.
+            float_only (bool, optional): If True, exclude integer-like
+                parameters. Defaults to False.
+
         Returns:
-        - List[float], a list of parameters
+            List[float]: Flat list of parameter values in traversal order.
         """
         params = []
         for op in self.iter_preorder():
@@ -246,11 +304,21 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
     def set_parameters(
         self, params: List[float], fitable_only: bool = False, float_only: bool = False
     ):
-        """Set the parameters of the Symbol.
+        """Assign new numeric parameter values to this symbol.
+
+        The values in ``params`` are consumed in the same order as produced
+        by :meth:`get_parameters` with the same filter options.
+
         Args:
-        - params: List[float], a list of parameters
-        - fitable_only: bool, whether to set only the fitable parameters
-        - float_only: bool, whether to set only the float parameters
+            params (List[float]): New parameter values to assign.
+            fitable_only (bool, optional): If True, only update fitable
+                parameters and leave others unchanged. Defaults to False.
+            float_only (bool, optional): If True, only update non-integer
+                parameters. Defaults to False.
+
+        Raises:
+            ValueError: If the length of ``params`` does not match the number
+                of parameters selected by the filters.
         """
         if len(params) != len(
             self.get_parameters(fitable_only=fitable_only, float_only=float_only)
@@ -270,7 +338,24 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
 
     @classmethod
     def map_nettype(cls, *children_nettypes: NetType) -> Optional[NetType]:
-        """ 默认的 nettype 映射逻辑: node 和 edge 不能相互运算; 只有 scalar 时返回 scalar; 否则返回 node / edge """
+        """Default nettype mapping rule for symbol subclasses.
+
+        The default behavior enforces that ``"node"`` and ``"edge"`` nettypes
+        cannot be mixed. If only scalars are present, the result is
+        ``"scalar"``; otherwise it follows the presence of ``"node"`` or
+        ``"edge"``.
+
+        Args:
+            *children_nettypes (NetType): Nettypes of the child operands.
+
+        Returns:
+            Optional[NetType]: Inferred nettype for the parent symbol, or
+            ``None`` if the combination is invalid or cannot be determined.
+
+        Raises:
+            ValueError: If the number of child nettypes does not match
+                ``cls.n_operands``.
+        """
         if len(children_nettypes) != cls.n_operands:
             raise ValueError(
                 f"Invalid number of operands for {cls.__name__}: "

@@ -78,29 +78,84 @@ class GP(BaseEstimator, RegressorMixin):
         num_nodes: int = None,
         **kwargs,
     ):
-        """
+        """Initialize a genetic-programming-based symbolic regression estimator.
+
+        This configures the function set, search hyperparameters, logging
+        behavior, and optional graph structure used for nettype-aware
+        expressions.
+
         Args:
-            variables: list of variables
-            binary: list of binary operators
-            unary: list of unary operators
-            max_params: max number of parameters in the equation
-            elitism_k: number of elite individuals to keep in the population
-            population_size: size of the population
-            tournament_size: size of the tournament
-            p_crossover: probability of crossover
-            p_subtree_mutation: probability of subtree mutation
-            p_hoist_mutation: probability of hoist mutation
-            p_point_mutation: probability of point mutation
-            p_point_replace: probability of point replacement
-            const_range: range of constant values
-            depth_range: range of tree depth
-            full_prob: probability of full tree generation
-            nettype: nettype for the generated equations (node, edge, scalar)
-            n_jobs: number of jobs for parallel processing (default is None)
-            log_per_iter: log every n iterations (default is float('inf'))
-            log_per_sec: log every n seconds (default is float('inf'))
-            log_detailed_speed: log the speed of each step (default is False)
-            save_path: path to save the logs (default is None)
+            variables (List[Variable]): List of input variables that can be
+                used in generated expressions.
+            binary (List[Symbol], optional): Binary operator symbols available
+                to the GP (for example ``Add``, ``Sub``, ``Mul``). Defaults to
+                a standard arithmetic and min/max set.
+            unary (List[Symbol], optional): Unary operator symbols available
+                to the GP (for example ``Sqrt``, ``Log``, ``Sin``). Defaults
+                to a standard set of common functions.
+            max_params (int, optional): Maximum number of numeric parameters
+                (``Number`` nodes) allowed in an expression. Defaults to 2.
+            elitism_k (int, optional): Number of top individuals carried over
+                unchanged between generations. Defaults to 10.
+            population_size (int, optional): Number of individuals in each
+                generation. Defaults to 1000.
+            tournament_size (int, optional): Number of individuals competing
+                in each tournament during parent selection. Defaults to 20.
+            p_crossover (float, optional): Probability of applying subtree
+                crossover. Defaults to 0.9.
+            p_subtree_mutation (float, optional): Probability of applying
+                subtree mutation. Defaults to 0.01.
+            p_hoist_mutation (float, optional): Probability of applying hoist
+                mutation. Defaults to 0.01.
+            p_point_mutation (float, optional): Probability of applying point
+                mutation. Defaults to 0.01.
+            p_point_replace (float, optional): Probability of replacing a
+                node during point mutation. Defaults to 0.05.
+            const_range (Tuple[float, float], optional): Range from which
+                random constants are sampled. Defaults to ``(-1.0, 1.0)``.
+            depth_range (Tuple[int, int], optional): Minimum and maximum tree
+                depth for randomly generated expressions. Defaults to
+                ``(2, 6)``.
+            full_prob (float, optional): Probability of using the "full"
+                method rather than "grow" when generating random trees.
+                Defaults to 0.5.
+            nettype (Optional[Literal["node", "edge", "scalar"]], optional):
+                Nettype of the target expression, used when working with graph
+                data. Defaults to ``"scalar"``.
+            n_jobs (int, optional): Number of parallel jobs used for evolving
+                the population. If ``None``, evolution is run in a single
+                process. Defaults to ``None``.
+            log_per_iter (float, optional): Log progress every ``log_per_iter``
+                iterations; use ``float("inf")`` to disable iteration-based
+                logging. Defaults to ``float("inf")``.
+            log_per_sec (float, optional): Log progress every ``log_per_sec``
+                seconds; use ``float("inf")`` to disable time-based logging.
+                Defaults to ``float("inf")``.
+            log_detailed_speed (bool, optional): If True, include detailed
+                timing information for individual steps in logs. Defaults to
+                False.
+            save_path (str, optional): File path to which JSON lines of
+                per-iteration records are appended. If ``None``, records are
+                not written to disk. Defaults to ``None``.
+            random_state (Optional[int], optional): Seed for the internal RNG
+                to make runs reproducible. Defaults to ``None``.
+            n_iter (int, optional): Maximum number of evolution iterations.
+                Defaults to 100.
+            use_tqdm (bool, optional): If True, wrap the main evolution loop
+                with a ``tqdm`` progress bar. Defaults to False.
+            edge_list (Tuple[List[int], List[int]], optional): Optional graph
+                edge list ``(sources, targets)`` used when evaluating graph
+                operators. If provided and ``num_nodes`` is ``None``, the
+                number of nodes is inferred. Defaults to ``None``.
+            num_nodes (int, optional): Number of nodes in the underlying
+                graph. If ``None`` and ``edge_list`` is provided, it is
+                inferred from the edges. Defaults to ``None``.
+            **kwargs: Additional unused keyword arguments; a warning is logged
+                if any are provided.
+
+        Raises:
+            AssertionError: If the sum of mutation and crossover probabilities
+                exceeds 1.0.
         """
         if num_nodes is None and edge_list is not None:
             num_nodes = np.reshape(edge_list, (-1,)).max() + 1
@@ -171,10 +226,24 @@ class GP(BaseEstimator, RegressorMixin):
         X: np.ndarray | pd.DataFrame | Dict[str, np.ndarray],
         y: np.ndarray | pd.Series,
     ):
-        """
+        """Fit the GP model to training data by evolving expression trees.
+
+        The input features can be provided as a NumPy array, a pandas
+        ``DataFrame``, or a dictionary mapping variable names to arrays. The
+        method runs the evolutionary loop, tracks the best individual, and
+        stores its expression tree in ``self.eqtree``.
+
         Args:
-            X: (n_samples, n_dims)
-            y: (n_samples,)
+            X (ndarray | DataFrame | Dict[str, ndarray]): Input features with
+                shape ``(n_samples, n_dims)`` or an equivalent mapping from
+                variable names to 1D arrays.
+            y (ndarray | Series): Target values with shape ``(n_samples,)``.
+
+        Returns:
+            GP: The fitted estimator instance.
+
+        Raises:
+            ValueError: If ``X`` is of an unsupported type.
         """
         if isinstance(X, np.ndarray):
             X = {var.name: x for var, x in zip(self.variables, X[..., :])}
@@ -257,12 +326,7 @@ class GP(BaseEstimator, RegressorMixin):
     def predict(
         self, X: np.ndarray | pd.DataFrame | Dict[str, np.ndarray]
     ) -> np.ndarray:
-        """
-        Args:
-            X: (n_samples, n_dims)
-        Returns:
-            y: (n_samples,)
-        """
+        """Predict target values for ``X`` using the best evolved expression tree."""
         if self.eqtree is None:
             raise ValueError("Model not fitted yet")
 
@@ -286,6 +350,7 @@ class GP(BaseEstimator, RegressorMixin):
         children_size=None,
         elitism_k=None,
     ) -> List[Individual]:
+        """Evolve a population for one generation and return the offspring."""
         if children_size is None:
             children_size = self.population_size
         if elitism_k is None:
@@ -341,6 +406,7 @@ class GP(BaseEstimator, RegressorMixin):
     def init_population(
         self, X: Dict[str, np.ndarray], y: np.ndarray
     ) -> List[Individual]:
+        """Initialize the first population of individuals from the generator."""
         population = []
         for _ in range(self.population_size):
             eqtree = nd.Identity(empty:=nd.Empty(), nettype=self.nettype)
@@ -352,6 +418,7 @@ class GP(BaseEstimator, RegressorMixin):
         return population
 
     def tournament(self, population: List[Individual], num) -> List[Individual]:
+        """Select individuals from the population via tournament selection."""
         tournaments = self._rng.choice(
             population, size=(num, self.tournament_size), replace=True
         )
@@ -361,7 +428,7 @@ class GP(BaseEstimator, RegressorMixin):
         return winners
 
     def crossover(self, parent: Individual, donor: Individual) -> Individual:
-        """Crossover: 用 donor 的某个子树替换 parent 的某个子树"""
+        """Create a child by replacing a subtree of ``parent`` with one from ``donor``."""
         child = parent.copy()
         subtree = self.get_random_subtree(child.eqtree.operands[0])
         child.eqtree = child.eqtree.replace(subtree, _subtree:=nd.Empty())
@@ -370,7 +437,7 @@ class GP(BaseEstimator, RegressorMixin):
         return child
 
     def subtree_mutation(self, parent: Individual) -> Individual:
-        """Subtree mutation: 用一个随机树替换某个子树"""
+        """Create a child by replacing a random subtree with a newly generated random tree."""
         child = parent.copy()
         subtree = self.get_random_subtree(child.eqtree.operands[0])
         child.eqtree = child.eqtree.replace(subtree, _subtree:=nd.Empty())
@@ -379,7 +446,7 @@ class GP(BaseEstimator, RegressorMixin):
         return child
 
     def hoist_mutation(self, parent: Individual) -> Individual:
-        """Hoist mutation: 用某个子树替换根节点"""
+        """Create a child by hoisting a randomly chosen subtree to the root."""
         child = parent.copy()
         eqtree = child.eqtree.operands[0]
         subtree = self.get_random_subtree(eqtree, nettypes=eqtree.possible_nettypes)
@@ -387,7 +454,7 @@ class GP(BaseEstimator, RegressorMixin):
         return child
 
     def point_mutation(self, parent: Individual) -> Individual:
-        """Point mutation: 用随机符号替换 / 插入某个节点"""
+        """Create a child by performing point mutation with random symbol replacements or insertions."""
         child = parent.copy()
         return child
         mutate_nodes = [
@@ -429,6 +496,7 @@ class GP(BaseEstimator, RegressorMixin):
         return child
 
     def set_fitness(self, individual: Individual, X: Dict[str, np.ndarray], y: np.ndarray):
+        """Compute and assign complexity, accuracy, and fitness for an individual."""
         individual.complexity = len(individual.eqtree)
         self.named_timer.add("drop")
         y_pred = individual.eqtree.eval(
@@ -448,9 +516,7 @@ class GP(BaseEstimator, RegressorMixin):
         individual: Individual | Symbol,
         nettypes: Set[Literal["node", "edge", "scalar"]] = None,
     ) -> Symbol:
-        """
-        follow the same approach as GPlearn and Koza (1992) to choose functions 90% of the time and leaves 10% of the time.
-        """
+        """Sample a subtree from an individual following the GPlearn/Koza (1992) node-selection strategy."""
         if isinstance(individual, Individual):
             individual = individual.eqtree
         if isinstance(nettypes, str):

@@ -16,16 +16,23 @@ ALL_NETTYPES: Set[NetType] = {"node", "edge", "scalar"}
 
 
 class NetTypeMixin(ABC):
-    """
-    Mixin 类：负责维护 Symbol 的 nettype 候选集 (nettypes) 并处理约束传播。
-        - 变量 (Variable), 数值 (Number) 和占位符 (Empty) 可以具有特定的 nettype, 表示该对象在网络中的角色 (节点、边或标量)
-        - 不同运算符对操作符的 nettype 有不同的要求和限制, 所得输出的 nettype 也不同
-        - 被指定为特定 nettype 的对象 (如 Variable(nettype="node")) 成为固定的锚点 (Anchor), 辅助其他对象通过约束传播确定自己的 nettype 候选集合
+    """Mixin that manages nettype candidates and constraint propagation.
 
-    宿主类 (Symbol) 必须提供以下属性和方法:
-        - self.parent
-        - self.operands
-        - self.map_nettype(*children_nettypes: NetType) -> Optional[NetType]
+    Symbols can carry a network type (nettype) describing their role in a
+    computational graph, such as ``"node"``, ``"edge"`` or ``"scalar"``.
+    This mixin tracks:
+
+    - User-assigned nettype anchors (hard constraints).
+    - The set of possible nettypes each symbol can take.
+    - Propagation of constraints across the expression tree.
+
+    The host class (typically ``Symbol``) is expected to provide:
+
+    - ``self.parent``: Reference to the parent symbol in the tree.
+    - ``self.operands``: List of child symbols.
+    - ``self.map_nettype(*children_nettypes: NetType) -> Optional[NetType]``:
+      Class method that maps child nettypes to a result nettype for the
+      operator.
     """
 
     # 通过 Type Hinting 提示宿主类必须有的属性, 不产生任何实际效果, 但方便 IDE 和类型检查器识别
@@ -35,13 +42,33 @@ class NetTypeMixin(ABC):
     @classmethod
     @abstractmethod
     def map_nettype(cls, *children_nettypes: NetType) -> Optional[NetType]:
-        """
-        根据子节点 nettypes 推导自身 nettype, 返回 None 表示发现逻辑冲突.
-        需要由具体的 Symbol 子类实现自己的映射逻辑
+        """Map child nettypes to the operator's resulting nettype.
+
+        This method defines the nettype semantics of a symbol class. Concrete
+        subclasses must implement their own mapping logic.
+
+        Args:
+            *children_nettypes (NetType): Nettypes of each operand, in order.
+
+        Returns:
+            Optional[NetType]: Inferred nettype of the operator, or ``None``
+            if the combination is invalid or cannot be resolved.
         """
         return None
 
     def __init__(self, nettype: Optional[NetType] = None):
+        """Initialize nettype state for a symbol-like object.
+
+        The initial nettype can be provided as a single value or a set of
+        allowed values. When specified, it acts as a hard constraint (anchor)
+        that guides later nettype inference.
+
+        Args:
+            nettype (Optional[NetType | Set[NetType]]): Initial nettype
+                constraint. If a string in ``ALL_NETTYPES``, it is converted
+                to a singleton set; if ``None``, all nettypes are initially
+                allowed.
+        """
         if isinstance(nettype, str) and nettype in ALL_NETTYPES: nettype = {nettype}
         # nettype 可以是 None 或 Set[NetType]
         # 如果用户提供了 nettype 作为硬约束, 将其用作限制其它节点的锚点
@@ -51,12 +78,26 @@ class NetTypeMixin(ABC):
 
     @property
     def possible_nettypes(self) -> Set[NetType]:
-        """ 返回此对象可取的 nettype 集合 """
+        """Return the set of possible nettypes for this object.
+
+        Returns:
+            Set[NetType]: Current candidate nettypes that are consistent with
+            all known constraints.
+        """
         return self._possible_nettypes
     
     @property
     def nettype(self) -> NetType|None:
-        """ 如果此对象可取的 nettype 唯一，则返回该 nettype，否则返回 None 表示不确定。"""
+        """Return the resolved nettype if unique.
+
+        When the candidate set contains exactly one element, this property
+        returns that nettype. Otherwise it returns ``None`` to indicate that
+        the nettype is still ambiguous.
+
+        Returns:
+            Optional[NetType]: Unique nettype if determined, otherwise
+            ``None``.
+        """
         return next(iter(self._possible_nettypes)) if len(self._possible_nettypes) == 1 else None
 
     @possible_nettypes.setter
@@ -65,6 +106,21 @@ class NetTypeMixin(ABC):
     
     @nettype.setter
     def nettype(self, val: NetType | Set[NetType] | None):
+        """Set a hard nettype constraint and trigger inference.
+
+        The value is normalized to a set of allowed nettypes and stored as
+        an assigned constraint. An empty set is treated as a conflict and
+        results in an error. On successful assignment, a full-tree nettype
+        inference pass is started.
+
+        Args:
+            val (NetType | Set[NetType] | None): New nettype constraint, or
+                ``None`` to clear the hard constraint.
+
+        Raises:
+            ValueError: If ``val`` is an empty set, which indicates a
+                nettype conflict.
+        """
         val = {val} if isinstance(val, str) and val in ALL_NETTYPES else val
         # 性能优化：值未变则跳过
         if self._assigned_nettypes == val: return
@@ -76,7 +132,12 @@ class NetTypeMixin(ABC):
         self.infer_nettype()
 
     def infer_nettype(self):
-        """ 根据 _assigned_nettypes 推断整个符号树的 _possible_nettypes """
+        """Infer possible nettypes for the entire expression tree.
+
+        This method uses the currently assigned nettype constraints as
+        anchors and propagates them through the symbol tree to update
+        ``_possible_nettypes`` of all involved symbols.
+        """
         from .inter_nettype import InferNettype
         if nettype_inference():
             infer_nettype = InferNettype()
@@ -84,7 +145,15 @@ class NetTypeMixin(ABC):
 
     @classmethod
     def get_nettype_range(cls) -> Set[NetType]:
-        """ 获取此节点可能产生的所有 nettype 值域，并在首次调用时缓存到类属性中。 """
+        """Compute and cache the full nettype range for this operator class.
+
+        The nettype range is the set of all possible result nettypes that can
+        be produced by this operator, over all combinations of valid child
+        nettypes. The result is cached on the class to avoid recomputation.
+
+        Returns:
+            Set[NetType]: Set of all nettypes that this operator can yield.
+        """
         if "_nettype_range" not in cls.__dict__: # cls.__dict__ 限定了只检查当前类自身的名称空间, 避免继承父类的 _nettype_range 标记
             possible_range = set()
             for combo in itertools.product(ALL_NETTYPES, repeat=cls.n_operands):
@@ -95,5 +164,9 @@ class NetTypeMixin(ABC):
     
     @classproperty
     def nettype_range(cls) -> Set[NetType]:
-        """ 获取此节点可能产生的所有 nettype 值域，并在首次调用时缓存到类属性中。 """
+        """Class-level cached nettype range for this operator.
+
+        Returns:
+            Set[NetType]: Set of all nettypes that this operator can yield.
+        """
         return cls.get_nettype_range()
