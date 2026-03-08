@@ -1,14 +1,51 @@
 # nd2py
 
-[![Nature Computational Science](https://img.shields.io/badge/Published%20in-Nature%20Computational%20Science-004d3d)](https://www.nature.com/articles/s43588-025-00893-8)
-[![DOI:10.1038/s43588-025-00893-8](https://img.shields.io/badge/DOI-10.1038/s43588--025--00893--8-blue)](https://doi.org/10.1038/s43588-025-00893-8)
-[![Original Version](https://img.shields.io/badge/Engine-ND2-orange?logo=github)](https://github.com/yuzhTHU/ND2)
+<div align="center">
 
-[![PyPI version](https://img.shields.io/pypi/v/nd2py.svg)](https://pypi.org/project/nd2py/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/nd2py.svg)](https://pypi.org/project/nd2py/)
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg)](https://yuzhthu.github.io/nd2py/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/yuzhthu/nd2py/blob/main/LICENSE)
-[![GitHub Repo](https://img.shields.io/badge/repo-nd2py-blue?logo=github)](https://github.com/yuzhthu/nd2py)
+# nd2py
+
+**Discovering network dynamics with neural symbolic regression.**
+
+<p>
+  <a href="https://www.nature.com/articles/s43588-025-00893-8">
+    <img src="https://img.shields.io/badge/Published%20in-Nature%20Computational%20Science-004d3d" alt="Nature">
+  </a>
+  <!-- <a href="https://doi.org/10.1038/s43588-025-00893-8">
+    <img src="https://img.shields.io/badge/DOI-10.1038/s43588--025--00893--8-blue" alt="DOI">
+  </a> -->
+  <a href="https://github.com/yuzhTHU/ND2">
+    <img src="https://img.shields.io/badge/Refactored%20from-ND2-orange?logo=github" alt="Based on ND2">
+  </a>
+</p>
+
+<p>
+  <a href="https://pypi.org/project/nd2py/">
+    <img src="https://img.shields.io/pypi/v/nd2py.svg" alt="PyPI version">
+  </a>
+  <a href="https://pypi.org/project/nd2py/">
+    <img src="https://img.shields.io/pypi/pyversions/nd2py.svg" alt="Python Versions">
+  </a>
+  <a href="https://yuzhthu.github.io/nd2py/">
+    <img src="https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg" alt="Documentation">
+  </a>
+  <a href="https://github.com/yuzhthu/nd2py/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
+  </a>
+</p>
+
+<p>
+  <a href="https://github.com/yuzhthu/nd2py">
+    <img src="https://img.shields.io/badge/GitHub-nd2py-181717?logo=github" alt="GitHub Repo">
+  </a>
+  <a href="https://github.com/yuzhthu/nd2py">
+    <img src="https://img.shields.io/github/last-commit/yuzhthu/nd2py" alt="Last Commit">
+  </a>
+  <a href="https://codecov.io/gh/yuzhthu/nd2py">
+    <img src="https://codecov.io/gh/yuzhthu/nd2py/branch/main/graph/badge.svg" alt="codecov">
+  </a>
+</p>
+
+</div>
 
 **nd2py** is a comprehensive and extensible Python framework designed for Symbolic Regression (SR) and the discovery of complex network dynamics. 
 
