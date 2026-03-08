@@ -1,4 +1,3 @@
-import os
 import re
 import sys
 import json
@@ -10,7 +9,6 @@ import numpy as np
 import nd2py as nd
 import torch.utils.data as D
 from tqdm import tqdm
-from copy import deepcopy
 from pathlib import Path
 from datetime import datetime
 from socket import gethostname
@@ -32,8 +30,8 @@ def load_dataset(args, config, tokenizer):
         eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=24,
-        random_state=args.random_state,
+        n_samples=480,
+        #random_state=args.random_state,
     )
     eval_dataset = NDformerDataset(
         config=config, 
@@ -41,7 +39,7 @@ def load_dataset(args, config, tokenizer):
         eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=24,
+        n_samples=480,
         random_state=args.random_state,
     )
     test_dataset = NDformerDataset(
@@ -50,8 +48,8 @@ def load_dataset(args, config, tokenizer):
         eqtree_generator=eqtree_generator, 
         topo_generator=topo_generator,
         data_generator=data_generator, 
-        n_samples=24,
-        random_state=args.random_state,
+        n_samples=480,
+        random_state=args.random_state+1,
     )
     train_loader = D.DataLoader(
         train_dataset, 
@@ -129,9 +127,19 @@ def reload_checkpoint(args, model, optimizer):
             optimizer.load_state_dict(checkpoint["optimizer"])
         else:
             _logger.warning("Optimizer state not found in checkpoint, optimizer re-initialized.")
+        if "timer" in checkpoint:
+            timer = nd.utils.NamedTimer.from_dict(checkpoint["timer"])
+        else:
+            timer = nd.utils.NamedTimer()
+        if "best_records" in checkpoint:
+            best_records = checkpoint["best_records"]
+        else:
+            best_records = None 
     else:
         start_epoch = 0
-    return start_epoch
+        timer = nd.utils.NamedTimer()
+        best_records = None
+    return start_epoch, timer, best_records
 
 
 def log_train_record(args, train_records, timer):
@@ -165,10 +173,9 @@ def main(args):
     model, optimizer, criterion = load_model(args, config, tokenizer)
 
     ## Reload Checkpoint
-    start_epoch = reload_checkpoint(args, model, optimizer)
+    start_epoch, timer, best_records = reload_checkpoint(args, model, optimizer)
 
     ## Train
-    timer = nd.utils.NamedTimer()
     for epoch in range(start_epoch, args.epochs+1):
         # 训练一个 epoch
         if epoch > 0:
@@ -208,7 +215,6 @@ def main(args):
                 'loss': sum(records['loss']) / len(records['loss']),
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
-            timer.add('train')
             _logger.info(log_train_record(args, train_records, timer))
         else:
             train_records = None
@@ -223,12 +229,14 @@ def main(args):
                 for k, v in batch_dict.items():
                     if isinstance(v, torch.Tensor):
                         batch_dict[k] = v.to(args.device)
-                logits = model(batch_dict) # (B_seq, n_words)
+                timer.add('Prepare-Data')
+                logits = model(batch_dict, timer=timer) # (B_seq, n_words)
                 targets = batch_dict["next_tokens"] # (B_seq,)
                 loss = criterion(logits, targets)
                 preds = logits.argmax(dim=-1) # (B_seq,)
                 records['loss'].extend([loss.item()] * targets.size(0))
                 records['correct'].extend((preds == targets).detach().cpu().tolist())
+                timer.add('Drop3')
 
             test_records = {
                 'epoch': epoch,
@@ -236,7 +244,6 @@ def main(args):
                 'loss': sum(records['loss']) / len(records['loss']),
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
-            timer.add('eval')
             _logger.info(log_test_record(args, test_records, timer))
         else:
             test_records = None
@@ -258,6 +265,8 @@ def main(args):
                 "args": vars(args),
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
+                "timer": timer.to_dict(),
+                "best_records": best_records,
             }, save_path)
             _logger.info(nd.utils.tag2ansi(f"Checkpoint saved to [underline green]{save_path}[reset]."))
             timer.add('save_checkpoint')
@@ -272,6 +281,8 @@ def main(args):
                 "args": vars(args),
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
+                "timer": timer.to_dict(),
+                "best_records": best_records,
             }, save_path)
             _logger.note(nd.utils.tag2ansi(f"Model saved to [underline green]{save_path}[reset]"))
             timer.add('save_periodly')
@@ -279,7 +290,7 @@ def main(args):
         # 保存最佳模型
         if test_records is not None:
             if (
-                'best_records' not in locals() or 
+                best_records is None or
                 np.mean(test_records['loss']) < np.mean(best_records['loss'])
             ):
                 patience = args.patience
@@ -290,13 +301,15 @@ def main(args):
                     "args": vars(args),
                     "model": model.state_dict(),
                     "optimizer": optimizer.state_dict(),
+                    "timer": timer.to_dict(),
+                    "best_records": best_records,
                 }, save_path)
                 _logger.note(nd.utils.tag2ansi(f"Best model saved to [underline green]{save_path}[reset]"))
             else:
                 patience -= 1
                 _logger.info(
-                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [lightred]{patience}/{args.patience}[reset].\n") + 
-                    log_test_record(args, test_records, timer)
+                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [lightred]{patience}/{args.patience}[reset].") +
+                    f"Best Record: {log_test_record(args, test_records, timer)}"
                 )
             timer.add('save_best')
 
@@ -334,8 +347,8 @@ def main(args):
             break
 
     ## Log Best Result
-    _logger.note(...)
-    
+    _logger.info(log_test_record(args, best_records, timer))
+
     ## Load Best Model
     best_path = Path(args.save_path) / 'best.pth'
     checkpoint = torch.load(best_path, map_location=args.device)
@@ -349,17 +362,25 @@ def main(args):
     ## Test
     torch.set_grad_enabled(False)
     model.eval()
-    test_records = ...
-    with open(f"{args.save_path}/records.jsonl", "a") as f:
-        if test_records is not None:
-            f.write(json.dumps(test_records) + "\n")
-
-    ## Log Test Result
-    w = np.array(test_records['sample_nums'], dtype=float)
-    w /= w.sum()
-    test_records['accuracy'] = 1 - np.sum(w * test_records['ade']) / np.sum(w * test_records['trajlen'])
-    test_records['unweighted_accuracy'] = 1 - np.mean(test_records['ade']) / np.mean(test_records['trajlen'])
-    _logger.note(...)
+    records = defaultdict(list)
+    for batch_idx, batch_dict in enumerate(pbar := tqdm(test_loader, leave=False, dynamic_ncols=True)):
+        for k, v in batch_dict.items():
+            if isinstance(v, torch.Tensor):
+                batch_dict[k] = v.to(args.device)
+        timer.add('Prepare-Data')
+        logits = model(batch_dict) # (B_seq, n_words)
+        targets = batch_dict["next_tokens"] # (B_seq,)
+        loss = criterion(logits, targets)
+        preds = logits.argmax(dim=-1) # (B_seq,)
+        records['loss'].extend([loss.item()] * targets.size(0))
+        records['correct'].extend((preds == targets).detach().cpu().tolist())
+    test_records = {
+        'epoch': best_records['epoch'],
+        'phase': 'test',
+        'loss': sum(records['loss']) / len(records['loss']),
+        'accuracy': sum(records['correct']) / len(records['correct'])
+    }
+    _logger.note(log_test_record(args, test_records, timer))
 
     _logger.note(f"Training finished. Re-run: {args.command}")
 

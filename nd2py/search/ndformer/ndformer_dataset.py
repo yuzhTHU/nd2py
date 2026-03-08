@@ -55,12 +55,20 @@ class NDformerDataset(D.Dataset):
         
         vars_dict = {var.name: var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)}
         data_node = np.zeros((sample_num, num_nodes, self.config.max_var_num + 1), dtype=np.float32)
-        for i, var_name in enumerate(var_name for var_name, var in vars_dict.items() if var.nettype == 'node'): # TODO!
-            data_node[:, :, i] = data_dict[var_name]  # 假设 data_dict[var] 形状为 (sample_num, num_nodes)
-            
         data_edge = np.zeros((sample_num, num_edges, self.config.max_var_num + 1), dtype=np.float32)
-        for i, var_name in enumerate(var_name for var_name, var in vars_dict.items() if var.nettype == 'edge'):
-            data_edge[:, :, i] = data_dict[var_name]  # 假设 data_dict[var] 形状为 (sample_num, num_edges)
+        for var in eqtree.iter_preorder():
+            if isinstance(var, nd.Variable):
+                var_token = self.tokenizer.variable_mapping[var.name]
+                if var_token in self.tokenizer.node_var_tokens:
+                    i = self.tokenizer.node_var_tokens.index(var_token)
+                    data_node[:, :, i] = data_dict[var.name]
+                elif var_token in self.tokenizer.edge_var_tokens:
+                    i = self.tokenizer.edge_var_tokens.index(var_token)
+                    data_edge[:, :, i] = data_dict[var.name]
+                elif var_token in self.tokenizer.scalar_var_tokens:
+                    raise NotImplementedError(f'Scalar variables are not supported: {var.name}')
+                else:
+                    raise ValueError(f'Unknown variable: {var.name}')
         
         # 将公式结果写入最后一个特征通道
         if eqtree.nettype == 'node':

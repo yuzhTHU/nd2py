@@ -112,6 +112,20 @@ class Timer:
     def pace_str(self): return humanize_pace(self.pace, unit=self.unit)
     def speed_str(self): return humanize_speed(self.speed, unit=self.unit)
 
+    def to_dict(self):
+        return {
+            '_count': self._count,
+            '_time': self._time,
+            'unit': self.unit,
+        }
+
+    @classmethod
+    def from_dict(cls, dict):
+        timer = cls(unit=dict['unit'])
+        timer._count = dict['_count']
+        timer._time = dict['_time']
+        return timer
+
 
 class NamedTimer(Timer):
     def __init__(self, unit="iter"):
