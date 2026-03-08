@@ -4,6 +4,7 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/nd2py.svg)](https://pypi.org/project/nd2py/)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg)](https://yuzhthu.github.io/nd2py/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/yuzhthu/nd2py/blob/main/LICENSE)
+[![GitHub Repo](https://img.shields.io/badge/repo-nd2py-blue?logo=github)](https://github.com/yuzhthu/nd2py)
 
 **nd2py** is a comprehensive and extensible Python framework designed for Symbolic Regression (SR) and the discovery of complex network dynamics. 
 
