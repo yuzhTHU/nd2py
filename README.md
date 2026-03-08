@@ -1,5 +1,9 @@
 # nd2py
 
+[![Nature Computational Science](https://img.shields.io/badge/Published%20in-Nature%20Computational%20Science-004d3d)](https://www.nature.com/articles/s43588-025-00893-8)
+[![DOI:10.1038/s43588-025-00893-8](https://img.shields.io/badge/DOI-10.1038/s43588--025--00893--8-blue)](https://doi.org/10.1038/s43588-025-00893-8)
+[![Original Version](https://img.shields.io/badge/Engine-ND2-orange?logo=github)](https://github.com/yuzhTHU/ND2)
+
 [![PyPI version](https://img.shields.io/pypi/v/nd2py.svg)](https://pypi.org/project/nd2py/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/nd2py.svg)](https://pypi.org/project/nd2py/)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue.svg)](https://yuzhthu.github.io/nd2py/)
