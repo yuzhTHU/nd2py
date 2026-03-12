@@ -6,10 +6,19 @@ Tests the NDFormerMCTS search with a simple equation: x + aggr(y)
 Uses a randomly initialized NDFormer model (not trained)
 """
 import logging
+import sys
+import json
+import random
+import re
 import torch
 import numpy as np
 import nd2py as nd
+import shlex
+from datetime import datetime
+from pathlib import Path
+from socket import gethostname
 from argparse import ArgumentParser
+from setproctitle import setproctitle
 from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
 
 _logger = logging.getLogger("nd2py.ndformer_search")
@@ -32,6 +41,25 @@ def generate_data(variables: list[nd.Variable], num_nodes: int, num_edges: int, 
 
 
 def main(args):
+    # Parse operator strings to actual operator objects
+    op_map = {
+        'Add': nd.Add, 'Sub': nd.Sub, 'Mul': nd.Mul, 'Div': nd.Div,
+        'Aggr': nd.Aggr, 'Rgga': nd.Rgga, 'Sour': nd.Sour, 'Targ': nd.Targ,
+        'Sin': nd.Sin, 'Cos': nd.Cos, 'Tan': nd.Tan,
+        'Abs': nd.Abs, 'Neg': nd.Neg, 'Sqrt': nd.Sqrt, 'Log': nd.Log,
+    }
+
+    # Default operators
+    if args.binary_ops is None:
+        args.binary_ops = [nd.Add]
+    else:
+        args.binary_ops = [op_map[op] for op in args.binary_ops]
+
+    if args.unary_ops is None:
+        args.unary_ops = [nd.Aggr]
+    else:
+        args.unary_ops = [op_map[op] for op in args.unary_ops]
+
     # 1. Define variables with correct nettypes
     # For equation "x + aggr(y)": x is node, y is edge
     variables = [
@@ -154,6 +182,15 @@ def main(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
+    # 基础配置
+    parser.add_argument("--name", type=str, default="search", help="实验任务名称，用于生成实验 ID")
+    parser.add_argument("--exp_name", type=str, default=None, help="手动指定实验名称（若指定则覆盖自动生成的名称）")
+    parser.add_argument("--device", type=str, default="auto", help="计算设备，可选 'cpu', 'cuda:0' 或 'auto'（自动选择显存充足的 GPU）")
+    parser.add_argument("--random_state", type=int, default=None, help="随机种子，固定以复现实验结果")
+    parser.add_argument("--save_dir", type=str, default="./logs/search", help="日志和模型权重的保存根目录")
+    parser.add_argument("--debug", action="store_true", help="是否开启调试模式（输出更多日志，不保存部分文件）")
+    parser.add_argument("--num_workers", type=int, default=0, help="DataLoader 的工作线程数（0 表示主线程）")
+    parser.add_argument("--minimize_gpu", action="store_true", default=False, help="是否在每个 epoch 结束后尽可能释放显存以供其他进程使用")
 
     # Equation and data configuration
     parser.add_argument("--eq", type=str, default="x + aggr(y)", help="Target equation to discover")
@@ -167,29 +204,69 @@ if __name__ == "__main__":
 
     # MCTS configuration
     parser.add_argument("--n_iter", type=int, default=50, help="Number of MCTS iterations")
+    parser.add_argument('--required_memory_MB', type=int, default=5000, help="自动选择 GPU 时要求的最小剩余显存 (MB)")
 
-    # Device
-    parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu", help="Device to use")
+    parser = nd.utils.add_minus_flags(parser) ## --key_name -> --key-name
+    parser = nd.utils.add_negation_flags(parser) ## --action-as-true -> --no-action-as-true
+    args, unknown = parser.parse_known_args()
 
-    args = parser.parse_args()
-
-    # Parse operator strings to actual operator objects
-    op_map = {
-        'Add': nd.Add, 'Sub': nd.Sub, 'Mul': nd.Mul, 'Div': nd.Div,
-        'Aggr': nd.Aggr, 'Rgga': nd.Rgga, 'Sour': nd.Sour, 'Targ': nd.Targ,
-        'Sin': nd.Sin, 'Cos': nd.Cos, 'Tan': nd.Tan,
-        'Abs': nd.Abs, 'Neg': nd.Neg, 'Sqrt': nd.Sqrt, 'Log': nd.Log,
-    }
-
-    # Default operators
-    if args.binary_ops is None:
-        args.binary_ops = [nd.Add]
+    ## Build Save Path
+    if args.exp_name is None:
+        now = datetime.now()
+        date = now.strftime("%Y%m%d")
+        curr = now.strftime("%H%M%S")
+        host = gethostname()
+        exp_name = f'{date}_{args.name}_{curr}_{host}'
+        exp_name = re.compile(r'[ <>:"/\\|?*\x00-\x1f]').sub('_', exp_name.strip())
+        exp_name = exp_name or 'unnamed'
+        exp_name = exp_name[:255] # Max filename length on most filesystems
+        args.exp_name = exp_name
+    save_path = Path(args.save_dir) / args.exp_name
+    if not save_path.exists():
+        save_path.mkdir(parents=True, exist_ok=True)
     else:
-        args.binary_ops = [op_map[op] for op in args.binary_ops]
+        _logger.warning(f"Save path {save_path} already exists.")
+    args.save_path = str(save_path)
 
-    if args.unary_ops is None:
-        args.unary_ops = [nd.Aggr]
-    else:
-        args.unary_ops = [op_map[op] for op in args.unary_ops]
+    ## Init Logger
+    nd.utils.init_logger(
+        "src",
+        exp_name=args.exp_name,
+        log_file=save_path / "info.log",
+        info_level="debug" if args.debug else "info",
+    )
+    nd.utils.init_logger(
+        "nd2py",
+        exp_name=args.exp_name,
+        log_file=save_path / "info.log",
+        info_level="debug" if args.debug else "info",
+    )
 
+    ## Warn Unknown Args
+    if unknown:
+        _logger.warning(f"Unknown args: {unknown}")
+
+    ## Set random_state
+    if args.random_state is None:
+        args.random_state = random.randint(1, 10000)
+    nd.utils.seed_all(args.random_state)
+    ## Set Command
+    args.command = ' '.join(map(shlex.quote, [sys.executable, *sys.argv]))
+    ## Select GPU
+    if args.device == "auto":
+        args.device = nd.utils.AutoGPU().choice_gpu(memory_MB=args.required_memory_MB, interval=15)
+
+    ## Save Args
+    args_path = save_path / "args.json"
+    if args_path.exists():
+        i = 1
+        while args_path.with_suffix(f".json.{i}").exists(): i += 1
+        args_path.rename(args_path.with_suffix(f".json.{i}"))
+        _logger.warning(f"args.json already exists, backup to args.json.{i}")
+    _logger.note(f"Args: {args}")
+    with open(args_path, "w") as f:
+        json.dump(vars(args), f, indent=4, ensure_ascii=False)
+
+    ## Start Search
+    setproctitle(f"{args.exp_name}@ZihanYu")
     main(args)
