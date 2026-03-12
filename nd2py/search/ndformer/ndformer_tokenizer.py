@@ -91,7 +91,8 @@ class NDFormerTokenizer:
         # Variable Tokens
         self.variables = (
             [nd.Variable(f'n{i}', nettype='node') for i in range(1, 1+config.max_var_num)] +
-            [nd.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)]
+            [nd.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)] +
+            [nd.Variable(f's{i}', nettype='scalar') for i in range(1, 1+config.max_var_num)]
         ) if variables is None else variables
         self.node_var_tokens = [f'NODEVAR_{i}' for i in range(1, 1+config.max_var_num)]
         self.edge_var_tokens = [f'EDGEVAR_{i}' for i in range(1, 1+config.max_var_num)]

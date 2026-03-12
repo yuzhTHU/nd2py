@@ -33,7 +33,7 @@ class TreeMixin:
         from .iter_postorder import IterPostorder
         return IterPostorder()(self)
 
-    def replace(self, child: "Symbol", other: "Symbol"):
+    def replace(self, child: "Symbol", other: "Symbol", no_warn=False):
         """Replace current expression (or subexpression denoted by child) with another expression."""
         if not any(child is op for op in self.iter_preorder()):
             raise ValueError(
@@ -46,11 +46,11 @@ class TreeMixin:
         # Ensure that 'other' is not a subexpression of another Symbol
         if other.parent is not None:
             other = other.copy()
-        if self == child:
+        if self is child:
             # Replace the whold expression of self with other
             # This operation is allowed but may cause problems, especially when self is an item of a list
             # in which user need to update the list with the return value manually.
-            if warn_once("replace_root_expression"):
+            if warn_once("replace_root_expression") and not no_warn:
                 warnings.warn(
                     "You are replacing the root expression itself. Make sure to reassign the result, "
                     "otherwise external references (e.g. in lists or variables) still point to the old object.",

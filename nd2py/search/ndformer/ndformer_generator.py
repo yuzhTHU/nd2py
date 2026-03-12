@@ -17,7 +17,7 @@ class NDFormerEqtreeGenerator:
         self,
         variables: List[Variable],
         binary: List[str|Symbol] = [nd.Add, nd.Sub, nd.Mul, nd.Div],
-        unary: List[str|Symbol] = [nd.Sqrt, nd.Log, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan],
+        unary: List[str|Symbol] = [nd.Sqrt, nd.SqrtAbs, nd.Pow2, nd.Pow3, nd.Log, nd.LogAbs, nd.Exp, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan, nd.Tanh, nd.Sigmoid, nd.Aggr, nd.Sour, nd.Targ, nd.Readout],
         full_prob: float = 0.5,
         depth_range: Tuple[int, int] = (2, 6),
         const_range: Tuple[float, float] = None,

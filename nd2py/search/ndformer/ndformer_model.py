@@ -59,13 +59,14 @@ class NDFormerModel(nn.Module):
 
         self.fc_head = nn.Linear(self.config.d_emb, tokenizer.vocab_size)
 
-    def encode_graph(self, data_node, data_edge, edge_list, num_nodes, node_batch_idx=None, timer=None):
+    def encode_graph(self, data_node, data_edge, data_scalar, edge_list, num_nodes, node_batch_idx=None, timer=None):
         """
         图编码阶段：仅在图拓扑变更或初始化时调用一次。
 
         Args:
         - data_node: (SampleNum, NodeNum, max_var_num+1, 3)
         - data_edge: (SampleNum, EdgeNum, max_var_num+1, 3)
+        - data_scalar: (SampleNum, BatchNum, max_var_num+1, 3)
         - edge_list: (2, EdgeNum)
         - num_nodes: int
         - node_batch_idx: (TotalNodeNum,) 每个节点所属图的索引
@@ -77,15 +78,17 @@ class NDFormerModel(nn.Module):
         # Embed
         node_emb = self.embedder(data_node).flatten(-3, -1) # (SampleNum, TotalNodeNum, (max_var_num+1)*3*d_emb)
         edge_emb = self.embedder(data_edge).flatten(-3, -1) # (SampleNum, TotalEdgeNum, (max_var_num+1)*3*d_emb)
+        scalar_emb = self.embedder(data_scalar).flatten(-3, -1) # (SampleNum, TotalBatchNum, (max_var_num+1)*3*d_emb)
 
         node_emb = self.linear(node_emb) # (SampleNum, TotalNodeNum, d_emb)
         edge_emb = self.linear(edge_emb) # (SampleNum, TotalEdgeNum, d_emb)
+        scalar_emb = self.linear(scalar_emb) # (SampleNum, TotalBatchNum, d_emb)
 
         if timer is not None:
             torch.cuda.synchronize()
             timer.add('Data-Embedding')
 
-        gnn_out, _ = self.gnn_encoder(node_emb, edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
+        gnn_out, _ = self.gnn_encoder(node_emb + scalar_emb[:, node_batch_idx, :], edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
         gnn_out = gnn_out.transpose(0, 1) # (SampleNum, TotalNodeNum, d_emb) -> (TotalNodeNum, SampleNum, d_emb)
         if timer is not None:
             torch.cuda.synchronize()
@@ -171,6 +174,7 @@ class NDFormerModel(nn.Module):
         memory, memory_key_padding_mask = self.encode_graph(
             data_node=batch_dict["data_node"], # (SampleNum, TotalNodes, max_var_num+1, 3)
             data_edge=batch_dict["data_edge"], # (SampleNum, TotalEdges, max_var_num+1, 3)
+            data_scalar=batch_dict["data_scalar"], # (SampleNum, 1, max_var_num+1, 3)
             edge_list=batch_dict["edge_list"], # (2, TotalEdges)
             num_nodes=batch_dict["num_nodes"], # int
             node_batch_idx=batch_dict.get("node_batch_idx", None), # (Batch,)

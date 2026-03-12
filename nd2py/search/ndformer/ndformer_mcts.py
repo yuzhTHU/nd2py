@@ -163,8 +163,9 @@ class NDFormerMCTS(MCTS):
         Prepare data for NDFormer encoder and cache the memory
 
         Returns:
-            data_node: (1, total_nodes, max_var_num+1)
-            data_edge: (1, total_edges, max_var_num+1)
+            data_node: (sample_num, num_nodes, max_var_num+1, 3)
+            data_edge: (sample_num, num_edges, max_var_num+1, 3)
+            data_scalar: (sample_num, 1, max_var_num+1, 3)
         """
         # Build variable dict with target
         vars_dict = {}
@@ -197,38 +198,41 @@ class NDFormerMCTS(MCTS):
 
         # Prepare data_node: (sample_num, num_nodes, max_var_num+1)
         data_node = np.zeros((sample_num, num_nodes, max_var_num + 1), dtype=np.float32)
+        # Prepare data_edge: (sample_num, num_edges, max_var_num+1)
+        data_edge = np.zeros((sample_num, num_edges, max_var_num + 1), dtype=np.float32)
+        # Prepare data_scalar: (sample_num, 1, max_var_num+1)
+        data_scalar = np.zeros((sample_num, 1, max_var_num + 1), dtype=np.float32)
 
         if self.nettype == 'scalar':
-            # For scalar problems, put each scalar variable at a different "node" position
+            # For scalar problems, put scalar variables in data_scalar
+            scalar_idx = 0
             for i, var in enumerate(scalar_vars):
                 if i < max_var_num:
-                    data_node[:, i, :] = 0  # Reset
-                    data_node[:, i, i] = X[var.name]  # Put variable value in diagonal position
-            # Write target to last channel of first node
-            data_node[:, 0, -1] = y
+                    data_scalar[:, :, scalar_idx] = X[var.name]
+                    scalar_idx += 1
+            # Write target to last channel
+            data_scalar[:, :, -1] = y
         else:
             # For node/edge problems, fill variable values
             for i, var in enumerate(node_vars):
                 if i < max_var_num:
                     data_node[:, :, i] = X[var.name]
+            for i, var in enumerate(edge_vars):
+                if i < max_var_num:
+                    data_edge[:, :, i] = X[var.name]
 
-        # Prepare data_edge: (sample_num, num_edges, max_var_num+1)
-        data_edge = np.zeros((sample_num, num_edges, max_var_num + 1), dtype=np.float32)
-        for i, var in enumerate(edge_vars):
-            if i < max_var_num:
-                data_edge[:, :, i] = X[var.name]
-
-        # Write target to last channel
-        if self.nettype == 'node':
-            data_node[:, :, -1] = y
-        elif self.nettype == 'edge':
-            data_edge[:, :, -1] = y
+            # Write target to last channel
+            if self.nettype == 'node':
+                data_node[:, :, -1] = y
+            elif self.nettype == 'edge':
+                data_edge[:, :, -1] = y
 
         # Encode to token IDs
         data_node = self.ndformer_tokenizer.encode_array(data_node, mode='token_id')
         data_edge = self.ndformer_tokenizer.encode_array(data_edge, mode='token_id')
+        data_scalar = self.ndformer_tokenizer.encode_array(data_scalar, mode='token_id')
 
-        return data_node, data_edge
+        return data_node, data_edge, data_scalar
 
     def _encode_and_cache_memory(self, X: Dict[str, np.ndarray], y: np.ndarray):
         """
@@ -236,44 +240,30 @@ class NDFormerMCTS(MCTS):
         """
         self._check_ndformer_loaded()
 
-        data_node, data_edge = self._prepare_data(X, y)
+        data_node, data_edge, data_scalar = self._prepare_data(X, y)
 
         # Convert to torch tensors
         # data_node: (sample_num, num_nodes, max_var_num+1, 3)
         # data_edge: (sample_num, num_edges, max_var_num+1, 3)
+        # data_scalar: (sample_num, 1, max_var_num+1, 3)
         data_node = torch.from_numpy(data_node).to(self.device)
         data_edge = torch.from_numpy(data_edge).to(self.device)
+        data_scalar = torch.from_numpy(data_scalar).to(self.device)
 
-        # For scalar nettype, skip graph encoding and use simpler encoding
-        if self.nettype == 'scalar':
-            # For scalar problems, we don't have graph structure
-            # Use transformer encoder directly on node embeddings
-            with torch.no_grad():
-                # Embed nodes
-                node_emb = self.ndformer_model.embedder(data_node).flatten(-3, -1)
-                node_emb = self.ndformer_model.linear(node_emb)
+        # Prepare node_batch_idx for to_dense_batch
+        # Since we have a single graph, all nodes belong to graph 0
+        node_batch_idx = torch.zeros(self.num_nodes, dtype=torch.long, device=self.device)
 
-                # Add positional encoding
-                node_emb = self.ndformer_model.pe(node_emb)
-
-                # Pass through transformer encoder
-                memory = self.ndformer_model.transformer_encoder(node_emb)
-                self._memory = memory  # (sample_num, num_nodes, d_emb)
-                self._memory_mask = None
-        else:
-            # Prepare node_batch_idx for to_dense_batch
-            # Since we have a single graph, all nodes belong to graph 0
-            node_batch_idx = torch.zeros(self.num_nodes, dtype=torch.long, device=self.device)
-
-            # Call encoder
-            with torch.no_grad():
-                self._memory, self._memory_mask = self.ndformer_model.encode_graph(
-                    data_node=data_node,
-                    data_edge=data_edge,
-                    edge_list=torch.tensor(self.edge_list, dtype=torch.long, device=self.device),
-                    num_nodes=self.num_nodes,
-                    node_batch_idx=node_batch_idx,
-                )
+        # Call encoder
+        with torch.no_grad():
+            self._memory, self._memory_mask = self.ndformer_model.encode_graph(
+                data_node=data_node,
+                data_edge=data_edge,
+                data_scalar=data_scalar,
+                edge_list=torch.tensor(self.edge_list, dtype=torch.long, device=self.device),
+                num_nodes=self.num_nodes,
+                node_batch_idx=node_batch_idx,
+            )
 
         self.logger.debug(f"Cached memory shape: {self._memory.shape}")
 
