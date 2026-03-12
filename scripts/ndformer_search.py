@@ -2,116 +2,91 @@
 """
 Debug script for NDFormer-guided MCTS symbolic regression
 
-Tests the NDFormerMCTS search with a simple equation: x + sin(y)
+Tests the NDFormerMCTS search with a simple equation: x + aggr(y)
 Uses a randomly initialized NDFormer model (not trained)
 """
 import logging
 import torch
 import numpy as np
 import nd2py as nd
+from argparse import ArgumentParser
 from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
 
-# Initialize logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger('nd2py.ndformer_search')
+_logger = logging.getLogger("nd2py.ndformer_search")
 
-# Set random seeds for reproducibility
-np.random.seed(42)
-torch.manual_seed(42)
-if torch.cuda.is_available():
-    torch.cuda.manual_seed(42)
 
-# Configuration
-NUM_SAMPLES = 100
-NUM_NODES = 20  # For graph-based problem
-N_ITER = 50     # MCTS iterations
-USE_CUDA = torch is not None and torch.cuda.is_available()
 
-def main():
-    logger.info("=" * 60)
-    logger.info("NDFormer-guided MCTS Symbolic Regression Demo")
-    logger.info("=" * 60)
+def generate_data(variables: list[nd.Variable], num_nodes: int, num_edges: int, n_samples: int) -> dict:
+    """Generate synthetic data for given variables."""
+    X = {}
+    for var in variables:
+        if var.nettype == 'node':
+            X[var.name] = np.random.uniform(-5, 5, (n_samples, num_nodes))
+        elif var.nettype == 'edge':
+            X[var.name] = np.random.uniform(-5, 5, (n_samples, num_edges))
+        elif var.nettype == 'scalar':
+            X[var.name] = np.random.uniform(-5, 5, (n_samples,))
+        else:
+            raise ValueError(f"Unknown nettype: {var.nettype}")
+    return X
 
-    # ==========================================
-    # 1. Create target equation: x + aggr(y)
-    # ==========================================
-    logger.info("\n[Step 1] Creating target equation: x + aggr(y)")
 
-    x = nd.Variable('x', nettype='node')
-    y = nd.Variable('y', nettype='edge')
-    target_eq = nd.Add(x, nd.aggr(y))
+def main(args):
+    # 1. Define variables with correct nettypes
+    # For equation "x + aggr(y)": x is node, y is edge
+    variables = [
+        nd.Variable('x', nettype='node'),
+        nd.Variable('y', nettype='edge'),
+    ]
+    var_dict = {var.name: var for var in variables}
 
-    logger.info(f"Target equation: {target_eq}")
-    logger.info(f"Target equation string: {target_eq.to_str()}")
+    # 2. Create graph topology
+    num_nodes = args.num_nodes
+    edge_list = ([], [])
+    for i in range(num_nodes):
+        for j in range(i+1, num_nodes):
+            edge_list[0].append(i)
+            edge_list[1].append(j)
+    num_edges = len(edge_list[0])
 
-    # ==========================================
-    # 2. Generate synthetic data
-    # ==========================================
-    logger.info("\n[Step 2] Generating synthetic data")
+    # 3. Build target equation with correct variables
+    target_eq = nd.parse(args.eq, variables=var_dict)
 
-    # Generate random graph-structured data
-    # Create edge list for a simple graph
-    edge_index = []
-    for i in range(NUM_NODES):
-        for j in range(i+1, NUM_NODES):
-            edge_index.append((i, j))
+    # 4. Generate synthetic data
+    X = generate_data(variables, num_nodes, num_edges, args.n_samples)
+    y_true = target_eq.eval(X, edge_list=edge_list, num_nodes=num_nodes)
 
-    num_edges = len(edge_index)
+    _logger.info(
+        f"Target equation: {target_eq.to_str()}\n"
+        f"Data shapes: {[(k, v.shape) for k, v in X.items()]}, y={y_true.shape}\n"
+        f"Target y range: [{y_true.min():.4f}, {y_true.max():.4f}]"
+    )
 
-    # Generate random input values
-    X = {
-        'x': np.random.uniform(-5, 5, (NUM_SAMPLES, NUM_NODES)),  # node features
-        'y': np.random.uniform(-5, 5, (NUM_SAMPLES, num_edges)),  # edge features
-    }
-
-    # Compute target values
-    edge_list = ([e[0] for e in edge_index], [e[1] for e in edge_index])
-    y_true = target_eq.eval(X, edge_list=edge_list, num_nodes=NUM_NODES)
-
-    logger.info(f"Data shape: X[x]={X['x'].shape}, X[y]={X['y'].shape}, y={y_true.shape}")
-    logger.info(f"Target y range: [{y_true.min():.4f}, {y_true.max():.4f}]")
-
-    # ==========================================
-    # 3. Initialize NDFormer model (random weights)
-    # ==========================================
-    logger.info("\n[Step 3] Initializing NDFormer model (random weights, not trained)")
-
+    # 5. Initialize NDFormer model (random weights)
     config = NDFormerConfig()
-    device = 'cuda' if USE_CUDA else 'cpu'
-    logger.info(f"Using device: {device}")
-
-    tokenizer = NDFormerTokenizer(config, variables=[x, y])
+    device = args.device
+    tokenizer = NDFormerTokenizer(config, variables=variables)
     model = NDFormerModel(config, tokenizer).to(device)
+    _logger.info(f"Using device: {device}")
+    _logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
 
-    logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
-
-    # ==========================================
-    # 4. Initialize NDFormerMCTS
-    # ==========================================
-    logger.info("\n[Step 4] Initializing NDFormerMCTS")
-
-    # Build edge list for MCTS
-    edge_list = ([e[0] for e in edge_index], [e[1] for e in edge_index])
-
+    # 6. Initialize NDFormerMCTS
     search = NDFormerMCTS(
-        variables=[x, y],
-        binary=[nd.Add],  # Only Add
-        unary=[nd.Aggr],   # Only Aggr
-        max_params=0,      # No constants needed
+        variables=variables,
+        binary=args.binary_ops,
+        unary=args.unary_ops,
+        max_params=args.max_params,
         const_range=(-2.0, 2.0),
-        depth_range=(2, 4),  # Reduced depth since equation is simple: x + aggr(y) has depth ~3
+        depth_range=(2, 6),
         nettype='node',
-        num_nodes=NUM_NODES,
+        num_nodes=num_nodes,
         edge_list=edge_list,
-        n_iter=N_ITER,
+        n_iter=args.n_iter,
         use_tqdm=True,
         child_num=20,
         n_playout=50,
         d_playout=5,
-        max_len=6,  # Short sequence: [x, y, aggr, Add] ~ 4-6 tokens
+        max_len=10,
         c=1.41,
         eta=0.99,
         # NDFormer parameters
@@ -121,65 +96,100 @@ def main():
         ndformer_topk=8,
         ndformer_temperature=1.0,
     )
+    _logger.info(f"NDFormerMCTS initialized with operators: binary={args.binary_ops}, unary={args.unary_ops}")
 
-    # ==========================================
-    # 5. Run MCTS search
-    # ==========================================
-    logger.info("\n[Step 5] Running NDFormer-guided MCTS search")
-    logger.info("-" * 40)
+    # 7. Run MCTS search
+    _logger.info("\n" + "=" * 60)
+    _logger.info("Starting NDFormer-guided MCTS search")
+    _logger.info("=" * 60 + "\n")
 
     search.fit(X, y_true)
 
-    logger.info("-" * 40)
-    logger.info("\n[Search Finished]")
-
-    # ==========================================
-    # 6. Report results
-    # ==========================================
-    logger.info("\n[Step 6] Results")
-    logger.info("=" * 60)
+    # 8. Report results
+    _logger.info("\n" + "=" * 60)
+    _logger.info("Results")
+    _logger.info("=" * 60)
 
     result_eq = search.eqtree
-    logger.info(f"Discovered equation: {result_eq}")
-    logger.info(f"Discovered equation string: {result_eq.to_str()}")
+    _logger.info(f"Discovered equation: {result_eq}")
+    _logger.info(f"Discovered equation string: {result_eq.to_str()}")
 
     # Evaluate discovered equation
-    y_pred = result_eq.eval(X, edge_list=edge_list, num_nodes=NUM_NODES)
+    y_pred = result_eq.eval(X, edge_list=edge_list, num_nodes=num_nodes)
 
     # Compute metrics
     mse = np.mean((y_pred - y_true) ** 2)
     rmse = np.sqrt(mse)
     r2 = 1 - np.sum((y_pred - y_true) ** 2) / (np.sum((y_true - np.mean(y_true)) ** 2) + 1e-10)
 
-    logger.info(f"\nMetrics:")
-    logger.info(f"  MSE:  {mse:.6f}")
-    logger.info(f"  RMSE: {rmse:.6f}")
-    logger.info(f"  R²:   {r2:.6f}")
+    _logger.info(f"\nMetrics:")
+    _logger.info(f"  MSE:  {mse:.6f}")
+    _logger.info(f"  RMSE: {rmse:.6f}")
+    _logger.info(f"  R²:   {r2:.6f}")
 
     # Check if exact match
     if str(result_eq) == str(target_eq):
-        logger.info("\n[SUCCESS] Exact match found!")
+        _logger.info("\n[SUCCESS] Exact match found!")
     elif r2 > 0.99:
-        logger.info("\n[GOOD] High accuracy match found!")
+        _logger.info("\n[GOOD] High accuracy match found!")
     elif r2 > 0.9:
-        logger.info("\n[OK] Reasonable approximation found!")
+        _logger.info("\n[OK] Reasonable approximation found!")
     else:
-        logger.info("\n[INFO] Search did not find a good solution.")
-        logger.info("This is expected with a randomly initialized NDFormer.")
+        _logger.info("\n[INFO] Search did not find a good solution.")
+        _logger.info("This is expected with a randomly initialized NDFormer.")
 
     # Show search history
     if search.records:
-        logger.info(f"\nSearch history ({len(search.records)} iterations):")
+        _logger.info(f"\nSearch history ({len(search.records)} iterations):")
         best_record = max(search.records, key=lambda r: r.get('reward', -float('inf')))
-        logger.info(f"Best iteration: {best_record.get('iter', 'N/A')}")
-        logger.info(f"Best equation: {best_record.get('fitted_eqtree', 'N/A')}")
-        logger.info(f"Best R²: {best_record.get('r2', 'N/A'):.6f}")
-        logger.info(f"Best reward: {best_record.get('reward', 'N/A'):.6f}")
+        _logger.info(f"Best iteration: {best_record.get('iter', 'N/A')}")
+        _logger.info(f"Best equation: {best_record.get('fitted_eqtree', 'N/A')}")
+        _logger.info(f"Best R²: {best_record.get('r2', 'N/A'):.6f}")
+        _logger.info(f"Best reward: {best_record.get('reward', 'N/A'):.6f}")
 
-    logger.info("\n" + "=" * 60)
-    logger.info("Demo finished!")
-    logger.info("=" * 60)
+    _logger.info("\n" + "=" * 60)
+    _logger.info("Demo finished!")
+    _logger.info("=" * 60)
 
 
 if __name__ == "__main__":
-    main()
+    parser = ArgumentParser()
+
+    # Equation and data configuration
+    parser.add_argument("--eq", type=str, default="x + aggr(y)", help="Target equation to discover")
+    parser.add_argument("--num_nodes", type=int, default=20, help="Number of nodes in the graph")
+    parser.add_argument("--n_samples", type=int, default=100, help="Number of data samples")
+
+    # Search operators
+    parser.add_argument("--binary_ops", type=str, nargs="+", default=None, help="Binary operators")
+    parser.add_argument("--unary_ops", type=str, nargs="+", default=None, help="Unary operators")
+    parser.add_argument("--max_params", type=int, default=0, help="Maximum number of numeric constants")
+
+    # MCTS configuration
+    parser.add_argument("--n_iter", type=int, default=50, help="Number of MCTS iterations")
+
+    # Device
+    parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu", help="Device to use")
+
+    args = parser.parse_args()
+
+    # Parse operator strings to actual operator objects
+    op_map = {
+        'Add': nd.Add, 'Sub': nd.Sub, 'Mul': nd.Mul, 'Div': nd.Div,
+        'Aggr': nd.Aggr, 'Rgga': nd.Rgga, 'Sour': nd.Sour, 'Targ': nd.Targ,
+        'Sin': nd.Sin, 'Cos': nd.Cos, 'Tan': nd.Tan,
+        'Abs': nd.Abs, 'Neg': nd.Neg, 'Sqrt': nd.Sqrt, 'Log': nd.Log,
+    }
+
+    # Default operators
+    if args.binary_ops is None:
+        args.binary_ops = [nd.Add]
+    else:
+        args.binary_ops = [op_map[op] for op in args.binary_ops]
+
+    if args.unary_ops is None:
+        args.unary_ops = [nd.Aggr]
+    else:
+        args.unary_ops = [op_map[op] for op in args.unary_ops]
+
+    main(args)
