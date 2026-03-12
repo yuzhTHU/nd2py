@@ -90,7 +90,7 @@ result = est.predict(X)
 
 ### NDFormerMCTS - NDFormer-guided MCTS
 
-**Status**: Implementation complete, pending testing
+**Status**: Empty node support implemented (tokenizer + dataset)
 
 **Design**:
 - `NDFormerMCTS` extends `MCTS` class, using PUCT instead of UCT
@@ -98,8 +98,17 @@ result = est.predict(X)
 - Encoder memory is cached in `fit()` for efficient decoder calls
 
 **Files**:
-- `nd2py/search/ndformer/ndformer_search.py` - Main implementation
-- `ndformer_search.debug.py` - Debug script for testing
+- `nd2py/search/ndformer/ndformer_mcts.py` - Main MCTS implementation
+- `nd2py/search/ndformer/ndformer_tokenizer.py` - Tokenizer with Empty node support
+- `nd2py/search/ndformer/ndformer_dataset.py` - Dataset with subtree replacement training data
+- `scripts/ndformer_search.py` - Debug script for testing
+- `scripts/test_empty_tokenizer.py` - Test script for Empty node encoding
+
+**Empty Node Support**:
+- Tokenizer now encodes `Empty` nodes as `EMPTY` tokens
+- Dataset generates training data by progressively replacing subtrees with `Empty()`
+- `next_token` is the symbol at the first Empty position (not prefix-based)
+- Enables equation skeleton search (e.g., starting from `Empty + Aggr(Empty)`)
 
 **Usage**:
 ```python
@@ -115,3 +124,14 @@ search.load_ndformer(checkpoint="path/to/model.pt", config=config)
 
 search.fit(X, y)
 ```
+
+**Testing**:
+```shell
+python scripts/test_empty_tokenizer.py  # Test Empty node encoding/decoding
+python scripts/ndformer_search.py       # Run MCTS search with NDFormer
+```
+
+**Pending**:
+- Train NDFormer model with new Empty-aware dataset
+- Test equation skeleton search (e.g., `Empty + Aggr(Empty)`)
+- Verify MCTS integration with Empty-aware policy prediction

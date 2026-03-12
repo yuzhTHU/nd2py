@@ -118,16 +118,20 @@ class NDFormerTokenizer:
         # Nettype Tokens
         self.nettype_tokens = [f'NETTYPE-{nt.upper()}' for nt in ['NODE', 'EDGE', 'SCALAR', 'NONE']]
 
+        # Empty Token
+        self.empty_token = 'EMPTY'
+
         # All Tokens
         self.vocab = [
             self.pad_token, self.sos_token, self.eos_token, self.unk_token,
-            *self.node_var_tokens, 
-            *self.edge_var_tokens, 
+            *self.node_var_tokens,
+            *self.edge_var_tokens,
             *self.scalar_var_tokens,
-            *self.config.operands, 
+            *self.config.operands,
             *self.num_tokenizer.vocab,
             *self.parent_tokens,
             *self.nettype_tokens,
+            self.empty_token,
         ]
         self.token2id = {token: idx for idx, token in enumerate(self.vocab)}
         self.id2token = {idx: token for token, idx in self.token2id.items()}
@@ -149,7 +153,9 @@ class NDFormerTokenizer:
         nettypes = []
         symbol_list = list(eqtree.iter_preorder())
         for symbol in symbol_list:
-            if isinstance(symbol, nd.Variable):
+            if isinstance(symbol, nd.Empty):
+                tokens.append(self.empty_token)
+            elif isinstance(symbol, nd.Variable):
                 tokens.append(self.variable_mapping[symbol.name])
             elif isinstance(symbol, nd.Number):
                 tokens.extend(self.num_tokenizer.encode(symbol.value, mode='token'))
@@ -175,7 +181,7 @@ class NDFormerTokenizer:
     def decode(self, tokens: List[str], parents: List[str], nettypes: List[str], mode:Literal['token', 'token_id']='token') -> nd.Symbol:
         if mode == 'token_id':
             tokens = [self.id2token[token_id] for token_id in tokens]
-        
+
         preorder = []
         for token in (tokens := iter(tokens)):
             if token in [self.sos_token, self.pad_token, self.eos_token]:
@@ -186,6 +192,8 @@ class NDFormerTokenizer:
                 symbol = nd.Variable(self.i_variable_mapping[token])
             elif token in self.config.operands:
                 symbol = getattr(nd, token)()
+            elif token == self.empty_token:
+                symbol = nd.Empty()
             else:
                 raise ValueError(f"Unknown token during decoding: {token}")
             preorder.append(symbol)

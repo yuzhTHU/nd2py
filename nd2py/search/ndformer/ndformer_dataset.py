@@ -3,6 +3,7 @@ from __future__ import annotations
 import torch
 import logging
 import itertools
+import copy
 import numpy as np
 import torch.utils.data as D
 from typing import Optional
@@ -23,13 +24,13 @@ class InfiniteSampler(D.Sampler):
 
 class NDFormerDataset(D.Dataset):
     def __init__(
-        self, 
+        self,
         config: NDFormerConfig,
-        eqtree_generator: NDFormerEqtreeGenerator, 
+        eqtree_generator: NDFormerEqtreeGenerator,
         topo_generator: NDFormerGraphGenerator,
-        data_generator: NDFormerDataGenerator, 
-        tokenizer: NDFormerTokenizer, 
-        n_samples: Optional[int] = None, 
+        data_generator: NDFormerDataGenerator,
+        tokenizer: NDFormerTokenizer,
+        n_samples: Optional[int] = None,
         random_state: Optional[int] = None
     ):
         self.config = config
@@ -53,7 +54,7 @@ class NDFormerDataset(D.Dataset):
         sample_num = target.shape[0]
 
         _logger.debug(f"Sampled eqtree: {eqtree.to_str(number_format='.2f')}")
-        
+
         vars_dict = {var.name: var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)}
         data_node = np.zeros((sample_num, num_nodes, self.config.max_var_num + 1), dtype=np.float32)
         data_edge = np.zeros((sample_num, num_edges, self.config.max_var_num + 1), dtype=np.float32)
@@ -70,7 +71,7 @@ class NDFormerDataset(D.Dataset):
                     raise NotImplementedError(f'Scalar variables are not supported: {var.name}')
                 else:
                     raise ValueError(f'Unknown variable: {var.name}')
-        
+
         # 将公式结果写入最后一个特征通道
         if eqtree.nettype == 'node':
             data_node[:, :, -1] = eqtree.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
@@ -78,26 +79,62 @@ class NDFormerDataset(D.Dataset):
             data_edge[:, :, -1] = eqtree.eval(data_dict, edge_list=edge_list, num_nodes=num_nodes)
         else:
             raise ValueError(f'Unsupported nettype: {eqtree.nettype}')
-        
+
         data_node = self.tokenizer.encode_array(data_node, mode='token_id')
         data_edge = self.tokenizer.encode_array(data_edge, mode='token_id')
 
-        tokens, _, _ = self.tokenizer.encode(eqtree, mode='token_id') 
-        # 将一个完整序列 [A, B, C, D] 切分为多对 (前缀, 预测目标)
-        # 例如: ([A], B), ([A, B], C), ([A, B, C], D)
+        # Generate training samples using progressive subtree replacement
+        # Instead of prefix splitting, we progressively replace subtrees with Empty()
+        # and use the symbol at the first Empty position as next_token
         partial_eqs = []
         next_tokens = []
-        for i in range(1, len(tokens)):
-            partial_eqs.append(tokens[:i])
-            next_tokens.append(tokens[i])
+        # === 我修改了这一部分 ===
+        eqtree_ = eqtree.copy()
+        while not isinstance(eqtree_, nd.Empty):
+            # 可选择被替换的节点：叶子节点 或 所有子节点都已是 Empty 的节点
+            def is_replaceable(node):
+                if node.n_operands == 0:
+                    return True  # 叶子节点
+                return all(isinstance(op, nd.Empty) for op in node.operands)  # 所有子节点都是 Empty
+
+            candidates = [i for i in eqtree_.iter_preorder() if is_replaceable(i) and not isinstance(i, nd.Empty)]
+            if not candidates:
+                break
+            node_to_replace = np.random.choice(candidates)
+            eqtree_ = eqtree_.replace(node_to_replace, nd.Empty())
+            # 找到第一个 Empty
+            for sym in eqtree_.iter_preorder():
+                if isinstance(sym, nd.Empty):
+                    break
+            # 找到 eqtree 中该 Empty 位置对应的原始符号
+            empty_path = eqtree_.path_to(sym)
+            original_sym = eqtree.get_path(empty_path)
+
+            # 编码不完整的树
+            tokens, parent_ids, nettype_ids = self.tokenizer.encode(eqtree_, mode='token_id')
+            partial_eqs.append(torch.tensor(tokens, dtype=torch.long))
+
+            # 获取 next_token
+            if isinstance(original_sym, nd.Variable):
+                next_token_str = self.tokenizer.variable_mapping[original_sym.name]
+            elif isinstance(original_sym, nd.Number):
+                num_tokens = self.tokenizer.num_tokenizer.encode(original_sym.value, mode='token')
+                next_token_str = num_tokens[0]  # Sign token
+            elif isinstance(original_sym, nd.Empty):
+                next_token_str = self.tokenizer.empty_token
+            else:
+                next_token_str = type(original_sym).__name__
+
+            next_token_id = self.tokenizer.token2id.get(next_token_str, self.tokenizer.unk_token_id)
+            next_tokens.append(torch.tensor(next_token_id, dtype=torch.long))
 
         return {
             'edge_list': torch.tensor(edge_list, dtype=torch.long), # (2, EdgeNum)
             'data_node': torch.tensor(data_node, dtype=torch.long), # (SampleNum, NodeNum, max_var_num+1, 3)
             'data_edge': torch.tensor(data_edge, dtype=torch.long), # (SampleNum, EdgeNum, max_var_num+1, 3)
             'num_nodes': num_nodes,     # int
-            'partial_eqs': [torch.tensor(partial_eq, dtype=torch.long) for partial_eq in partial_eqs], # List of (SeqLen,)
-            'next_tokens': [torch.tensor(next_token, dtype=torch.long) for next_token in next_tokens], # List of (1,)
+            'partial_eqs': partial_eqs, # List of (SeqLen,)
+            'next_tokens': next_tokens, # List of (1,)
         }
 
     def collate_fn(self, batch):
@@ -107,8 +144,8 @@ class NDFormerDataset(D.Dataset):
         batched_num_nodes = 0
         batched_partial_eqs = []
         batched_next_tokens = []
-        node_batch_idx = [] # 记录每个节点属于 batch 中的哪张图, 后续使用 to_dense_batch 还原时需要用到
-        seq_batch_idx = [] # 记录每个 (partial_eq, next_token) 序列属于 batch 中的哪张图, 后续构建 seq2graph_idx 时需要用到
+        node_batch_idx = [] # 记录每个节点属于 batch 中的哪张图，后续使用 to_dense_batch 还原时需要用到
+        seq_batch_idx = [] # 记录每个 (partial_eq, next_token) 序列属于 batch 中的哪张图，后续构建 seq2graph_idx 时需要用到
 
         for batch_idx, data in enumerate(batch):
             batched_edge_list.append(data['edge_list'] + batched_num_nodes)
@@ -142,6 +179,6 @@ class NDFormerDataset(D.Dataset):
             "node_batch_idx": final_node_batch_idx, # (TotalNodes,) data_node 中每个节点与所属图索引的映射
             "seq_batch_idx": final_seq_batch_idx    # (TotalSeqs,) partial_eqs / next_tokens 中每个序列与所属图索引的映射
         }
-    
+
     def get_sampler(self):
         return InfiniteSampler() if self.n_samples is None else None
