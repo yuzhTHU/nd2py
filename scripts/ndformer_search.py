@@ -6,6 +6,7 @@ Tests the NDFormerMCTS search with a simple equation: x + sin(y)
 Uses a randomly initialized NDFormer model (not trained)
 """
 import logging
+import torch
 import numpy as np
 import nd2py as nd
 from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
@@ -19,20 +20,15 @@ logger = logging.getLogger('nd2py.ndformer_search')
 
 # Set random seeds for reproducibility
 np.random.seed(42)
-torch = None
-try:
-    import torch
-    torch.manual_seed(42)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(42)
-except ImportError:
-    pass
+torch.manual_seed(42)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(42)
 
 # Configuration
 NUM_SAMPLES = 100
 NUM_NODES = 20  # For graph-based problem
 N_ITER = 50     # MCTS iterations
-USE_CUDA = torch and torch.cuda.is_available()
+USE_CUDA = torch is not None and torch.cuda.is_available()
 
 def main():
     logger.info("=" * 60)
@@ -40,13 +36,13 @@ def main():
     logger.info("=" * 60)
 
     # ==========================================
-    # 1. Create target equation: x + sin(y)
+    # 1. Create target equation: x + aggr(y)
     # ==========================================
-    logger.info("\n[Step 1] Creating target equation: x + sin(y)")
+    logger.info("\n[Step 1] Creating target equation: x + aggr(y)")
 
-    x = nd.Variable('x', nettype='scalar')
-    y = nd.Variable('y', nettype='scalar')
-    target_eq = nd.Add(x, nd.Sin(y))
+    x = nd.Variable('x', nettype='node')
+    y = nd.Variable('y', nettype='edge')
+    target_eq = nd.Add(x, nd.aggr(y))
 
     logger.info(f"Target equation: {target_eq}")
     logger.info(f"Target equation string: {target_eq.to_str()}")
@@ -56,14 +52,24 @@ def main():
     # ==========================================
     logger.info("\n[Step 2] Generating synthetic data")
 
+    # Generate random graph-structured data
+    # Create edge list for a simple graph
+    edge_index = []
+    for i in range(NUM_NODES):
+        for j in range(i+1, NUM_NODES):
+            edge_index.append((i, j))
+
+    num_edges = len(edge_index)
+
     # Generate random input values
     X = {
-        'x': np.random.uniform(-5, 5, NUM_SAMPLES),
-        'y': np.random.uniform(-5, 5, NUM_SAMPLES),
+        'x': np.random.uniform(-5, 5, (NUM_SAMPLES, NUM_NODES)),  # node features
+        'y': np.random.uniform(-5, 5, (NUM_SAMPLES, num_edges)),  # edge features
     }
 
     # Compute target values
-    y_true = target_eq.eval(X)
+    edge_list = ([e[0] for e in edge_index], [e[1] for e in edge_index])
+    y_true = target_eq.eval(X, edge_list=edge_list, num_nodes=NUM_NODES)
 
     logger.info(f"Data shape: X[x]={X['x'].shape}, X[y]={X['y'].shape}, y={y_true.shape}")
     logger.info(f"Target y range: [{y_true.min():.4f}, {y_true.max():.4f}]")
@@ -73,12 +79,12 @@ def main():
     # ==========================================
     logger.info("\n[Step 3] Initializing NDFormer model (random weights, not trained)")
 
-    config = NDformerConfig()
+    config = NDFormerConfig()
     device = 'cuda' if USE_CUDA else 'cpu'
     logger.info(f"Using device: {device}")
 
-    model = NDformerModel(config).to(device)
     tokenizer = NDFormerTokenizer(config, variables=[x, y])
+    model = NDFormerModel(config, tokenizer).to(device)
 
     logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
 
@@ -87,20 +93,25 @@ def main():
     # ==========================================
     logger.info("\n[Step 4] Initializing NDFormerMCTS")
 
+    # Build edge list for MCTS
+    edge_list = ([e[0] for e in edge_index], [e[1] for e in edge_index])
+
     search = NDFormerMCTS(
         variables=[x, y],
-        binary=[nd.Add, nd.Sub, nd.Mul, nd.Div],
-        unary=[nd.Sin, nd.Cos, nd.Abs, nd.Neg, nd.Sqrt],
-        max_params=2,
+        binary=[nd.Add],  # Only Add
+        unary=[nd.Aggr],   # Only Aggr
+        max_params=0,      # No constants needed
         const_range=(-2.0, 2.0),
-        depth_range=(2, 8),
-        nettype='scalar',
+        depth_range=(2, 4),  # Reduced depth since equation is simple: x + aggr(y) has depth ~3
+        nettype='node',
+        num_nodes=NUM_NODES,
+        edge_list=edge_list,
         n_iter=N_ITER,
         use_tqdm=True,
         child_num=20,
         n_playout=50,
         d_playout=5,
-        max_len=20,
+        max_len=6,  # Short sequence: [x, y, aggr, Add] ~ 4-6 tokens
         c=1.41,
         eta=0.99,
         # NDFormer parameters
@@ -133,7 +144,7 @@ def main():
     logger.info(f"Discovered equation string: {result_eq.to_str()}")
 
     # Evaluate discovered equation
-    y_pred = result_eq.eval(X)
+    y_pred = result_eq.eval(X, edge_list=edge_list, num_nodes=NUM_NODES)
 
     # Compute metrics
     mse = np.mean((y_pred - y_true) ** 2)

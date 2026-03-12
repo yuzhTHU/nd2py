@@ -6,12 +6,13 @@ Uses a pre-trained NDFormer model to guide MCTS search via PUCT
 """
 import torch
 import numpy as np
+import pandas as pd
 from typing import List, Dict, Tuple, Optional, Literal
 from ..mcts import MCTS, Node
 from ... import core as nd
-from .ndformer_config import NDformerConfig
-from .ndformer_tokenizer import NDformerTokenizer
-from .ndformer_model import NDformerModel
+from .ndformer_config import NDFormerConfig
+from .ndformer_tokenizer import NDFormerTokenizer
+from .ndformer_model import NDFormerModel
 
 
 class NDFormerMCTS(MCTS):
@@ -58,8 +59,8 @@ class NDFormerMCTS(MCTS):
         eta: float = 0.999,
 
         # NDFormer parameters
-        ndformer: Optional[NDformerModel] = None,
-        ndformer_tokenizer: Optional[NDformerTokenizer] = None,
+        ndformer: Optional[NDFormerModel] = None,
+        ndformer_tokenizer: Optional[NDFormerTokenizer] = None,
         puct_c_puct: float = 1.0,
         ndformer_topk: int = 10,
         ndformer_temperature: float = 1.0,
@@ -116,7 +117,7 @@ class NDFormerMCTS(MCTS):
     def load_ndformer(
         self,
         checkpoint: str,
-        config: Optional[NDformerConfig] = None,
+        config: Optional[NDFormerConfig] = None,
         variables: Optional[List[nd.Variable]] = None,
         device: Optional[str] = None,
     ):
@@ -125,7 +126,7 @@ class NDFormerMCTS(MCTS):
 
         Args:
             checkpoint: Path to model checkpoint
-            config: NDformerConfig, if None will use default config
+            config: NDFormerConfig, if None will use default config
             variables: List of variables for tokenizer, if None will use search variables
             device: Device to load model on, if None will auto-detect
         """
@@ -135,13 +136,13 @@ class NDFormerMCTS(MCTS):
 
         # Load config
         if config is None:
-            config = NDformerConfig()
+            config = NDFormerConfig()
 
         # Load tokenizer
-        self.ndformer_tokenizer = NDformerTokenizer(config, variables or self.variables)
+        self.ndformer_tokenizer = NDFormerTokenizer(config, variables or self.variables)
 
         # Load model
-        self.ndformer_model = NDformerModel(config)
+        self.ndformer_model = NDFormerModel(config)
         checkpoint_data = torch.load(checkpoint, map_location=self.device, weights_only=False)
         self.ndformer_model.load_state_dict(checkpoint_data['model_state_dict'])
         self.ndformer_model.to(self.device)
@@ -183,15 +184,33 @@ class NDFormerMCTS(MCTS):
                 vars_dict[var.name] = X[var.name]
 
         sample_num = y.shape[0]
-        num_nodes = self.num_nodes
-        num_edges = len(self.edge_list[0]) if self.edge_list else 0
         max_var_num = self.ndformer_tokenizer.config.max_var_num
+
+        # For scalar nettype, treat scalar variables as node variables
+        if self.nettype == 'scalar':
+            # For scalar problems, we have one "node" per sample with all variables concatenated
+            num_nodes = len(scalar_vars) if scalar_vars else 1
+            num_edges = 0
+        else:
+            num_nodes = self.num_nodes
+            num_edges = len(self.edge_list[0]) if self.edge_list else 0
 
         # Prepare data_node: (sample_num, num_nodes, max_var_num+1)
         data_node = np.zeros((sample_num, num_nodes, max_var_num + 1), dtype=np.float32)
-        for i, var in enumerate(node_vars):
-            if i < max_var_num:
-                data_node[:, :, i] = X[var.name]
+
+        if self.nettype == 'scalar':
+            # For scalar problems, put each scalar variable at a different "node" position
+            for i, var in enumerate(scalar_vars):
+                if i < max_var_num:
+                    data_node[:, i, :] = 0  # Reset
+                    data_node[:, i, i] = X[var.name]  # Put variable value in diagonal position
+            # Write target to last channel of first node
+            data_node[:, 0, -1] = y
+        else:
+            # For node/edge problems, fill variable values
+            for i, var in enumerate(node_vars):
+                if i < max_var_num:
+                    data_node[:, :, i] = X[var.name]
 
         # Prepare data_edge: (sample_num, num_edges, max_var_num+1)
         data_edge = np.zeros((sample_num, num_edges, max_var_num + 1), dtype=np.float32)
@@ -205,6 +224,10 @@ class NDFormerMCTS(MCTS):
         elif self.nettype == 'edge':
             data_edge[:, :, -1] = y
 
+        # Encode to token IDs
+        data_node = self.ndformer_tokenizer.encode_array(data_node, mode='token_id')
+        data_edge = self.ndformer_tokenizer.encode_array(data_edge, mode='token_id')
+
         return data_node, data_edge
 
     def _encode_and_cache_memory(self, X: Dict[str, np.ndarray], y: np.ndarray):
@@ -216,30 +239,41 @@ class NDFormerMCTS(MCTS):
         data_node, data_edge = self._prepare_data(X, y)
 
         # Convert to torch tensors
-        data_node = torch.from_numpy(data_node).to(self.device)  # (sample_num, num_nodes, dim)
-        data_edge = torch.from_numpy(data_edge).to(self.device)  # (sample_num, num_edges, dim)
+        # data_node: (sample_num, num_nodes, max_var_num+1, 3)
+        # data_edge: (sample_num, num_edges, max_var_num+1, 3)
+        data_node = torch.from_numpy(data_node).to(self.device)
+        data_edge = torch.from_numpy(data_edge).to(self.device)
 
-        # Prepare node_batch_idx for to_dense_batch
-        # Since we have a single graph, all nodes belong to graph 0
-        node_batch_idx = torch.zeros(self.num_nodes, dtype=torch.long, device=self.device)
+        # For scalar nettype, skip graph encoding and use simpler encoding
+        if self.nettype == 'scalar':
+            # For scalar problems, we don't have graph structure
+            # Use transformer encoder directly on node embeddings
+            with torch.no_grad():
+                # Embed nodes
+                node_emb = self.ndformer_model.embedder(data_node).flatten(-3, -1)
+                node_emb = self.ndformer_model.linear(node_emb)
 
-        # Reshape for GNN input: (total_nodes, sample_num*dim) -> need to flatten properly
-        # GNN expects: data_node (total_nodes, dim*sample_num), data_edge (total_edges, dim*sample_num)
-        # But NDformerModel expects different shape, let's check the actual interface
+                # Add positional encoding
+                node_emb = self.ndformer_model.pe(node_emb)
 
-        # Actually looking at ndformer_model.py line 61-62:
-        # data_node = self.data_embedder(data_node.nan_to_num(0.0)) # (sample_num, batched_node_num, d_emb)
-        # So input should be (sample_num, total_nodes, dim)
+                # Pass through transformer encoder
+                memory = self.ndformer_model.transformer_encoder(node_emb)
+                self._memory = memory  # (sample_num, num_nodes, d_emb)
+                self._memory_mask = None
+        else:
+            # Prepare node_batch_idx for to_dense_batch
+            # Since we have a single graph, all nodes belong to graph 0
+            node_batch_idx = torch.zeros(self.num_nodes, dtype=torch.long, device=self.device)
 
-        # Call encoder
-        with torch.no_grad():
-            self._memory, self._memory_mask = self.ndformer_model.encode_graph(
-                data_node=data_node,
-                data_edge=data_edge,
-                edge_list=torch.tensor(self.edge_list, dtype=torch.long, device=self.device),
-                num_nodes=self.num_nodes,
-                node_batch_idx=node_batch_idx,
-            )
+            # Call encoder
+            with torch.no_grad():
+                self._memory, self._memory_mask = self.ndformer_model.encode_graph(
+                    data_node=data_node,
+                    data_edge=data_edge,
+                    edge_list=torch.tensor(self.edge_list, dtype=torch.long, device=self.device),
+                    num_nodes=self.num_nodes,
+                    node_batch_idx=node_batch_idx,
+                )
 
         self.logger.debug(f"Cached memory shape: {self._memory.shape}")
 
@@ -278,10 +312,10 @@ class NDFormerMCTS(MCTS):
                 memory=self._memory,
                 memory_key_padding_mask=self._memory_mask,
             )
-            # logits shape: (1, seq_len, n_words)
-            # Get last position: (1, n_words)
-            last_logits = logits[:, -1, :] / self.ndformer_temperature
-            probs = torch.softmax(last_logits, dim=-1).squeeze(0)  # (n_words,)
+            # logits shape: (1, vocab_size) after mean pooling in decode_sequence
+            # Apply temperature scaling
+            last_logits = logits[0] / self.ndformer_temperature
+            probs = torch.softmax(last_logits, dim=-1)  # (vocab_size,)
 
         # Map token probabilities to action probabilities
         action_probs = {}
