@@ -1,3 +1,5 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import re
 import sys
 import json
@@ -15,16 +17,16 @@ from socket import gethostname
 from collections import defaultdict
 from argparse import ArgumentParser
 from setproctitle import setproctitle
-from nd2py.search.ndformer import NDformerConfig, NDformerDataset, NDformerTokenizer, NDformerModel
+from nd2py.search.ndformer import NDFormerConfig, NDFormerDataset, NDFormerTokenizer, NDFormerModel
 
 _logger = logging.getLogger("nd2py.ndformer_train")
 
 
 def load_dataset(args, config, tokenizer):
-    eqtree_generator = nd.search.ndformer.NDformerEqtreeGenerator(tokenizer.variables, depth_range=(1, 3))
-    topo_generator = nd.search.ndformer.NDformerGraphGenerator(config)
-    data_generator = nd.search.ndformer.NDformerDataGenerator(config)
-    train_dataset = NDformerDataset(
+    eqtree_generator = nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(1, 6))
+    topo_generator = nd.search.ndformer.NDFormerGraphGenerator(config)
+    data_generator = nd.search.ndformer.NDFormerDataGenerator(config)
+    train_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
         eqtree_generator=eqtree_generator, 
@@ -33,7 +35,7 @@ def load_dataset(args, config, tokenizer):
         n_samples=480,
         #random_state=args.random_state,
     )
-    eval_dataset = NDformerDataset(
+    eval_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
         eqtree_generator=eqtree_generator, 
@@ -42,7 +44,7 @@ def load_dataset(args, config, tokenizer):
         n_samples=480,
         random_state=args.random_state,
     )
-    test_dataset = NDformerDataset(
+    test_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
         eqtree_generator=eqtree_generator, 
@@ -80,7 +82,7 @@ def load_dataset(args, config, tokenizer):
 
 
 def load_model(args, config, tokenizer):
-    model = NDformerModel(config, tokenizer).to(args.device)
+    model = NDFormerModel(config, tokenizer).to(args.device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     criterion = torch.nn.CrossEntropyLoss(ignore_index=tokenizer.pad_token_id)
     _logger.note(
@@ -161,10 +163,10 @@ def log_test_record(args, test_records, timer):
 
 
 def main(args):
-    config = NDformerConfig()
+    config = NDFormerConfig()
 
     ## Load Tokenizer
-    tokenizer = NDformerTokenizer(config, variables=None)
+    tokenizer = NDFormerTokenizer(config, variables=None)
 
     ## Load Dataset
     train_loader, eval_loader, test_loader = load_dataset(args, config, tokenizer)

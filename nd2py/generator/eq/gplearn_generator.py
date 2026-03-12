@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 import numpy as np
 from typing import Tuple, Optional, List, Dict, Literal, Set, TYPE_CHECKING

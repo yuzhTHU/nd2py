@@ -106,7 +106,7 @@ result = est.predict(X)
 from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
 
 # Option 1: Pass NDFormer directly
-model = NDformerModel(config)
+model = NDFormerModel(config)
 search = NDFormerMCTS(variables=[x, y], ndformer=model, ndformer_tokenizer=tokenizer)
 
 # Option 2: Load after initialization
@@ -115,8 +115,3 @@ search.load_ndformer(checkpoint="path/to/model.pt", config=config)
 
 search.fit(X, y)
 ```
-
-**Pending**:
-- Test with randomly initialized model on simple equation (e.g., `x + sin(y)`)
-- Debug any issues with encoder/decoder interface
-- Verify PUCT formula and policy prior calculation

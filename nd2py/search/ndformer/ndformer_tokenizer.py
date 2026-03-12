@@ -1,10 +1,11 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import json
 import warnings
 import numpy as np
 from typing import List, Dict, Tuple, Optional, Literal
 from ... import core as nd
-from .ndformer_config import NDformerConfig
+from .ndformer_config import NDFormerConfig
 
 
 class NumberTokenizer:
@@ -77,8 +78,8 @@ class NumberTokenizer:
         return values
 
 
-class NDformerTokenizer:
-    def __init__(self, config: NDformerConfig, variables: Optional[List[nd.Symbol]] = None):
+class NDFormerTokenizer:
+    def __init__(self, config: NDFormerConfig, variables: Optional[List[nd.Symbol]] = None):
         self.config = config
 
         # Special Tokens        
@@ -218,7 +219,7 @@ class NDformerTokenizer:
         }
 
     @classmethod
-    def from_dict(cls, config: dict) -> 'NDformerTokenizer':
+    def from_dict(cls, config: dict) -> 'NDFormerTokenizer':
         return cls(config["operators"], config["max_dim_node"], config["max_dim_edge"])
 
     def save(self, filepath: str):
@@ -227,7 +228,7 @@ class NDformerTokenizer:
             json.dump(self.to_dict(), f, indent=4)
 
     @classmethod
-    def load(cls, filepath: str) -> 'NDformerTokenizer':
+    def load(cls, filepath: str) -> 'NDFormerTokenizer':
         """从本地 JSON 文件加载"""
         with open(filepath, 'r', encoding='utf-8') as f:
             config = json.load(f)
@@ -238,6 +239,6 @@ class NDformerTokenizer:
         重写等于运算符。
         用法: if tokenizer == cached_tokenizer: print("配置一致！")
         """
-        if not isinstance(other, NDformerTokenizer):
+        if not isinstance(other, NDFormerTokenizer):
             return False
         return self.to_dict() == other.to_dict()

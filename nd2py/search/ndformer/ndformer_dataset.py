@@ -1,4 +1,5 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import torch
 import logging
 import itertools
@@ -7,9 +8,9 @@ import torch.utils.data as D
 from typing import Optional
 from torch_geometric.data import Batch
 from ... import core as nd
-from .ndformer_config import NDformerConfig
-from .ndformer_generator import NDformerEqtreeGenerator, NDformerGraphGenerator, NDformerDataGenerator
-from .ndformer_tokenizer import NDformerTokenizer
+from .ndformer_config import NDFormerConfig
+from .ndformer_generator import NDFormerEqtreeGenerator, NDFormerGraphGenerator, NDFormerDataGenerator
+from .ndformer_tokenizer import NDFormerTokenizer
 
 _logger = logging.getLogger(f'nd2py.{__name__}')
 
@@ -20,14 +21,14 @@ class InfiniteSampler(D.Sampler):
         return itertools.count()
 
 
-class NDformerDataset(D.Dataset):
+class NDFormerDataset(D.Dataset):
     def __init__(
         self, 
-        config: NDformerConfig,
-        eqtree_generator: NDformerEqtreeGenerator, 
-        topo_generator: NDformerGraphGenerator,
-        data_generator: NDformerDataGenerator, 
-        tokenizer: NDformerTokenizer, 
+        config: NDFormerConfig,
+        eqtree_generator: NDFormerEqtreeGenerator, 
+        topo_generator: NDFormerGraphGenerator,
+        data_generator: NDFormerDataGenerator, 
+        tokenizer: NDFormerTokenizer, 
         n_samples: Optional[int] = None, 
         random_state: Optional[int] = None
     ):

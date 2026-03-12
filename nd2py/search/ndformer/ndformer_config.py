@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class NDformerConfig:
+class NDFormerConfig:
     d_emb: int = 128
     d_ff: int = 128*4
     n_head: int = 8

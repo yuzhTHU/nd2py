@@ -1,3 +1,5 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import random
 import logging
 import numpy as np

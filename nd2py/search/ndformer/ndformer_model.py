@@ -1,4 +1,5 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import sys
 import torch
 import logging
@@ -9,8 +10,8 @@ import torch.nn.functional as F
 from dataclasses import dataclass
 from torch_geometric.utils import to_dense_batch
 from typing import List, Dict, Tuple, Union, Literal
-from .ndformer_config import NDformerConfig
-from .ndformer_tokenizer import NDformerTokenizer
+from .ndformer_config import NDFormerConfig
+from .ndformer_tokenizer import NDFormerTokenizer
 from ... import utils
 
 # See https://github.com/pytorch/pytorch/issues/100469
@@ -18,8 +19,8 @@ warnings.filterwarnings("ignore", message="Converting mask without torch.bool dt
 _logger = logging.getLogger('nd2py.ndformer_model')
 
 
-class NDformerModel(nn.Module):
-    def __init__(self, config: NDformerConfig, tokenizer: NDformerTokenizer):
+class NDFormerModel(nn.Module):
+    def __init__(self, config: NDFormerConfig, tokenizer: NDFormerTokenizer):
         super().__init__()
         self.config = config
         self.tokenizer = tokenizer
