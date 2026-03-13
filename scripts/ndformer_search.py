@@ -123,6 +123,7 @@ def main(args):
         puct_c_puct=1.0,
         ndformer_topk=8,
         ndformer_temperature=1.0,
+        beam_width=args.beam_width,
     )
     _logger.info(f"NDFormerMCTS initialized with operators: binary={args.binary_ops}, unary={args.unary_ops}")
 
@@ -204,6 +205,7 @@ if __name__ == "__main__":
 
     # MCTS configuration
     parser.add_argument("--n_iter", type=int, default=50, help="Number of MCTS iterations")
+    parser.add_argument('--beam_width', type=int, default=10, help="Beam width for batch expansion")
     parser.add_argument('--required_memory_MB', type=int, default=5000, help="自动选择 GPU 时要求的最小剩余显存 (MB)")
 
     parser = nd.utils.add_minus_flags(parser) ## --key_name -> --key-name

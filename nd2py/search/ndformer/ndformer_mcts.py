@@ -2,11 +2,14 @@
 """
 NDFormer-guided MCTS for Symbolic Regression
 
-Uses a pre-trained NDFormer model to guide MCTS search via PUCT
+Uses a pre-trained NDFormer model to guide MCTS search via PUCK
 """
+import json
+import time
 import torch
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from typing import List, Dict, Tuple, Optional, Literal
 from ..mcts import MCTS, Node
 from ... import core as nd
@@ -64,6 +67,7 @@ class NDFormerMCTS(MCTS):
         puct_c_puct: float = 1.0,
         ndformer_topk: int = 10,
         ndformer_temperature: float = 1.0,
+        beam_width: int = 10,  # Number of leaf nodes to expand in batch
         **kwargs,
     ):
         super().__init__(
@@ -105,6 +109,7 @@ class NDFormerMCTS(MCTS):
         self.puct_c_puct = puct_c_puct
         self.ndformer_topk = ndformer_topk
         self.ndformer_temperature = ndformer_temperature
+        self.beam_width = beam_width
         self.device = None
 
         # Cached memory from encoder (per graph topology)
@@ -269,63 +274,72 @@ class NDFormerMCTS(MCTS):
 
     def _get_policy_prior(
         self,
-        state: Node,
-        valid_actions: List[Tuple[nd.Symbol, nd.Symbol]]
-    ) -> Dict[Tuple[nd.Symbol, nd.Symbol], float]:
+        states: List[Node],
+        valid_actions_list: List[List[Tuple[nd.Symbol, nd.Symbol]]]
+    ) -> List[Dict[Tuple[nd.Symbol, nd.Symbol], float]]:
         """
         Get prior probabilities from NDFormer for valid actions
-        by decoding the current partial sequence
+        by decoding the current partial sequences in batch
 
         Args:
-            state: Current MCTS node
-            valid_actions: List of valid (empty, operator) tuples
+            states: List of MCTS nodes
+            valid_actions_list: List of valid (empty, operator) tuples for each node
 
         Returns:
-            Dictionary mapping actions to prior probabilities
+            List of dictionaries mapping actions to prior probabilities (one per node)
         """
         self._check_ndformer_loaded()
 
-        # Encode current equation tree to tokens
-        tokens, _, _ = self.ndformer_tokenizer.encode(state.eqtree, mode='token_id')
+        # Encode current equation trees to tokens
+        partial_eqs = []
+        for state in states:
+            tokens, _, _ = self.ndformer_tokenizer.encode(state.eqtree, mode='token_id')
+            partial_eqs.append(torch.tensor(tokens, dtype=torch.long, device=self.device))
 
-        # Add SOS token at the beginning if needed
-        # Looking at tokenizer, sos_token_id is used for sequence start
-        # For prediction, we need to predict next token after current sequence
-        partial_eq = torch.tensor([tokens], dtype=torch.long, device=self.device)
+        # Pad sequences for batch processing
+        max_len = max(len(eq) for eq in partial_eqs)
+        padded_eqs = torch.stack([
+            torch.cat([eq, torch.full((max_len - len(eq),), self.ndformer_tokenizer.pad_token_id, dtype=torch.long, device=self.device)])
+            for eq in partial_eqs
+        ])  # (batch_size, max_seq_len)
 
         # Get policy from decoder (predict next token)
         with torch.no_grad():
             # decode_sequence returns logits for each position
             # We only need the last position's logits to predict next token
             logits = self.ndformer_model.decode_sequence(
-                partial_eq=partial_eq,
+                partial_eq=padded_eqs,
                 memory=self._memory,
                 memory_key_padding_mask=self._memory_mask,
             )
-            # logits shape: (1, vocab_size) after mean pooling in decode_sequence
+            # logits shape: (batch_size, vocab_size) after mean pooling in decode_sequence
             # Apply temperature scaling
-            last_logits = logits[0] / self.ndformer_temperature
-            probs = torch.softmax(last_logits, dim=-1)  # (vocab_size,)
+            logits = logits / self.ndformer_temperature
+            probs = torch.softmax(logits, dim=-1)  # (batch_size, vocab_size)
 
-        # Map token probabilities to action probabilities
-        action_probs = {}
-        for action in valid_actions:
-            _, op = action
-            op_token = type(op).__name__
-            if op_token in self.ndformer_tokenizer.token2id:
-                token_id = self.ndformer_tokenizer.token2id[op_token]
-                action_probs[action] = probs[token_id].item()
+        # Map token probabilities to action probabilities for each node
+        results = []
+        for i, (state, valid_actions) in enumerate(zip(states, valid_actions_list)):
+            action_probs = {}
+            for action in valid_actions:
+                _, op = action
+                op_token = type(op).__name__
+                if op_token in self.ndformer_tokenizer.token2id:
+                    token_id = self.ndformer_tokenizer.token2id[op_token]
+                    action_probs[action] = probs[i, token_id].item()
+                else:
+                    action_probs[action] = 1e-6
+
+            # Normalize
+            total = sum(action_probs.values())
+            if total > 0:
+                action_probs = {k: v / total for k, v in action_probs.items()}
             else:
-                action_probs[action] = 1e-6
+                action_probs = {a: 1.0 / len(valid_actions) for a in valid_actions}
 
-        # Normalize
-        total = sum(action_probs.values())
-        if total > 0:
-            action_probs = {k: v / total for k, v in action_probs.items()}
-        else:
-            action_probs = {a: 1.0 / len(valid_actions) for a in valid_actions}
+            results.append(action_probs)
 
-        return action_probs
+        return results
 
     def PUCT(self, node: Node) -> float:
         """
@@ -343,46 +357,105 @@ class NDFormerMCTS(MCTS):
 
         return node.Q / (node.N + 1e-6) + exploration
 
-    def select(self, root: Node) -> Node:
+    def select(self, root: Node) -> List[Node]:
         """
-        Select a leaf node using PUCT
+        Select leaf nodes using Beam Search with PUCT
+
+        Returns a list of leaf nodes to expand in batch
         """
-        node = root
-        while node.children:
-            node = max(node.children, key=lambda x: self.PUCT(x))
-        return node
+        # Use beam search to find top-k leaf nodes
+        # Start from root and expand beam width nodes at each level
+        beam = [root]
 
-    def expand(self, node: Node, X: Dict[str, np.ndarray], y: np.ndarray) -> Node:
-        """
-        Expand node with NDFormer-guided action selection
-        """
-        valid_actions = list(self.iter_valid_action(node, shuffle=False))
+        for _ in range(self.max_len):  # Max depth limit
+            next_beam = []
+            for node in beam:
+                if node.children:
+                    # Add all children to candidate pool
+                    next_beam.extend(node.children)
+                else:
+                    # This is a leaf node
+                    next_beam.append(node)
 
-        if not valid_actions:
-            return node
-
-        # Get policy prior from NDFormer
-        policy_priors = self._get_policy_prior(node, valid_actions)
-
-        # Select top-k actions based on NDFormer prior
-        sorted_actions = sorted(valid_actions, key=lambda a: policy_priors[a], reverse=True)
-        valid_actions = sorted_actions[:self.ndformer_topk]
-
-        # Create child nodes
-        for idx, action in enumerate(valid_actions):
-            child = self.action(node, action)
-            child.parent = node
-            child.xchild = len(node.children)
-            child.policy_prior = policy_priors[action]
-            node.children.append(child)
-            if self.child_num and idx + 1 >= self.child_num:
+            if not next_beam:
                 break
 
-        if not node.children:
-            return node
+            # Score all candidates using PUCT
+            scored = []
+            for node in next_beam:
+                if node.children:
+                    # Internal node: use max child PUCT as proxy
+                    score = max(self.PUCT(child) for child in node.children)
+                else:
+                    # Leaf node: use parent's PUCT toward this node
+                    score = self.PUCT(node) if node.parent else 0
+                scored.append((score, node))
 
-        # Select child based on PUCT for simulation
-        return max(node.children, key=self.PUCT)
+            # Keep top-k nodes
+            scored.sort(key=lambda x: x[0], reverse=True)
+            beam = [node for _, node in scored[:self.beam_width]]
+
+            # If all nodes in beam are leaves, we're done
+            if all(not node.children for node in beam):
+                break
+
+        # Return only leaf nodes
+        return [node for node in beam if not node.children]
+
+    def expand(self, nodes: List[Node], X: Dict[str, np.ndarray], y: np.ndarray) -> List[Node]:
+        """
+        Expand multiple nodes with NDFormer-guided action selection in batch
+
+        Args:
+            nodes: List of leaf nodes to expand
+
+        Returns:
+            List of selected child nodes for simulation
+        """
+        if not nodes:
+            return []
+
+        # Collect valid actions for each node
+        valid_actions_list = []
+        for node in nodes:
+            valid_actions = list(self.iter_valid_action(node, shuffle=False))
+            if not valid_actions:
+                valid_actions_list.append([])
+            else:
+                valid_actions_list.append(valid_actions)
+
+        # Check if any node has valid actions
+        nodes_with_actions = [node for node, actions in zip(nodes, valid_actions_list) if actions]
+        if not nodes_with_actions:
+            return nodes
+
+        # Get policy priors in batch
+        policy_priors_list = self._get_policy_prior(nodes_with_actions, [
+            actions for node, actions in zip(nodes_with_actions, valid_actions_list)
+        ])
+
+        # Create child nodes with priors
+        selected_children = []
+        for node, valid_actions, policy_priors in zip(nodes_with_actions, valid_actions_list, policy_priors_list):
+            # Sort actions by prior and select top-k
+            sorted_actions = sorted(valid_actions, key=lambda a: policy_priors[a], reverse=True)
+            top_actions = sorted_actions[:self.ndformer_topk]
+
+            # Create child nodes
+            for idx, action in enumerate(top_actions):
+                child = self.action(node, action)
+                child.parent = node
+                child.xchild = len(node.children)
+                child.policy_prior = policy_priors[action]
+                node.children.append(child)
+                if self.child_num and idx + 1 >= self.child_num:
+                    break
+
+            # Select best child for simulation
+            if node.children:
+                selected_children.append(max(node.children, key=self.PUCT))
+
+        return selected_children
 
     def fit(
         self,
@@ -390,9 +463,10 @@ class NDFormerMCTS(MCTS):
         y: np.ndarray | pd.Series,
     ):
         """
-        Fit the model using NDFormer-guided MCTS
+        Fit the model using NDFormer-guided MCTS with batch expansion
 
         First encodes the graph data and caches memory, then runs MCTS search
+        with beam search based select and batch expand for efficiency
         """
         # Convert X to dict format
         if isinstance(X, np.ndarray):
@@ -404,8 +478,86 @@ class NDFormerMCTS(MCTS):
         else:
             raise ValueError(f"Unknown type: {type(X)}")
 
+        # Root Node
+        self.MC_tree = Node(nd.Identity(nd.Empty(), nettype=self.nettype))
+
         # Encode graph and cache memory before MCTS search
         self._encode_and_cache_memory(X, y)
 
-        # Call parent fit
-        super().fit(X, y)
+        # Search with batch expansion
+        stop = False
+        best_node = None
+        self.eqtree = None
+        self.named_timer.clear(reset_last_add_time=True)
+        self.start_time = time.time()
+
+        for iter in tqdm(range(1, self.n_iter + 1), disable=not self.use_tqdm):
+            # Select multiple leaf nodes using beam search
+            leaf_nodes = self.select(self.MC_tree)
+
+            # Expand all selected nodes in batch
+            expanded_nodes = self.expand(leaf_nodes, X, y)
+
+            # Simulate and backpropagate for each expanded node
+            iter_best = None
+            for expanded in expanded_nodes:
+                reward, best_simulated = self.simulate(expanded, X, y)
+                self.backpropagate(expanded, reward)
+                if iter_best is None or best_simulated.reward > iter_best.reward:
+                    iter_best = best_simulated
+
+            self.para_timer.add('iteration')
+
+            ## Prepare log & record
+            record = dict(
+                iter=iter,
+                time=self.para_timer.time,
+                speed=self.para_timer.named_speed,
+                time_usage=self.para_timer.named_time,
+                call_count=self.para_timer.named_count,
+            )
+
+            log = {"Iter": iter}
+
+            # Use the best simulated node from this iteration
+            if iter_best is not None:
+                if _update_best := (best_node is None or iter_best.reward > best_node.reward):
+                    best_node = iter_best
+                    self.eqtree = best_node.fitted_eqtree
+
+                    record["eqtree"] = str(best_node.eqtree)
+                    record["fitted_eqtree"] = str(best_node.fitted_eqtree)
+                    record["complexity"] = best_node.complexity
+                    record["reward"] = best_node.reward
+                    record["r2"] = best_node.r2
+
+                    log['Eqtree'] = str(best_node.eqtree)
+                    log['Fitted eqtree'] = str(best_node.fitted_eqtree)
+                    log['Complexity'] = best_node.complexity
+                    log['Reward'] = f"{best_node.reward:.5f}"
+                    log['R2'] = f"{best_node.r2:.5f}"
+
+            _early_stop = (
+                (iter == self.n_iter)
+                or self.time_limit and (self.para_timer.time > self.time_limit)
+                or best_node and best_node.r2 >= 0.99999
+            )
+
+            if (
+                _update_best or _early_stop
+                or self.log_per_iter and (not iter % self.log_per_iter)
+                or self.log_per_sec and ('_last_log_time' not in locals() or time.time() - _last_log_time > self.log_per_sec)
+            ):
+                log["Speed"] = self.para_timer.to_str('time', 'speed', None)
+                log['Time Usage'] = self.named_timer.to_str('pace', 'time', 'by_time')
+                msg = " | ".join(f"\033[4m{k}\033[0m={v}" for k, v in log.items())
+                (self.logger.note if _update_best else self.logger.info)(msg)
+
+            self.records.append(record)
+            if self.save_path:
+                with open(self.save_path / 'records.jsonl', "a") as f:
+                    f.write(json.dumps(record) + "\n")
+
+            if _early_stop:
+                self.logger.note(f"Early stop at iter {iter}")
+                break
