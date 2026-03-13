@@ -271,12 +271,15 @@ class NDFormerMCTS(MCTS):
             config = NDFormerConfig()
         self.device = device
         self.ndformer_tokenizer = NDFormerTokenizer(config, self.variables)
-        self.ndformer_model = NDFormerModel(config)
+        self.ndformer_model = NDFormerModel(config, self.ndformer_tokenizer)
         checkpoint_data = torch.load(checkpoint, map_location=self.device, weights_only=False)
         self.ndformer_model.load_state_dict(checkpoint_data['model'])
         self.ndformer_model.to(self.device)
         self.ndformer_model.eval()
-        _logger.info(f"Loaded NDFormer from {checkpoint} on {self.device}")
+        _logger.info(
+            f"Loaded NDFormer from {checkpoint} on {self.device}, "
+            f"Model parameters: {sum(p.numel() for p in self.ndformer_model.parameters()):,}"
+        )
 
     def _prepare_data(self, X: Dict[str, np.ndarray], y: np.ndarray):
         """

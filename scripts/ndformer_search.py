@@ -83,37 +83,13 @@ def main(args):
     # 4. Generate synthetic data
     X = generate_data(variables, num_nodes, num_edges, args.n_samples)
     y_true = target_eq.eval(X, edge_list=edge_list, num_nodes=num_nodes)
-
     _logger.info(
         f"Target equation: {target_eq.to_str()}\n"
         f"Data shapes: {[(k, v.shape) for k, v in X.items()]}, y={y_true.shape}\n"
         f"Target y range: [{y_true.min():.4f}, {y_true.max():.4f}]"
     )
 
-    # 5. Initialize NDFormer model and load trained weights
-    config = NDFormerConfig()
-    device = args.device
-    tokenizer = NDFormerTokenizer(config, variables=variables)
-    model = NDFormerModel(config, tokenizer).to(device)
-
-    # Load trained checkpoint if provided
-    if args.ndformer_ckpt is not None:
-        ckpt_path = Path(args.ndformer_ckpt)
-        if not ckpt_path.exists():
-            raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
-        checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
-        model_state = checkpoint['model']
-        # Handle both 'model' dict and 'model_state_dict' key formats
-        if isinstance(model_state, dict) and 'model_state_dict' in model_state:
-            model_state = model_state['model_state_dict']
-        model.load_state_dict(model_state)
-        _logger.note(f"Loaded trained NDFormer from {ckpt_path}")
-
-    model.eval()  # Set to evaluation mode
-    _logger.info(f"Using device: {device}")
-    _logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
-
-    # 6. Initialize NDFormerMCTS
+    # Initialize NDFormerMCTS
     search = NDFormerMCTS(
         variables=variables,
         binary=args.binary_ops,
@@ -133,12 +109,13 @@ def main(args):
         c=1.41,
         eta=0.99,
         # NDFormer parameters
-        ndformer=model,
-        ndformer_tokenizer=tokenizer,
         ndformer_topk=8,
         ndformer_temperature=1.0,
         beam_width=args.beam_width,
     )
+    if args.ndformer_ckpt is not None:
+        config = NDFormerConfig()
+        search.load_ndformer(args.ndformer_ckpt, config=config, device=args.device)
     _logger.info(f"NDFormerMCTS initialized with operators: binary={args.binary_ops}, unary={args.unary_ops}")
 
     # 7. Run MCTS search
