@@ -135,3 +135,42 @@ python scripts/ndformer_search.py       # Run MCTS search with NDFormer
 - Train NDFormer model with new Empty-aware dataset
 - Test equation skeleton search (e.g., `Empty + Aggr(Empty)`)
 - Verify MCTS integration with Empty-aware policy prediction
+
+## Hugging Face Hub
+
+### Upload Model Checkpoints
+
+**Login** (only needed once):
+```shell
+conda activate ./venv
+hf auth login --token hf_XXX  # Get token from https://huggingface.co/settings/tokens
+```
+
+**Upload checkpoint**:
+```shell
+# Basic usage
+hf upload YuMeow/ndformer <local_file> <remote_name>
+
+# Examples
+hf upload YuMeow/ndformer logs/train/train/best.pth best.pth
+hf upload YuMeow/ndformer logs/train/train/epoch10.pth epoch10.pth
+```
+
+### Download Model Checkpoints
+
+**From NDFormerMCTS**:
+```python
+# From Hugging Face Hub (auto-cached to ~/.cache/huggingface/hub/)
+search.load_ndformer('hf://YuMeow/ndformer:best.pth')
+
+# Or without hf:// prefix
+search.load_ndformer('YuMeow/ndformer:best.pth')
+
+# Local file
+search.load_ndformer('/path/to/checkpoint.pth')
+```
+
+**CLI download**:
+```shell
+hf download YuMeow/ndformer best.pth
+```
