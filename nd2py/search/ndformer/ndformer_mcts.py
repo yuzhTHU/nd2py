@@ -365,42 +365,43 @@ class NDFormerMCTS(MCTS):
         """
         # Use beam search to find top-k leaf nodes
         # Start from root and expand beam width nodes at each level
-        beam = [root]
+        beam = [(root, [])]  # (node, path_from_root)
 
         for _ in range(self.max_len):  # Max depth limit
             next_beam = []
-            for node in beam:
+            for node, path in beam:
                 if node.children:
                     # Add all children to candidate pool
-                    next_beam.extend(node.children)
+                    for i, child in enumerate(node.children):
+                        next_beam.append((child, path + [i]))
                 else:
                     # This is a leaf node
-                    next_beam.append(node)
+                    next_beam.append((node, path))
 
             if not next_beam:
                 break
 
             # Score all candidates using PUCT
             scored = []
-            for node in next_beam:
+            for node, path in next_beam:
                 if node.children:
                     # Internal node: use max child PUCT as proxy
                     score = max(self.PUCT(child) for child in node.children)
                 else:
                     # Leaf node: use parent's PUCT toward this node
                     score = self.PUCT(node) if node.parent else 0
-                scored.append((score, node))
+                scored.append((score, node, path))
 
             # Keep top-k nodes
             scored.sort(key=lambda x: x[0], reverse=True)
-            beam = [node for _, node in scored[:self.beam_width]]
+            beam = [(node, path) for _, node, path in scored[:self.beam_width]]
 
             # If all nodes in beam are leaves, we're done
-            if all(not node.children for node in beam):
+            if all(not node.children for node, _ in beam):
                 break
 
         # Return only leaf nodes
-        return [node for node in beam if not node.children]
+        return [node for node, _ in beam if not node.children]
 
     def expand(self, nodes: List[Node], X: Dict[str, np.ndarray], y: np.ndarray) -> List[Node]:
         """
@@ -416,27 +417,24 @@ class NDFormerMCTS(MCTS):
             return []
 
         # Collect valid actions for each node
-        valid_actions_list = []
+        valid_actions_dict = {}
+        nodes_with_actions = []
         for node in nodes:
             valid_actions = list(self.iter_valid_action(node, shuffle=False))
-            if not valid_actions:
-                valid_actions_list.append([])
-            else:
-                valid_actions_list.append(valid_actions)
+            if valid_actions:
+                valid_actions_dict[node] = valid_actions
+                nodes_with_actions.append(node)
 
-        # Check if any node has valid actions
-        nodes_with_actions = [node for node, actions in zip(nodes, valid_actions_list) if actions]
         if not nodes_with_actions:
             return nodes
 
         # Get policy priors in batch
-        policy_priors_list = self._get_policy_prior(nodes_with_actions, [
-            actions for node, actions in zip(nodes_with_actions, valid_actions_list)
-        ])
+        actions_list = [valid_actions_dict[node] for node in nodes_with_actions]
+        policy_priors_list = self._get_policy_prior(nodes_with_actions, actions_list)
 
         # Create child nodes with priors
         selected_children = []
-        for node, valid_actions, policy_priors in zip(nodes_with_actions, valid_actions_list, policy_priors_list):
+        for node, valid_actions, policy_priors in zip(nodes_with_actions, actions_list, policy_priors_list):
             # Sort actions by prior and select top-k
             sorted_actions = sorted(valid_actions, key=lambda a: policy_priors[a], reverse=True)
             top_actions = sorted_actions[:self.ndformer_topk]

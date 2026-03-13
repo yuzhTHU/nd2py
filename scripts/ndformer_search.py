@@ -90,11 +90,26 @@ def main(args):
         f"Target y range: [{y_true.min():.4f}, {y_true.max():.4f}]"
     )
 
-    # 5. Initialize NDFormer model (random weights)
+    # 5. Initialize NDFormer model and load trained weights
     config = NDFormerConfig()
     device = args.device
     tokenizer = NDFormerTokenizer(config, variables=variables)
     model = NDFormerModel(config, tokenizer).to(device)
+
+    # Load trained checkpoint if provided
+    if args.ndformer_ckpt is not None:
+        ckpt_path = Path(args.ndformer_ckpt)
+        if not ckpt_path.exists():
+            raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
+        checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
+        model_state = checkpoint['model']
+        # Handle both 'model' dict and 'model_state_dict' key formats
+        if isinstance(model_state, dict) and 'model_state_dict' in model_state:
+            model_state = model_state['model_state_dict']
+        model.load_state_dict(model_state)
+        _logger.note(f"Loaded trained NDFormer from {ckpt_path}")
+
+    model.eval()  # Set to evaluation mode
     _logger.info(f"Using device: {device}")
     _logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
 
@@ -206,6 +221,7 @@ if __name__ == "__main__":
     # MCTS configuration
     parser.add_argument("--n_iter", type=int, default=50, help="Number of MCTS iterations")
     parser.add_argument('--beam_width', type=int, default=10, help="Beam width for batch expansion")
+    parser.add_argument('--ndformer_ckpt', type=str, default=None, help="Path to trained NDFormer checkpoint (e.g., logs/train/xxx/best.pth)")
     parser.add_argument('--required_memory_MB', type=int, default=5000, help="自动选择 GPU 时要求的最小剩余显存 (MB)")
 
     parser = nd.utils.add_minus_flags(parser) ## --key_name -> --key-name
