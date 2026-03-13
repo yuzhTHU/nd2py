@@ -4,6 +4,7 @@ NDFormer-guided MCTS for Symbolic Regression
 
 Uses a pre-trained NDFormer model to guide MCTS search via PUCK
 """
+import re
 import json
 import time
 import torch
@@ -252,7 +253,7 @@ class NDFormerMCTS(MCTS):
 
     def load_ndformer(
         self,
-        checkpoint: str,
+        checkpoint_path: str = 'hf://YuMeow/ndformer:best.pth',
         config: Optional[NDFormerConfig] = None,
         device: Optional[str] = None,
     ):
@@ -260,24 +261,37 @@ class NDFormerMCTS(MCTS):
         Load pre-trained NDFormer model and tokenizer
 
         Args:
-            checkpoint: Path to model checkpoint
+            checkpoint_path: Path to model checkpoint. Can be:
+                - Local file path: "/path/to/checkpoint.pth"
+                - HF shorthand: "YuMeow/ndformer:best.pth"
+                - HF full syntax: "hf://YuMeow/ndformer:best.pth"
             config: NDFormerConfig, if None will use default config
-            variables: List of variables for tokenizer, if None will use search variables
             device: Device to load model on, if None will auto-detect
         """
         if device is None:
             device = 'cuda' if torch.cuda.is_available() else 'cpu'
         if config is None:
             config = NDFormerConfig()
+
+        # Match HF syntax: "repo_id:filename" or "hf://repo_id:filename"
+        if re.match(r'(hf://)?[\w\-]+/[\w\-]+:.*', checkpoint_path):
+            from huggingface_hub import hf_hub_download
+            hf_path = checkpoint_path.removeprefix('hf://')
+            repo_id, filename = hf_path.split(":", 1)
+            checkpoint_path = hf_hub_download(repo_id=repo_id, filename=filename)
+            _logger.info(f"Downloaded {filename} from Hugging Face Hub {repo_id} into {checkpoint_path}")
+        else:
+            _logger.info(f"Loading local checkpoint: {checkpoint_path}")
+
         self.device = device
         self.ndformer_tokenizer = NDFormerTokenizer(config, self.variables)
         self.ndformer_model = NDFormerModel(config, self.ndformer_tokenizer)
-        checkpoint_data = torch.load(checkpoint, map_location=self.device, weights_only=False)
+        checkpoint_data = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
         self.ndformer_model.load_state_dict(checkpoint_data['model'])
         self.ndformer_model.to(self.device)
         self.ndformer_model.eval()
         _logger.info(
-            f"Loaded NDFormer from {checkpoint} on {self.device}, "
+            f"Loaded NDFormer from {checkpoint_path} on {self.device}, "
             f"Model parameters: {sum(p.numel() for p in self.ndformer_model.parameters()):,}"
         )
 
