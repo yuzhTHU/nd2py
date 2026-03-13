@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import logging
 from typing import List, Generator, Dict, Type
 from .llm_result import LLMResult

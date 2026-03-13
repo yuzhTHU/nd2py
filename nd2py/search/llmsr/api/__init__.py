@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from .llm_api import LLMAPI
 from .llm_result import LLMResult
 from .openai_api import OpenAIAPI

@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import random
 import numpy as np
 from scipy.stats import special_ortho_group

@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import logging
 from typing import Generator, Tuple, List, Dict
 from .llm_api import LLMAPI

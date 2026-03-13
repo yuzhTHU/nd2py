@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 class classproperty(object):
     """
     自定义的类属性装饰器。

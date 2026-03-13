@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from .core import *
 from . import dataset, generator, search, utils
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 """Utilities for llmsr module"""
 from collections.abc import Iterator
 from typing import Any
