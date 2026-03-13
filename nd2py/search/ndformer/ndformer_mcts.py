@@ -291,9 +291,14 @@ class NDFormerMCTS(MCTS):
         self._check_ndformer_loaded()
 
         # Encode current equation trees to tokens
+        # Strip Identity wrapper for encoding (Identity is just a sentinel for MCTS root)
         partial_eqs = []
         for state in states:
-            tokens, _, _ = self.ndformer_tokenizer.encode(state.eqtree, mode='token_id')
+            eqtree = state.eqtree
+            if isinstance(eqtree, nd.Identity):
+                # Strip Identity wrapper: copy Identity's operand to create a standalone partial tree
+                eqtree = eqtree.operands[0].copy()
+            tokens, _, _ = self.ndformer_tokenizer.encode(eqtree, mode='token_id')
             partial_eqs.append(torch.tensor(tokens, dtype=torch.long, device=self.device))
 
         # Pad sequences for batch processing
