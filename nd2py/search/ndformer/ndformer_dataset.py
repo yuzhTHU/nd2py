@@ -58,26 +58,23 @@ class NDFormerDataset(D.Dataset):
         num_edges = len(edge_list[0])
         sample_num = target.shape[0]
 
-        _logger.debug(f"Sampled eqtree: {eqtree.to_str(number_format='.2f')}")
-
         vars_dict = {var.name: var for var in eqtree.iter_preorder() if isinstance(var, nd.Variable)}
         data_node = np.zeros((sample_num, num_nodes, self.config.max_var_num + 1), dtype=np.float32)
         data_edge = np.zeros((sample_num, num_edges, self.config.max_var_num + 1), dtype=np.float32)
         data_scalar = np.zeros((sample_num, 1, self.config.max_var_num + 1), dtype=np.float32)
-        for var in eqtree.iter_preorder():
-            if isinstance(var, nd.Variable):
-                var_token = self.tokenizer.variable_mapping[var.name]
-                if var_token in self.tokenizer.node_var_tokens:
-                    i = self.tokenizer.node_var_tokens.index(var_token)
-                    data_node[:, :, i] = data_dict[var.name]
-                elif var_token in self.tokenizer.edge_var_tokens:
-                    i = self.tokenizer.edge_var_tokens.index(var_token)
-                    data_edge[:, :, i] = data_dict[var.name]
-                elif var_token in self.tokenizer.scalar_var_tokens:
-                    i = self.tokenizer.scalar_var_tokens.index(var_token)
-                    data_scalar[:, :, i] = data_dict[var.name]
-                else:
-                    raise ValueError(f'Unknown variable: {var.name}')
+        for var_name, var in vars_dict.items():
+            var_token = self.tokenizer.variable_mapping[var_name]
+            if var_token in self.tokenizer.node_var_tokens:
+                i = self.tokenizer.node_var_tokens.index(var_token)
+                data_node[:, :, i] = data_dict[var_name]
+            elif var_token in self.tokenizer.edge_var_tokens:
+                i = self.tokenizer.edge_var_tokens.index(var_token)
+                data_edge[:, :, i] = data_dict[var_name]
+            elif var_token in self.tokenizer.scalar_var_tokens:
+                i = self.tokenizer.scalar_var_tokens.index(var_token)
+                data_scalar[:, :, i] = data_dict[var_name]
+            else:
+                raise ValueError(f'Unknown variable: {var_name}')
 
         # 将公式结果写入最后一个特征通道
         if eqtree.nettype == 'node':
@@ -98,7 +95,6 @@ class NDFormerDataset(D.Dataset):
         # and use the symbol at the first Empty position as next_token
         partial_eqs = []
         next_tokens = []
-        # === 我修改了这一部分 ===
         eqtree_ = eqtree.copy()
         while not isinstance(eqtree_, nd.Empty):
             # 可选择被替换的节点：叶子节点 或 所有子节点都已是 Empty 的节点

@@ -24,7 +24,7 @@ def load_dataset(args, config, tokenizer):
     train_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(3, 6)), 
+        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(1, 6)), 
         topo_generator=nd.search.ndformer.NDFormerGraphGenerator(config),
         data_generator=nd.search.ndformer.NDFormerDataGenerator(config), 
         n_samples=480,
@@ -33,7 +33,7 @@ def load_dataset(args, config, tokenizer):
     eval_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(3, 6)), 
+        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(1, 6)), 
         topo_generator=nd.search.ndformer.NDFormerGraphGenerator(config),
         data_generator=nd.search.ndformer.NDFormerDataGenerator(config), 
         n_samples=480,
@@ -42,7 +42,7 @@ def load_dataset(args, config, tokenizer):
     test_dataset = NDFormerDataset(
         config=config, 
         tokenizer=tokenizer,
-        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(1, 3)), 
+        eqtree_generator=nd.search.ndformer.NDFormerEqtreeGenerator(tokenizer.variables, depth_range=(1, 6)), 
         topo_generator=nd.search.ndformer.NDFormerGraphGenerator(config),
         data_generator=nd.search.ndformer.NDFormerDataGenerator(config), 
         n_samples=480,
@@ -178,6 +178,7 @@ def main(args):
     for epoch in range(start_epoch, args.epochs+1):
         # 训练一个 epoch
         if epoch > 0:
+            train_timer = nd.utils.NamedTimer()
             torch.set_grad_enabled(True)
             model.train()
 
@@ -187,11 +188,11 @@ def main(args):
                     if isinstance(v, torch.Tensor):
                         batch_dict[k] = v.to(args.device)
                 torch.cuda.synchronize()
-                timer.add('Prepare-Data')
+                train_timer.add('Prepare-Data')
 
                 logits = model(batch_dict) # (B_seq, seq_len, n_words)
                 torch.cuda.synchronize()
-                timer.add('Forward')
+                train_timer.add('Forward')
                 
                 targets = batch_dict["next_tokens"] # (B_seq,)
                 loss = criterion(logits, targets)
@@ -201,12 +202,12 @@ def main(args):
                     torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
                 optimizer.step()
                 torch.cuda.synchronize()
-                timer.add('Backward')
+                train_timer.add('Backward')
                 
                 preds = logits.argmax(dim=-1) # (B_seq,)
                 records['loss'].extend([loss.item()] * targets.size(0))
                 records['correct'].extend((preds == targets).detach().cpu().tolist())
-                timer.add('Statistics')
+                train_timer.add('Statistics')
 
             train_records = {
                 'epoch': epoch,
@@ -214,12 +215,14 @@ def main(args):
                 'loss': sum(records['loss']) / len(records['loss']),
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
-            _logger.info(log_train_record(args, train_records, timer))
+            _logger.info(log_train_record(args, train_records, train_timer))
+            timer.add('Train')
         else:
             train_records = None
 
         # 测试一个 epoch
         if (epoch > 0 and not epoch % args.test_per_epoch) or (epoch == 0 and args.test_before_train):
+            eval_timer = nd.utils.NamedTimer()
             torch.set_grad_enabled(False)
             model.eval()
 
@@ -228,31 +231,33 @@ def main(args):
                 for k, v in batch_dict.items():
                     if isinstance(v, torch.Tensor):
                         batch_dict[k] = v.to(args.device)
-                timer.add('Prepare-Data')
-                logits = model(batch_dict, timer=timer) # (B_seq, n_words)
+                eval_timer.add('Prepare-Data')
+                logits = model(batch_dict, timer=eval_timer) # (B_seq, n_words)
                 targets = batch_dict["next_tokens"] # (B_seq,)
                 loss = criterion(logits, targets)
                 preds = logits.argmax(dim=-1) # (B_seq,)
                 records['loss'].extend([loss.item()] * targets.size(0))
                 records['correct'].extend((preds == targets).detach().cpu().tolist())
-                timer.add('Drop3')
+                eval_timer.add('Statistics')
 
-            test_records = {
+            eval_records = {
                 'epoch': epoch,
                 'phase': 'eval',
                 'loss': sum(records['loss']) / len(records['loss']),
                 'accuracy': sum(records['correct']) / len(records['correct'])
             }
-            _logger.info(log_eval_record(args, test_records, timer))
+            _logger.info(log_eval_record(args, eval_records, eval_timer))
+            timer.add('Eval')
         else:
-            test_records = None
+            eval_records = None
 
         # 保存日志
         with open(f"{args.save_path}/records.jsonl", "a") as f:
             if train_records is not None:
                 f.write(json.dumps(train_records) + "\n")
-            if test_records is not None:
-                f.write(json.dumps(test_records) + "\n")
+            if eval_records is not None:
+                f.write(json.dumps(eval_records) + "\n")
+            timer.add('save_records')
 
         # 保存加载点
         if '_last_checkpoint_time' not in locals() or (datetime.now() - _last_checkpoint_time).seconds > 300:
@@ -287,12 +292,12 @@ def main(args):
             timer.add('save_periodly')
 
         # 保存最佳模型
-        if test_records is not None:
+        if eval_records is not None:
             if (
                 best_records is None or
-                np.mean(test_records['loss']) < np.mean(best_records['loss'])
+                np.mean(eval_records['loss']) < np.mean(best_records['loss'])
             ):
-                best_records = test_records
+                best_records = eval_records
                 best_records['patience'] = args.patience
                 save_path = f"{args.save_path}/best.pth"
                 torch.save({
@@ -307,8 +312,9 @@ def main(args):
             else:
                 best_records['patience'] -= 1
                 _logger.info(
-                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [lightred]{best_records['patience']}/{args.patience}[reset].") +
-                    f"Best Record: {log_eval_record(args, test_records, timer)}"
+                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [#FFCCCC bold]{best_records['patience']}/{args.patience}[reset]. ") +
+                    nd.utils("[#FFCCCC bold]Current Best Eval Record[reset]: ") + \
+                    log_eval_record(args, best_records, timer)
                 )
             timer.add('save_best')
 
@@ -317,11 +323,9 @@ def main(args):
         reserved = torch.cuda.memory_reserved(args.device) / 1024 / 1024 / 1024
         peak = torch.cuda.max_memory_allocated(args.device) / 1024 / 1024 / 1024
         _logger.info(nd.utils.tag2ansi(
-            f"[pink][Epoch {epoch}/{args.epochs}] finished. "
+            f"[pink][Epoch {epoch}/{args.epochs}] finished.[reset] "
             f"Time Usage={timer.to_str()}, "
             f"CUDA ({args.device}) usage: allocated={allocated:.1f}GiB, peak={peak:.1f}GiB, reserved={reserved:.1f}GiB"
-            # f"adjust reserved memory from {reserved_raw/1024:.1f}GiB to {reserved_new/1024:.1f}GiB"
-            "[reset]"
         ))
 
         # 释放额外的显存
@@ -337,7 +341,7 @@ def main(args):
                     del tmp
                 reserved_new = torch.cuda.memory_reserved(args.device) / 1024 / 1024
             _logger.info(nd.utils.tag2ansi(
-                f"[brown]Adjust reserved memory from {reserved_raw/1024:.1f}GiB to {reserved_new/1024:.1f}GiB. [reset]"
+                f"[gray]Adjust reserved memory from {reserved_raw/1024:.1f}GiB to {reserved_new/1024:.1f}GiB.[reset]"
             ))
         
         # 提前终止
@@ -346,7 +350,10 @@ def main(args):
             break
 
     ## Log Best Result
-    _logger.info(log_eval_record(args, best_records, timer))
+    _logger.info(
+        nd.utils.tag2ansi("[red]Best Eval Results[reset]: ") +
+        log_eval_record(args, best_records, timer)
+    )
 
     ## Load Best Model
     best_path = Path(args.save_path) / 'best.pth'
@@ -356,9 +363,12 @@ def main(args):
             f"Best epoch in records.jsonl ({best_records['epoch']}) does not match that in best.pth ({checkpoint['epoch']})!"
         ))
     model.load_state_dict(checkpoint["model"])
-    _logger.note(f'Load best model from epoch {best_records["epoch"]} ({best_path}) for final test.')
+    _logger.note(nd.utils.tag2ansi(
+        f'Load best model from epoch {best_records["epoch"]} ([green]{best_path}[reset]) for final test.'
+    ))
 
     ## Test
+    test_timer = nd.utils.NamedTimer()
     torch.set_grad_enabled(False)
     model.eval()
     records = defaultdict(list)
@@ -366,20 +376,25 @@ def main(args):
         for k, v in batch_dict.items():
             if isinstance(v, torch.Tensor):
                 batch_dict[k] = v.to(args.device)
-        timer.add('Prepare-Data')
-        logits = model(batch_dict) # (B_seq, n_words)
+        test_timer.add('Prepare-Data')
+        logits = model(batch_dict, timer=test_timer) # (B_seq, n_words)
         targets = batch_dict["next_tokens"] # (B_seq,)
         loss = criterion(logits, targets)
         preds = logits.argmax(dim=-1) # (B_seq,)
         records['loss'].extend([loss.item()] * targets.size(0))
         records['correct'].extend((preds == targets).detach().cpu().tolist())
+        test_timer.add('Statistics')
+    timer.add('Test')
     test_records = {
         'epoch': best_records['epoch'],
         'phase': 'test',
         'loss': sum(records['loss']) / len(records['loss']),
         'accuracy': sum(records['correct']) / len(records['correct'])
     }
-    _logger.note(log_test_record(args, test_records, timer))
+    _logger.note(
+        nd.utils.tag2ansi("[red]Final Test Results[reset]: ") + 
+        log_test_record(args, test_records, test_timer)
+    )
 
     _logger.note(f"Training finished. Re-run: {args.command}")
 
