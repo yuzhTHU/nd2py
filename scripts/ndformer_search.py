@@ -135,7 +135,6 @@ def main(args):
         # NDFormer parameters
         ndformer=model,
         ndformer_tokenizer=tokenizer,
-        puct_c_puct=1.0,
         ndformer_topk=8,
         ndformer_temperature=1.0,
         beam_width=args.beam_width,

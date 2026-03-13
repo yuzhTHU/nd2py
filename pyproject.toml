@@ -58,9 +58,10 @@ dev = [
 minversion = "7.0"
 addopts = "-q"
 testpaths = ["tests"]
-# 新增这行，注册 slow 标记
+# 注册标记
 markers = [
     "slow: marks tests as slow (integration tests)",
+    "paid: marks tests as paid API calls (requires credits)",
 ]
 
 [tool.setuptools.packages.find]

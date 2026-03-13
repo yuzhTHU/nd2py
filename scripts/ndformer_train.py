@@ -312,8 +312,8 @@ def main(args):
             else:
                 best_records['patience'] -= 1
                 _logger.info(
-                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [#FFCCCC bold]{best_records['patience']}/{args.patience}[reset]. ") +
-                    nd.utils("[#FFCCCC bold]Current Best Eval Record[reset]: ") + \
+                    nd.utils.tag2ansi(f"No improvement in eval loss, patience decreased to [red bold]{best_records['patience']}/{args.patience}[reset]. ") +
+                    nd.utils.tag2ansi("[red bold]Current Best Eval Record[reset]: ") + \
                     log_eval_record(args, best_records, timer)
                 )
             timer.add('save_best')
@@ -324,7 +324,7 @@ def main(args):
         peak = torch.cuda.max_memory_allocated(args.device) / 1024 / 1024 / 1024
         _logger.info(nd.utils.tag2ansi(
             f"[pink][Epoch {epoch}/{args.epochs}] finished.[reset] "
-            f"Time Usage={timer.to_str()}, "
+            f"Time Usage={timer.to_str(mode='time')}, "
             f"CUDA ({args.device}) usage: allocated={allocated:.1f}GiB, peak={peak:.1f}GiB, reserved={reserved:.1f}GiB"
         ))
 

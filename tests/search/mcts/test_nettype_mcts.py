@@ -18,7 +18,7 @@ vars = {'x': np.random.rand(100, num_nodes), 'y': np.random.rand(100, num_edges)
     (dict(variables=[x,y], n_iter=100, binary=[nd.Add, nd.Mul], unary=[nd.Aggr, nd.Sour, nd.Targ], nettype='node', const_range=None), x + nd.aggr(nd.sour(x) * nd.targ(x))   ),
 ])
 def test_nettype_mcts(flags, node):
-    est = nd.MCTS(**flags, edge_list=edge_list, num_nodes=num_nodes, random_state=42)
+    est = nd.search.mcts.MCTS(**flags, edge_list=edge_list, num_nodes=num_nodes, random_state=42)
     X = vars
     y = node.eval(vars, edge_list=edge_list, num_nodes=num_nodes)
     est.fit(X, y)

@@ -79,21 +79,21 @@ class NDFormerModel(nn.Module):
         node_emb = self.embedder(data_node).flatten(-3, -1) # (SampleNum, TotalNodeNum, (max_var_num+1)*3*d_emb)
         edge_emb = self.embedder(data_edge).flatten(-3, -1) # (SampleNum, TotalEdgeNum, (max_var_num+1)*3*d_emb)
         scalar_emb = self.embedder(data_scalar).flatten(-3, -1) # (SampleNum, TotalBatchNum, (max_var_num+1)*3*d_emb)
-
         node_emb = self.linear(node_emb) # (SampleNum, TotalNodeNum, d_emb)
         edge_emb = self.linear(edge_emb) # (SampleNum, TotalEdgeNum, d_emb)
         scalar_emb = self.linear(scalar_emb) # (SampleNum, TotalBatchNum, d_emb)
-
+        if node_batch_idx is not None:
+            scalar_emb = scalar_emb[:, node_batch_idx, :] # (SampleNum, TotalNodeNum, d_emb)
         if timer is not None:
             torch.cuda.synchronize()
             timer.add('Data-Embedding')
-
-        gnn_out, _ = self.gnn_encoder(node_emb + scalar_emb[:, node_batch_idx, :], edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
+        # GNN Encode
+        gnn_out, _ = self.gnn_encoder(node_emb + scalar_emb, edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
         gnn_out = gnn_out.transpose(0, 1) # (SampleNum, TotalNodeNum, d_emb) -> (TotalNodeNum, SampleNum, d_emb)
         if timer is not None:
             torch.cuda.synchronize()
             timer.add('GNN-Encoder')
-
+        # To Dense Batch
         if node_batch_idx is not None:
             (
                 dense_nodes, # (BatchNum, MaxNodeNum, SampleNum, d_emb)
@@ -106,12 +106,12 @@ class NDFormerModel(nn.Module):
             dense_nodes = dense_nodes.flatten(1, 2) # (BatchNum, NodeNum*SampleNum, d_emb)
             valid_mask = valid_mask[..., None].expand(batch_num, node_num, sample_num).flatten(1, 2) # (BatchNum, NodeNum*SampleNum)
             src_key_padding_mask = ~valid_mask # padding_mask 中 True 代表需要被忽略的 Pad
-            if timer is not None:
-                torch.cuda.synchronize()
-                timer.add('To-Dense-Batch')
         else:
             dense_nodes = gnn_out.unsqueeze(0).flatten(1, 2) # (1, NodeNum*SampleNum, d_emb)
             src_key_padding_mask = None
+        if timer is not None:
+            torch.cuda.synchronize()
+            timer.add('To-Dense-Batch')
 
         memory = self.transformer_encoder(
             dense_nodes, # ([BatchNum,] NodeNum*SampleNum, d_emb)

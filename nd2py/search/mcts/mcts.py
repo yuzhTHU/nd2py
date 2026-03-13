@@ -4,7 +4,6 @@ import time
 import random
 import logging
 import sklearn
-import traceback
 import numpy as np
 import sympy as sp
 import nd2py as nd
@@ -15,6 +14,8 @@ from nd2py.utils import seed_all, Timer, NamedTimer, R2_score, ParallelTimer
 from ... import core as nd
 if TYPE_CHECKING:
     from ...core import *
+
+_logger = logging.getLogger(f'nd2py.{__name__}')
 
 
 def simplify(eq: Symbol):
@@ -50,9 +51,8 @@ class Node:
     def UCT(self, c) -> float:
         if self.parent is None:
             return float("inf")
-        return self.Q / (self.N + 1e-6) + c * np.sqrt(
-            np.log(self.parent.N) / (self.N + 1e-6)
-        )
+        exploration = np.sqrt(np.log(self.parent.N) / (self.N + 1e-6))
+        return self.Q / (self.N + 1e-6) + c * exploration
 
     def to_route(self, N=5, c=1.41) -> str:
         """
@@ -255,12 +255,11 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         self.c = c
         self.eta = eta
         if kwargs:
-            self.logger.warning(
+            _logger.warning(
                 "Unknown args: %s", ", ".join(f"{k}={v}" for k, v in kwargs.items())
             )
 
         self.records = []
-        self.logger = logging.getLogger(__name__)
         self.step_timer = Timer()
         self.view_timer = Timer()
         self.named_timer = NamedTimer()
@@ -364,7 +363,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
                 log["Speed"] = self.para_timer.to_str('time', 'speed', None)
                 log['Time Usage'] = self.named_timer.to_str('pace', 'time', 'by_time')
                 msg = " | ".join(f"\033[4m{k}\033[0m={v}" for k, v in log.items())
-                (self.logger.note if _update_best else self.logger.info)(msg)
+                (_logger.note if _update_best else _logger.info)(msg)
 
             self.records.append(record)
             if self.save_path:
@@ -372,7 +371,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
                     f.write(json.dumps(record) + "\n")
 
             if _early_stop:
-                self.logger.note(f"Early stop at iter {iter}")
+                _logger.note(f"Early stop at iter {iter}")
                 break
 
     def predict(
@@ -487,10 +486,9 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         for idx, action in enumerate(self.iter_valid_action(node, shuffle=True)):
             child = self.action(node, action)
             child.parent = node
-            child.xchild = len(node.children)
             node.children.append(child)
-            if self.child_num and idx + 1 >= self.child_num:
-                break
+            # if self.child_num and idx + 1 >= self.child_num:
+            #     break
         if not node.children:
             return node  # leaf node
         return random.choice(node.children)
@@ -519,7 +517,7 @@ class MCTS(sklearn.base.BaseEstimator, sklearn.base.RegressorMixin):
         if best is None:
             best = Node(nd.Number(0))
             self.set_reward(best, X, y)
-            self.logger.warning(
+            _logger.warning(
                 f"best is None after simualte({node}), set best to {best}"
             )
         return best.reward, best
