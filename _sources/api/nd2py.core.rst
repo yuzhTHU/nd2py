@@ -3,8 +3,8 @@ nd2py.core package
 
 .. automodule:: nd2py.core
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------
@@ -29,13 +29,13 @@ nd2py.core.base\_visitor module
 
 .. automodule:: nd2py.core.base_visitor
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 nd2py.core.symbol\_api module
 -----------------------------
 
 .. automodule:: nd2py.core.symbol_api
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

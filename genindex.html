@@ -15,35 +15,39 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=8bb39fa6"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -59,19 +63,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -79,7 +72,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -87,8 +79,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -106,7 +98,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -136,15 +129,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -156,7 +145,10 @@
 <li class="toctree-l2"><a class="reference internal" href="api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/nd2py.search.llmsr.api.html">nd2py.search.llmsr.api package</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
 </ul>
@@ -184,6 +176,7 @@
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/nd2py.search.e2esr.html">nd2py.search.e2esr package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
@@ -206,9 +199,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -258,7 +256,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -272,24 +270,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -354,7 +344,7 @@ document.write(`
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.number.Number.__init__">(nd2py.core.symbols.number.Number method)</a>
 </li>
-        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.__init__">(nd2py.core.symbols.symbols.Symbol method)</a>
+        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.__init__">(nd2py.core.symbols.symbol.Symbol method)</a>
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.__init__">(nd2py.core.symbols.variable.Variable method)</a>
 </li>
@@ -491,7 +481,7 @@ document.write(`
 </li>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.functions.Constant">Constant() (in module nd2py.core.symbols.functions)</a>
 </li>
-      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.copy">copy() (nd2py.core.symbols.symbols.Symbol method)</a>
+      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.copy">copy() (nd2py.core.symbols.symbol.Symbol method)</a>
 
       <ul>
         <li><a href="api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual.copy">(nd2py.search.gp.gp.Individual method)</a>
@@ -539,8 +529,6 @@ document.write(`
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.decompose">decompose() (in module nd2py.generator.eq.metaai_generator)</a>
-</li>
       <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.dist">dist() (nd2py.generator.eq.metaai_generator.MetaAIGenerator method)</a>
 </li>
   </ul></td>
@@ -607,6 +595,8 @@ document.write(`
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/nd2py.utils.html#nd2py.utils.timing.Timer.from_dict">from_dict() (nd2py.utils.timing.Timer class method)</a>
+</li>
       <li><a href="api/nd2py.core.converter.html#nd2py.core.converter.from_postorder.from_postorder">from_postorder() (in module nd2py.core.converter.from_postorder)</a>
 </li>
       <li><a href="api/nd2py.core.converter.html#nd2py.core.converter.from_preorder.from_preorder">from_preorder() (in module nd2py.core.converter.from_preorder)</a>
@@ -629,11 +619,9 @@ document.write(`
         <li><a href="api/nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator.generate_data">(nd2py.generator.data.subeq_generator.SubeqGenerator method)</a>
 </li>
       </ul></li>
-      <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_eqtree">generate_eqtree() (nd2py.generator.eq.metaai_generator.MetaAIGenerator method)</a>
+      <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_eqtree">generate_eqtree() (nd2py.generator.eq.snip_generator.SNIPGenerator method)</a>
 
       <ul>
-        <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_eqtree">(nd2py.generator.eq.snip_generator.SNIPGenerator method)</a>
-</li>
         <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.generate_eqtree">(nd2py.generator.eq.snip_generator.SNIPGenerator3 method)</a>
 </li>
       </ul></li>
@@ -727,9 +715,9 @@ document.write(`
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.get_nettype_range">(nd2py.core.symbols.variable.Variable method)</a>
 </li>
       </ul></li>
-      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_numbers">get_numbers() (nd2py.core.symbols.symbols.Symbol method)</a>
+      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.get_numbers">get_numbers() (nd2py.core.symbols.symbol.Symbol method)</a>
 </li>
-      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.get_parameters">get_parameters() (nd2py.core.symbols.symbols.Symbol method)</a>
+      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.get_parameters">get_parameters() (nd2py.core.symbols.symbol.Symbol method)</a>
 </li>
       <li><a href="api/nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.get_path">get_path() (nd2py.core.tree.tree_mixin.TreeMixin method)</a>
 </li>
@@ -807,11 +795,13 @@ document.write(`
 </li>
       <li><a href="api/nd2py.utils.html#nd2py.utils.attr_dict.AttrDict.load_yaml_str">load_yaml_str() (nd2py.utils.attr_dict.AttrDict class method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.operands.Log">Log (class in nd2py.core.symbols.operands)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.functions.log">log (in module nd2py.core.symbols.functions)</a>
+</li>
+      <li><a href="api/nd2py.utils.html#nd2py.utils.log_exception.log_exception">log_exception() (in module nd2py.utils.log_exception)</a>
 </li>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.operands.LogAbs">LogAbs (class in nd2py.core.symbols.operands)</a>
 </li>
@@ -838,7 +828,7 @@ document.write(`
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.operands.Sour.map_nettype">(nd2py.core.symbols.operands.Sour class method)</a>
 </li>
-        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.map_nettype">(nd2py.core.symbols.symbols.Symbol class method)</a>
+        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.map_nettype">(nd2py.core.symbols.symbol.Symbol class method)</a>
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.map_nettype">(nd2py.core.symbols.variable.Variable method)</a>
 </li>
@@ -925,7 +915,7 @@ document.write(`
 </li>
         <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.operands">nd2py.core.symbols.operands</a>
 </li>
-        <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.symbols">nd2py.core.symbols.symbols</a>
+        <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.symbol">nd2py.core.symbols.symbol</a>
 </li>
         <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.variable">nd2py.core.symbols.variable</a>
 </li>
@@ -985,6 +975,8 @@ document.write(`
 </li>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.fix_parser">nd2py.utils.fix_parser</a>
 </li>
+        <li><a href="api/nd2py.utils.html#module-nd2py.utils.log_exception">nd2py.utils.log_exception</a>
+</li>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.logger">nd2py.utils.logger</a>
 </li>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.metrics">nd2py.utils.metrics</a>
@@ -1000,8 +992,6 @@ document.write(`
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.render_markdown">nd2py.utils.render_markdown</a>
 </li>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.render_python">nd2py.utils.render_python</a>
-</li>
-        <li><a href="api/nd2py.utils.html#module-nd2py.utils.softmax">nd2py.utils.softmax</a>
 </li>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.tag2ansi">nd2py.utils.tag2ansi</a>
 </li>
@@ -1103,7 +1093,7 @@ document.write(`
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.operands.Tanh.n_operands">(nd2py.core.symbols.operands.Tanh attribute)</a>
 </li>
-        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.n_operands">(nd2py.core.symbols.symbols.Symbol attribute)</a>
+        <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.n_operands">(nd2py.core.symbols.symbol.Symbol attribute)</a>
 </li>
         <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.n_operands">(nd2py.core.symbols.variable.Variable attribute)</a>
 </li>
@@ -1341,10 +1331,10 @@ document.write(`
 </li>
       </ul></li>
       <li>
-    nd2py.core.symbols.symbols
+    nd2py.core.symbols.symbol
 
       <ul>
-        <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.symbols">module</a>
+        <li><a href="api/nd2py.core.symbols.html#module-nd2py.core.symbols.symbol">module</a>
 </li>
       </ul></li>
       <li>
@@ -1551,6 +1541,13 @@ document.write(`
 </li>
       </ul></li>
       <li>
+    nd2py.utils.log_exception
+
+      <ul>
+        <li><a href="api/nd2py.utils.html#module-nd2py.utils.log_exception">module</a>
+</li>
+      </ul></li>
+      <li>
     nd2py.utils.logger
 
       <ul>
@@ -1604,13 +1601,6 @@ document.write(`
 
       <ul>
         <li><a href="api/nd2py.utils.html#module-nd2py.utils.render_python">module</a>
-</li>
-      </ul></li>
-      <li>
-    nd2py.utils.softmax
-
-      <ul>
-        <li><a href="api/nd2py.utils.html#module-nd2py.utils.softmax">module</a>
 </li>
       </ul></li>
       <li>
@@ -1789,7 +1779,11 @@ document.write(`
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.sample">sample() (nd2py.generator.eq.gplearn_generator.GPLearnGenerator method)</a>
+
+      <ul>
+        <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.sample">(nd2py.generator.eq.metaai_generator.MetaAIGenerator method)</a>
 </li>
+      </ul></li>
       <li><a href="api/nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.scalar_to_edge">scalar_to_edge() (nd2py.core.transform.fix_nettype.FixNetType method)</a>
 </li>
       <li><a href="api/nd2py.core.transform.html#nd2py.core.transform.fix_nettype.FixNetType.scalar_to_node">scalar_to_node() (nd2py.core.transform.fix_nettype.FixNetType method)</a>
@@ -1812,7 +1806,7 @@ document.write(`
 </li>
       <li><a href="api/nd2py.core.context.html#nd2py.core.context.nettype_inference.set_nettype_inference">set_nettype_inference() (in module nd2py.core.context.nettype_inference)</a>
 </li>
-      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol.set_parameters">set_parameters() (nd2py.core.symbols.symbols.Symbol method)</a>
+      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.set_parameters">set_parameters() (nd2py.core.symbols.symbol.Symbol method)</a>
 </li>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.operands.Sigmoid">Sigmoid (class in nd2py.core.symbols.operands)</a>
 </li>
@@ -1832,10 +1826,10 @@ document.write(`
 </li>
       <li><a href="api/nd2py.utils.html#nd2py.utils.metrics.sMAPE_score">sMAPE_score() (in module nd2py.utils.metrics)</a>
 </li>
-      <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator">SNIPGenerator (class in nd2py.generator.eq.snip_generator)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator">SNIPGenerator (class in nd2py.generator.eq.snip_generator)</a>
+</li>
       <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2">SNIPGenerator2 (class in nd2py.generator.eq.snip_generator)</a>
 </li>
       <li><a href="api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3">SNIPGenerator3 (class in nd2py.generator.eq.snip_generator)</a>
@@ -1878,7 +1872,7 @@ document.write(`
 </li>
       <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.functions.sum">sum() (in module nd2py.core.symbols.functions)</a>
 </li>
-      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbols.Symbol">Symbol (class in nd2py.core.symbols.symbols)</a>
+      <li><a href="api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol">Symbol (class in nd2py.core.symbols.symbol)</a>
 </li>
       <li><a href="api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin">SymbolAPIMixin (class in nd2py.core.symbol_api)</a>
 </li>
@@ -1913,6 +1907,8 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/nd2py.utils.html#nd2py.utils.timing.Timer">Timer (class in nd2py.utils.timing)</a>
+</li>
+      <li><a href="api/nd2py.utils.html#nd2py.utils.timing.Timer.to_dict">to_dict() (nd2py.utils.timing.Timer method)</a>
 </li>
       <li><a href="api/nd2py.core.html#nd2py.core.symbol_api.SymbolAPIMixin.to_str">to_str() (nd2py.core.symbol_api.SymbolAPIMixin method)</a>
 
@@ -2447,8 +2443,8 @@ By YuMeow
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

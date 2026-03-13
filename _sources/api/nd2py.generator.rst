@@ -3,8 +3,8 @@ nd2py.generator package
 
 .. automodule:: nd2py.generator
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------
