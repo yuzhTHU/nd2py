@@ -126,6 +126,11 @@ class NDFormerModelConfig:
     """Number of transformer decoder layers for autoregressive generation."""
     use_aux_input: bool = True
     """Whether to use auxiliary inputs (parent/nettype information)."""
+    n_induction_points: int = 128
+    """
+    Number of induction points for Set Transformer encoder (FLASH-ANSR).
+    Only used when model='flash_ansr'.
+    """
 
     # =========================================================================
     # Model Capabilities

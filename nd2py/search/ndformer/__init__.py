@@ -5,3 +5,5 @@ from .ndformer_model import NDFormerModel
 from .ndformer_tokenizer import NDFormerTokenizer
 from .ndformer_generator import NDFormerEqtreeGenerator, NDFormerGraphGenerator, NDFormerDataGenerator
 from .ndformer_mcts import NDFormerMCTS
+
+from .ndformer_model_flash_ansr import FlashANSRNDFormer

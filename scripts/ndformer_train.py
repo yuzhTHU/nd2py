@@ -77,7 +77,7 @@ def load_dataset(args, config, tokenizer):
 
 
 def load_model(args, config, tokenizer, train_loader):
-    model = NDFormerModel(config, tokenizer).to(args.device)
+    model = NDFormerModel.create(config, tokenizer).to(args.device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=args.lr,
@@ -176,7 +176,7 @@ def log_test_record(args, test_records, timer):
 
 
 def main(args):
-    config = NDFormerModelConfig()
+    config = NDFormerModelConfig(model=args.model)
 
     ## Load Tokenizer
     tokenizer = NDFormerTokenizer(config, variables=None)
@@ -432,6 +432,9 @@ if __name__ == "__main__":
     parser.add_argument("--debug", action="store_true", help="是否开启调试模式（输出更多日志，不保存部分文件）")
     parser.add_argument("--num_workers", type=int, default=0, help="DataLoader 的工作线程数（0 表示主线程）")
     parser.add_argument("--minimize_gpu", action="store_true", default=False, help="是否在每个 epoch 结束后尽可能释放显存以供其他进程使用")
+
+    # 模型配置
+    parser.add_argument("--model", type=str, default="default", choices=["default", "flash_ansr"], help="模型架构类型")
 
     parser.add_argument('--n_samples', type=int, default=None, help="训练样本数量，默认为 None 表示无限生成样本")
     
