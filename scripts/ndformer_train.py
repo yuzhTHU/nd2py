@@ -15,7 +15,7 @@ from socket import gethostname
 from collections import defaultdict
 from argparse import ArgumentParser
 from setproctitle import setproctitle
-from nd2py.search.ndformer import NDFormerConfig, NDFormerDataset, NDFormerTokenizer, NDFormerModel
+from nd2py.search.ndformer import NDFormerModelConfig, NDFormerDataset, NDFormerTokenizer, NDFormerModel
 
 _logger = logging.getLogger("nd2py.ndformer_train")
 
@@ -76,19 +76,39 @@ def load_dataset(args, config, tokenizer):
     return train_loader, eval_loader, test_loader
 
 
-def load_model(args, config, tokenizer):
+def load_model(args, config, tokenizer, train_loader):
     model = NDFormerModel(config, tokenizer).to(args.device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    criterion = torch.nn.CrossEntropyLoss(ignore_index=tokenizer.pad_token_id)
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=args.lr,
+        weight_decay=0.01,
+        betas=(0.9, 0.98),
+        eps=1e-9
+    )
+    criterion = torch.nn.CrossEntropyLoss(
+        ignore_index=tokenizer.pad_token_id,
+        label_smoothing=0.1
+    )
+    scheduler = torch.optim.lr_scheduler.OneCycleLR( # Warmup + Cosine Decay
+        optimizer,
+        max_lr=args.lr,
+        epochs=args.epochs,
+        steps_per_epoch=len(train_loader),
+        pct_start=0.1,
+        anneal_strategy='cos',
+        cycle_momentum=False,
+    )
     _logger.note(
         "Model Parameters:\n"
         f"Trainable: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}\n"
-        f"Total: {sum(p.numel() for p in model.parameters()):,}"
+        f"Total: {sum(p.numel() for p in model.parameters()):,}\n"
+        f"Optimizer: AdamW(lr={args.lr}, weight_decay=0.01, betas=(0.9, 0.98))\n"
+        f"Scheduler: OneCycleLR(max_lr={args.lr}, pct_start=0.1, warmup epochs={int(args.epochs * 0.1)})"
     )
-    return model,optimizer,criterion
+    return model, optimizer, criterion, scheduler
 
 
-def reload_checkpoint(args, model, optimizer):
+def reload_checkpoint(args, model, optimizer, scheduler):
     if args.force_new_experiment:
         checkpoint_path = None
     elif args.reload_checkpoint is not None:
@@ -119,19 +139,15 @@ def reload_checkpoint(args, model, optimizer):
                         f"saved_args={val1} vs. current_args={val2}"
                     )
         model.load_state_dict(checkpoint["model"])
+        if "optimizer" in checkpoint: optimizer.load_state_dict(checkpoint["optimizer"])
+        else: _logger.warning("Optimizer state not found in checkpoint, optimizer re-initialized.")
+        if "scheduler" in checkpoint: scheduler.load_state_dict(checkpoint["scheduler"])
+        else: _logger.warning("Scheduler state not found in checkpoint, scheduler re-initialized.")
+        if "timer" in checkpoint: timer = nd.utils.NamedTimer.from_dict(checkpoint["timer"])
+        else: timer = nd.utils.NamedTimer()
+        if "best_records" in checkpoint: best_records = checkpoint["best_records"]
+        else: best_records = None
         _logger.note(nd.utils.tag2ansi(f"Checkpoint loaded from [underline green]{checkpoint_path}[reset], resume from epoch [underline green]{start_epoch}[reset]."))
-        if "optimizer" in checkpoint:
-            optimizer.load_state_dict(checkpoint["optimizer"])
-        else:
-            _logger.warning("Optimizer state not found in checkpoint, optimizer re-initialized.")
-        if "timer" in checkpoint:
-            timer = nd.utils.NamedTimer.from_dict(checkpoint["timer"])
-        else:
-            timer = nd.utils.NamedTimer()
-        if "best_records" in checkpoint:
-            best_records = checkpoint["best_records"]
-        else:
-            best_records = None 
     else:
         start_epoch = 0
         timer = nd.utils.NamedTimer()
@@ -160,7 +176,7 @@ def log_test_record(args, test_records, timer):
 
 
 def main(args):
-    config = NDFormerConfig()
+    config = NDFormerModelConfig()
 
     ## Load Tokenizer
     tokenizer = NDFormerTokenizer(config, variables=None)
@@ -169,10 +185,10 @@ def main(args):
     train_loader, eval_loader, test_loader = load_dataset(args, config, tokenizer)
 
     ## Load Model
-    model, optimizer, criterion = load_model(args, config, tokenizer)
+    model, optimizer, criterion, scheduler = load_model(args, config, tokenizer, train_loader)
 
     ## Reload Checkpoint
-    start_epoch, timer, best_records = reload_checkpoint(args, model, optimizer)
+    start_epoch, timer, best_records = reload_checkpoint(args, model, optimizer, scheduler)
 
     ## Train
     for epoch in range(start_epoch, args.epochs+1):
@@ -193,17 +209,17 @@ def main(args):
                 logits = model(batch_dict) # (B_seq, seq_len, n_words)
                 torch.cuda.synchronize()
                 train_timer.add('Forward')
-                
+
                 targets = batch_dict["next_tokens"] # (B_seq,)
                 loss = criterion(logits, targets)
                 optimizer.zero_grad()
                 loss.backward()
-                if True:
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
                 optimizer.step()
+                scheduler.step()  # OneCycleLR 需要在每个 batch 后更新
                 torch.cuda.synchronize()
                 train_timer.add('Backward')
-                
+
                 preds = logits.argmax(dim=-1) # (B_seq,)
                 records['loss'].extend([loss.item()] * targets.size(0))
                 records['correct'].extend((preds == targets).detach().cpu().tolist())
@@ -267,8 +283,10 @@ def main(args):
             torch.save({
                 "epoch": epoch,
                 "args": vars(args),
+                "config": vars(config),
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
                 "timer": timer.to_dict(),
                 "best_records": best_records,
             }, save_path)
@@ -283,8 +301,10 @@ def main(args):
             torch.save({
                 "epoch": epoch,
                 "args": vars(args),
+                "config": vars(config),
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
                 "timer": timer.to_dict(),
                 "best_records": best_records,
             }, save_path)
@@ -303,8 +323,10 @@ def main(args):
                 torch.save({
                     "epoch": epoch,
                     "args": vars(args),
+                    "config": vars(config),
                     "model": model.state_dict(),
                     "optimizer": optimizer.state_dict(),
+                    "scheduler": scheduler.state_dict(),
                     "timer": timer.to_dict(),
                     "best_records": best_records,
                 }, save_path)

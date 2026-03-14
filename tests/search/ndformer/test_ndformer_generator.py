@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 import nd2py as nd
 from nd2py.search.ndformer import (
-    NDFormerConfig,
+    NDFormerModelConfig,
     NDFormerEqtreeGenerator,
     NDFormerGraphGenerator,
     NDFormerDataGenerator,
@@ -22,7 +22,7 @@ class TestNDFormerEqtreeGenerator:
 
     def test_init(self):
         """测试初始化参数"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         variables = [x, y, z]
         generator = NDFormerEqtreeGenerator(variables=variables)
 
@@ -115,7 +115,7 @@ class TestNDFormerGraphGenerator:
 
     def test_init(self):
         """测试初始化参数"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerGraphGenerator(config)
 
         assert generator.min_node_num == config.min_node_num
@@ -124,7 +124,7 @@ class TestNDFormerGraphGenerator:
     @pytest.mark.parametrize("topology", ['ER', 'BA', 'Complete'])
     def test_sample_topologies(self, topology):
         """测试不同图拓扑结构的生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         config.min_node_num = 5
         config.max_node_num = 10
         generator = NDFormerGraphGenerator(config)
@@ -146,7 +146,7 @@ class TestNDFormerGraphGenerator:
 
     def test_er_graph_parameters(self):
         """测试 ER 图参数"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerGraphGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -160,7 +160,7 @@ class TestNDFormerGraphGenerator:
 
     def test_ba_graph_parameters(self):
         """测试 BA 图参数"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerGraphGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -172,7 +172,7 @@ class TestNDFormerGraphGenerator:
 
     def test_complete_graph(self):
         """测试完全图生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerGraphGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -189,7 +189,7 @@ class TestNDFormerDataGenerator:
 
     def test_init(self):
         """测试初始化参数"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerDataGenerator(config)
 
         assert generator.min_var_val == config.min_var_val
@@ -197,7 +197,7 @@ class TestNDFormerDataGenerator:
 
     def test_sample_uniform_data(self):
         """测试均匀分布数据生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerDataGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -222,7 +222,7 @@ class TestNDFormerDataGenerator:
 
     def test_sample_gaussian_data(self):
         """测试高斯分布数据生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerDataGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -244,7 +244,7 @@ class TestNDFormerDataGenerator:
 
     def test_sample_gmm_data(self):
         """测试 GMM 数据生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerDataGenerator(config)
         rng = np.random.default_rng(42)
 
@@ -267,7 +267,7 @@ class TestNDFormerDataGenerator:
 
     def test_sample_with_node_variables(self):
         """测试包含节点变量的数据生成"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         config.min_node_num = 5
         config.max_node_num = 10
         generator = NDFormerDataGenerator(config)
@@ -295,7 +295,7 @@ class TestNDFormerDataGenerator:
 
     def test_invalid_dist_type(self):
         """测试无效分布类型的错误处理"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         generator = NDFormerDataGenerator(config)
         rng = np.random.default_rng(42)
 

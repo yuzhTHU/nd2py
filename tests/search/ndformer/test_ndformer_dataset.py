@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import nd2py as nd
 from nd2py.search.ndformer import (
-    NDFormerConfig,
+    NDFormerModelConfig,
     NDFormerTokenizer,
     NDFormerDataset,
     NDFormerEqtreeGenerator,
@@ -24,7 +24,7 @@ class TestNDFormerDataset:
     @pytest.fixture
     def config(self):
         """创建配置"""
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         config.min_node_num = 3
         config.max_node_num = 5
         return config
@@ -250,7 +250,7 @@ class TestEmptyNodeTrainingData:
 
     @pytest.fixture
     def config(self):
-        config = NDFormerConfig()
+        config = NDFormerModelConfig()
         config.min_node_num = 3
         config.max_node_num = 5
         return config

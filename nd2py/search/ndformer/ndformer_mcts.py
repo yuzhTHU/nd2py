@@ -13,11 +13,12 @@ import logging
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
+from dataclasses import fields
 from collections import defaultdict
 from typing import List, Dict, Tuple, Optional, Literal
 from ..mcts import MCTS, Node
 from ... import core as nd
-from .ndformer_config import NDFormerConfig
+from .ndformer_config import NDFormerModelConfig
 from .ndformer_tokenizer import NDFormerTokenizer
 from .ndformer_model import NDFormerModel
 
@@ -43,12 +44,108 @@ class NDFormerNode(Node):
 
 class NDFormerMCTS(MCTS):
     """
-    NDFormer-guided MCTS using PUCT for action selection
+    NDFormer-guided Monte Carlo Tree Search for Symbolic Regression.
 
-    The PUCT formula:
+    This class extends MCTS by using a pre-trained NDFormer model to provide
+    prior probabilities for action selection via the PUCT algorithm:
+
         PUCT(s, a) = Q(s, a) + c_puct * P(s, a) * sqrt(sum(N(s, b)) / (1 + N(s, a)))
 
-    where P(s, a) is the prior probability from NDFormer
+    where P(s, a) is the prior probability from NDFormer's policy head.
+
+    The pre-trained model is treated as a black box - it provides policy priors
+    but does not control search behavior. Search is controlled by parameters
+    like `beam_width`, `ndformer_temperature`, `c`, and `eta`.
+
+    Usage Examples
+    --------------
+
+    # Load pre-trained model from Hugging Face Hub
+    search = NDFormerMCTS(variables=[x, y])
+    search.load_ndformer('hf://YuMeow/ndformer:best.pth')
+    search.fit(X, y)
+
+    # Or pass model directly
+    model = NDFormerModel(config)
+    model.load_state_dict(checkpoint)
+    tokenizer = NDFormerTokenizer(config, [x, y])
+    search = NDFormerMCTS(
+        variables=[x, y],
+        ndformer=model,
+        tokenizer=tokenizer,
+        beam_width=20,
+        c=1.5,
+    )
+    search.fit(X, y)
+
+    Parameters
+    ----------
+    variables : List[nd.Variable]
+        Input variables for symbolic regression.
+    binary : List[nd.Symbol], optional
+        Binary operators for search. Default: [Add, Sub, Mul, Div, Max, Min].
+    unary : List[nd.Symbol], optional
+        Unary operators for search. Default: [Sqrt, Log, Abs, Neg, Inv, Sin, Cos, Tan].
+    max_params : int, optional
+        Maximum number of numeric parameters in expressions. Default: 2.
+    const_range : Tuple[float, float], optional
+        Range for constant initialization. Default: (-1.0, 1.0).
+    depth_range : Tuple[int, int], optional
+        Depth range for generated expressions. Default: (2, 6).
+    nettype : Literal["node", "edge", "scalar"], optional
+        Network type for the search. Default: "scalar".
+    log_per_iter : int, optional
+        Log every N iterations. Default: inf.
+    log_per_sec : float, optional
+        Log every N seconds. Default: inf.
+    log_detailed_speed : bool, optional
+        Log detailed timing information. Default: False.
+    save_path : str, optional
+        Directory to save search records. Default: None.
+    random_state : int, optional
+        Random seed for reproducibility. Default: None.
+    n_iter : int, optional
+        Maximum number of MCTS iterations. Default: 100.
+    use_tqdm : bool, optional
+        Show progress bar. Default: False.
+    edge_list : Tuple[List[int], List[int]], optional
+        Graph edge list for network operators. Default: None.
+    num_nodes : int, optional
+        Number of nodes in the graph. Default: None.
+    time_limit : float, optional
+        Maximum search time in seconds. Default: None.
+    sample_num : int, optional
+        Number of samples for evaluation. Default: 300.
+    keep_vars : bool, optional
+        Keep original variable names. Default: False.
+    normalize_y : bool, optional
+        Normalize target values. Default: False.
+    normalize_X : bool, optional
+        Normalize input features. Default: False.
+    remove_abnormal : bool, optional
+        Remove abnormal samples. Default: False.
+    train_eval_split : float, optional
+        Train/eval data split ratio. Default: 1.0.
+    child_num : int, optional
+        Maximum children per expansion. Default: 50.
+    n_playout : int, optional
+        Number of playouts per simulation. Default: 100.
+    d_playout : int, optional
+        Maximum depth per playout. Default: 10.
+    max_len : int, optional
+        Maximum expression length during search. Default: 30.
+    c : float, optional
+        PUCT exploration constant. Default: 1.41.
+    eta : float, optional
+        Complexity penalty factor for reward. Default: 0.999.
+    ndformer : NDFormerModel, optional
+        Pre-trained NDFormer model. Default: None.
+    tokenizer : NDFormerTokenizer, optional
+        Tokenizer for the model. Default: None.
+    ndformer_temperature : float, optional
+        Temperature for policy softmax. Default: 1.0.
+    beam_width : int, optional
+        Beam size for leaf selection. Default: 10.
     """
 
     def __init__(
@@ -86,8 +183,7 @@ class NDFormerMCTS(MCTS):
 
         # NDFormer parameters
         ndformer: Optional[NDFormerModel] = None,
-        ndformer_tokenizer: Optional[NDFormerTokenizer] = None,
-        ndformer_topk: int = 10,
+        tokenizer: Optional[NDFormerTokenizer] = None,
         ndformer_temperature: float = 1.0,
         beam_width: int = 10,  # Number of leaf nodes to expand in batch
         **kwargs,
@@ -127,13 +223,10 @@ class NDFormerMCTS(MCTS):
 
         # NDFormer parameters
         self.ndformer_model = ndformer
-        self.ndformer_tokenizer = ndformer_tokenizer
-        self.ndformer_topk = ndformer_topk
+        self.tokenizer = tokenizer
         self.ndformer_temperature = ndformer_temperature
         self.beam_width = beam_width
         self.device = None
-
-        # Cached memory from encoder (per graph topology)
         self._memory = None
         self._memory_mask = None
 
@@ -151,7 +244,7 @@ class NDFormerMCTS(MCTS):
         First encodes the graph data and caches memory, then runs MCTS search
         with beam search based select and batch expand for efficiency
         """
-        if self.ndformer_model is None or self.ndformer_tokenizer is None:
+        if self.ndformer_model is None or self.tokenizer is None:
             raise ValueError(
                 "NDFormer not loaded. Call __init__ with ndformer parameter "
                 "or call load_ndformer(checkpoint) before fit()."
@@ -251,27 +344,23 @@ class NDFormerMCTS(MCTS):
                 _logger.note(f"Early stop at iter {iter}")
                 break
 
-    def load_ndformer(
-        self,
-        checkpoint_path: str = 'hf://YuMeow/ndformer:best.pth',
-        config: Optional[NDFormerConfig] = None,
-        device: Optional[str] = None,
-    ):
+    def load_ndformer(self, checkpoint_path='hf://YuMeow/ndformer:best.pth', device=None):
         """
-        Load pre-trained NDFormer model and tokenizer
+        Load pre-trained NDFormer model and tokenizer from checkpoint.
+
+        The model config is automatically loaded from the checkpoint.
+        Users do not need to provide a config manually.
 
         Args:
             checkpoint_path: Path to model checkpoint. Can be:
                 - Local file path: "/path/to/checkpoint.pth"
                 - HF shorthand: "YuMeow/ndformer:best.pth"
                 - HF full syntax: "hf://YuMeow/ndformer:best.pth"
-            config: NDFormerConfig, if None will use default config
-            device: Device to load model on, if None will auto-detect
+            device: Device to load model on. If None, auto-detects CUDA/CPU.
         """
         if device is None:
             device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        if config is None:
-            config = NDFormerConfig()
+        self.device = device
 
         # Match HF syntax: "repo_id:filename" or "hf://repo_id:filename"
         if re.match(r'(hf://)?[\w\-]+/[\w\-]+:.*', checkpoint_path):
@@ -283,17 +372,88 @@ class NDFormerMCTS(MCTS):
         else:
             _logger.info(f"Loading local checkpoint: {checkpoint_path}")
 
-        self.device = device
-        self.ndformer_tokenizer = NDFormerTokenizer(config, self.variables)
-        self.ndformer_model = NDFormerModel(config, self.ndformer_tokenizer)
-        checkpoint_data = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
-        self.ndformer_model.load_state_dict(checkpoint_data['model'])
+        checkpoint = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
+        config = self._load_model_config(checkpoint['config'])
+        self.tokenizer = NDFormerTokenizer(config, self.variables)
+        self.ndformer_model = NDFormerModel(config, self.tokenizer)
+        self.ndformer_model.load_state_dict(checkpoint['model'])
         self.ndformer_model.to(self.device)
         self.ndformer_model.eval()
+
         _logger.info(
             f"Loaded NDFormer from {checkpoint_path} on {self.device}, "
-            f"Model parameters: {sum(p.numel() for p in self.ndformer_model.parameters()):,}"
+            f"Model parameters: {sum(p.numel() for p in self.ndformer_model.parameters()):,}\n"
+            f"Model capabilities: max_seq_len={config.max_seq_len}, "
+            f"max_var_num={config.max_var_num}, "
+            f"vocab_size={len(self.tokenizer.vocab):,} tokens"
         )
+        self._validate_model_capabilities(config)
+
+    def _load_model_config(self, saved_config: dict) -> NDFormerModelConfig:
+        """
+        Load config from saved dict with backward compatibility handling.
+
+        - Missing fields use current default values (with warning)
+        - Extra fields (from newer versions) are ignored
+        """
+        current_defaults = {f.name: f.default for f in fields(NDFormerModelConfig)}
+        merged = {**current_defaults, **saved_config}
+        # Find missing fields (exist in current but not in saved)
+        if (missing_keys := set(current_defaults.keys()) - set(saved_config.keys())):
+            _logger.warning(
+                f"Config from checkpoint is missing {len(missing_keys)} field(s): {missing_keys}. "
+                f"Using current default values. This may indicate a version mismatch."
+            )
+        # Filter out fields that not exist in current version
+        if (extra_keys := set(saved_config.keys()) - set(current_defaults.keys())):
+            _logger.info(
+                f"Ignoring {len(extra_keys)} extra field(s) from checkpoint: {extra_keys}. "
+                f"This may indicate a version mismatch."
+            )
+        return NDFormerModelConfig(**{k: v for k, v in merged.items() if k in current_defaults})
+
+    def _validate_model_capabilities(self, config):
+        """
+        Validate that search settings are within the model's capabilities.
+
+        This method checks:
+        1. max_len (search) vs max_seq_len (model capability)
+        2. Operator set compatibility
+        3. Variable count vs max_var_num
+
+        Logs warnings if settings exceed model capabilities.
+        """
+        # Check 1: max_len vs max_seq_len
+        if self.max_len > config.max_seq_len:
+            _logger.warning(
+                f"Search max_len={self.max_len} exceeds model's max_seq_len={config.max_seq_len}. "
+                f"Consider reducing max_len or results may be unreliable."
+            )
+
+        # Check 2: Operator compatibility
+        search_operators = set(op.__name__ for op in self.binary + self.unary)
+        if (missing_operators := search_operators - set(config.operands)):
+            _logger.warning(
+                f"Operators {missing_operators} are in search set but not in model vocabulary. "
+                f"Model may not handle these operators correctly."
+            )
+
+        # Check 3: Variable count
+        if (n_node_vars := sum(1 for v in self.variables if v.nettype == 'node')) > config.max_var_num:
+            _logger.warning(
+                f"Node variables ({n_node_vars}) exceed model's max_var_num={config.max_var_num}. "
+                f"Some variables may not be recognized."
+            )
+        if (n_edge_vars := sum(1 for v in self.variables if v.nettype == 'edge')) > config.max_var_num:
+            _logger.warning(
+                f"Edge variables ({n_edge_vars}) exceed model's max_var_num={config.max_var_num}. "
+                f"Some variables may not be recognized."
+            )
+        if (n_scalar_vars := sum(1 for v in self.variables if v.nettype == 'scalar')) > config.max_var_num:
+            _logger.warning(
+                f"Scalar variables ({n_scalar_vars}) exceed model's max_var_num={config.max_var_num}. "
+                f"Some variables may not be recognized."
+            )
 
     def _prepare_data(self, X: Dict[str, np.ndarray], y: np.ndarray):
         """
@@ -305,7 +465,7 @@ class NDFormerMCTS(MCTS):
             data_scalar: (sample_num, 1, max_var_num+1, 3)
         """
         sample_num = y.shape[0]
-        max_var_num = self.ndformer_tokenizer.config.max_var_num
+        max_var_num = self.tokenizer.config.max_var_num
 
         if self.num_nodes is None:
             num_nodes = 1
@@ -318,15 +478,15 @@ class NDFormerMCTS(MCTS):
         data_edge = np.zeros((sample_num, num_edges, max_var_num + 1), dtype=np.float32)
         data_scalar = np.zeros((sample_num, 1, max_var_num + 1), dtype=np.float32)
         for var in self.variables:
-            var_token = self.ndformer_tokenizer.variable_mapping[var.name]
+            var_token = self.tokenizer.variable_mapping[var.name]
             if var.nettype == 'node':
-                i = self.ndformer_tokenizer.node_var_tokens.index(var_token)
+                i = self.tokenizer.node_var_tokens.index(var_token)
                 data_node[:, :, i] = X[var.name]
             elif var.nettype == 'edge':
-                i = self.ndformer_tokenizer.edge_var_tokens.index(var_token)
+                i = self.tokenizer.edge_var_tokens.index(var_token)
                 data_edge[:, :, i] = X[var.name]
             elif var.nettype == 'scalar':
-                i = self.ndformer_tokenizer.scalar_var_tokens.index(var_token)
+                i = self.tokenizer.scalar_var_tokens.index(var_token)
                 data_scalar[:, :, i] = X[var.name]
             else:
                 raise ValueError(f"Unsupported nettype: {var.name}.nettype == {var.nettype}")
@@ -342,9 +502,9 @@ class NDFormerMCTS(MCTS):
             raise ValueError(f'Unsupported nettype: self.nettype == {self.nettype}')
 
         # Encode to token IDs
-        data_node = self.ndformer_tokenizer.encode_array(data_node, mode='token_id')
-        data_edge = self.ndformer_tokenizer.encode_array(data_edge, mode='token_id')
-        data_scalar = self.ndformer_tokenizer.encode_array(data_scalar, mode='token_id')
+        data_node = self.tokenizer.encode_array(data_node, mode='token_id')
+        data_edge = self.tokenizer.encode_array(data_edge, mode='token_id')
+        data_scalar = self.tokenizer.encode_array(data_scalar, mode='token_id')
         return data_node, data_edge, data_scalar
 
     def encode_data(self, X: Dict[str, np.ndarray], y: np.ndarray):
@@ -383,10 +543,10 @@ class NDFormerMCTS(MCTS):
             eqtree = node.eqtree
             if isinstance(eqtree, nd.Identity):
                 eqtree = eqtree.operands[0].copy() # Strip Identity wrapper
-            tokens, _, _ = self.ndformer_tokenizer.encode(eqtree, mode='token_id')
+            tokens, _, _ = self.tokenizer.encode(eqtree, mode='token_id')
             partial_eqs.append(torch.tensor(tokens, dtype=torch.long, device=self.device))
         padded_eqs = torch.nn.utils.rnn.pad_sequence(
-            partial_eqs, batch_first=True, padding_value=self.ndformer_tokenizer.pad_token_id
+            partial_eqs, batch_first=True, padding_value=self.tokenizer.pad_token_id
         ) # (batch_size, max_seq_len)
 
         # Get policy from decoder (predict next token)
@@ -403,8 +563,8 @@ class NDFormerMCTS(MCTS):
         # Map token probabilities to action probabilities for each node's children
         for node_idx, (node, actions) in enumerate(actions_dict.items()):
             for child_idx, (_, op) in enumerate(actions):
-                if (op_token := type(op).__name__) in self.ndformer_tokenizer.token2id:
-                    token_id = self.ndformer_tokenizer.token2id[op_token]
+                if (op_token := type(op).__name__) in self.tokenizer.token2id:
+                    token_id = self.tokenizer.token2id[op_token]
                     policy_prior = probs[node_idx, token_id].item()
                 else:
                     policy_prior = 1e-6

@@ -10,7 +10,7 @@ import torch.utils.data as D
 from typing import Optional
 from torch_geometric.data import Batch
 from ... import core as nd
-from .ndformer_config import NDFormerConfig
+from .ndformer_config import NDFormerModelConfig
 from .ndformer_generator import NDFormerEqtreeGenerator, NDFormerGraphGenerator, NDFormerDataGenerator
 from .ndformer_tokenizer import NDFormerTokenizer
 
@@ -30,7 +30,7 @@ class InfiniteSampler(D.Sampler):
 class NDFormerDataset(D.Dataset):
     def __init__(
         self,
-        config: NDFormerConfig,
+        config: NDFormerModelConfig,
         eqtree_generator: NDFormerEqtreeGenerator,
         topo_generator: NDFormerGraphGenerator,
         data_generator: NDFormerDataGenerator,

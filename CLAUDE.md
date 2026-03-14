@@ -112,7 +112,7 @@ result = est.predict(X)
 
 **Usage**:
 ```python
-from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
+from nd2py.search.ndformer import NDFormerMCTS, NDFormerModelConfig, NDFormerModel, NDFormerTokenizer
 
 # Option 1: Pass NDFormer directly
 model = NDFormerModel(config)

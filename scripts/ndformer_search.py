@@ -19,7 +19,7 @@ from pathlib import Path
 from socket import gethostname
 from argparse import ArgumentParser
 from setproctitle import setproctitle
-from nd2py.search.ndformer import NDFormerMCTS, NDFormerConfig, NDFormerModel, NDFormerTokenizer
+from nd2py.search.ndformer import NDFormerMCTS, NDFormerModelConfig, NDFormerModel, NDFormerTokenizer
 
 _logger = logging.getLogger("nd2py.ndformer_search")
 
@@ -114,8 +114,7 @@ def main(args):
         beam_width=args.beam_width,
     )
     if args.ndformer_ckpt is not None:
-        config = NDFormerConfig()
-        search.load_ndformer(args.ndformer_ckpt, config=config, device=args.device)
+        search.load_ndformer(args.ndformer_ckpt, device=args.device)
     _logger.info(f"NDFormerMCTS initialized with operators: binary={args.binary_ops}, unary={args.unary_ops}")
 
     # 7. Run MCTS search

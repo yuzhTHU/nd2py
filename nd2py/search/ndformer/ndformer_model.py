@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from dataclasses import dataclass
 from torch_geometric.utils import to_dense_batch
 from typing import List, Dict, Tuple, Union, Literal
-from .ndformer_config import NDFormerConfig
+from .ndformer_config import NDFormerModelConfig
 from .ndformer_tokenizer import NDFormerTokenizer
 from ... import utils
 
@@ -20,7 +20,7 @@ _logger = logging.getLogger('nd2py.ndformer_model')
 
 
 class NDFormerModel(nn.Module):
-    def __init__(self, config: NDFormerConfig, tokenizer: NDFormerTokenizer):
+    def __init__(self, config: NDFormerModelConfig, tokenizer: NDFormerTokenizer):
         super().__init__()
         self.config = config
         self.tokenizer = tokenizer

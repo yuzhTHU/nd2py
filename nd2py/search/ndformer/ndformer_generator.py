@@ -6,7 +6,7 @@ import networkx as nx
 from numpy.random import default_rng
 from typing import Tuple, List, Literal, Set, TYPE_CHECKING
 from ... import core as nd
-from .ndformer_config import NDFormerConfig
+from .ndformer_config import NDFormerModelConfig
 if TYPE_CHECKING:
     from ...core.nettype import NetType
     from ...core.symbols import *
@@ -111,7 +111,7 @@ class NDFormerEqtreeGenerator:
 
 
 class NDFormerGraphGenerator:
-    def __init__(self, config: NDFormerConfig):
+    def __init__(self, config: NDFormerModelConfig):
         self.min_node_num = config.min_node_num
         self.max_node_num = config.max_node_num
         self.min_edge_num = config.min_edge_num
@@ -197,7 +197,7 @@ class NDFormerGraphGenerator:
 
 
 class NDFormerDataGenerator:
-    def __init__(self, config: NDFormerConfig):
+    def __init__(self, config: NDFormerModelConfig):
         self.min_var_val = config.min_var_val
         self.max_var_val = config.max_var_val
         self.min_coeff_val = config.min_coeff_val

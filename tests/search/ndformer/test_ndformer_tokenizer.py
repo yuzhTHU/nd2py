@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 import nd2py as nd
-from nd2py.search.ndformer import NDFormerConfig, NDFormerTokenizer
+from nd2py.search.ndformer import NDFormerModelConfig, NDFormerTokenizer
 import warnings
 
 np.random.seed(42)
@@ -51,7 +51,7 @@ s = nd.Variable('s', nettype='scalar')
      ['NETTYPE-SCALAR', 'NETTYPE-SCALAR', 'NETTYPE-SCALAR']),
 ])
 def test_ndformer_tokenizer(node, expected_tokens, expected_parents, expected_nettypes):
-    config = NDFormerConfig()
+    config = NDFormerModelConfig()
     tokenizer = NDFormerTokenizer(config, variables=[x, y, z, n, e, s])
     tokens, parents, nettypes = tokenizer.encode(node, mode='token')
 

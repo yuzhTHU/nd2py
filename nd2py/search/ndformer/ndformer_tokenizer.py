@@ -5,7 +5,7 @@ import warnings
 import numpy as np
 from typing import List, Dict, Tuple, Optional, Literal
 from ... import core as nd
-from .ndformer_config import NDFormerConfig
+from .ndformer_config import NDFormerModelConfig
 
 
 class NumberTokenizer:
@@ -79,7 +79,7 @@ class NumberTokenizer:
 
 
 class NDFormerTokenizer:
-    def __init__(self, config: NDFormerConfig, variables: Optional[List[nd.Symbol]] = None):
+    def __init__(self, config: NDFormerModelConfig, variables: Optional[List[nd.Symbol]] = None):
         self.config = config
 
         # Special Tokens        
