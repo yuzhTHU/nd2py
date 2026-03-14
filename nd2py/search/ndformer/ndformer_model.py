@@ -12,6 +12,7 @@ from torch_geometric.utils import to_dense_batch
 from typing import List, Dict, Tuple, Union, Literal
 from .ndformer_config import NDFormerModelConfig
 from .ndformer_tokenizer import NDFormerTokenizer
+from ...utils.factory import FactoryMixin
 from ... import utils
 
 # See https://github.com/pytorch/pytorch/issues/100469
@@ -19,7 +20,28 @@ warnings.filterwarnings("ignore", message="Converting mask without torch.bool dt
 _logger = logging.getLogger('nd2py.ndformer_model')
 
 
-class NDFormerModel(nn.Module):
+class NDFormerModel(FactoryMixin, nn.Module):
+    """
+    Base class for NDFormer models.
+
+    Inherits from FactoryMixin which provides:
+    - NDFormerModel.register_model('name'): Decorator to register subclasses
+    - NDFormerModel.create(config, tokenizer): Factory method to create instances
+
+    The base class is automatically registered as 'default' model.
+
+    Example:
+        @NDFormerModel.register_model('gcn')
+        class GCNNDFormer(NDFormerModel):
+            def __init__(self, config, tokenizer):
+                super().__init__(config, tokenizer)
+                # ... custom architecture ...
+
+        # Usage
+        config = NDFormerModelConfig(model='gcn')
+        model = NDFormerModel.create(config, tokenizer)
+    """
+
     def __init__(self, config: NDFormerModelConfig, tokenizer: NDFormerTokenizer):
         super().__init__()
         self.config = config

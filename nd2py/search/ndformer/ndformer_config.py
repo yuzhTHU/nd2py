@@ -50,9 +50,9 @@ class NDFormerModelConfig:
 
     Training a new model:
     ```python
-    config = NDFormerModelConfig(n_head=16, d_emb=256)
-    model = NDFormerModel(config)
+    config = NDFormerModelConfig(model='default', n_head=16, d_emb=256)
     tokenizer = NDFormerTokenizer(config, variables)
+    model = NDFormerModel.create(config, tokenizer)
     # ... train on dataset ...
     torch.save({'model': model.state_dict(), 'config': config}, 'checkpoint.pth')
     ```
@@ -63,6 +63,18 @@ class NDFormerModelConfig:
     search.load_ndformer('hf://YuMeow/ndformer:best.pth')
     # Config is automatically loaded and used for capability validation
     search.fit(X, y)
+    ```
+
+    Creating alternative model architectures:
+    ```python
+    @NDFormerModel.register_model('gcn')
+    class GCNNDFormer(NDFormerModel):
+        def __init__(self, config, tokenizer):
+            super().__init__(config, tokenizer)
+            # ... custom architecture ...
+
+    config = NDFormerModelConfig(model='gcn')
+    model = NDFormerModel.create(config, tokenizer)
     ```
 
     ═══════════════════════════════════════════════════════════════════════════
@@ -91,6 +103,13 @@ class NDFormerModelConfig:
     # These define the transformer and GNN structure. Changing these requires
     # training a new model from scratch.
     # =========================================================================
+    model: str = 'default'
+    """
+    Model architecture type. Used by NDFormerModel.create() to select subclass.
+
+    Available models are registered via @NDFormerModel.register_model('name').
+    Default is 'default' (the base NDFormerModel architecture).
+    """
     n_head: int = 8
     """Number of attention heads in multi-head self-attention."""
     d_emb: int = 128
