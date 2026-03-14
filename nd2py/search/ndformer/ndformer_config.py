@@ -5,29 +5,22 @@ from dataclasses import dataclass
 
 @dataclass
 class NDFormerConfig:
-    d_emb: int = 128
-    d_ff: int = 128*4
-    n_head: int = 8
-
-    dropout: float = 0.1
-    d_data_feat: int = 16 # sign bit (1) + exponent bits (5) + mantissa bits (10)
-    n_node_vars: int = 6
-    n_edge_vars: int = 6
-    n_scalar_vars: int = 6  # 新增：标量变量数量
-    n_transformer_encoder_layers: int = 2
-    n_GNN_layers: int = 2
-    max_sample_num: int = 3000
-    split: bool = False
-    use_aux_input: bool = True
-    n_words: int = 60 # vocabulary size
-    n_transformer_decoder_layers: int = 2
-    max_seq_len: int = 100  # no less than GDExpr.max_complexity + 3
-
+    # Tokenizer
     n_mantissa: int = 4
     min_exponent: int = -100
     max_exponent: int = 100
     max_var_num: int = 10
-
+    # Model
+    n_head: int = 8
+    d_emb: int = 128
+    d_ff: int = 128*4
+    dropout: float = 0.1
+    n_GNN_layers: int = 2
+    n_transformer_encoder_layers: int = 2
+    n_transformer_decoder_layers: int = 2
+    use_aux_input: bool = True
+    # Eq Generator
+    max_seq_len: int = 100  # no less than GDExpr.max_complexity + 3
     operands: Tuple[str] = (
         'Add', 'Sub', 'Mul', 'Div', 'Pow', 'Max', 'Min',
         'Identity',
@@ -38,14 +31,13 @@ class NDFormerConfig:
         'Sigmoid', 'Regular',
         'Sour', 'Targ', 'Aggr', 'Rgga', 'Readout',
     )
-
+    # Data Generator
     min_data_num: int = 100
     max_data_num: int = 200
     min_node_num: int = 10
     max_node_num: int = 100
     min_edge_num: int = 20
     max_edge_num: int = 600
-
     min_var_val: int = -10
     max_var_val: int = 10
     min_coeff_val: int = -20

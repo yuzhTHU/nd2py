@@ -32,11 +32,11 @@ class NDFormerModel(nn.Module):
         )
         
         self.gnn_encoder = utils.nn.GNN(
-            self.config.d_emb, 
-            self.config.n_GNN_layers, 
-            self.config.d_emb,
-            self.config.d_emb, 
-            self.config.dropout
+            d_emb=self.config.d_emb, 
+            n_layers=self.config.n_GNN_layers, 
+            node_dim=self.config.d_emb,
+            edge_dim=self.config.d_emb, 
+            dropout=self.config.dropout
         )
 
         self.transformer_encoder = nn.TransformerEncoder(nn.TransformerEncoderLayer(
