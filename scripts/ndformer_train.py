@@ -440,7 +440,7 @@ if __name__ == "__main__":
     
     # 训练超参数
     parser.add_argument("--batch_size", type=int, default=24, help="训练批次大小")
-    parser.add_argument("--lr", type=float, default=2e-4, help="学习率 (Learning Rate)")
+    parser.add_argument("--lr", type=float, default=1e-3, help="学习率 (Learning Rate)")
     parser.add_argument("--epochs", type=int, default=10000, help="最大训练轮数")
     parser.add_argument('--patience', type=int, default=20, help="Early Stopping 的耐心值（多少个 epoch 验证集指标不提升则停止）")
     parser.add_argument('--loss_type', type=str, default='noise', choices=['position', 'accelerate', 'noise'], help="损失函数计算的目标类型")
