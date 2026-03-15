@@ -1,7 +1,7 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 import warnings
-from typing import TYPE_CHECKING, Set, Optional, List, Tuple
+from typing import TYPE_CHECKING, Set, Optional, List, Tuple, Dict
 from ..context.warn_once import warn_once
 from ..nettype.nettype_mixin import NetType
 
@@ -86,3 +86,46 @@ class TreeMixin:
             current = current.operands[idx]
         return current
     
+    def match(self, pattern: Symbol) -> Optional[Dict[str, Symbol]]:
+        """
+        Match a pattern expression against self expression.
+
+        This function checks if the pattern can match the self expression by comparing
+        their tree structures. Variables in the pattern can match any subexpression.
+        The same variable name must match the same subexpression throughout the pattern.
+
+        Args:
+            pattern: The pattern expression containing variables to be matched.
+
+        Returns:
+            A dictionary mapping variable names from the pattern to their matched
+            subexpressions, or None if the pattern does not match.
+
+        Examples:
+            >>> from nd2py import Variable, sin, Add, Mul
+            >>> from nd2py.core.tree import match
+            >>> a = Variable('a')
+            >>> x = Variable('x')
+
+            >>> # sin(a) matches sin(x*2+1)
+            >>> f = sin(x*2+1)
+            >>> f.match(sin(a))  # doctest: +SKIP
+            {'a': x + 2*x}
+
+            >>> # a+a matches sin(x)+sin(x) (same variable must match same subexpression)
+            >>> f = sin(x) + sin(x)
+            >>> f.match(a+a)  # doctest: +SKIP
+            {'a': sin(x)}
+
+            >>> # a+a does NOT match sin(x)+cos(x) (different subexpressions)
+            >>> f = sin(x) + cos(x)
+            >>> f.match(a+a)  # doctest: +SKIP
+            None
+
+            >>> # a+b matches both sin(x)+sin(x) and sin(x)+cos(x)
+            >>> f = sin(x) + sin(x)
+            >>> f.match(a+b)  # doctest: +SKIP
+            {'a': sin(x), 'b': sin(x)}
+        """
+        from .match import Match
+        return Match()(pattern, self)
