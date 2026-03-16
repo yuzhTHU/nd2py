@@ -23,6 +23,14 @@ class TreeMixin:
     operands: List["Symbol"]
     _candidates: Set[NetType]
 
+    @property
+    def root(self):
+        root_node = self
+        while root_node.parent is not None:
+            root_node = root_node.parent
+        assert root_node.parent is None
+        return root_node
+
     def iter_preorder(self):
         """Non-recursive preorder traversal of the Symbol tree using an explicit stack."""
         from .iter_preorder import IterPreorder
