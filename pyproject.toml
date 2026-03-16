@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nd2py"
-version = "3.1.0"
+version = "3.2.0"
 readme = "README.md"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
