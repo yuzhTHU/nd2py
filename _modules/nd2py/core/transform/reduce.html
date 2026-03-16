@@ -314,11 +314,16 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">islice</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">platformdirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">user_cache_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.fold_constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">FoldConstant</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...generator.eq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enumerator</span>
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
@@ -327,18 +332,6 @@
 <span class="c1"># 缓存文件路径</span>
 <span class="n">_CACHE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;.cache/reduce&#39;</span><span class="p">)</span>
 <span class="n">_CACHE_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="TauProcessResult">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.TauProcessResult">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">TauProcessResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;多进程处理单个 tau 的返回值&quot;&quot;&quot;</span>
-    <span class="n">tau</span><span class="p">:</span> <span class="s1">&#39;Symbol&#39;</span>
-    <span class="n">val</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-    <span class="n">is_constant_rule</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="n">rule_target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Symbol&#39;</span><span class="p">]</span>  <span class="c1"># 如果是常量规则，则为化简后的 Number</span>
-    <span class="n">val_hash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>  <span class="c1"># 如果不是常量规则，则为值的哈希</span></div>
-
 
 
 <div class="viewcode-block" id="ReduceRule">
@@ -356,121 +349,6 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s1"> =&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="si">}</span><span class="s1">&#39;</span></div>
-
-
-
-<span class="c1"># =============================================================================</span>
-<span class="c1"># 核心 API 函数 - 可独立用于单进程或多进程实现</span>
-<span class="c1"># =============================================================================</span>
-
-<div class="viewcode-block" id="process_tau">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.process_tau">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">process_tau</span><span class="p">(</span><span class="n">tau</span><span class="p">:</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="n">anchors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TauProcessResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    处理单个表达式 tau：求值、判断是否为常量规则、计算哈希。</span>
-
-<span class="sd">    这是 prepare_rule_dict 的核心计算单元，设计为无状态函数以便多进程调用。</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        tau: 表达式树</span>
-<span class="sd">        anchors: 锚点字典 {变量名：numpy 数组}</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        TauProcessResult: 处理结果</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
-
-    <span class="n">val</span> <span class="o">=</span> <span class="n">tau</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">anchors</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">anchors</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mf">1.23456789</span><span class="p">,</span> <span class="n">posinf</span><span class="o">=</span><span class="mf">2.34567891</span><span class="p">,</span> <span class="n">neginf</span><span class="o">=</span><span class="mf">3.45678912</span><span class="p">)</span>
-
-    <span class="c1"># 判断是否为常量规则（所有值相同）</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.23456789</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">2.34567891</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">3.45678912</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">TauProcessResult</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">is_constant_rule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rule_target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">val_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># 计算哈希</span>
-        <span class="n">val_rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="n">val_bytes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">val_rounded</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
-        <span class="n">val_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">val_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">TauProcessResult</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">is_constant_rule</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rule_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_hash</span><span class="o">=</span><span class="n">val_hash</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="merge_tau_result">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.merge_tau_result">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">merge_tau_result</span><span class="p">(</span>
-    <span class="n">result</span><span class="p">:</span> <span class="n">TauProcessResult</span><span class="p">,</span>
-    <span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]],</span>
-    <span class="n">reduce_rules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ReduceRule</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 process_tau 的结果合并到 hash_dict 和 reduce_rules。</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        result: process_tau 的返回值</span>
-<span class="sd">        hash_dict: 哈希字典（会被修改）</span>
-<span class="sd">        reduce_rules: 规则列表（会被修改）</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        bool: 是否发现了新的化简规则</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
-
-    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_constant_rule</span><span class="p">:</span>
-        <span class="n">reduce_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReduceRule</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">rule_target</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="c1"># 在 hash_dict 中查找</span>
-    <span class="n">val_hash</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">val_hash</span>
-    <span class="k">if</span> <span class="n">val_hash</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="p">:</span>
-        <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="c1"># 检查是否有等价但更短的表达式</span>
-    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">val</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">candidates</span><span class="p">:</span>
-        <span class="c1"># 哈希碰撞但数值不等，追加到桶中</span>
-        <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="c1"># 找到等价的最短表达式</span>
-    <span class="n">best_tau</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_tau</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">):</span>
-        <span class="c1"># 发现化简规则</span>
-        <span class="n">reduce_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReduceRule</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">best_tau</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># 长度相同或更长，追加到桶中</span>
-        <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">result</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
-
-
-
-<div class="viewcode-block" id="has_variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.has_variable">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">:</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查表达式是否包含变量&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Variable&#39;</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">tau</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="get_start_length">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.get_start_length">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_start_length</span><span class="p">(</span><span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">reduce_rules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ReduceRule</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;获取应该从哪个长度开始处理（跳过已缓存的）&quot;&quot;&quot;</span>
-    <span class="n">l1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span> <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">eq</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">bucket</span><span class="p">])</span>
-    <span class="n">l2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">source</span><span class="p">)</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">reduce_rules</span><span class="p">])</span>
-    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></div>
 
 
 
@@ -499,7 +377,7 @@
 
         <span class="n">_rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">_rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">num_anchors</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ReduceRule</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 化简规则，按模式长度倒序排列 (longest to smallest)</span>
         <span class="k">if</span> <span class="n">load_cache</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_cache</span><span class="p">()</span>  <span class="c1"># 初始化时加载缓存</span></div>
@@ -533,6 +411,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load Cache from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        在线阶段：交替运行规则匹配和代数清理，直到收敛。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_expr</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_online_iterations</span><span class="p">):</span>
+            <span class="n">_current_expr</span> <span class="o">=</span> <span class="n">current_expr</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">current_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_pass</span><span class="p">(</span><span class="n">current_expr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">current_expr</span> <span class="o">=</span> <span class="n">FoldConstant</span><span class="p">(</span><span class="n">fold_fitable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fold_constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">current_expr</span><span class="p">)</span>
+            <span class="n">current_expr</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">current_expr</span><span class="o">.</span><span class="n">split_by_add</span><span class="p">(</span><span class="n">split_by_sub</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand_mul</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand_div</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">merge_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">_current_expr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">_current_expr</span><span class="p">):</span>
+                <span class="k">break</span>  <span class="c1"># 如果表达式没有改变，说明已收敛</span>
+        <span class="k">return</span> <span class="n">current_expr</span>
+
 <div class="viewcode-block" id="Reduce.prepare_rule_dict">
 <a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.prepare_rule_dict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">prepare_rule_dict</span><span class="p">(</span>
@@ -553,22 +445,17 @@
 <span class="sd">            save_cache: 是否将构建结果缓存到文件</span>
 <span class="sd">            show_progress: 是否显示进度条</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">...generator.eq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enumerator</span>
-
         <span class="k">if</span> <span class="n">force_rebuild</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span> <span class="o">=</span> <span class="p">[]</span>
-
         <span class="n">enumerator</span> <span class="o">=</span> <span class="n">Enumerator</span><span class="p">(</span><span class="n">leafs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">leafs</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span> <span class="n">unary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">)</span>
-        <span class="n">l_start</span> <span class="o">=</span> <span class="n">get_start_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
-
+        <span class="n">l_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_start_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
         <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="nb">range</span><span class="p">(</span><span class="n">l_start</span><span class="p">,</span> <span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Length&quot;</span><span class="p">,</span>
             <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">,</span>
             <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">show_progress</span><span class="p">,</span>
         <span class="p">)</span>
-
         <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="n">progress_bar</span><span class="p">:</span>
             <span class="n">inner_progress</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">enumerator</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">L</span><span class="p">),</span>
@@ -577,17 +464,16 @@
                 <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;expr&quot;</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">show_progress</span><span class="p">,</span>
             <span class="p">)</span>
-
-            <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">inner_progress</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">):</span>
-                    <span class="k">continue</span>
-
-                <span class="n">result</span> <span class="o">=</span> <span class="n">process_tau</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">)</span>
-                <span class="n">merge_tau_result</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
+            <span class="n">loader</span> <span class="o">=</span> <span class="p">(</span><span class="n">tau</span> <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">inner_progress</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+                <span class="n">rule</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_tau</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
                 <span class="n">inner_progress</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)})</span>
-
+            <span class="n">inner_progress</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;total_rules&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)})</span>
-
             <span class="k">if</span> <span class="n">save_cache</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_save_to_cache</span><span class="p">()</span></div>
 
@@ -598,6 +484,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
         <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
         <span class="n">force_rebuild</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">save_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">show_progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -614,54 +501,75 @@
 <span class="sd">            save_cache: 是否将构建结果缓存到文件</span>
 <span class="sd">            show_progress: 是否显示进度条</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">...generator.eq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enumerator</span>
-
         <span class="k">if</span> <span class="n">force_rebuild</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span> <span class="o">=</span> <span class="p">[]</span>
-
         <span class="n">enumerator</span> <span class="o">=</span> <span class="n">Enumerator</span><span class="p">(</span><span class="n">leafs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">leafs</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span> <span class="n">unary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">)</span>
-        <span class="n">l_start</span> <span class="o">=</span> <span class="n">get_start_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
-
+        <span class="n">l_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_start_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
         <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="nb">range</span><span class="p">(</span><span class="n">l_start</span><span class="p">,</span> <span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Length&quot;</span><span class="p">,</span>
             <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">,</span>
             <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">show_progress</span><span class="p">,</span>
         <span class="p">)</span>
-
         <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="n">progress_bar</span><span class="p">:</span>
             <span class="n">inner_progress</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+                <span class="n">enumerator</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">L</span><span class="p">),</span>
                 <span class="n">total</span><span class="o">=</span><span class="n">enumerator</span><span class="o">.</span><span class="n">estimate_total</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">L</span><span class="p">),</span>
                 <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Formulas L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;expr&quot;</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">show_progress</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="n">loader</span> <span class="o">=</span> <span class="p">(</span><span class="n">tau</span> <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">inner_progress</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">))</span>
             <span class="n">workers</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_as</span><span class="o">=</span><span class="s2">&quot;generator&quot;</span><span class="p">)</span>
-            <span class="n">tasks</span> <span class="o">=</span> <span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">process_tau</span><span class="p">)(</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">)</span> <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">enumerator</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">L</span><span class="p">)</span> <span class="k">if</span> <span class="n">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
-                <span class="n">merge_tau_result</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)</span>
-                <span class="n">inner_progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">saved_reduce_rules</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">saved_hash_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tasks</span> <span class="o">=</span> <span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_tau</span><span class="p">)(</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">rule</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">rule</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+                        <span class="n">saved_reduce_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span> 
+                        <span class="n">saved_hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+                    <span class="n">inner_progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">inner_progress</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">batch_loader</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)),</span> <span class="p">[])</span> <span class="c1"># iter(..., []) 会不断调用前面的 lambda 函数，直到它返回一个空列表 []（即生成器耗尽）时停止。</span>
+                <span class="n">tasks</span> <span class="o">=</span> <span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_tau_batch</span><span class="p">)(</span><span class="n">tau_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">tau_list</span> <span class="ow">in</span> <span class="n">batch_loader</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">results</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">rule</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">rule</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">saved_reduce_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span> 
+                            <span class="n">saved_hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+                        <span class="n">inner_progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="n">inner_progress</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)})</span>
             <span class="n">inner_progress</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">saved_reduce_rules</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">saved_hash_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
             <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;total_rules&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reduce_rules</span><span class="p">)})</span>
             <span class="k">if</span> <span class="n">save_cache</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_save_to_cache</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        在线阶段：交替运行规则匹配和代数清理，直到收敛。</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">current_expr</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_online_iterations</span><span class="p">):</span>
-            <span class="n">_current_expr</span> <span class="o">=</span> <span class="n">current_expr</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">current_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_pass</span><span class="p">(</span><span class="n">current_expr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">current_expr</span> <span class="o">=</span> <span class="n">FoldConstant</span><span class="p">(</span><span class="n">fold_fitable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fold_constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">current_expr</span><span class="p">)</span>
-            <span class="n">current_expr</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">current_expr</span><span class="o">.</span><span class="n">split_by_add</span><span class="p">(</span><span class="n">split_by_sub</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand_mul</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand_div</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">merge_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">_current_expr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">_current_expr</span><span class="p">):</span>
-                <span class="k">break</span>  <span class="c1"># 如果表达式没有改变，说明已收敛</span>
-        <span class="k">return</span> <span class="n">current_expr</span>
+<div class="viewcode-block" id="Reduce.has_variable">
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.has_variable">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_variable</span><span class="p">(</span><span class="n">tau</span><span class="p">:</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;检查表达式是否包含变量&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Variable&#39;</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">tau</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Reduce.get_start_length">
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.get_start_length">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_start_length</span><span class="p">(</span><span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">reduce_rules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ReduceRule</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取应该从哪个长度开始处理（跳过已缓存的）&quot;&quot;&quot;</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span> <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">eq</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">bucket</span><span class="p">])</span>
+        <span class="n">l2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">source</span><span class="p">)</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">reduce_rules</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_rule_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Symbol</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -686,7 +594,60 @@
                 <span class="n">children_results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">child</span><span class="p">,</span> <span class="n">new_child</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">child</span><span class="p">,</span> <span class="n">new_child</span> <span class="ow">in</span> <span class="n">children_results</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">new_child</span><span class="p">,</span> <span class="n">no_warn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">node</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children_results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+        <span class="k">return</span> <span class="n">node</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children_results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="Reduce.get_array_hash">
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.get_array_hash">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_array_hash</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">val_rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">val_bytes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">val_rounded</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+        <span class="n">val_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">val_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">val_hash</span></div>
+
+
+<div class="viewcode-block" id="Reduce.process_tau">
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.process_tau">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_tau</span><span class="p">(</span><span class="n">tau</span><span class="p">:</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="n">anchors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]]):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">tau</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">anchors</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">anchors</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mf">1.23456789</span><span class="p">,</span> <span class="n">posinf</span><span class="o">=</span><span class="mf">2.34567891</span><span class="p">,</span> <span class="n">neginf</span><span class="o">=</span><span class="mf">3.45678912</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="c1"># 常量规则</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.23456789</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">2.34567891</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">3.45678912</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">ReduceRule</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">target</span><span class="p">),</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">val_hash</span> <span class="o">:=</span> <span class="n">Reduce</span><span class="o">.</span><span class="n">get_array_hash</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="p">:</span>
+            <span class="c1"># 未发生哈希碰撞，追加到 hash_dict 中</span>
+            <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="n">candidates</span> <span class="o">:=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">hash_dict</span><span class="p">[</span><span class="n">val_hash</span><span class="p">]</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()]):</span>
+            <span class="c1"># 未找到数值相等结果，追加到 hash_dict 中</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_tau</span> <span class="o">:=</span> <span class="nb">min</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tau</span><span class="p">):</span>
+            <span class="c1"># 数值相等结果无法帮助减少长度，追加到 hash_dict 中</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val_hash</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 存在化简规则 tau -&gt; best_tau</span>
+            <span class="k">return</span> <span class="n">ReduceRule</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">best_tau</span><span class="p">),</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Reduce.process_tau_batch">
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.reduce.Reduce.process_tau_batch">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_tau_batch</span><span class="p">(</span><span class="n">tau_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Symbol&#39;</span><span class="p">],</span> <span class="n">anchors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">hash_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]]):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Reduce</span><span class="o">.</span><span class="n">process_tau</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">anchors</span><span class="p">,</span> <span class="n">hash_dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">tau_list</span><span class="p">]</span></div>
+</div>
 
 </pre></div>
 
