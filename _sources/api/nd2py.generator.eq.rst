@@ -9,6 +9,14 @@ nd2py.generator.eq package
 Submodules
 ----------
 
+nd2py.generator.eq.enumerator module
+------------------------------------
+
+.. automodule:: nd2py.generator.eq.enumerator
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.generator.eq.gplearn\_generator module
 --------------------------------------------
 

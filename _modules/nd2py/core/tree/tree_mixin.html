@@ -309,7 +309,7 @@
 <span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..context.warn_once</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn_once</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..nettype.nettype_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetType</span>
 
@@ -332,6 +332,14 @@
     <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]</span>
     <span class="n">operands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Symbol&quot;</span><span class="p">]</span>
     <span class="n">_candidates</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">root_node</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">while</span> <span class="n">root_node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">root_node</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">assert</span> <span class="n">root_node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">root_node</span>
 
 <div class="viewcode-block" id="TreeMixin.iter_preorder">
 <a class="viewcode-back" href="../../../../api/nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.iter_preorder">[docs]</a>
@@ -409,9 +417,55 @@
                 <span class="p">)</span>
             <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">current</span></div>
-</div>
 
     
+<div class="viewcode-block" id="TreeMixin.match">
+<a class="viewcode-back" href="../../../../api/nd2py.core.tree.html#nd2py.core.tree.tree_mixin.TreeMixin.match">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Match a pattern expression against self expression.</span>
+
+<span class="sd">        This function checks if the pattern can match the self expression by comparing</span>
+<span class="sd">        their tree structures. Variables in the pattern can match any subexpression.</span>
+<span class="sd">        The same variable name must match the same subexpression throughout the pattern.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pattern: The pattern expression containing variables to be matched.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary mapping variable names from the pattern to their matched</span>
+<span class="sd">            subexpressions, or None if the pattern does not match.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from nd2py import Variable, sin, Add, Mul</span>
+<span class="sd">            &gt;&gt;&gt; from nd2py.core.tree import match</span>
+<span class="sd">            &gt;&gt;&gt; a = Variable(&#39;a&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; x = Variable(&#39;x&#39;)</span>
+
+<span class="sd">            &gt;&gt;&gt; # sin(a) matches sin(x*2+1)</span>
+<span class="sd">            &gt;&gt;&gt; f = sin(x*2+1)</span>
+<span class="sd">            &gt;&gt;&gt; f.match(sin(a))  # doctest: +SKIP</span>
+<span class="sd">            {&#39;a&#39;: x + 2*x}</span>
+
+<span class="sd">            &gt;&gt;&gt; # a+a matches sin(x)+sin(x) (same variable must match same subexpression)</span>
+<span class="sd">            &gt;&gt;&gt; f = sin(x) + sin(x)</span>
+<span class="sd">            &gt;&gt;&gt; f.match(a+a)  # doctest: +SKIP</span>
+<span class="sd">            {&#39;a&#39;: sin(x)}</span>
+
+<span class="sd">            &gt;&gt;&gt; # a+a does NOT match sin(x)+cos(x) (different subexpressions)</span>
+<span class="sd">            &gt;&gt;&gt; f = sin(x) + cos(x)</span>
+<span class="sd">            &gt;&gt;&gt; f.match(a+a)  # doctest: +SKIP</span>
+<span class="sd">            None</span>
+
+<span class="sd">            &gt;&gt;&gt; # a+b matches both sin(x)+sin(x) and sin(x)+cos(x)</span>
+<span class="sd">            &gt;&gt;&gt; f = sin(x) + sin(x)</span>
+<span class="sd">            &gt;&gt;&gt; f.match(a+b)  # doctest: +SKIP</span>
+<span class="sd">            {&#39;a&#39;: sin(x), &#39;b&#39;: sin(x)}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.match</span><span class="w"> </span><span class="kn">import</span> <span class="n">Match</span>
+        <span class="k">return</span> <span class="n">Match</span><span class="p">()(</span><span class="n">pattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
                 </article>

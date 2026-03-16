@@ -353,6 +353,14 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.generator.eq.enumerator">nd2py.generator.eq.enumerator module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator"><code class="docutils literal notranslate"><span class="pre">Enumerator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator.__init__"><code class="docutils literal notranslate"><span class="pre">Enumerator.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator.estimate_total"><code class="docutils literal notranslate"><span class="pre">Enumerator.estimate_total()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.generator.eq.gplearn_generator">nd2py.generator.eq.gplearn_generator module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.gplearn_generator.GPLearnGenerator"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.__init__()</span></code></a></li>
@@ -412,6 +420,50 @@
 <span id="nd2py-generator-eq-package"></span><h1>nd2py.generator.eq package<a class="headerlink" href="#module-nd2py.generator.eq" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-nd2py.generator.eq.enumerator">
+<span id="nd2py-generator-eq-enumerator-module"></span><h2>nd2py.generator.eq.enumerator module<a class="headerlink" href="#module-nd2py.generator.eq.enumerator" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.generator.eq.enumerator.Enumerator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.generator.eq.enumerator.</span></span><span class="sig-name descname"><span class="pre">Enumerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leafs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><span class="pre">Variable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number" title="nd2py.core.symbols.number.Number"><span class="pre">Number</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol" title="nd2py.core.symbols.symbol.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol" title="nd2py.core.symbols.symbol.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/generator/eq/enumerator.html#Enumerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.generator.eq.enumerator.Enumerator" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Enumerate all possible expression trees of a given length.</p>
+<p>This generator exhaustively constructs all valid expression trees
+by combining given leaf nodes, binary operators, and unary operators
+to reach the target tree size (measured by number of nodes).</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="kn">import</span> <span class="n">Variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.generator.eq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enumerator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enumerator</span> <span class="o">=</span> <span class="n">Enumerator</span><span class="p">(</span><span class="n">leafs</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">binary</span><span class="o">=</span><span class="p">[</span><span class="n">Add</span><span class="p">,</span> <span class="n">Mul</span><span class="p">],</span> <span class="n">unary</span><span class="o">=</span><span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">enumerator</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
+<span class="go">x + x</span>
+<span class="go">x * x</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.generator.eq.enumerator.Enumerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leafs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable" title="nd2py.core.symbols.variable.Variable"><span class="pre">Variable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.number.Number" title="nd2py.core.symbols.number.Number"><span class="pre">Number</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol" title="nd2py.core.symbols.symbol.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol" title="nd2py.core.symbols.symbol.Symbol"><span class="pre">Symbol</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/generator/eq/enumerator.html#Enumerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.generator.eq.enumerator.Enumerator.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the enumerator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>leafs</strong> – List of leaf symbols (Variable, Number instances).</p></li>
+<li><p><strong>binary</strong> – List of binary operator classes (e.g., Add, Sub, Mul, Div).</p></li>
+<li><p><strong>unary</strong> – List of unary operator classes (e.g., Sin, Cos, Log, Exp).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.generator.eq.enumerator.Enumerator.estimate_total">
+<span class="sig-name descname"><span class="pre">estimate_total</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/nd2py/generator/eq/enumerator.html#Enumerator.estimate_total"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.generator.eq.enumerator.Enumerator.estimate_total" title="Link to this definition">#</a></dt>
+<dd><p>估计长度为 length 的公式总数</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-nd2py.generator.eq.gplearn_generator">
 <span id="nd2py-generator-eq-gplearn-generator-module"></span><h2>nd2py.generator.eq.gplearn_generator module<a class="headerlink" href="#module-nd2py.generator.eq.gplearn_generator" title="Link to this heading">#</a></h2>
@@ -614,6 +666,14 @@ Sample a position in {0, …, <cite>n_empty</cite> - 1}.</p>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.generator.eq.enumerator">nd2py.generator.eq.enumerator module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator"><code class="docutils literal notranslate"><span class="pre">Enumerator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator.__init__"><code class="docutils literal notranslate"><span class="pre">Enumerator.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.enumerator.Enumerator.estimate_total"><code class="docutils literal notranslate"><span class="pre">Enumerator.estimate_total()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.generator.eq.gplearn_generator">nd2py.generator.eq.gplearn_generator module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.gplearn_generator.GPLearnGenerator"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">GPLearnGenerator.__init__()</span></code></a></li>

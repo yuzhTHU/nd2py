@@ -41,6 +41,14 @@ nd2py.utils.classproperty module
    :show-inheritance:
    :undoc-members:
 
+nd2py.utils.factory module
+--------------------------
+
+.. automodule:: nd2py.utils.factory
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.utils.fix\_parser module
 ------------------------------
 

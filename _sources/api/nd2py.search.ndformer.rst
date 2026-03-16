@@ -49,6 +49,14 @@ nd2py.search.ndformer.ndformer\_model module
    :show-inheritance:
    :undoc-members:
 
+nd2py.search.ndformer.ndformer\_model\_flash\_ansr module
+---------------------------------------------------------
+
+.. automodule:: nd2py.search.ndformer.ndformer_model_flash_ansr
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.search.ndformer.ndformer\_tokenizer module
 ------------------------------------------------
 

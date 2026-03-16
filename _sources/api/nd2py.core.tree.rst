@@ -25,6 +25,14 @@ nd2py.core.tree.iter\_preorder module
    :show-inheritance:
    :undoc-members:
 
+nd2py.core.tree.match module
+----------------------------
+
+.. automodule:: nd2py.core.tree.match
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.core.tree.tree\_mixin module
 ----------------------------------
 

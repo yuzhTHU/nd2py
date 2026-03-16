@@ -33,6 +33,14 @@ nd2py.core.transform.fold\_constant module
    :show-inheritance:
    :undoc-members:
 
+nd2py.core.transform.reduce module
+----------------------------------
+
+.. automodule:: nd2py.core.transform.reduce
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.core.transform.simplify module
 ------------------------------------
 

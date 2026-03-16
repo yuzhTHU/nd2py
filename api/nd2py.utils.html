@@ -380,6 +380,15 @@
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.factory">nd2py.utils.factory module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin"><code class="docutils literal notranslate"><span class="pre">FactoryMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.MODEL_DICT"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.MODEL_DICT</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.register_model"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.register_model()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.create"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.create()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.fix_parser">nd2py.utils.fix_parser module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_minus_flags"><code class="docutils literal notranslate"><span class="pre">add_minus_flags()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_negation_flags"><code class="docutils literal notranslate"><span class="pre">add_negation_flags()</span></code></a></li>
@@ -610,6 +619,103 @@ Arguments:
 <dt class="sig sig-object py" id="nd2py.utils.classproperty.classproperty.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/classproperty.html#classproperty.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.classproperty.classproperty.__init__" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nd2py.utils.factory">
+<span id="nd2py-utils-factory-module"></span><h2>nd2py.utils.factory module<a class="headerlink" href="#module-nd2py.utils.factory" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.factory.FactoryMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.factory.</span></span><span class="sig-name descname"><span class="pre">FactoryMixin</span></span><a class="reference internal" href="../_modules/nd2py/utils/factory.html#FactoryMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Mixin class that provides factory pattern capabilities for any class.</p>
+<p>Any class inheriting from this mixin gains the ability to:
+1. Register subclasses via &#64;&lt;Class&gt;.register_model(‘name’)
+2. Create instances via &lt;Class&gt;.create(config, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs)</p>
+<p>The base class is automatically registered as ‘default’ model.</p>
+<p>═══════════════════════════════════════════════════════════════════════════
+INHERITANCE ORDER (IMPORTANT)
+═══════════════════════════════════════════════════════════════════════════</p>
+<p>FactoryMixin should be placed BEFORE other base classes in the inheritance:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class MyModel(FactoryMixin, nn.Module):</dt><dd><p>…</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>This ensures correct Method Resolution Order (MRO) so that:
+1. create() method resolves correctly
+2. Subclasses share the same MODEL_DICT through the mixin</p>
+<p>═══════════════════════════════════════════════════════════════════════════
+EXAMPLE
+═══════════════════════════════════════════════════════════════════════════</p>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a>python
+from nd2py.utils import FactoryMixin</p>
+<dl class="simple">
+<dt>class MyModel(FactoryMixin, nn.Module):</dt><dd><dl class="simple">
+<dt>def __init__(self, config, tokenizer):</dt><dd><p>super().__init__()
+self.config = config</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>&#64;MyModel.register_model(‘gcn’)
+class GCNModel(MyModel):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>def __init__(self, config, tokenizer):</dt><dd><p>super().__init__(config, tokenizer)
+# … custom architecture</p>
+</dd>
+</dl>
+</div></blockquote>
+<p># Usage - create() automatically handles model selection
+config = MyConfig(model=’gcn’)
+model = MyModel.create(config, tokenizer)</p>
+<p># ‘default’ is automatically the base class
+config = MyConfig(model=’default’)
+model = MyModel.create(config, tokenizer)  # Returns MyModel instance
+<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nd2py.utils.factory.FactoryMixin.MODEL_DICT">
+<span class="sig-name descname"><span class="pre">MODEL_DICT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin.MODEL_DICT" title="Link to this definition">#</a></dt>
+<dd><p>Registry of model classes keyed by name. Shared across all subclasses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.factory.FactoryMixin.register_model">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/factory.html#FactoryMixin.register_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin.register_model" title="Link to this definition">#</a></dt>
+<dd><p>Decorator to register a model subclass.</p>
+<dl>
+<dt>Usage:</dt><dd><p>&#64;MyModel.register_model(‘gcn’)
+class GCNModel(MyModel):</p>
+<blockquote>
+<div><p>…</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.factory.FactoryMixin.create">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="reference internal" href="../_modules/nd2py/utils/factory.html#FactoryMixin.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin.create" title="Link to this definition">#</a></dt>
+<dd><p>Factory method to create instance based on config.model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – Configuration object with model type specified in config.model</p></li>
+<li><p><strong>*args</strong> – Positional arguments passed to constructor</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to constructor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instantiated object of the type specified in config.model</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If config.model is not found in MODEL_DICT</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1119,6 +1225,15 @@ Example:
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.classproperty">nd2py.utils.classproperty module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty.classproperty"><code class="docutils literal notranslate"><span class="pre">classproperty</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty.classproperty.__init__"><code class="docutils literal notranslate"><span class="pre">classproperty.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.factory">nd2py.utils.factory module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin"><code class="docutils literal notranslate"><span class="pre">FactoryMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.MODEL_DICT"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.MODEL_DICT</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.register_model"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.register_model()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.factory.FactoryMixin.create"><code class="docutils literal notranslate"><span class="pre">FactoryMixin.create()</span></code></a></li>
 </ul>
 </li>
 </ul>
