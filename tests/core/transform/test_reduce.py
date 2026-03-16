@@ -29,7 +29,8 @@ reducer = Reduce(
     load_cache=True  # Don't load cache for fast unit tests
 )
 # Build rules with small l_max for fast tests
-reducer.prepare_rule_dict(l_max=5, force_rebuild=False, save_cache=True, show_progress=True)
+reducer.prepare_rule_dict(l_max=6, force_rebuild=False, save_cache=True, show_progress=True)
+# reducer.prepare_rule_dict_parallel(l_max=6, n_jobs=8, show_progress=True)
 
 for rule in reducer.reduce_rules[:10]:
     print(rule)

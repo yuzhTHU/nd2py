@@ -10,41 +10,41 @@ class LLMAPI:
     supported_models = []
 
     @classmethod
-    def load(cls, args) -> 'LLMAPI':
+    def load(cls, llm_provider: str, llm_model: str, generate_per_prompt: int = 2) -> 'LLMAPI':
         from . import (
             SiliconFlowAPI, OpenRouterAPI, OpenAIAPI,
             GeminiAPI, DeepSeekAPI, ManualAPI,
         )
-        if args.llm_provider:
-            if args.llm_provider.lower() == "siliconflow":
-                return SiliconFlowAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_provider.lower() == "openrouter":
-                return OpenRouterAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_provider.lower() == "openai":
-                return OpenAIAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_provider.lower() == "gemini":
-                return GeminiAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_provider.lower() == "deepseek":
-                return DeepSeekAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_provider.lower() == "manual":
-                return ManualAPI(model=args.llm_model, n=args.generate_per_prompt)
+        if llm_provider:
+            if llm_provider.lower() == "siliconflow":
+                return SiliconFlowAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_provider.lower() == "openrouter":
+                return OpenRouterAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_provider.lower() == "openai":
+                return OpenAIAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_provider.lower() == "gemini":
+                return GeminiAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_provider.lower() == "deepseek":
+                return DeepSeekAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_provider.lower() == "manual":
+                return ManualAPI(model=llm_model, n=generate_per_prompt)
             else:
-                raise ValueError(f"Unsupported provider: {args.llm_provider}.")
-        elif args.llm_model:
-            if args.llm_model in ManualAPI.supported_models:
-                return ManualAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_model in DeepSeekAPI.supported_models:
-                return DeepSeekAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_model in OpenAIAPI.supported_models:
-                return OpenAIAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_model in GeminiAPI.supported_models:
-                return GeminiAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_model in SiliconFlowAPI.supported_models:
-                return SiliconFlowAPI(model=args.llm_model, n=args.generate_per_prompt)
-            elif args.llm_model in OpenRouterAPI.supported_models:
-                return OpenRouterAPI(model=args.llm_model, n=args.generate_per_prompt)
+                raise ValueError(f"Unsupported provider: {llm_provider}.")
+        elif llm_model:
+            if llm_model in ManualAPI.supported_models:
+                return ManualAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_model in DeepSeekAPI.supported_models:
+                return DeepSeekAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_model in OpenAIAPI.supported_models:
+                return OpenAIAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_model in GeminiAPI.supported_models:
+                return GeminiAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_model in SiliconFlowAPI.supported_models:
+                return SiliconFlowAPI(model=llm_model, n=generate_per_prompt)
+            elif llm_model in OpenRouterAPI.supported_models:
+                return OpenRouterAPI(model=llm_model, n=generate_per_prompt)
             else:
-                raise ValueError(f"Unsupported model: {args.llm_model}.")
+                raise ValueError(f"Unsupported model: {llm_model}.")
         else:
             _logger.warning("No llm_provider or llm_model specified, returning base LLMAPI.")
             return LLMAPI()

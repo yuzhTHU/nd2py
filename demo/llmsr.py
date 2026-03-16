@@ -1,4 +1,4 @@
-import nd2py as nd2
+from nd2py.search.llmsr import LLMSR
 import numpy as np
 
 
@@ -43,7 +43,7 @@ def equation(x: np.ndarray, v: np.ndarray, params: np.ndarray) -> np.ndarray:
 
 
 namespace = {"np": np}
-est = nd2.LLMSR(
+est = LLMSR(
     prompt=prompt,
     eval_program=evaluate,
     seed_program=equation,

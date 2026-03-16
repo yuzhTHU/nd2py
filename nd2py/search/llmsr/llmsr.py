@@ -13,12 +13,14 @@ import requests
 import textwrap
 import numpy as np
 import pandas as pd
+from pathlib import Path
 from collections import defaultdict
 from numpy.random import default_rng
 from sklearn.base import BaseEstimator, RegressorMixin
 from typing import Dict, List, Tuple, Optional, Literal
 from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
-from ...utils import NamedTimer, render_markdown, render_python
+from ...utils import NamedTimer, ParallelTimer, render_markdown, render_python, tag2ansi
+from .api import LLMAPI
 
 dotenv.load_dotenv()
 
@@ -61,12 +63,11 @@ class LLMSR(BaseEstimator, RegressorMixin):
         temperature_init: float = 0.1,
         temperature_period: int = 30_000,
         random_state: Optional[int] = None,
-        log_per_iter: int = float("inf"),
-        log_per_sec: float = float("inf"),
-        log_detailed_speed=False,
+        log_per_iter: int = 1,
+        log_per_sec: float = None,
         save_path: str = None,
-        model: str | Literal["manual"] = "Qwen3-8B",
-        **kwargs,
+        llm_provider: str = "SiliconFlow",
+        llm_model: str = "Qwen3-8B",
     ):
         self.prompt = prompt
         self.eval_program = textwrap.dedent(inspect.getsource(eval_program))
@@ -83,20 +84,18 @@ class LLMSR(BaseEstimator, RegressorMixin):
         self.temperature_period = temperature_period
         self.log_per_iter = log_per_iter
         self.log_per_sec = log_per_sec
-        self.log_detailed_speed = log_detailed_speed
         self.save_path = save_path
-        self.model = model
+        self.llm_provider = llm_provider
+        self.llm_model = llm_model
+        self.api = LLMAPI.load(llm_provider, llm_model, self.programs_per_prompt)
 
         self.islands = []
         self.records = []
         self.best_model = None
         self._rng = default_rng(random_state)
-        self.speed_timer = NamedTimer(unit="iter", mode="pace")
-        self.token_timer = NamedTimer(unit="token", mode="speed")
-        if kwargs:
-            _logger.warning(
-                "Unknown args: %s", ", ".join(f"{k}={v}" for k, v in kwargs.items())
-            )
+        self.speed_timer = NamedTimer(unit="iter")
+        self.token_counter = ParallelTimer(unit="token")
+        self.price_counter = ParallelTimer(unit="$")
 
     def fit(self, data: np.ndarray | pd.DataFrame | Dict[str, np.ndarray]):
         """
@@ -115,54 +114,55 @@ class LLMSR(BaseEstimator, RegressorMixin):
             raise ValueError(f"Unknown type: {type(data)}")
 
         prompt = self.generate_prompt([Individual(self.seed_program)])
-        render_prompt = render_markdown(prompt)
-        _logger.note("Demo Prompt:\n%s", render_prompt)
-        # lines = render_prompt.splitlines()
-        # for i in range(0, len(lines), 10):
-        #     print("\n".join(lines[i : i + 10]))
-        with open(f"./{self.save_path}/demo_prompt.md", "w", encoding="utf-8") as f:
-            f.write(prompt)
+        _logger.note(f"Initial Prompt:\n{render_markdown(prompt)}")
+        if self.save_path:
+            with open(Path(self.save_path) / "prompt_demo.md", "w", encoding="utf-8") as f:
+                f.write(prompt)
 
         self.islands = self.init_islands(data)
         self.start_time = time.time()
         self.speed_timer.clear(reset_last_add_time=True)
-        self.token_timer.clear(reset_last_add_time=True)
+        self.token_counter.clear(reset_last_add_time=True)
+        self.price_counter.clear(reset_last_add_time=True)
         for n_iter in range(1, 1 + self.n_iter):
+            # Evolve for an Iteration
             self.islands = self.evolve(self.islands, data, n_iter=n_iter)
-
+            
+            # Update best
             best = max(sum(self.islands, []), key=lambda x: x.score).copy()
-            if self.save_path and best.program != self.best_model:
-                with open(f"{self.save_path}/best_model_{n_iter}.py", "w") as f:
-                    f.write(f"# Score={best.score}\n")
-                    f.write(best.program)
-            self.best_model = best.program
-
+            if best is not None and (self.best_model is None or best.score > self.best_model.score):
+                self.best_model = best
+                _logger.note(tag2ansi(f"Update Best Result with score [#66CCFF bold]{best.score}[reset]:\n{render_python(best.program)}"))
+                if self.save_path:
+                    with open(Path(self.save_path) / f"best_model_{n_iter}.py", "w") as f:
+                        f.write(f"# Score={best.score}\n")
+                        f.write(best.program)
+            
+            # Save Record & Print Log
             record = dict(
                 iter=n_iter,
-                time=time.time() - self.start_time,
+                time=self.speed_timer.time,
                 score=best.score,
                 length=len(best.program),
                 program=best.program,
                 population_size=len(sum(self.islands, [])),
             )
             if (
-                not n_iter % self.log_per_iter
-                or self.speed_timer.time > self.log_per_sec
+                (self.log_per_iter is not None and n_iter % self.log_per_iter == 0)
+                or (self.log_per_sec is not None and (time.time() - getattr(self, '_last_log_time', 0)) > self.log_per_sec)
             ):
-                log = {}
-                log["Iter"] = record["iter"]
-                log["Score"] = f"{record['score']:.6f}"
-                log["Length"] = record["length"]
-                log["Population Size"] = record["population_size"]
-                log["Best Model"] = f"\n{render_python(record['program'])}\n"
-                if self.log_detailed_speed:
-                    log["Speed"] = str(self.speed_timer)
-                    log["Token Usage"] = str(self.token_timer)
-                _logger.info(
-                    " | ".join(f"\033[4m{k}\033[0m: {v}" for k, v in log.items())
-                )
-                self.speed_timer.clear()
-                # self.token_timer.clear()  # Comment this for more accurate token usage estimation
+                log = {
+                    'Iter': record["iter"],
+                    'Score': f"{record['score']:.6f}",
+                    'Program Length': record["length"],
+                    'Population Size': record["population_size"],
+                    'Time Usage': self.speed_timer.to_str(mode='time', mode_of_detail='pace', mode_of_percent='by_time'),
+                    'Token Usage': self.token_counter.to_str(mode='count', mode_of_detail='speed', mode_of_percent='by_count'),
+                    'Money Usage': self.price_counter.to_str(mode='count', mode_of_detail='speed', mode_of_percent='by_count'),
+                    'Best Program': f"\n{render_python(record['program'])}\n"
+                }  
+                _logger.info(tag2ansi(" | ".join(f"[#66CCFF bold]{k}[reset]: {v}" for k, v in log.items())))
+                self._last_log_time = time.time()
 
             record = {
                 k: float(v) if isinstance(v, (np.float32, np.float64)) else v
@@ -170,13 +170,15 @@ class LLMSR(BaseEstimator, RegressorMixin):
             }
             self.records.append(record)
             if self.save_path:
-                with open(f"{self.save_path}/records.jsonl", "a") as f:
+                with open(Path(self.save_path) / "records.jsonl", "a") as f:
                     f.write(json.dumps(record) + "\n")
             if best.score > -1e-6:
-                _logger.info(
-                    f"Early stopping at iter {iter} with score {best.score}:\n{render_python(best.program)}"
-                )
+                _logger.info(tag2ansi(f"Early stopping at iter [#66CCFF bold]{n_iter}/{self.n_iter}[reset] with score [#66CCFF bold]{best.score}[reset]"))
                 break
+        _logger.note(tag2ansi(
+            f"Finished Searching after [#66CCFF bold]{n_iter}/{self.n_iter}[reset] iterations. "
+            f"Final Result with score [#66CCFF bold]{best.score}[reset]:\n{render_python(best.program)}"
+        ))
         return self
 
     def init_islands(self, data) -> List[List[Individual]]:
@@ -191,10 +193,20 @@ class LLMSR(BaseEstimator, RegressorMixin):
     def evolve(
         self, islands: List[List[Individual]], data, n_iter=None
     ) -> List[List[Individual]]:
+        self.speed_timer.add('Other Stuff')
+        
         island_idx, individuals = self.tournament(islands, data, n_iter=n_iter)
+        self.speed_timer.add('Tournament')
+        
         prompt = self.generate_prompt(individuals)
+        self.speed_timer.add('Generate Prompt')
+        
         children = self.generate_children(prompt)
+        self.speed_timer.add('Generate Children')
+        
         self.set_score(children, data)
+        self.speed_timer.add('Set Score')
+        
         islands[island_idx].extend(children)
         return islands
 
@@ -257,89 +269,19 @@ class LLMSR(BaseEstimator, RegressorMixin):
         return self.template.format(**materials)
 
     def generate_children(self, prompt: str) -> List[Individual]:
-        self.speed_timer.add("drop")
-        if self.model == "manual":
-            programs = self._manual(prompt)
-        else:
-            programs = self._silicon_flow(prompt)
-        self.speed_timer.add("request_llm")
-
         children = []
-        for program in programs:
-            clear_program = self.clear(program)
-            if clear_program:
+        for program in (gen := self.api(prompt)):
+            if (clear_program := self.clear(program)) is not None:
                 children.append(Individual(clear_program))
+        self.token_counter.add('total', gen.usage['token'].get('total', 0))
+        self.token_counter.add('prompt', gen.usage['token'].get('prompt', 0))
+        self.token_counter.add('answer', gen.usage['token'].get('answer', 0))
+        self.token_counter.add('reason', gen.usage['token'].get('reason', 0))
+        self.price_counter.add('total', gen.usage['price'].get('total', 0))
+        self.price_counter.add('prompt', gen.usage['price'].get('prompt', 0))
+        self.price_counter.add('answer', gen.usage['price'].get('answer', 0))
+        self.price_counter.add('reason', gen.usage['price'].get('reason', 0))
         return children
-
-    def _manual(self, prompt: str) -> str:
-        import pyperclip
-        import tiktoken
-
-        # Copy the prompt to clipboard and save it to a file for manual input
-        pyperclip.copy(prompt)
-        prompt_path = f"{self.save_path}/manual_prompt.md"
-        with open(prompt_path, "w") as f:
-            f.write(prompt)
-        _logger.note(
-            f"Prompt copied to clipboard (and saved to {prompt_path}). Please paste it into the LLM interface and return the generated program."
-        )
-        programs = []
-        for idx in range(1, self.programs_per_prompt + 1):
-            # Wait for user input or clipboard content
-            program = input(
-                f"Please enter the generated program {idx}/{self.programs_per_prompt} (press Enter to use clipboard): "
-            )
-            if not program.strip():
-                program = pyperclip.paste()
-            if program is not None:
-                programs.append(program)
-            # Calculate token usage
-            encoding = tiktoken.encoding_for_model("gpt-3.5")
-            prompt_tokens = len(encoding.encode(prompt))
-            answer_tokens = len(encoding.encode(program))
-            total_tokens = prompt_tokens + answer_tokens
-            self.token_timer.add("total", total_tokens, update_time=False)
-            self.token_timer.add("prompt", prompt_tokens, update_time=False)
-            self.token_timer.add("answer", answer_tokens)
-        return programs
-
-    def _silicon_flow(self, prompt: str) -> str:
-        # Load the LLM configuration from the environment variable ${LLM_CONFIG_PATH} or default path
-        path = os.environ.get("LLM_CONFIG_PATH", None)
-        path = path or os.path.join(os.path.dirname(__file__), "llm_config.yaml")
-        config = yaml.load(open(path, "r"), Loader=yaml.FullLoader)
-        if self.model not in config:
-            raise ValueError(
-                f"Model {self.model} not found in config file: {path} (available models: {', '.join(config.keys())})"
-            )
-        cfg = config[self.model]
-        # Send the request to the LLM
-        url = cfg["url"]
-        payload = cfg["payload"] | {
-            "messages": [{"role": "user", "content": prompt}],
-            "n": self.programs_per_prompt,
-        }
-        headers = {k: os.path.expandvars(v) for k, v in cfg["headers"].items()}
-        response = requests.request("POST", url, json=payload, headers=headers)
-        if response.status_code != 200:
-            _logger.error(
-                "Error requesting LLM: %s\nResponse: %s",
-                result.get("error", "Unknown error"),
-                response.text,
-            )
-            return []
-        result = response.json()
-        usage = result["usage"]
-        total_tokens = usage["total_tokens"]
-        prompt_tokens = usage["prompt_tokens"]
-        answer_tokens = usage["completion_tokens"]
-        reason_tokens = usage["completion_tokens_details"].get("reasoning_tokens", 0)
-        self.token_timer.add("total", total_tokens, update_time=False)
-        self.token_timer.add("prompt", prompt_tokens, update_time=False)
-        self.token_timer.add("answer", answer_tokens, update_time=False)
-        self.token_timer.add("reason", reason_tokens)
-        programs = [choice["message"]["content"] for choice in result["choices"]]
-        return programs
 
     def clear(self, program: str) -> Optional[str]:
         lines = program.split("\n")

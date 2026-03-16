@@ -23,7 +23,8 @@ dependencies = [
   "rich",
   "dotenv",
   "requests",
-  "pyperclip"
+  "pyperclip",
+  "platformdirs",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

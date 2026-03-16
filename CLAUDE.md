@@ -10,6 +10,8 @@ conda activate ./venv
 pip install -e ".[all]"  # Installs nd2py with torch and torch_geometric
 ```
 
+**Note**: Always use `./venv/bin/python` to run scripts and tests.
+
 ## Development Commands
 
 ```shell
@@ -84,6 +86,113 @@ expr = x + nd.aggr(y * nd.sour(x))
 est = nd.MCTS(variables=[x, y], n_iter=3000, ...)
 est.fit(X, y)
 result = est.predict(X)
+```
+
+## LLMSR Usage
+
+**LLMSR** is a Large Language Model-guided Symbolic Regression algorithm.
+
+### Import
+
+```python
+from nd2py.search.llmsr import LLMSR
+```
+
+### Supported LLM APIs
+
+- **SiliconFlowAPI**: `Qwen3-8B` (FREE), `Deepseek-V3` (PAID)
+- **DeepSeekAPI**: `deepseek-chat`, `deepseek-reasoner` (PAID)
+- **OpenAIAPI**: `gpt-4o-mini`, `gpt-5-mini` (PAID)
+- **GeminiAPI**: `gemini-2.5-pro`, `gemini-2.5-flash`, etc. (PAID)
+- **OpenRouterAPI**: `kimi-k2`, `gemini-2.5-pro`, `gemini-2.5-flash` (PAID)
+- **ManualAPI**: `manual` (manual input via clipboard)
+
+### Environment Variables
+
+```shell
+# SiliconFlow (for Qwen3-8B and Deepseek-V3)
+export SILICONFLOW_API_KEY="your-api-key"
+
+# DeepSeek
+export DEEPSEEK_API_KEY="your-api-key"
+
+# OpenAI/Azure
+export OPENAI_API_KEY="your-api-key"
+export OPENAI_API_VERSION="2024-xx-xx"
+export OPENAI_ENDPOINT="https://your-endpoint.openai.azure.com/"
+
+# Gemini
+export GEMINI_API_KEY="your-api-key"
+export HTTP_PROXY="http://your-proxy:port"  # Optional
+export HTTPS_PROXY="http://your-proxy:port"
+```
+
+### Basic Usage
+
+```python
+from nd2py.search.llmsr import LLMSR
+import numpy as np
+
+# Define the prompt for LLM
+prompt = """Find the mathematical function skeleton.
+You should generate `def equation(...)` directly."""
+
+# Define evaluation function
+def evaluate(x: np.ndarray, v: np.ndarray, y: np.ndarray, maxn_params=10) -> float:
+    from scipy.optimize import minimize
+
+    def loss(params):
+        y_pred = equation(x, v, params)
+        return np.mean((y_pred - y) ** 2)
+
+    result = minimize(lambda p: loss(p), [1.0] * maxn_params, method="BFGS")
+    return -result.fun if np.isfinite(result.fun) else float('-inf')
+
+# Define seed program (equation skeleton)
+def equation(x: np.ndarray, v: np.ndarray, params: np.ndarray) -> np.ndarray:
+    """Initial equation skeleton."""
+    return params[0] * x + params[1] * v
+
+# Initialize and run LLMSR
+est = LLMSR(
+    prompt=prompt,
+    eval_program=evaluate,
+    seed_program=equation,
+    namespace={"np": np},
+    model="Qwen3-8B",  # or "manual", "deepseek-chat", "gpt-4o-mini", etc.
+    n_islands=10,
+    n_iter=100,
+    programs_per_prompt=2,
+    log_per_iter=1,
+    save_path="./logs/llmsr",
+)
+
+# Prepare data
+data = {
+    "x": np.random.random(100),
+    "v": np.random.random(100),
+    "y": 1.0 * np.sin(2.0 * np.random.random(100)) + 0.5 * np.random.random(100)**2,
+}
+
+# Run search
+est.fit(data)
+print(est.best_model)
+```
+
+### Testing
+
+```shell
+# Test SiliconFlow API (Qwen3-8B is FREE)
+./venv/bin/python -m pytest tests/search/llmsr/test_siliconflow_api.py -v --run-slow
+
+# Test DeepSeek API (requires API credits)
+./venv/bin/python -m pytest tests/search/llmsr/test_deepseek_api.py -v --run-slow --paid
+
+# Test OpenAI API (requires API credits)
+./venv/bin/python -m pytest tests/search/llmsr/test_openai_api.py -v --run-slow --paid
+
+# Run demo script
+./venv/bin/python demo/llmsr.py
 ```
 
 ## TODO
