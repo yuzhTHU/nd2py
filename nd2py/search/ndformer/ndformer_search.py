@@ -6,6 +6,7 @@ Uses a pre-trained NDFormer model to guide MCTS search via PUCT
 """
 import torch
 import numpy as np
+import pandas as pd
 from typing import List, Dict, Tuple, Optional, Literal
 from ..mcts import MCTS, Node
 from ... import core as nd
