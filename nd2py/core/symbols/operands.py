@@ -3,7 +3,7 @@ import warnings
 from functools import reduce
 from typing import Optional, List, Set
 from .empty import Empty
-from .symbols import Symbol
+from .symbol import Symbol
 from ..nettype import NetType
 from ..context.warn_once import warn_once
 

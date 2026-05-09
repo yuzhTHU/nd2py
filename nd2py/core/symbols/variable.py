@@ -1,6 +1,6 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from typing import Set, Optional
-from .symbols import Symbol
+from .symbol import Symbol
 from ..nettype import NetType, ALL_NETTYPES
 
 __all__ = ["Variable"]

@@ -17,7 +17,7 @@ vars = {'x': np.random.rand(100, 1), 'y': np.random.rand(100, 1), 'z': np.random
     (dict(variables=[x],     n_iter=100, random_state=42, binary=[nd.Add, nd.Mul], unary=[nd.Sin], const_range=None), nd.sin(2*x),   vars),
 ])
 def test_mcts(flags, node, vars):
-    est = nd.MCTS(**flags)
+    est = nd.search.mcts.MCTS(**flags)
     X = vars
     y = node.eval(vars)
     est.fit(X, y)

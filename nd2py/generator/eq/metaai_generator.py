@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
 import random
 import logging
@@ -10,56 +11,6 @@ from ... import core as nd
 if TYPE_CHECKING:
     from ...core.nettype import NetType
     from ...core.symbols import *
-
-
-def decompose(
-    eqtrees:Symbol|List[Symbol], 
-    route:List[List[Symbol]] = [],
-    route2:List[Symbol] = [nd.Empty()]
-) -> Generator[List[Tuple[List[Symbol], Symbol]], None, None]:
-    """
-    将 eqtrees 分解为 Leaf Symbol 的组合，尝试所有可能的分解方式，每次返回一种分解方式
-    Input: exp(x+y)*(x+z)
-    Output1:
-        [exp(x + y) * (x + z)] | ?
-        [exp(x + y), x + z] | ? * ?
-        [x + y, x + z] | exp(?) * ?
-        [x, y, x + z] | exp(? + ?) * ?
-        [x, y, x, z] | exp(? + ?) * (? + ?)
-    Output2:
-        [exp(x + y) * (x + z)] | ?
-        [exp(x + y), x + z] | ? * ?
-        [x + y, x + z] | exp(?) * ?
-        [x + y, x, z] | exp(?) * (? + ?)
-        [x, y, x, z] | exp(? + ?) * (? + ?)
-    Output3:
-        [exp(x + y) * (x + z)] | ?
-        [exp(x + y), x + z] | ? * ?
-        [exp(x + y), x, z] | ? * (? + ?)
-        [x + y, x, z] | exp(?) * (? + ?)
-        [x, y, x, z] | exp(? + ?) * (? + ?)
-    """
-    if isinstance(eqtrees, nd.Symbol): eqtrees = [eqtrees]
-    if all([eq.n_operands == 0 for eq in eqtrees]): 
-        yield list(zip([*route, eqtrees], route2))
-    else:
-        for idx, eq in enumerate(eqtrees):
-            if eq.n_operands == 0: continue
-            f = route2[-1].copy()
-            cnt = -1
-            for n in f.preorder():
-                if isinstance(n, nd.Empty): 
-                    cnt +=1
-                    if cnt == idx: 
-                        if n.parent: n.replace(eq.__class__())
-                        else: f = eq.__class__()
-                        break
-            else:
-                raise Exception('Error')
-            yield from decompose([*eqtrees[:idx], *eq.operands, *eqtrees[idx+1:]], 
-                                 [*route, eqtrees],
-                                 [*route2, f])
-
 
 
 class MetaAIGenerator:
@@ -96,7 +47,7 @@ class MetaAIGenerator:
         self.num_nodes = num_nodes
         self.edge_list = edge_list
 
-    def generate_eqtree(self, nettypes: Set[NetType], n_operators, n_var) -> nd.Symbol:
+    def sample(self, nettypes: Set[NetType], n_operators: int = None, n_var: int = None) -> nd.Symbol:
         if isinstance(nettypes, str):
             nettypes = {nettypes}
         

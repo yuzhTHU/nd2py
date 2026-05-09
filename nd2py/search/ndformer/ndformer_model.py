@@ -1,4 +1,5 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import sys
 import torch
 import logging
@@ -9,8 +10,9 @@ import torch.nn.functional as F
 from dataclasses import dataclass
 from torch_geometric.utils import to_dense_batch
 from typing import List, Dict, Tuple, Union, Literal
-from .ndformer_config import NDformerConfig
-from .ndformer_tokenizer import NDformerTokenizer
+from .ndformer_config import NDFormerModelConfig
+from .ndformer_tokenizer import NDFormerTokenizer
+from ...utils.factory import FactoryMixin
 from ... import utils
 
 # See https://github.com/pytorch/pytorch/issues/100469
@@ -18,8 +20,29 @@ warnings.filterwarnings("ignore", message="Converting mask without torch.bool dt
 _logger = logging.getLogger('nd2py.ndformer_model')
 
 
-class NDformerModel(nn.Module):
-    def __init__(self, config: NDformerConfig, tokenizer: NDformerTokenizer):
+class NDFormerModel(FactoryMixin, nn.Module):
+    """
+    Base class for NDFormer models.
+
+    Inherits from FactoryMixin which provides:
+    - NDFormerModel.register_model('name'): Decorator to register subclasses
+    - NDFormerModel.create(config, tokenizer): Factory method to create instances
+
+    The base class is automatically registered as 'default' model.
+
+    Example:
+        @NDFormerModel.register_model('gcn')
+        class GCNNDFormer(NDFormerModel):
+            def __init__(self, config, tokenizer):
+                super().__init__(config, tokenizer)
+                # ... custom architecture ...
+
+        # Usage
+        config = NDFormerModelConfig(model='gcn')
+        model = NDFormerModel.create(config, tokenizer)
+    """
+
+    def __init__(self, config: NDFormerModelConfig, tokenizer: NDFormerTokenizer):
         super().__init__()
         self.config = config
         self.tokenizer = tokenizer
@@ -31,11 +54,11 @@ class NDformerModel(nn.Module):
         )
         
         self.gnn_encoder = utils.nn.GNN(
-            self.config.d_emb, 
-            self.config.n_GNN_layers, 
-            self.config.d_emb,
-            self.config.d_emb, 
-            self.config.dropout
+            d_emb=self.config.d_emb, 
+            n_layers=self.config.n_GNN_layers, 
+            node_dim=self.config.d_emb,
+            edge_dim=self.config.d_emb, 
+            dropout=self.config.dropout
         )
 
         self.transformer_encoder = nn.TransformerEncoder(nn.TransformerEncoderLayer(
@@ -58,13 +81,14 @@ class NDformerModel(nn.Module):
 
         self.fc_head = nn.Linear(self.config.d_emb, tokenizer.vocab_size)
 
-    def encode_graph(self, data_node, data_edge, edge_list, num_nodes, node_batch_idx=None, timer=None):
+    def encode_graph(self, data_node, data_edge, data_scalar, edge_list, num_nodes, node_batch_idx=None, timer=None):
         """
         图编码阶段：仅在图拓扑变更或初始化时调用一次。
 
         Args:
         - data_node: (SampleNum, NodeNum, max_var_num+1, 3)
         - data_edge: (SampleNum, EdgeNum, max_var_num+1, 3)
+        - data_scalar: (SampleNum, BatchNum, max_var_num+1, 3)
         - edge_list: (2, EdgeNum)
         - num_nodes: int
         - node_batch_idx: (TotalNodeNum,) 每个节点所属图的索引
@@ -76,20 +100,22 @@ class NDformerModel(nn.Module):
         # Embed
         node_emb = self.embedder(data_node).flatten(-3, -1) # (SampleNum, TotalNodeNum, (max_var_num+1)*3*d_emb)
         edge_emb = self.embedder(data_edge).flatten(-3, -1) # (SampleNum, TotalEdgeNum, (max_var_num+1)*3*d_emb)
-
+        scalar_emb = self.embedder(data_scalar).flatten(-3, -1) # (SampleNum, TotalBatchNum, (max_var_num+1)*3*d_emb)
         node_emb = self.linear(node_emb) # (SampleNum, TotalNodeNum, d_emb)
         edge_emb = self.linear(edge_emb) # (SampleNum, TotalEdgeNum, d_emb)
-
+        scalar_emb = self.linear(scalar_emb) # (SampleNum, TotalBatchNum, d_emb)
+        if node_batch_idx is not None:
+            scalar_emb = scalar_emb[:, node_batch_idx, :] # (SampleNum, TotalNodeNum, d_emb)
         if timer is not None:
             torch.cuda.synchronize()
             timer.add('Data-Embedding')
-
-        gnn_out, _ = self.gnn_encoder(node_emb, edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
+        # GNN Encode
+        gnn_out, _ = self.gnn_encoder(node_emb + scalar_emb, edge_emb, edge_list, num_nodes) # (SampleNum, TotalNodeNum, d_emb)
         gnn_out = gnn_out.transpose(0, 1) # (SampleNum, TotalNodeNum, d_emb) -> (TotalNodeNum, SampleNum, d_emb)
         if timer is not None:
             torch.cuda.synchronize()
             timer.add('GNN-Encoder')
-
+        # To Dense Batch
         if node_batch_idx is not None:
             (
                 dense_nodes, # (BatchNum, MaxNodeNum, SampleNum, d_emb)
@@ -102,12 +128,12 @@ class NDformerModel(nn.Module):
             dense_nodes = dense_nodes.flatten(1, 2) # (BatchNum, NodeNum*SampleNum, d_emb)
             valid_mask = valid_mask[..., None].expand(batch_num, node_num, sample_num).flatten(1, 2) # (BatchNum, NodeNum*SampleNum)
             src_key_padding_mask = ~valid_mask # padding_mask 中 True 代表需要被忽略的 Pad
-            if timer is not None:
-                torch.cuda.synchronize()
-                timer.add('To-Dense-Batch')
         else:
             dense_nodes = gnn_out.unsqueeze(0).flatten(1, 2) # (1, NodeNum*SampleNum, d_emb)
             src_key_padding_mask = None
+        if timer is not None:
+            torch.cuda.synchronize()
+            timer.add('To-Dense-Batch')
 
         memory = self.transformer_encoder(
             dense_nodes, # ([BatchNum,] NodeNum*SampleNum, d_emb)
@@ -170,6 +196,7 @@ class NDformerModel(nn.Module):
         memory, memory_key_padding_mask = self.encode_graph(
             data_node=batch_dict["data_node"], # (SampleNum, TotalNodes, max_var_num+1, 3)
             data_edge=batch_dict["data_edge"], # (SampleNum, TotalEdges, max_var_num+1, 3)
+            data_scalar=batch_dict["data_scalar"], # (SampleNum, 1, max_var_num+1, 3)
             edge_list=batch_dict["edge_list"], # (2, TotalEdges)
             num_nodes=batch_dict["num_nodes"], # int
             node_batch_idx=batch_dict.get("node_batch_idx", None), # (Batch,)

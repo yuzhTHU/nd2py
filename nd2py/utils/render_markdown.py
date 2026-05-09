@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import re
 from rich.console import Console
 from rich.markdown import Markdown

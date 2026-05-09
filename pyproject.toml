@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nd2py"
-version = "3.0.1"
+version = "3.2.0"
 readme = "README.md"
 description = "nd2py (Neural Discovery of Network Dynamics) symbolic regression"
 authors = [{name="YuMeow", email="yuzh19@tsinghua.org.cn"}]
@@ -23,7 +23,8 @@ dependencies = [
   "rich",
   "dotenv",
   "requests",
-  "pyperclip"
+  "pyperclip",
+  "platformdirs",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -58,9 +59,10 @@ dev = [
 minversion = "7.0"
 addopts = "-q"
 testpaths = ["tests"]
-# 新增这行，注册 slow 标记
+# 注册标记
 markers = [
     "slow: marks tests as slow (integration tests)",
+    "paid: marks tests as paid API calls (requires credits)",
 ]
 
 [tool.setuptools.packages.find]

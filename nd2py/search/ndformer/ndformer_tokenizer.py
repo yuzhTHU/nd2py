@@ -1,10 +1,11 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from __future__ import annotations
 import json
 import warnings
 import numpy as np
 from typing import List, Dict, Tuple, Optional, Literal
 from ... import core as nd
-from .ndformer_config import NDformerConfig
+from .ndformer_config import NDFormerModelConfig
 
 
 class NumberTokenizer:
@@ -77,8 +78,8 @@ class NumberTokenizer:
         return values
 
 
-class NDformerTokenizer:
-    def __init__(self, config: NDformerConfig, variables: Optional[List[nd.Symbol]] = None):
+class NDFormerTokenizer:
+    def __init__(self, config: NDFormerModelConfig, variables: Optional[List[nd.Symbol]] = None):
         self.config = config
 
         # Special Tokens        
@@ -90,7 +91,8 @@ class NDformerTokenizer:
         # Variable Tokens
         self.variables = (
             [nd.Variable(f'n{i}', nettype='node') for i in range(1, 1+config.max_var_num)] +
-            [nd.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)]
+            [nd.Variable(f'e{i}', nettype='edge') for i in range(1, 1+config.max_var_num)] +
+            [nd.Variable(f's{i}', nettype='scalar') for i in range(1, 1+config.max_var_num)]
         ) if variables is None else variables
         self.node_var_tokens = [f'NODEVAR_{i}' for i in range(1, 1+config.max_var_num)]
         self.edge_var_tokens = [f'EDGEVAR_{i}' for i in range(1, 1+config.max_var_num)]
@@ -117,16 +119,20 @@ class NDformerTokenizer:
         # Nettype Tokens
         self.nettype_tokens = [f'NETTYPE-{nt.upper()}' for nt in ['NODE', 'EDGE', 'SCALAR', 'NONE']]
 
+        # Empty Token
+        self.empty_token = 'EMPTY'
+
         # All Tokens
         self.vocab = [
             self.pad_token, self.sos_token, self.eos_token, self.unk_token,
-            *self.node_var_tokens, 
-            *self.edge_var_tokens, 
+            *self.node_var_tokens,
+            *self.edge_var_tokens,
             *self.scalar_var_tokens,
-            *self.config.operands, 
+            *self.config.operands,
             *self.num_tokenizer.vocab,
             *self.parent_tokens,
             *self.nettype_tokens,
+            self.empty_token,
         ]
         self.token2id = {token: idx for idx, token in enumerate(self.vocab)}
         self.id2token = {idx: token for token, idx in self.token2id.items()}
@@ -148,7 +154,9 @@ class NDformerTokenizer:
         nettypes = []
         symbol_list = list(eqtree.iter_preorder())
         for symbol in symbol_list:
-            if isinstance(symbol, nd.Variable):
+            if isinstance(symbol, nd.Empty):
+                tokens.append(self.empty_token)
+            elif isinstance(symbol, nd.Variable):
                 tokens.append(self.variable_mapping[symbol.name])
             elif isinstance(symbol, nd.Number):
                 tokens.extend(self.num_tokenizer.encode(symbol.value, mode='token'))
@@ -174,7 +182,7 @@ class NDformerTokenizer:
     def decode(self, tokens: List[str], parents: List[str], nettypes: List[str], mode:Literal['token', 'token_id']='token') -> nd.Symbol:
         if mode == 'token_id':
             tokens = [self.id2token[token_id] for token_id in tokens]
-        
+
         preorder = []
         for token in (tokens := iter(tokens)):
             if token in [self.sos_token, self.pad_token, self.eos_token]:
@@ -185,6 +193,8 @@ class NDformerTokenizer:
                 symbol = nd.Variable(self.i_variable_mapping[token])
             elif token in self.config.operands:
                 symbol = getattr(nd, token)()
+            elif token == self.empty_token:
+                symbol = nd.Empty()
             else:
                 raise ValueError(f"Unknown token during decoding: {token}")
             preorder.append(symbol)
@@ -218,7 +228,7 @@ class NDformerTokenizer:
         }
 
     @classmethod
-    def from_dict(cls, config: dict) -> 'NDformerTokenizer':
+    def from_dict(cls, config: dict) -> 'NDFormerTokenizer':
         return cls(config["operators"], config["max_dim_node"], config["max_dim_edge"])
 
     def save(self, filepath: str):
@@ -227,7 +237,7 @@ class NDformerTokenizer:
             json.dump(self.to_dict(), f, indent=4)
 
     @classmethod
-    def load(cls, filepath: str) -> 'NDformerTokenizer':
+    def load(cls, filepath: str) -> 'NDFormerTokenizer':
         """从本地 JSON 文件加载"""
         with open(filepath, 'r', encoding='utf-8') as f:
             config = json.load(f)
@@ -238,6 +248,6 @@ class NDformerTokenizer:
         重写等于运算符。
         用法: if tokenizer == cached_tokenizer: print("配置一致！")
         """
-        if not isinstance(other, NDformerTokenizer):
+        if not isinstance(other, NDFormerTokenizer):
             return False
         return self.to_dict() == other.to_dict()

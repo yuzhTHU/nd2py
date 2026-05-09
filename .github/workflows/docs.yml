@@ -26,7 +26,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' # 可以根据你的实际需求修改
+          python-version: '3.12' # 可以根据你的实际需求修改
 
       # 3. 安装依赖
       - name: Install dependencies

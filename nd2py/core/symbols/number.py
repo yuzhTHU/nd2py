@@ -1,7 +1,7 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import numpy as np
 from typing import Set, Optional
-from .symbols import Symbol, is_number
+from .symbol import Symbol, is_number
 from ..nettype import NetType
 from ..context.set_fitable import set_fitable
 

@@ -22,7 +22,7 @@ class FoldConstant(Visitor):
         vars: dict = {},
         edge_list: Tuple[List[int], List[int]] = None,
         num_nodes: int = None,
-    ):
+    ) -> Symbol:
         """
         Args:
         - node (Symbol): 要访问的节点。

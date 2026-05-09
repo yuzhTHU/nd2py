@@ -6,17 +6,18 @@ import networkx as nx
 from numpy.random import default_rng
 from typing import Tuple, List, Literal, Set, TYPE_CHECKING
 from ... import core as nd
-from .ndformer_config import NDformerConfig
+from .ndformer_config import NDFormerModelConfig
 if TYPE_CHECKING:
     from ...core.nettype import NetType
     from ...core.symbols import *
 
-class NDformerEqtreeGenerator:
+
+class NDFormerEqtreeGenerator:
     def __init__(
         self,
         variables: List[Variable],
         binary: List[str|Symbol] = [nd.Add, nd.Sub, nd.Mul, nd.Div],
-        unary: List[str|Symbol] = [nd.Sqrt, nd.Log, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan],
+        unary: List[str|Symbol] = [nd.Sqrt, nd.SqrtAbs, nd.Pow2, nd.Pow3, nd.Log, nd.LogAbs, nd.Exp, nd.Abs, nd.Neg, nd.Inv, nd.Sin, nd.Cos, nd.Tan, nd.Tanh, nd.Sigmoid, nd.Aggr, nd.Sour, nd.Targ, nd.Readout],
         full_prob: float = 0.5,
         depth_range: Tuple[int, int] = (2, 6),
         const_range: Tuple[float, float] = None,
@@ -109,8 +110,8 @@ class NDformerEqtreeGenerator:
         return eqtree
 
 
-class NDformerGraphGenerator:
-    def __init__(self, config: NDformerConfig):
+class NDFormerGraphGenerator:
+    def __init__(self, config: NDFormerModelConfig):
         self.min_node_num = config.min_node_num
         self.max_node_num = config.max_node_num
         self.min_edge_num = config.min_edge_num
@@ -195,8 +196,8 @@ class NDformerGraphGenerator:
         return edge_list, num_nodes
 
 
-class NDformerDataGenerator:
-    def __init__(self, config: NDformerConfig):
+class NDFormerDataGenerator:
+    def __init__(self, config: NDFormerModelConfig):
         self.min_var_val = config.min_var_val
         self.max_var_val = config.max_var_val
         self.min_coeff_val = config.min_coeff_val

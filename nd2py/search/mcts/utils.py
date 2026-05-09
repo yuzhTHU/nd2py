@@ -1,3 +1,4 @@
+# Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 import logging
 import numpy as np
 import nd2py as nd
