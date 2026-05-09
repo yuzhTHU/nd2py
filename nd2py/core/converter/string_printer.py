@@ -1,6 +1,5 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
-import torch
 import numbers
 import numpy as np
 from typing import Generator, Tuple, Dict, List, TYPE_CHECKING
@@ -75,7 +74,7 @@ class StringPrinter(Visitor):
                 raise ValueError(
                     f"Unknown nettype: {node.nettype}. Expected 'scalar', 'node', or 'edge'."
                 )
-        if isinstance(node.value, torch.Tensor):
+        if type(node.value).__module__.startswith("torch"):
             content = np.array(node.value.tolist())
         else:
             content = np.array(node.value)

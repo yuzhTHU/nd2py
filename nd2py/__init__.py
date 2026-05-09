@@ -1,20 +1,36 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
-from .core import *
-from . import dataset, generator, search, utils
+from typing import TYPE_CHECKING
+from . import core, dataset, generator, search, utils
 
-# 定义模块级别的 __getattr__ 拦截
-def __getattr__(name):
-    if name == '__all__':
-        # Triggered when 'from nd2py import *' is used
+# 扁平化 core 中模块的导入，提供更简洁的接口
+if TYPE_CHECKING:
+    from .core import *
+
+from . import core
+_export_modules = [core]
+
+def __getattr__(name: str):
+    if name == "__all__":
         import warnings
         warnings.warn(
-            "Detected 'from nd2py import *'. WARNING: This will shadow standard Python built-in functions (such as 'sum').\n"
-            "It is strongly recommended to use explicit imports, e.g., 'from nd2py import sum' or 'import nd2py as nd'.",
-            category=UserWarning,
-            stacklevel=2
+            "Using `from nd2py import *` is strongly discouraged as "
+            "it overrides Python built-in functions like `max`, `sum`, etc. "
+            "Please use `import nd2py as nd` instead.",
+            UserWarning,
+            stacklevel=2  # stacklevel=2 让警告指向用户的调用代码，而不是 __init__.py
         )
-        # 动态获取当前模块（__init__.py）中所有不以 '_' 开头的全局变量和模块
-        return [n for n in globals() if not n.startswith('_')]
+        return __dir__()
 
-    # 对于其他不存在的属性，保持默认的报错行为
-    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+    for mod in _export_modules:
+        if name in dir(mod): # 使用 dir 避免触发下层模块的 __getattr__ 导致懒加载失效
+            return getattr(mod, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+def __dir__():
+    exclude_names = {"TYPE_CHECKING", "core"}
+    names = {name for name in globals() if not name.startswith("_") and name not in exclude_names}
+    for mod in _export_modules:
+        names.update([n for n in dir(mod) if not n.startswith("_")])
+    return list(names)
+
+# __all__ = __dir__() # 不定义 __all__, 以保证用户使用 from nd2py import * 时触发 __getattr__ 中的警告

@@ -1,6 +1,5 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from .attr_dict import *
-from .auto_gpu import *
 from .logger import *
 from .metrics import *
 from .plot import *
@@ -12,4 +11,14 @@ from .classproperty import classproperty
 from .render_python import render_python
 from .render_markdown import render_markdown
 from .fix_parser import add_minus_flags, add_negation_flags
-from . import nn
+from .lazy_loader import setup_lazy_imports
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .auto_gpu import AutoGPU
+    from . import nn
+
+__getattr__, __dir__, __all__ = setup_lazy_imports(__name__, {
+    "AutoGPU": (".auto_gpu", "nn"),
+    "nn": (".nn", "nn"),
+})

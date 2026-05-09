@@ -6,7 +6,6 @@ import random
 import logging
 import sklearn
 import numpy as np
-import sympy as sp
 import nd2py as nd
 import pandas as pd
 from tqdm import tqdm
@@ -21,9 +20,13 @@ _logger = logging.getLogger(f'nd2py.{__name__}')
 
 def simplify(eq: Symbol):
     try:
+        import sympy as sp
         expr = sp.parse_expr(eq.to_str())
         expr = sp.simplify(expr)
         return nd.parse_expr(str(expr))
+    except ImportError:
+        _logger.warning("SymPy not installed, cannot simplify expression")
+        return eq.copy()
     except:
         return eq.copy()
 

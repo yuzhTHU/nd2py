@@ -14,7 +14,7 @@ from ... import core as nd
 from ...utils.timing import Timer, NamedTimer
 from sklearn.base import BaseEstimator, RegressorMixin
 from ...generator.eq.gplearn_generator import GPLearnGenerator
-from ... import BFGSFit
+from ...core import BFGSFit
 if TYPE_CHECKING:
     from ...core import *
 
