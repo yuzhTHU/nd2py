@@ -16,3 +16,5 @@ __pycache__/
 /venv.bak/
 /docs/build/
 /dist/
+
+**/rust_*/target/
