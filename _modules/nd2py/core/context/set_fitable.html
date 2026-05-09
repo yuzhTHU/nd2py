@@ -316,13 +316,13 @@
 <span class="n">_local</span><span class="o">.</span><span class="n">set_fitable</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="set_fitable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.set_fitable.set_fitable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.set_fitable">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_fitable</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_local</span><span class="p">,</span> <span class="s2">&quot;set_fitable&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="no_set_fitable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.set_fitable.no_set_fitable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.no_set_fitable">[docs]</a>
 <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">no_set_fitable</span><span class="p">():</span>
     <span class="n">prev</span> <span class="o">=</span> <span class="n">set_fitable</span><span class="p">()</span>

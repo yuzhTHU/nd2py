@@ -316,17 +316,17 @@
 
 
 <div class="viewcode-block" id="collect_numbers">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.collect_numbers">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.collect_numbers">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">collect_numbers</span><span class="p">(</span><span class="n">expression</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="n">op</span><span class="o">.</span><span class="n">fitable</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="BFGSFit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.BFGSFit">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BFGSFit</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">):</span>
 <div class="viewcode-block" id="BFGSFit.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.BFGSFit.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">expression</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span>
@@ -349,7 +349,7 @@
 
 
 <div class="viewcode-block" id="BFGSFit.fit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.fit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.BFGSFit.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
@@ -408,7 +408,7 @@
 
 
 <div class="viewcode-block" id="BFGSFit.predict">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.bfgs_fit.BFGSFit.predict">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.BFGSFit.predict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        用拟合好的 expression 去计算新的 X 上的输出。</span>

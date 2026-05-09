@@ -363,32 +363,32 @@
 <span class="n">readout</span> <span class="o">=</span> <span class="n">Readout</span>
 
 <div class="viewcode-block" id="sum">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.sum">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.sum">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="o">*</span><span class="n">operands</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="prod">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.prod">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.prod">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">prod</span><span class="p">(</span><span class="o">*</span><span class="n">operands</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">mul</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="maximum">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.maximum">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.maximum">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">maximum</span><span class="p">(</span><span class="o">*</span><span class="n">operands</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="minimum">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.minimum">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.minimum">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">minimum</span><span class="p">(</span><span class="o">*</span><span class="n">operands</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="Constant">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.Constant">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Constant">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">Constant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">nettype</span><span class="p">:</span> <span class="n">NetType</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    一个工厂函数，返回一个 fitable 为 False 的 Number 对象。</span>
@@ -397,7 +397,7 @@
 
 
 <div class="viewcode-block" id="variables">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.functions.variables">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.variables">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">variables</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    一个工厂函数，返回一个或多个 Variable 对象。</span>

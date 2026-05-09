@@ -1,0 +1,1037 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nd2py.search.ndformer.ndformer_mcts &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/search/ndformer/ndformer_mcts';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api_reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.api.html">nd2py.search.llmsr.api package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.e2esr.html">nd2py.search.e2esr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for nd2py.search.ndformer.ndformer_mcts</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">NDFormer-guided MCTS for Symbolic Regression</span>
+
+<span class="sd">Uses a pre-trained NDFormer model to guide MCTS search via PUCK</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">fields</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..mcts</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCTS</span><span class="p">,</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...</span><span class="w"> </span><span class="kn">import</span> <span class="n">core</span> <span class="k">as</span> <span class="n">nd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ndformer_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDFormerModelConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ndformer_tokenizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDFormerTokenizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ndformer_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDFormerModel</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;nd2py.</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NDFormerNode">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NDFormerNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="NDFormerNode.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span> <span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_prior</span> <span class="o">=</span> <span class="mf">1.0</span></div>
+
+
+<div class="viewcode-block" id="NDFormerNode.UCT">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode.UCT">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">UCT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        PUCT score for a node</span>
+
+<span class="sd">        PUCT(s, a) = Q(s, a) + c_puct * P(s, a) * sqrt(sum(N) / (1 + N(s, a)))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="n">exploration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_prior</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">N</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">exploration</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NDFormerMCTS">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NDFormerMCTS</span><span class="p">(</span><span class="n">MCTS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NDFormer-guided Monte Carlo Tree Search for Symbolic Regression.</span>
+
+<span class="sd">    This class extends MCTS by using a pre-trained NDFormer model to provide</span>
+<span class="sd">    prior probabilities for action selection via the PUCT algorithm:</span>
+
+<span class="sd">        PUCT(s, a) = Q(s, a) + c_puct * P(s, a) * sqrt(sum(N(s, b)) / (1 + N(s, a)))</span>
+
+<span class="sd">    where P(s, a) is the prior probability from NDFormer&#39;s policy head.</span>
+
+<span class="sd">    The pre-trained model is treated as a black box - it provides policy priors</span>
+<span class="sd">    but does not control search behavior. Search is controlled by parameters</span>
+<span class="sd">    like `beam_width`, `ndformer_temperature`, `c`, and `eta`.</span>
+
+<span class="sd">    Usage Examples</span>
+<span class="sd">    --------------</span>
+
+<span class="sd">    # Load pre-trained model from Hugging Face Hub</span>
+<span class="sd">    search = NDFormerMCTS(variables=[x, y])</span>
+<span class="sd">    search.load_ndformer(&#39;hf://YuMeow/ndformer:best.pth&#39;)</span>
+<span class="sd">    search.fit(X, y)</span>
+
+<span class="sd">    # Or pass model directly</span>
+<span class="sd">    model = NDFormerModel(config)</span>
+<span class="sd">    model.load_state_dict(checkpoint)</span>
+<span class="sd">    tokenizer = NDFormerTokenizer(config, [x, y])</span>
+<span class="sd">    search = NDFormerMCTS(</span>
+<span class="sd">        variables=[x, y],</span>
+<span class="sd">        ndformer=model,</span>
+<span class="sd">        tokenizer=tokenizer,</span>
+<span class="sd">        beam_width=20,</span>
+<span class="sd">        c=1.5,</span>
+<span class="sd">    )</span>
+<span class="sd">    search.fit(X, y)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    variables : List[nd.Variable]</span>
+<span class="sd">        Input variables for symbolic regression.</span>
+<span class="sd">    binary : List[nd.Symbol], optional</span>
+<span class="sd">        Binary operators for search. Default: [Add, Sub, Mul, Div, Max, Min].</span>
+<span class="sd">    unary : List[nd.Symbol], optional</span>
+<span class="sd">        Unary operators for search. Default: [Sqrt, Log, Abs, Neg, Inv, Sin, Cos, Tan].</span>
+<span class="sd">    max_params : int, optional</span>
+<span class="sd">        Maximum number of numeric parameters in expressions. Default: 2.</span>
+<span class="sd">    const_range : Tuple[float, float], optional</span>
+<span class="sd">        Range for constant initialization. Default: (-1.0, 1.0).</span>
+<span class="sd">    depth_range : Tuple[int, int], optional</span>
+<span class="sd">        Depth range for generated expressions. Default: (2, 6).</span>
+<span class="sd">    nettype : Literal[&quot;node&quot;, &quot;edge&quot;, &quot;scalar&quot;], optional</span>
+<span class="sd">        Network type for the search. Default: &quot;scalar&quot;.</span>
+<span class="sd">    log_per_iter : int, optional</span>
+<span class="sd">        Log every N iterations. Default: inf.</span>
+<span class="sd">    log_per_sec : float, optional</span>
+<span class="sd">        Log every N seconds. Default: inf.</span>
+<span class="sd">    log_detailed_speed : bool, optional</span>
+<span class="sd">        Log detailed timing information. Default: False.</span>
+<span class="sd">    save_path : str, optional</span>
+<span class="sd">        Directory to save search records. Default: None.</span>
+<span class="sd">    random_state : int, optional</span>
+<span class="sd">        Random seed for reproducibility. Default: None.</span>
+<span class="sd">    n_iter : int, optional</span>
+<span class="sd">        Maximum number of MCTS iterations. Default: 100.</span>
+<span class="sd">    use_tqdm : bool, optional</span>
+<span class="sd">        Show progress bar. Default: False.</span>
+<span class="sd">    edge_list : Tuple[List[int], List[int]], optional</span>
+<span class="sd">        Graph edge list for network operators. Default: None.</span>
+<span class="sd">    num_nodes : int, optional</span>
+<span class="sd">        Number of nodes in the graph. Default: None.</span>
+<span class="sd">    time_limit : float, optional</span>
+<span class="sd">        Maximum search time in seconds. Default: None.</span>
+<span class="sd">    sample_num : int, optional</span>
+<span class="sd">        Number of samples for evaluation. Default: 300.</span>
+<span class="sd">    keep_vars : bool, optional</span>
+<span class="sd">        Keep original variable names. Default: False.</span>
+<span class="sd">    normalize_y : bool, optional</span>
+<span class="sd">        Normalize target values. Default: False.</span>
+<span class="sd">    normalize_X : bool, optional</span>
+<span class="sd">        Normalize input features. Default: False.</span>
+<span class="sd">    remove_abnormal : bool, optional</span>
+<span class="sd">        Remove abnormal samples. Default: False.</span>
+<span class="sd">    train_eval_split : float, optional</span>
+<span class="sd">        Train/eval data split ratio. Default: 1.0.</span>
+<span class="sd">    child_num : int, optional</span>
+<span class="sd">        Maximum children per expansion. Default: 50.</span>
+<span class="sd">    n_playout : int, optional</span>
+<span class="sd">        Number of playouts per simulation. Default: 100.</span>
+<span class="sd">    d_playout : int, optional</span>
+<span class="sd">        Maximum depth per playout. Default: 10.</span>
+<span class="sd">    max_len : int, optional</span>
+<span class="sd">        Maximum expression length during search. Default: 30.</span>
+<span class="sd">    c : float, optional</span>
+<span class="sd">        PUCT exploration constant. Default: 1.41.</span>
+<span class="sd">    eta : float, optional</span>
+<span class="sd">        Complexity penalty factor for reward. Default: 0.999.</span>
+<span class="sd">    ndformer : NDFormerModel, optional</span>
+<span class="sd">        Pre-trained NDFormer model. Default: None.</span>
+<span class="sd">    tokenizer : NDFormerTokenizer, optional</span>
+<span class="sd">        Tokenizer for the model. Default: None.</span>
+<span class="sd">    ndformer_temperature : float, optional</span>
+<span class="sd">        Temperature for policy softmax. Default: 1.0.</span>
+<span class="sd">    beam_width : int, optional</span>
+<span class="sd">        Beam size for leaf selection. Default: 10.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NDFormerMCTS.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">],</span>
+        <span class="n">binary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Add</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Sub</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Mul</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Div</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Max</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Min</span><span class="p">],</span>
+        <span class="n">unary</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Sqrt</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Log</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Abs</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Neg</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Inv</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Sin</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Cos</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Tan</span><span class="p">],</span>
+        <span class="n">max_params</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">const_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="n">depth_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;scalar&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">,</span>
+        <span class="n">log_per_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
+        <span class="n">log_per_sec</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
+        <span class="n">log_detailed_speed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">use_tqdm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sample_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="n">keep_vars</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">normalize_y</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">normalize_X</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">remove_abnormal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">train_eval_split</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+
+        <span class="n">child_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">n_playout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">d_playout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">max_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.41</span><span class="p">,</span>
+        <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.999</span><span class="p">,</span>
+
+        <span class="c1"># NDFormer parameters</span>
+        <span class="n">ndformer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDFormerModel</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDFormerTokenizer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ndformer_temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">beam_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>  <span class="c1"># Number of leaf nodes to expand in batch</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span>
+            <span class="n">binary</span><span class="o">=</span><span class="n">binary</span><span class="p">,</span>
+            <span class="n">unary</span><span class="o">=</span><span class="n">unary</span><span class="p">,</span>
+            <span class="n">max_params</span><span class="o">=</span><span class="n">max_params</span><span class="p">,</span>
+            <span class="n">const_range</span><span class="o">=</span><span class="n">const_range</span><span class="p">,</span>
+            <span class="n">depth_range</span><span class="o">=</span><span class="n">depth_range</span><span class="p">,</span>
+            <span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">,</span>
+            <span class="n">log_per_iter</span><span class="o">=</span><span class="n">log_per_iter</span><span class="p">,</span>
+            <span class="n">log_per_sec</span><span class="o">=</span><span class="n">log_per_sec</span><span class="p">,</span>
+            <span class="n">log_detailed_speed</span><span class="o">=</span><span class="n">log_detailed_speed</span><span class="p">,</span>
+            <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+            <span class="n">use_tqdm</span><span class="o">=</span><span class="n">use_tqdm</span><span class="p">,</span>
+            <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">,</span>
+            <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span>
+            <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span>
+            <span class="n">sample_num</span><span class="o">=</span><span class="n">sample_num</span><span class="p">,</span>
+            <span class="n">keep_vars</span><span class="o">=</span><span class="n">keep_vars</span><span class="p">,</span>
+            <span class="n">normalize_y</span><span class="o">=</span><span class="n">normalize_y</span><span class="p">,</span>
+            <span class="n">normalize_X</span><span class="o">=</span><span class="n">normalize_X</span><span class="p">,</span>
+            <span class="n">remove_abnormal</span><span class="o">=</span><span class="n">remove_abnormal</span><span class="p">,</span>
+            <span class="n">train_eval_split</span><span class="o">=</span><span class="n">train_eval_split</span><span class="p">,</span>
+            <span class="n">child_num</span><span class="o">=</span><span class="n">child_num</span><span class="p">,</span>
+            <span class="n">n_playout</span><span class="o">=</span><span class="n">n_playout</span><span class="p">,</span>
+            <span class="n">d_playout</span><span class="o">=</span><span class="n">d_playout</span><span class="p">,</span>
+            <span class="n">max_len</span><span class="o">=</span><span class="n">max_len</span><span class="p">,</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+            <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># NDFormer parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span> <span class="o">=</span> <span class="n">ndformer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tokenizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_temperature</span> <span class="o">=</span> <span class="n">ndformer_temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beam_width</span> <span class="o">=</span> <span class="n">beam_width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memory</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memory_mask</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="o">.</span><span class="n">device</span></div>
+
+
+<div class="viewcode-block" id="NDFormerMCTS.fit">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.fit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the model using NDFormer-guided MCTS with batch expansion</span>
+
+<span class="sd">        First encodes the graph data and caches memory, then runs MCTS search</span>
+<span class="sd">        with beam search based select and batch expand for efficiency</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;NDFormer not loaded. Call __init__ with ndformer parameter &quot;</span>
+                <span class="s2">&quot;or call load_ndformer(checkpoint) before fit().&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Convert X to dict format</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:])}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Root Node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MC_tree</span> <span class="o">=</span> <span class="n">NDFormerNode</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Empty</span><span class="p">(),</span> <span class="n">nettype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nettype</span><span class="p">))</span>
+
+        <span class="c1"># Encode graph and cache memory before MCTS search</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encode_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># Search with batch expansion</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">best_node</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">reset_last_add_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span><span class="p">):</span>
+            <span class="c1"># Select multiple leaf nodes using beam search</span>
+            <span class="n">leaf_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MC_tree</span><span class="p">)</span>
+
+            <span class="c1"># Expand all selected nodes in batch</span>
+            <span class="n">expanded_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">leaf_nodes</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+            <span class="c1"># Simulate and backpropagate for each expanded node</span>
+            <span class="n">iter_best</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">expanded</span> <span class="ow">in</span> <span class="n">expanded_nodes</span><span class="p">:</span>
+                <span class="n">reward</span><span class="p">,</span> <span class="n">best_simulated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">expanded</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">backpropagate</span><span class="p">(</span><span class="n">expanded</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">iter_best</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">best_simulated</span><span class="o">.</span><span class="n">reward</span> <span class="o">&gt;</span> <span class="n">iter_best</span><span class="o">.</span><span class="n">reward</span><span class="p">:</span>
+                    <span class="n">iter_best</span> <span class="o">=</span> <span class="n">best_simulated</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;iteration&#39;</span><span class="p">)</span>
+
+            <span class="c1">## Prepare log &amp; record</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">iter</span><span class="o">=</span><span class="nb">iter</span><span class="p">,</span>
+                <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+                <span class="n">speed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">named_speed</span><span class="p">,</span>
+                <span class="n">time_usage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">named_time</span><span class="p">,</span>
+                <span class="n">call_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">named_count</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">log</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Iter&quot;</span><span class="p">:</span> <span class="nb">iter</span><span class="p">}</span>
+
+            <span class="c1"># Use the best simulated node from this iteration</span>
+            <span class="k">if</span> <span class="n">iter_best</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">_update_best</span> <span class="o">:=</span> <span class="p">(</span><span class="n">best_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">iter_best</span><span class="o">.</span><span class="n">reward</span> <span class="o">&gt;</span> <span class="n">best_node</span><span class="o">.</span><span class="n">reward</span><span class="p">):</span>
+                    <span class="n">best_node</span> <span class="o">=</span> <span class="n">iter_best</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">best_node</span><span class="o">.</span><span class="n">fitted_eqtree</span>
+
+                    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;eqtree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_node</span><span class="o">.</span><span class="n">eqtree</span><span class="p">)</span>
+                    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;fitted_eqtree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_node</span><span class="o">.</span><span class="n">fitted_eqtree</span><span class="p">)</span>
+                    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;complexity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_node</span><span class="o">.</span><span class="n">complexity</span>
+                    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;reward&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_node</span><span class="o">.</span><span class="n">reward</span>
+                    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;r2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_node</span><span class="o">.</span><span class="n">r2</span>
+
+                    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;Eqtree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_node</span><span class="o">.</span><span class="n">eqtree</span><span class="p">)</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;Fitted eqtree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_node</span><span class="o">.</span><span class="n">fitted_eqtree</span><span class="p">)</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;Complexity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_node</span><span class="o">.</span><span class="n">complexity</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;Reward&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">best_node</span><span class="o">.</span><span class="n">reward</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">best_node</span><span class="o">.</span><span class="n">r2</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">_early_stop</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span><span class="nb">iter</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_limit</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_limit</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">best_node</span> <span class="ow">and</span> <span class="n">best_node</span><span class="o">.</span><span class="n">r2</span> <span class="o">&gt;=</span> <span class="mf">0.99999</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">_update_best</span> <span class="ow">or</span> <span class="n">_early_stop</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_iter</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">iter</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_iter</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_sec</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;_last_log_time&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">_last_log_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_per_sec</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">log</span><span class="p">[</span><span class="s2">&quot;Speed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">para_timer</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;speed&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">log</span><span class="p">[</span><span class="s1">&#39;Time Usage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">named_timer</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="s1">&#39;pace&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;by_time&#39;</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[4m</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="se">\033</span><span class="s2">[0m=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+                <span class="p">(</span><span class="n">_logger</span><span class="o">.</span><span class="n">note</span> <span class="k">if</span> <span class="n">_update_best</span> <span class="k">else</span> <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">)(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">/</span> <span class="s1">&#39;records.jsonl&#39;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">_early_stop</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Early stop at iter </span><span class="si">{</span><span class="nb">iter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">break</span></div>
+
+
+<div class="viewcode-block" id="NDFormerMCTS.load_ndformer">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.load_ndformer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_ndformer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="s1">&#39;hf://YuMeow/ndformer:best.pth&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load pre-trained NDFormer model and tokenizer from checkpoint.</span>
+
+<span class="sd">        The model config is automatically loaded from the checkpoint.</span>
+<span class="sd">        Users do not need to provide a config manually.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint_path: Path to model checkpoint. Can be:</span>
+<span class="sd">                - Local file path: &quot;/path/to/checkpoint.pth&quot;</span>
+<span class="sd">                - HF shorthand: &quot;YuMeow/ndformer:best.pth&quot;</span>
+<span class="sd">                - HF full syntax: &quot;hf://YuMeow/ndformer:best.pth&quot;</span>
+<span class="sd">            device: Device to load model on. If None, auto-detects CUDA/CPU.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+
+        <span class="c1"># Match HF syntax: &quot;repo_id:filename&quot; or &quot;hf://repo_id:filename&quot;</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(hf://)?[\w\-]+/[\w\-]+:.*&#39;</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">):</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">huggingface_hub</span><span class="w"> </span><span class="kn">import</span> <span class="n">hf_hub_download</span>
+            <span class="n">hf_path</span> <span class="o">=</span> <span class="n">checkpoint_path</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s1">&#39;hf://&#39;</span><span class="p">)</span>
+            <span class="n">repo_id</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">hf_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="n">hf_hub_download</span><span class="p">(</span><span class="n">repo_id</span><span class="o">=</span><span class="n">repo_id</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloaded </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> from Hugging Face Hub </span><span class="si">{</span><span class="n">repo_id</span><span class="si">}</span><span class="s2"> into </span><span class="si">{</span><span class="n">checkpoint_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading local checkpoint: </span><span class="si">{</span><span class="n">checkpoint_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_model_config</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">NDFormerTokenizer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span> <span class="o">=</span> <span class="n">NDFormerModel</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Loaded NDFormer from </span><span class="si">{</span><span class="n">checkpoint_path</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Model parameters: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Model capabilities: max_seq_len=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_seq_len</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;max_var_num=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;vocab_size=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> tokens&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_model_capabilities</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_model_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saved_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDFormerModelConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load config from saved dict with backward compatibility handling.</span>
+
+<span class="sd">        - Missing fields use current default values (with warning)</span>
+<span class="sd">        - Extra fields (from newer versions) are ignored</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">default</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">NDFormerModelConfig</span><span class="p">)}</span>
+        <span class="n">merged</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">current_defaults</span><span class="p">,</span> <span class="o">**</span><span class="n">saved_config</span><span class="p">}</span>
+        <span class="c1"># Find missing fields (exist in current but not in saved)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">missing_keys</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">current_defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">saved_config</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Config from checkpoint is missing </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">)</span><span class="si">}</span><span class="s2"> field(s): </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Using current default values. This may indicate a version mismatch.&quot;</span>
+            <span class="p">)</span>
+        <span class="c1"># Filter out fields that not exist in current version</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">extra_keys</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">saved_config</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">current_defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Ignoring </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_keys</span><span class="p">)</span><span class="si">}</span><span class="s2"> extra field(s) from checkpoint: </span><span class="si">{</span><span class="n">extra_keys</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;This may indicate a version mismatch.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">NDFormerModelConfig</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">current_defaults</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_model_capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate that search settings are within the model&#39;s capabilities.</span>
+
+<span class="sd">        This method checks:</span>
+<span class="sd">        1. max_len (search) vs max_seq_len (model capability)</span>
+<span class="sd">        2. Operator set compatibility</span>
+<span class="sd">        3. Variable count vs max_var_num</span>
+
+<span class="sd">        Logs warnings if settings exceed model capabilities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check 1: max_len vs max_seq_len</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">max_seq_len</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Search max_len=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="si">}</span><span class="s2"> exceeds model&#39;s max_seq_len=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_seq_len</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Consider reducing max_len or results may be unreliable.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check 2: Operator compatibility</span>
+        <span class="n">search_operators</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">missing_operators</span> <span class="o">:=</span> <span class="n">search_operators</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">operands</span><span class="p">)):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Operators </span><span class="si">{</span><span class="n">missing_operators</span><span class="si">}</span><span class="s2"> are in search set but not in model vocabulary. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Model may not handle these operators correctly.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check 3: Variable count</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n_node_vars</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;node&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Node variables (</span><span class="si">{</span><span class="n">n_node_vars</span><span class="si">}</span><span class="s2">) exceed model&#39;s max_var_num=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Some variables may not be recognized.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n_edge_vars</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;edge&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Edge variables (</span><span class="si">{</span><span class="n">n_edge_vars</span><span class="si">}</span><span class="s2">) exceed model&#39;s max_var_num=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Some variables may not be recognized.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n_scalar_vars</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;scalar&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Scalar variables (</span><span class="si">{</span><span class="n">n_scalar_vars</span><span class="si">}</span><span class="s2">) exceed model&#39;s max_var_num=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Some variables may not be recognized.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare data for NDFormer encoder and cache the memory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data_node: (sample_num, num_nodes, max_var_num+1, 3)</span>
+<span class="sd">            data_edge: (sample_num, num_edges, max_var_num+1, 3)</span>
+<span class="sd">            data_scalar: (sample_num, 1, max_var_num+1, 3)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sample_num</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">max_var_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_var_num</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_nodes</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">num_edges</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span>
+            <span class="n">num_edges</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">data_node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sample_num</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">,</span> <span class="n">max_var_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">data_edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sample_num</span><span class="p">,</span> <span class="n">num_edges</span><span class="p">,</span> <span class="n">max_var_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">data_scalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sample_num</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_var_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+            <span class="n">var_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">variable_mapping</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;node&#39;</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">node_var_tokens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">var_token</span><span class="p">)</span>
+                <span class="n">data_node</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;edge&#39;</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">edge_var_tokens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">var_token</span><span class="p">)</span>
+                <span class="n">data_edge</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;scalar&#39;</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">scalar_var_tokens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">var_token</span><span class="p">)</span>
+                <span class="n">data_scalar</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported nettype: </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.nettype == </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">nettype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Write target to last channel</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;node&#39;</span><span class="p">:</span>
+            <span class="n">data_node</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;edge&#39;</span><span class="p">:</span>
+            <span class="n">data_edge</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s1">&#39;scalar&#39;</span><span class="p">:</span>
+            <span class="n">data_scalar</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported nettype: self.nettype == </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nettype</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Encode to token IDs</span>
+        <span class="n">data_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_array</span><span class="p">(</span><span class="n">data_node</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;token_id&#39;</span><span class="p">)</span>
+        <span class="n">data_edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_array</span><span class="p">(</span><span class="n">data_edge</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;token_id&#39;</span><span class="p">)</span>
+        <span class="n">data_scalar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_array</span><span class="p">(</span><span class="n">data_scalar</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;token_id&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_node</span><span class="p">,</span> <span class="n">data_edge</span><span class="p">,</span> <span class="n">data_scalar</span>
+
+<div class="viewcode-block" id="NDFormerMCTS.encode_data">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.encode_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">encode_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encode graph data using NDFormer encoder and cache memory for reuse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_node</span><span class="p">,</span> <span class="n">data_edge</span><span class="p">,</span> <span class="n">data_scalar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_memory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memory_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">encode_graph</span><span class="p">(</span>
+                <span class="n">data_node</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">data_node</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="c1"># (sample_num, num_nodes, max_var_num+1, 3)</span>
+                <span class="n">data_edge</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">data_edge</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="c1"># (sample_num, num_edges, max_var_num+1, 3)</span>
+                <span class="n">data_scalar</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">data_scalar</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="c1"># (sample_num, 1, max_var_num+1, 3)</span>
+                <span class="n">edge_list</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                <span class="n">num_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">,</span>
+                <span class="c1"># node_batch_idx=torch.zeros(self.num_nodes, dtype=torch.long, device=self.device),</span>
+            <span class="p">)</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cached memory shape: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_memory</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NDFormerMCTS.set_policy_prior">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.set_policy_prior">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_policy_prior</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">actions_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">NDFormerNode</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">]]],</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set prior probabilities from NDFormer for valid actions</span>
+<span class="sd">        by decoding the current partial sequences in batch</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            states: List of MCTS nodes</span>
+<span class="sd">            actions_dict: List of valid (empty, operator) tuples for each node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of dictionaries mapping actions to prior probabilities (one per node)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Encode current equation trees to tokens</span>
+        <span class="n">partial_eqs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">actions_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">eqtree</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">eqtree</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Identity</span><span class="p">):</span>
+                <span class="n">eqtree</span> <span class="o">=</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># Strip Identity wrapper</span>
+            <span class="n">tokens</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;token_id&#39;</span><span class="p">)</span>
+            <span class="n">partial_eqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+        <span class="n">padded_eqs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">rnn</span><span class="o">.</span><span class="n">pad_sequence</span><span class="p">(</span>
+            <span class="n">partial_eqs</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">padding_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span>
+        <span class="p">)</span> <span class="c1"># (batch_size, max_seq_len)</span>
+
+        <span class="c1"># Get policy from decoder (predict next token)</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="c1"># decode_sequence returns logits for each position</span>
+            <span class="c1"># We only need the last position&#39;s logits to predict next token</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_model</span><span class="o">.</span><span class="n">decode_sequence</span><span class="p">(</span>
+                <span class="n">partial_eq</span><span class="o">=</span><span class="n">padded_eqs</span><span class="p">,</span>
+                <span class="n">memory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_memory</span><span class="p">,</span>
+                <span class="n">memory_key_padding_mask</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_memory_mask</span><span class="p">,</span>
+            <span class="p">)</span> <span class="c1"># (batch_size, vocab_size)</span>
+            <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndformer_temperature</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (batch_size, vocab_size)</span>
+
+        <span class="c1"># Map token probabilities to action probabilities for each node&#39;s children</span>
+        <span class="k">for</span> <span class="n">node_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actions_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">child_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actions</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">op_token</span> <span class="o">:=</span> <span class="nb">type</span><span class="p">(</span><span class="n">op</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">token2id</span><span class="p">:</span>
+                    <span class="n">token_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">token2id</span><span class="p">[</span><span class="n">op_token</span><span class="p">]</span>
+                    <span class="n">policy_prior</span> <span class="o">=</span> <span class="n">probs</span><span class="p">[</span><span class="n">node_idx</span><span class="p">,</span> <span class="n">token_id</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">policy_prior</span> <span class="o">=</span> <span class="mf">1e-6</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">child_idx</span><span class="p">]</span><span class="o">.</span><span class="n">policy_prior</span> <span class="o">=</span> <span class="n">policy_prior</span>
+            <span class="c1"># Normalize</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">total</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">policy_prior</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">policy_prior</span> <span class="o">/=</span> <span class="n">total</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">policy_prior</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NDFormerMCTS.select">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.select">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">NDFormerNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">NDFormerNode</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select leaf nodes using Beam Search with PUCT</span>
+
+<span class="sd">        Returns a list of leaf nodes to expand in batch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use beam search to find top-k leaf nodes</span>
+        <span class="c1"># Start from root and expand beam width nodes at each level</span>
+        <span class="n">beam</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">):</span>  <span class="c1"># Max depth limit</span>
+            <span class="n">next_beam</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">beam</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                    <span class="n">next_beam</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="c1"># Add all children to candidate pool</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">next_beam</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="c1"># This is a leaf node</span>
+            <span class="n">next_beam</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">UCT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">beam</span> <span class="o">=</span> <span class="n">next_beam</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">beam_width</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">beam</span><span class="p">):</span>
+                <span class="k">break</span> <span class="c1"># If all nodes in beam are leaves, we&#39;re done</span>
+        <span class="c1"># Return only leaf nodes</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">beam</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="NDFormerMCTS.expand">
+<a class="viewcode-back" href="../../../../api/nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.expand">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NDFormerNode</span><span class="p">],</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">NDFormerNode</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expand multiple nodes with NDFormer-guided action selection in batch</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            nodes: List of leaf nodes to expand</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of selected child nodes for simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c1"># Collect valid actions for each node</span>
+        <span class="n">actions_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="c1"># node -&gt; list of actions</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_valid_action</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="n">actions_dict</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">actions_dict</span><span class="p">:</span> <span class="c1"># i.e., not any (node.children for node in nodes)</span>
+            <span class="k">return</span> <span class="n">nodes</span> <span class="c1"># all nodes are leaf nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_policy_prior</span><span class="p">(</span><span class="n">actions_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">else</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By YuMeow
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

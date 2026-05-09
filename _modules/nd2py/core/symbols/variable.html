@@ -315,25 +315,25 @@
 
 
 <div class="viewcode-block" id="Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Variable">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Variable</span><span class="p">(</span><span class="n">Symbol</span><span class="p">):</span>
     <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="Variable.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Variable.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">nettype</span><span class="p">:</span> <span class="n">NetType</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
 
 
 <div class="viewcode-block" id="Variable.map_nettype">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.map_nettype">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Variable.map_nettype">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">map_nettype</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nettype</span></div>
 
 
 <div class="viewcode-block" id="Variable.get_nettype_range">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.variable.Variable.get_nettype_range">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Variable.get_nettype_range">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_nettype_range</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; 获取此节点可能产生的所有 nettype 值域，并在首次调用时缓存到类属性中。 &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nettype</span><span class="p">}</span></div>

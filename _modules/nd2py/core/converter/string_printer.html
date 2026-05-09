@@ -308,7 +308,6 @@
   <h1>Source code for nd2py.core.converter.string_printer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
@@ -322,7 +321,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StringPrinter</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -352,7 +351,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="StringPrinter.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="n">name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
@@ -366,7 +365,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Empty">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Empty</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -377,7 +376,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Number">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Number">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Number">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -393,7 +392,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Unknown nettype: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">nettype</span><span class="si">}</span><span class="s2">. Expected &#39;scalar&#39;, &#39;node&#39;, or &#39;edge&#39;.&quot;</span>
                 <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;torch&quot;</span><span class="p">):</span>
             <span class="n">content</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">content</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
@@ -416,7 +415,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Variable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Variable">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Variable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -431,7 +430,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Add">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Add">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Add">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Add</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -439,7 +438,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Sub">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Sub">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Sub">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -453,7 +452,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Mul">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Mul">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Mul">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Mul</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -482,7 +481,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Div">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Div">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Div">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Div</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -504,7 +503,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Pow">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Pow">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -528,7 +527,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Neg">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Neg">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Neg">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Neg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Neg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Add&#39;</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">]:</span>
@@ -537,7 +536,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Inv">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Inv">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Inv">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Inv</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -548,7 +547,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Pow2">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow2">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Pow2">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="p">[</span>
@@ -559,7 +558,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Pow3">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Pow3">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Pow3">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow3</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="p">[</span>
@@ -570,7 +569,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Sour">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Sour">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Sour">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sour</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
@@ -581,7 +580,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Targ">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Targ">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Targ">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Targ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Targ</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
@@ -592,7 +591,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Aggr">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Aggr">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Aggr">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Aggr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Aggr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
@@ -603,7 +602,7 @@
 
 
 <div class="viewcode-block" id="StringPrinter.visit_Rgga">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.string_printer.StringPrinter.visit_Rgga">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.StringPrinter.visit_Rgga">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Rgga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Rgga</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>

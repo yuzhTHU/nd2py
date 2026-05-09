@@ -319,35 +319,35 @@
 
 
 <div class="viewcode-block" id="R2_score">
-<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.metrics.R2_score">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.R2_score">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">R2_score</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">true</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">true</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="RMSE_score">
-<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.metrics.RMSE_score">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.RMSE_score">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">RMSE_score</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">true</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="sMAPE_score">
-<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.metrics.sMAPE_score">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.sMAPE_score">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sMAPE_score</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="MAPE_score">
-<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.metrics.MAPE_score">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.MAPE_score">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">MAPE_score</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="MAE_score">
-<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.metrics.MAE_score">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.MAE_score">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">MAE_score</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span> <span class="o">-</span> <span class="n">pred</span><span class="p">))</span></div>
 

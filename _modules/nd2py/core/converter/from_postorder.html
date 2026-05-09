@@ -313,7 +313,7 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <div class="viewcode-block" id="FromPostorder">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.from_postorder.FromPostorder">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.FromPostorder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FromPostorder</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span> <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a Symbol tree from a list of Symbols in postorder traversal order.&quot;&quot;&quot;</span> 
@@ -334,7 +334,7 @@
 
     
 <div class="viewcode-block" id="from_postorder">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.from_postorder.from_postorder">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.from_postorder">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">from_postorder</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span> <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct a Symbol tree from a list of Symbols in postorder traversal order.&quot;&quot;&quot;</span> 
     <span class="k">return</span> <span class="n">FromPostorder</span><span class="p">()(</span><span class="n">nodes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>

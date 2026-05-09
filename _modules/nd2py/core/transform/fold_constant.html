@@ -313,13 +313,13 @@
 
 
 <div class="viewcode-block" id="FoldConstant">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FoldConstant</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    访问器，用于将表达式中不含 Number 的子表达式折叠为 Constant。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FoldConstant.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fold_fitable</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -349,7 +349,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="FoldConstant.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
@@ -367,20 +367,20 @@
 
     
 <div class="viewcode-block" id="FoldConstant.visit_Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Empty">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Empty node should not be visited.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FoldConstant.visit_Number">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Number">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Number">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">node</span></div>
 
 
 <div class="viewcode-block" id="FoldConstant.visit_Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.fold_constant.FoldConstant.visit_Variable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Variable">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Variable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vars&#39;</span><span class="p">,</span> <span class="p">{}):</span>

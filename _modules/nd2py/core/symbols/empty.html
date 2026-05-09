@@ -315,12 +315,12 @@
 
 
 <div class="viewcode-block" id="Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Empty">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Empty</span><span class="p">(</span><span class="n">Symbol</span><span class="p">):</span>
     <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="Empty.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Empty.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">operands</span> <span class="o">=</span> <span class="p">[]</span>
@@ -328,7 +328,7 @@
 
 
 <div class="viewcode-block" id="Empty.map_nettype">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.empty.Empty.map_nettype">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Empty.map_nettype">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">map_nettype</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="p">]:</span>
         <span class="c1"># 这个方法不应该被调用</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Empty 的 map_nettype 不应该被调用，因为它不参与 nettype 推导。&quot;</span><span class="p">)</span></div>

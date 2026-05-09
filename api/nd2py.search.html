@@ -352,6 +352,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 </ul>
             </nav>
@@ -364,20 +365,54 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nd2py-search-package">
-<h1>nd2py.search package<a class="headerlink" href="#nd2py-search-package" title="Link to this heading">#</a></h1>
+  <section id="module-nd2py.search">
+<span id="nd2py-search-package"></span><h1>nd2py.search package<a class="headerlink" href="#module-nd2py.search" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.search.setup_lazy_imports">
+<span class="sig-prename descclassname"><span class="pre">nd2py.search.</span></span><span class="sig-name descname"><span class="pre">setup_lazy_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/lazy_loader.html#setup_lazy_imports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.search.setup_lazy_imports" title="Link to this definition">#</a></dt>
+<dd><p>Set up lazy imports for a module’s <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">(__getattr__,</span> <span class="pre">__dir__,</span> <span class="pre">__all__)</span></code> which should be assigned at
+the module level so that <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">package</span> <span class="pre">import</span> <span class="pre">OptionalClass</span></code> works
+without importing the optional dependency until it is actually needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> – The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of the calling module.</p></li>
+<li><p><strong>import_mapping</strong> – A dict mapping attribute names to
+<code class="docutils literal notranslate"><span class="pre">(module_path,</span> <span class="pre">requires)</span></code> tuples.  <em>module_path</em> is a
+relative import path (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;.torch_calc&quot;</span></code>) and <em>requires</em>
+is the optional-dependency group name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;nn&quot;</span></code>) shown in
+the error message when the dependency is missing.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># __init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoreClass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.lazy_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_lazy_imports</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.optional</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalClass</span>
+
+<span class="fm">__getattr__</span><span class="p">,</span> <span class="fm">__dir__</span><span class="p">,</span> <span class="n">__all__</span> <span class="o">=</span> <span class="n">setup_lazy_imports</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;OptionalClass&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;.optional&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">),</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.e2esr.html">nd2py.search.e2esr package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-config-module">nd2py.search.e2esr.e2esr_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-dataset-module">nd2py.search.e2esr.e2esr_dataset module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-generator-module">nd2py.search.e2esr.e2esr_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-model-module">nd2py.search.e2esr.e2esr_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-tokenizer-module">nd2py.search.e2esr.e2esr_tokenizer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#nd2py-search-e2esr-e2esr-train-module">nd2py.search.e2esr.e2esr_train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_config">nd2py.search.e2esr.e2esr_config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_dataset">nd2py.search.e2esr.e2esr_dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_generator">nd2py.search.e2esr.e2esr_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_model">nd2py.search.e2esr.e2esr_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_tokenizer">nd2py.search.e2esr.e2esr_tokenizer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.e2esr.html#module-nd2py.search.e2esr.e2esr_train">nd2py.search.e2esr.e2esr_train module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.gp.html">nd2py.search.gp package</a><ul>
@@ -401,6 +436,7 @@
 <li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.point_mutation"><code class="docutils literal notranslate"><span class="pre">GP.point_mutation()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.set_fitness"><code class="docutils literal notranslate"><span class="pre">GP.set_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.get_random_subtree"><code class="docutils literal notranslate"><span class="pre">GP.get_random_subtree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.gp.html#nd2py.search.gp.gp.GP.set_score_request"><code class="docutils literal notranslate"><span class="pre">GP.set_score_request()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -411,38 +447,299 @@
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.llmsr.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nd2py.search.llmsr.api.html">nd2py.search.llmsr.api package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-deepseek-api-module">nd2py.search.llmsr.api.deepseek_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-gemini-api-module">nd2py.search.llmsr.api.gemini_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-llm-api-module">nd2py.search.llmsr.api.llm_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-llm-result-module">nd2py.search.llmsr.api.llm_result module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-manual-api-module">nd2py.search.llmsr.api.manual_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-openai-api-module">nd2py.search.llmsr.api.openai_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-openrouter-api-module">nd2py.search.llmsr.api.openrouter_api module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#nd2py-search-llmsr-api-siliconflow-api-module">nd2py.search.llmsr.api.siliconflow_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.deepseek_api">nd2py.search.llmsr.api.deepseek_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.gemini_api">nd2py.search.llmsr.api.gemini_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.llm_api">nd2py.search.llmsr.api.llm_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.llm_result">nd2py.search.llmsr.api.llm_result module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.manual_api">nd2py.search.llmsr.api.manual_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.openai_api">nd2py.search.llmsr.api.openai_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.openrouter_api">nd2py.search.llmsr.api.openrouter_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.api.html#module-nd2py.search.llmsr.api.siliconflow_api">nd2py.search.llmsr.api.siliconflow_api module</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.llmsr.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py-search-llmsr-llmsr-module">nd2py.search.llmsr.llmsr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.llmsr.html#module-nd2py.search.llmsr.llmsr">nd2py.search.llmsr.llmsr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR"><code class="docutils literal notranslate"><span class="pre">LLMSR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.__init__"><code class="docutils literal notranslate"><span class="pre">LLMSR.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.fit"><code class="docutils literal notranslate"><span class="pre">LLMSR.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.init_islands"><code class="docutils literal notranslate"><span class="pre">LLMSR.init_islands()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.evolve"><code class="docutils literal notranslate"><span class="pre">LLMSR.evolve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.tournament"><code class="docutils literal notranslate"><span class="pre">LLMSR.tournament()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.generate_prompt"><code class="docutils literal notranslate"><span class="pre">LLMSR.generate_prompt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.generate_children"><code class="docutils literal notranslate"><span class="pre">LLMSR.generate_children()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.clear"><code class="docutils literal notranslate"><span class="pre">LLMSR.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.run_evaluate"><code class="docutils literal notranslate"><span class="pre">LLMSR.run_evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.set_score"><code class="docutils literal notranslate"><span class="pre">LLMSR.set_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.set_fit_request"><code class="docutils literal notranslate"><span class="pre">LLMSR.set_fit_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.set_score_request"><code class="docutils literal notranslate"><span class="pre">LLMSR.set_score_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.render_markdown"><code class="docutils literal notranslate"><span class="pre">render_markdown()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.render_python"><code class="docutils literal notranslate"><span class="pre">render_python()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.mcts.html">nd2py.search.mcts package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#nd2py-search-mcts-mcts-module">nd2py.search.mcts.mcts module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#nd2py-search-mcts-mcts-forest-module">nd2py.search.mcts.mcts_forest module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#nd2py-search-mcts-utils-module">nd2py.search.mcts.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#module-nd2py.search.mcts.mcts">nd2py.search.mcts.mcts module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.simplify"><code class="docutils literal notranslate"><span class="pre">simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.Node.__init__"><code class="docutils literal notranslate"><span class="pre">Node.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.Node.UCT"><code class="docutils literal notranslate"><span class="pre">Node.UCT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.Node.to_route"><code class="docutils literal notranslate"><span class="pre">Node.to_route()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.Node.copy"><code class="docutils literal notranslate"><span class="pre">Node.copy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS"><code class="docutils literal notranslate"><span class="pre">MCTS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.__init__"><code class="docutils literal notranslate"><span class="pre">MCTS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.fit"><code class="docutils literal notranslate"><span class="pre">MCTS.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.predict"><code class="docutils literal notranslate"><span class="pre">MCTS.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.action"><code class="docutils literal notranslate"><span class="pre">MCTS.action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.check_valid_action"><code class="docutils literal notranslate"><span class="pre">MCTS.check_valid_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.iter_valid_action"><code class="docutils literal notranslate"><span class="pre">MCTS.iter_valid_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.pick_valid_action"><code class="docutils literal notranslate"><span class="pre">MCTS.pick_valid_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.fill_to_complete"><code class="docutils literal notranslate"><span class="pre">MCTS.fill_to_complete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.select"><code class="docutils literal notranslate"><span class="pre">MCTS.select()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.expand"><code class="docutils literal notranslate"><span class="pre">MCTS.expand()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.simulate"><code class="docutils literal notranslate"><span class="pre">MCTS.simulate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.backpropagate"><code class="docutils literal notranslate"><span class="pre">MCTS.backpropagate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.set_reward"><code class="docutils literal notranslate"><span class="pre">MCTS.set_reward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts.MCTS.set_score_request"><code class="docutils literal notranslate"><span class="pre">MCTS.set_score_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#module-nd2py.search.mcts.mcts_forest">nd2py.search.mcts.mcts_forest module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts_forest.NodeForest"><code class="docutils literal notranslate"><span class="pre">NodeForest</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts_forest.MCTSForest"><code class="docutils literal notranslate"><span class="pre">MCTSForest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.mcts_forest.MCTSForest.set_score_request"><code class="docutils literal notranslate"><span class="pre">MCTSForest.set_score_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.mcts.html#module-nd2py.search.mcts.utils">nd2py.search.mcts.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.utils.preprocess"><code class="docutils literal notranslate"><span class="pre">preprocess()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.utils.sample_Xy"><code class="docutils literal notranslate"><span class="pre">sample_Xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.mcts.html#nd2py.search.mcts.utils.rename_variable"><code class="docutils literal notranslate"><span class="pre">rename_variable()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.search.ndformer.html">nd2py.search.ndformer package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator.generate_normal_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_normal_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator.generate_uniform_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_uniform_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerDataGenerator.generate_GMM_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_GMM_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerEqtreeGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerEqtreeGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerEqtreeGenerator.generate_node"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.generate_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerEqtreeGenerator.generate_leaf"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.generate_leaf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerEqtreeGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.generate_ER_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_ER_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.generate_BA_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_BA_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.generate_WS_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_WS_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerGraphGenerator.generate_complete_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_complete_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_mantissa"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_mantissa</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_exponent"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_exponent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_exponent"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_exponent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_var_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_var_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.model"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_head"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_head</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.d_emb"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.d_emb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.d_ff"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.d_ff</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.dropout"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.dropout</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_GNN_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_GNN_layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_transformer_encoder_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_transformer_encoder_layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_transformer_decoder_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_transformer_decoder_layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.use_aux_input"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.use_aux_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.n_induction_points"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_induction_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_seq_len"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_seq_len</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.operands"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.operands</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_data_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_data_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_data_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_data_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_node_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_node_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_node_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_node_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_edge_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_edge_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_edge_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_edge_num</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_var_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_var_val</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_var_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_var_val</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.min_coeff_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_coeff_val</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerModelConfig.max_coeff_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_coeff_val</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.vocab_size"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.vocab_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.pad_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.pad_token_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.sos_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.sos_token_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.eos_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.eos_token_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.unk_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.unk_token_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.encode"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.encode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.decode"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.decode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.encode_array"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.encode_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.decode_array"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.decode_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.to_dict"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.from_dict"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.save"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.NDFormerTokenizer.load"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-config-module">nd2py.search.ndformer.ndformer_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-dataset-module">nd2py.search.ndformer.ndformer_dataset module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-generator-module">nd2py.search.ndformer.ndformer_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-mcts-module">nd2py.search.ndformer.ndformer_mcts module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-model-module">nd2py.search.ndformer.ndformer_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-model-flash-ansr-module">nd2py.search.ndformer.ndformer_model_flash_ansr module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py-search-ndformer-ndformer-tokenizer-module">nd2py.search.ndformer.ndformer_tokenizer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_config">nd2py.search.ndformer.ndformer_config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_mantissa"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_mantissa</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_exponent"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_exponent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_exponent"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_exponent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_var_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_var_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.model"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_head"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_head</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.d_emb"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.d_emb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.d_ff"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.d_ff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.dropout"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.dropout</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_GNN_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_GNN_layers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_transformer_encoder_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_transformer_encoder_layers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_transformer_decoder_layers"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_transformer_decoder_layers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.use_aux_input"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.use_aux_input</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.n_induction_points"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.n_induction_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_seq_len"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_seq_len</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.operands"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.operands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_data_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_data_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_data_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_data_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_node_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_node_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_node_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_node_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_edge_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_edge_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_edge_num"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_edge_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_var_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_var_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_var_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_var_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.min_coeff_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.min_coeff_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_config.NDFormerModelConfig.max_coeff_val"><code class="docutils literal notranslate"><span class="pre">NDFormerModelConfig.max_coeff_val</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_dataset">nd2py.search.ndformer.ndformer_dataset module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_dataset.InfiniteSampler"><code class="docutils literal notranslate"><span class="pre">InfiniteSampler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_dataset.NDFormerDataset"><code class="docutils literal notranslate"><span class="pre">NDFormerDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_dataset.NDFormerDataset.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerDataset.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_dataset.NDFormerDataset.collate_fn"><code class="docutils literal notranslate"><span class="pre">NDFormerDataset.collate_fn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_dataset.NDFormerDataset.get_sampler"><code class="docutils literal notranslate"><span class="pre">NDFormerDataset.get_sampler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_generator">nd2py.search.ndformer.ndformer_generator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerEqtreeGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerEqtreeGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerEqtreeGenerator.generate_node"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.generate_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerEqtreeGenerator.generate_leaf"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.generate_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerEqtreeGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerEqtreeGenerator.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.generate_ER_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_ER_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.generate_BA_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_BA_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.generate_WS_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_WS_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerGraphGenerator.generate_complete_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerGraphGenerator.generate_complete_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator.sample"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator.generate_normal_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_normal_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator.generate_uniform_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_uniform_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_generator.NDFormerDataGenerator.generate_GMM_data"><code class="docutils literal notranslate"><span class="pre">NDFormerDataGenerator.generate_GMM_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_mcts">nd2py.search.ndformer.ndformer_mcts module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode"><code class="docutils literal notranslate"><span class="pre">NDFormerNode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerNode.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerNode.UCT"><code class="docutils literal notranslate"><span class="pre">NDFormerNode.UCT()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.fit"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.load_ndformer"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.load_ndformer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.encode_data"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.encode_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.set_policy_prior"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.set_policy_prior()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.select"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.select()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.expand"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.expand()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_mcts.NDFormerMCTS.set_score_request"><code class="docutils literal notranslate"><span class="pre">NDFormerMCTS.set_score_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_model">nd2py.search.ndformer.ndformer_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model.NDFormerModel"><code class="docutils literal notranslate"><span class="pre">NDFormerModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model.NDFormerModel.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerModel.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model.NDFormerModel.encode_graph"><code class="docutils literal notranslate"><span class="pre">NDFormerModel.encode_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model.NDFormerModel.decode_sequence"><code class="docutils literal notranslate"><span class="pre">NDFormerModel.decode_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model.NDFormerModel.forward"><code class="docutils literal notranslate"><span class="pre">NDFormerModel.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_model_flash_ansr">nd2py.search.ndformer.ndformer_model_flash_ansr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.SetTransformerEncoder"><code class="docutils literal notranslate"><span class="pre">SetTransformerEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.SetTransformerEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">SetTransformerEncoder.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.SetTransformerEncoder.forward"><code class="docutils literal notranslate"><span class="pre">SetTransformerEncoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.FlashANSRNDFormer"><code class="docutils literal notranslate"><span class="pre">FlashANSRNDFormer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.FlashANSRNDFormer.__init__"><code class="docutils literal notranslate"><span class="pre">FlashANSRNDFormer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_model_flash_ansr.FlashANSRNDFormer.model_name"><code class="docutils literal notranslate"><span class="pre">FlashANSRNDFormer.model_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.search.ndformer.html#module-nd2py.search.ndformer.ndformer_tokenizer">nd2py.search.ndformer.ndformer_tokenizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NumberTokenizer"><code class="docutils literal notranslate"><span class="pre">NumberTokenizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NumberTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">NumberTokenizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NumberTokenizer.encode"><code class="docutils literal notranslate"><span class="pre">NumberTokenizer.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NumberTokenizer.decode"><code class="docutils literal notranslate"><span class="pre">NumberTokenizer.decode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.__init__"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.vocab_size"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.vocab_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.pad_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.pad_token_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.sos_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.sos_token_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.eos_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.eos_token_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.unk_token_id"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.unk_token_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.encode"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.decode"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.decode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.encode_array"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.encode_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.decode_array"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.decode_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.to_dict"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.from_dict"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.save"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="nd2py.search.ndformer.html#nd2py.search.ndformer.ndformer_tokenizer.NDFormerTokenizer.load"><code class="docutils literal notranslate"><span class="pre">NDFormerTokenizer.load()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -497,6 +794,7 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.search.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 </ul>
   </nav></div>

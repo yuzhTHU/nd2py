@@ -364,12 +364,12 @@
 
 
 <div class="viewcode-block" id="Symbol">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Symbol</span><span class="p">(</span><span class="n">NetTypeMixin</span><span class="p">,</span> <span class="n">TreeMixin</span><span class="p">,</span> <span class="n">SymbolAPIMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">SymbolMeta</span><span class="p">):</span>
     <span class="n">n_operands</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Symbol.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">operands</span><span class="p">,</span> <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="o">|</span><span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a Symbol node.</span>
 
@@ -541,7 +541,7 @@
         <span class="k">return</span> <span class="n">Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Symbol.copy">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.copy">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.copy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a deep copy of this symbol.</span>
 
@@ -558,7 +558,7 @@
 
 
 <div class="viewcode-block" id="Symbol.get_numbers">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.get_numbers">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.get_numbers">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_numbers</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -594,7 +594,7 @@
 
 
 <div class="viewcode-block" id="Symbol.get_parameters">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.get_parameters">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.get_parameters">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
@@ -624,7 +624,7 @@
 
 
 <div class="viewcode-block" id="Symbol.set_parameters">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.set_parameters">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.set_parameters">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_parameters</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">fitable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">):</span>
@@ -662,7 +662,7 @@
 
 
 <div class="viewcode-block" id="Symbol.map_nettype">
-<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.core.symbols.symbol.Symbol.map_nettype">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.Symbol.map_nettype">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">map_nettype</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">children_nettypes</span><span class="p">:</span> <span class="n">NetType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Default nettype mapping rule for symbol subclasses.</span>

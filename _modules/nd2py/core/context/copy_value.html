@@ -316,19 +316,19 @@
 <span class="n">_local</span><span class="o">.</span><span class="n">copy_value</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="get_copy_value">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.copy_value.get_copy_value">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.get_copy_value">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_copy_value</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_local</span><span class="p">,</span> <span class="s2">&quot;copy_value&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="set_copy_value">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.copy_value.set_copy_value">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.set_copy_value">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_copy_value</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
     <span class="n">_local</span><span class="o">.</span><span class="n">copy_value</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
 <div class="viewcode-block" id="no_copy_value">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.copy_value.no_copy_value">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.no_copy_value">[docs]</a>
 <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">no_copy_value</span><span class="p">():</span>
     <span class="n">prev</span> <span class="o">=</span> <span class="n">get_copy_value</span><span class="p">()</span>

@@ -320,7 +320,7 @@
 
 
 <div class="viewcode-block" id="SplitByMul">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.SplitByMul">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SplitByMul</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -341,14 +341,14 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="SplitByMul.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.SplitByMul.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="SplitByMul.visit_Mul">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.visit_Mul">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.SplitByMul.visit_Mul">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Mul</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">operands</span>
         <span class="n">result1</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
@@ -360,7 +360,7 @@
 
 
 <div class="viewcode-block" id="SplitByMul.visit_Div">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.visit_Div">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.SplitByMul.visit_Div">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Div</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;split_by_div&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span>
@@ -383,7 +383,7 @@
 
 
 <div class="viewcode-block" id="SplitByMul.merge_coefficients">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.core.transform.split_by_mul.SplitByMul.merge_coefficients">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.SplitByMul.merge_coefficients">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Merge coefficients from the symbols.&quot;&quot;&quot;</span>
         <span class="n">is_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Number&#39;</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>

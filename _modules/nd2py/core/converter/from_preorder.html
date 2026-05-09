@@ -319,7 +319,7 @@
 
 
 <div class="viewcode-block" id="FromPreorder">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.from_preorder.FromPreorder">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.FromPreorder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FromPreorder</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span> <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a Symbol tree from a list of Symbols in preorder traversal order.&quot;&quot;&quot;</span>
@@ -331,7 +331,7 @@
         <span class="k">return</span> <span class="n">eqtree</span>
 
 <div class="viewcode-block" id="FromPreorder.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.from_preorder.FromPreorder.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.FromPreorder.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">following_nodes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
@@ -345,7 +345,7 @@
 
 
 <div class="viewcode-block" id="from_preorder">
-<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.core.converter.from_preorder.from_preorder">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.converter.html#nd2py.from_preorder">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">from_preorder</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Symbol</span> <span class="o">|</span> <span class="n">Type</span><span class="p">[</span><span class="n">Symbol</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct a Symbol tree from a list of Symbols in preorder traversal order.&quot;&quot;&quot;</span> 
     <span class="k">return</span> <span class="n">FromPreorder</span><span class="p">()(</span><span class="n">nodes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>

@@ -352,6 +352,96 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict"><code class="docutils literal notranslate"><span class="pre">AttrDict</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.__init__"><code class="docutils literal notranslate"><span class="pre">AttrDict.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.load_yaml"><code class="docutils literal notranslate"><span class="pre">AttrDict.load_yaml()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.load_yaml_str"><code class="docutils literal notranslate"><span class="pre">AttrDict.load_yaml_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize.__init__"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize.inverse"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize.inverse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.MAE_score"><code class="docutils literal notranslate"><span class="pre">MAE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.MAPE_score"><code class="docutils literal notranslate"><span class="pre">MAPE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer"><code class="docutils literal notranslate"><span class="pre">NamedTimer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.__init__"><code class="docutils literal notranslate"><span class="pre">NamedTimer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.add"><code class="docutils literal notranslate"><span class="pre">NamedTimer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.clear"><code class="docutils literal notranslate"><span class="pre">NamedTimer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.to_str"><code class="docutils literal notranslate"><span class="pre">NamedTimer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.names"><code class="docutils literal notranslate"><span class="pre">NamedTimer.names</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_time()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_pace"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_pace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_speed"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_speed()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_pace"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_speed"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer"><code class="docutils literal notranslate"><span class="pre">ParallelTimer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.__init__"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.add"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.clear"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.to_str"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.names"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.names</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_time"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_time()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_pace"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_pace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_speed"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_speed()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_time"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_pace"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_speed"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.R2_score"><code class="docutils literal notranslate"><span class="pre">R2_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.RMSE_score"><code class="docutils literal notranslate"><span class="pre">RMSE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.add"><code class="docutils literal notranslate"><span class="pre">Timer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.clear"><code class="docutils literal notranslate"><span class="pre">Timer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.to_str"><code class="docutils literal notranslate"><span class="pre">Timer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.time"><code class="docutils literal notranslate"><span class="pre">Timer.time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.count"><code class="docutils literal notranslate"><span class="pre">Timer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.pace"><code class="docutils literal notranslate"><span class="pre">Timer.pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.speed"><code class="docutils literal notranslate"><span class="pre">Timer.speed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.time_str"><code class="docutils literal notranslate"><span class="pre">Timer.time_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.count_str"><code class="docutils literal notranslate"><span class="pre">Timer.count_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.pace_str"><code class="docutils literal notranslate"><span class="pre">Timer.pace_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.speed_str"><code class="docutils literal notranslate"><span class="pre">Timer.speed_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.to_dict"><code class="docutils literal notranslate"><span class="pre">Timer.to_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.from_dict"><code class="docutils literal notranslate"><span class="pre">Timer.from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.add_minus_flags"><code class="docutils literal notranslate"><span class="pre">add_minus_flags()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.add_negation_flags"><code class="docutils literal notranslate"><span class="pre">add_negation_flags()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.adjust_text"><code class="docutils literal notranslate"><span class="pre">adjust_text()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty"><code class="docutils literal notranslate"><span class="pre">classproperty</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty.__init__"><code class="docutils literal notranslate"><span class="pre">classproperty.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.clear_svg"><code class="docutils literal notranslate"><span class="pre">clear_svg()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.get_fig"><code class="docutils literal notranslate"><span class="pre">get_fig()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.init_logger"><code class="docutils literal notranslate"><span class="pre">init_logger()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.load_font"><code class="docutils literal notranslate"><span class="pre">load_font()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.log_exception"><code class="docutils literal notranslate"><span class="pre">log_exception()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.merge_axes"><code class="docutils literal notranslate"><span class="pre">merge_axes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.plotOD"><code class="docutils literal notranslate"><span class="pre">plotOD()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.plot_resilience"><code class="docutils literal notranslate"><span class="pre">plot_resilience()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.render_markdown"><code class="docutils literal notranslate"><span class="pre">render_markdown()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.render_python"><code class="docutils literal notranslate"><span class="pre">render_python()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.sMAPE_score"><code class="docutils literal notranslate"><span class="pre">sMAPE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.seed_all"><code class="docutils literal notranslate"><span class="pre">seed_all()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.softmax"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.tag2ansi"><code class="docutils literal notranslate"><span class="pre">tag2ansi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.use_chinese_font"><code class="docutils literal notranslate"><span class="pre">use_chinese_font()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.attr_dict">nd2py.utils.attr_dict module</a><ul class="visible nav section-nav flex-column">
@@ -392,6 +482,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.fix_parser">nd2py.utils.fix_parser module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_minus_flags"><code class="docutils literal notranslate"><span class="pre">add_minus_flags()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_negation_flags"><code class="docutils literal notranslate"><span class="pre">add_negation_flags()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.lazy_loader">nd2py.utils.lazy_loader module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.lazy_loader.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.log_exception">nd2py.utils.log_exception module</a><ul class="visible nav section-nav flex-column">
@@ -511,11 +605,482 @@
                   
   <section id="module-nd2py.utils">
 <span id="nd2py-utils-package"></span><h1>nd2py.utils package<a class="headerlink" href="#module-nd2py.utils" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.AttrDict">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">AttrDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/attr_dict.html#AttrDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.AttrDict" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.AttrDict.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/attr_dict.html#AttrDict.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.AttrDict.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.AttrDict.load_yaml">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_AttrDict__filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/attr_dict.html#AttrDict.load_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.AttrDict.load_yaml" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.AttrDict.load_yaml_str">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_yaml_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/attr_dict.html#AttrDict.load_yaml_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.AttrDict.load_yaml_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.EqualizeNormalize">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">EqualizeNormalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#EqualizeNormalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.EqualizeNormalize" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Normalize</span></code></p>
+<p>按分布而非值进行归一化</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.EqualizeNormalize.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#EqualizeNormalize.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.EqualizeNormalize.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.EqualizeNormalize.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#EqualizeNormalize.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.EqualizeNormalize.inverse" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.MAE_score">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">MAE_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/metrics.html#MAE_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.MAE_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.MAPE_score">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">MAPE_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/metrics.html#MAPE_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.MAPE_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">NamedTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nd2py.utils.timing.Timer" title="nd2py.utils.timing.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.__init__" title="Link to this definition">#</a></dt>
+<dd><p>对 Timer 的扩展, 支持将 count 和 time 统计到不同的名称下</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'increment'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'absolute'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'increment'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.add" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset_last_add_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.clear" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'speed'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_of_detail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'speed'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_of_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'by_time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'by_count'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'by_time'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.to_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.names">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.names" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.get_named_time">
+<span class="sig-name descname"><span class="pre">get_named_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.get_named_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.get_named_time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.get_named_count">
+<span class="sig-name descname"><span class="pre">get_named_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.get_named_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.get_named_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.get_named_pace">
+<span class="sig-name descname"><span class="pre">get_named_pace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.get_named_pace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.get_named_pace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.get_named_speed">
+<span class="sig-name descname"><span class="pre">get_named_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#NamedTimer.get_named_speed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.NamedTimer.get_named_speed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.named_time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_time</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.named_time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.named_count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_count</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.named_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.named_pace">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_pace</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.named_pace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.NamedTimer.named_speed">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_speed</span></span><a class="headerlink" href="#nd2py.utils.NamedTimer.named_speed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">ParallelTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nd2py.utils.timing.Timer" title="nd2py.utils.timing.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.__init__" title="Link to this definition">#</a></dt>
+<dd><p>对 Timer 的扩展, 支持将 count 统计到不同的名称下, 但 time 在各名称间共享</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'increment'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'absolute'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'increment'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.add" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset_last_add_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.clear" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'speed'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_of_detail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'speed'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_of_percent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'by_time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'by_count'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'by_time'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.to_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.names">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.names" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.get_named_time">
+<span class="sig-name descname"><span class="pre">get_named_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.get_named_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.get_named_time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.get_named_count">
+<span class="sig-name descname"><span class="pre">get_named_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.get_named_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.get_named_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.get_named_pace">
+<span class="sig-name descname"><span class="pre">get_named_pace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.get_named_pace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.get_named_pace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.get_named_speed">
+<span class="sig-name descname"><span class="pre">get_named_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#ParallelTimer.get_named_speed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.ParallelTimer.get_named_speed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.named_time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_time</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.named_time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.named_count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_count</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.named_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.named_pace">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_pace</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.named_pace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.ParallelTimer.named_speed">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">named_speed</span></span><a class="headerlink" href="#nd2py.utils.ParallelTimer.named_speed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.R2_score">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">R2_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/metrics.html#R2_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.R2_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.RMSE_score">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">RMSE_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/metrics.html#RMSE_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.RMSE_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.Timer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iter'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.__init__" title="Link to this definition">#</a></dt>
+<dd><p>计时器</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'increment'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'absolute'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'increment'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.add" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset_last_add_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.clear" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'speed'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pace'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.to_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#nd2py.utils.Timer.time" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#nd2py.utils.Timer.count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.pace">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pace</span></span><a class="headerlink" href="#nd2py.utils.Timer.pace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.speed">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">speed</span></span><a class="headerlink" href="#nd2py.utils.Timer.speed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.time_str">
+<span class="sig-name descname"><span class="pre">time_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.time_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.time_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.count_str">
+<span class="sig-name descname"><span class="pre">count_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.count_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.count_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.pace_str">
+<span class="sig-name descname"><span class="pre">pace_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.pace_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.pace_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.speed_str">
+<span class="sig-name descname"><span class="pre">speed_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.speed_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.speed_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.to_dict" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.Timer.from_dict">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/timing.html#Timer.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.Timer.from_dict" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.add_minus_flags">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">add_minus_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArgumentParser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/fix_parser.html#add_minus_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.add_minus_flags" title="Link to this definition">#</a></dt>
+<dd><p>自动为 argparse.ArgumentParser 中含有下划线的参数添加别名。例如：
+–fix_existing -&gt; 添加别名 –fix-existing
+–augment_OD_num -&gt; 添加别名 –augment-OD-num</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.add_negation_flags">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">add_negation_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArgumentParser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/fix_parser.html#add_negation_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.add_negation_flags" title="Link to this definition">#</a></dt>
+<dd><p>自动为 parser 中的 store_true 参数添加对应的 –no-xxx 选项。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.adjust_text">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">adjust_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xy'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#adjust_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.adjust_text" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nd2py.utils.classproperty">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">classproperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/classproperty.html#classproperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.classproperty" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>自定义的类属性装饰器。
+允许通过 ClassName.property_name 直接获取动态计算的类属性，
+同时也支持 instance.property_name。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nd2py.utils.classproperty.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/classproperty.html#classproperty.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.classproperty.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.clear_svg">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">clear_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#clear_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.clear_svg" title="Link to this definition">#</a></dt>
+<dd><p>matplotlib 生成的 svg 中会使用 &lt;text style=”font: 9.8px ‘Arial’; text-anchor: middle” x=”80.307802” y=”193.900483”&gt;2020-02-02&lt;/text&gt; 的语法，而 Powerpoint 无法识别 font: 9.8px ‘Arial’; 的简写记法，只能识别 font-family: ‘Arial’; font-size: 9.8px; 的记法。因此需要进行转换。考虑的属性包括：
+- font-size
+- font-family
+- font-weight
+- font-style</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.get_fig">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">get_fig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">RN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FW</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AW</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridspec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#get_fig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.get_fig" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.init_logger">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">init_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'debug'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'trace'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'info'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'note'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'warning'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'error'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'critical'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'info'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_max_size_MB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_backup_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_lineno_for_all_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/logger.html#init_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.init_logger" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the logger for the package.
+Args:
+- package_name: The name of the package / project, used in loggin.getLogger({package_name}.{path}.{to}.{file}).
+- exp_name: The name of the experiment, used in log prefix.
+- log_file: The path to the log file. If None, no file logging is performed.
+- info_level: The level of info logging. Can be one of ‘debug’, ‘info’, ‘note’, ‘warning’, ‘error’, ‘critical’.
+- file_max_size_MB: The maximum size of the log file in MB. Default is 50MB.
+- file_backup_count: The number of backup files to keep. Default is 100.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.load_font">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">load_font</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#load_font"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.load_font" title="Link to this definition">#</a></dt>
+<dd><ul class="simple">
+<li><p>plt.title(“示例图表：数字平方”, fontproperties=font, size=15)</p></li>
+<li><p>plt.xlabel(“数字”, fontproperties=font, size=12)</p></li>
+<li><p>plt.ylabel(“平方”, fontproperties=font, size=12)</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.log_exception">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">log_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Exception</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/utils/log_exception.html#log_exception"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.log_exception" title="Link to this definition">#</a></dt>
+<dd><p>Format exception for logging.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.merge_axes">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">merge_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#merge_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.merge_axes" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.plotOD">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">plotOD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linetype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'straight'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'parabola'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rotated_parabola'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'projected_parabola'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'straight'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#plotOD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.plotOD" title="Link to this definition">#</a></dt>
+<dd><p>绘制OD流量</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.plot_resilience">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">plot_resilience</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridnum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1000,</span> <span class="pre">1000)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_xylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#plot_resilience"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.plot_resilience" title="Link to this definition">#</a></dt>
+<dd><p>绘制二维函数的韧性
+- f: 二维函数，如 lambda x, y: y - 3*y**2 - y**3 + x*y**3
+- extent: 函数定义域 (xmin, xmax, ymin, ymax)
+- gridnum: 网格数量 (xnum, ynum)
+—
+Example:
+&gt;&gt;&gt; f = lambda x, y: y - 3*y**2 - y**3 + x*y**3
+&gt;&gt;&gt; plot_resilience(f, ax=axes[0], extent=(0, 5, 0, 5))
+&gt;&gt;&gt; f = lambda x, y: np.sin(np.sqrt(x**2 + y ** 2))
+&gt;&gt;&gt; plot_resilience(f, ax=axes[1], extent=(-4*np.pi, 4*np.pi, -4*np.pi, 4*np.pi))
+&gt;&gt;&gt; f = lambda x, y: np.sin(np.sqrt(x ** 2 + y ** 2)) * x - y * np.cos(np.sqrt(x ** 2 + y ** 2))
+&gt;&gt;&gt; plot_resilience(f, ax=axes[2], extent=(-4*np.pi, 4*np.pi, -4*np.pi, 4*np.pi))</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.render_markdown">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">render_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'staroffice'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/utils/render_markdown.html#render_markdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.render_markdown" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.render_python">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">render_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight_lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'staroffice'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/utils/render_python.html#render_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.render_python" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.sMAPE_score">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">sMAPE_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/metrics.html#sMAPE_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.sMAPE_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.seed_all">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">seed_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/utils.html#seed_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.seed_all" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.setup_lazy_imports">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">setup_lazy_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/lazy_loader.html#setup_lazy_imports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.setup_lazy_imports" title="Link to this definition">#</a></dt>
+<dd><p>Set up lazy imports for a module’s <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">(__getattr__,</span> <span class="pre">__dir__,</span> <span class="pre">__all__)</span></code> which should be assigned at
+the module level so that <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">package</span> <span class="pre">import</span> <span class="pre">OptionalClass</span></code> works
+without importing the optional dependency until it is actually needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> – The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of the calling module.</p></li>
+<li><p><strong>import_mapping</strong> – A dict mapping attribute names to
+<code class="docutils literal notranslate"><span class="pre">(module_path,</span> <span class="pre">requires)</span></code> tuples.  <em>module_path</em> is a
+relative import path (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;.torch_calc&quot;</span></code>) and <em>requires</em>
+is the optional-dependency group name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;nn&quot;</span></code>) shown in
+the error message when the dependency is missing.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># __init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoreClass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.lazy_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_lazy_imports</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.optional</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalClass</span>
+
+<span class="fm">__getattr__</span><span class="p">,</span> <span class="fm">__dir__</span><span class="p">,</span> <span class="n">__all__</span> <span class="o">=</span> <span class="n">setup_lazy_imports</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;OptionalClass&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;.optional&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">),</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.softmax">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">softmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/utils.html#softmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.softmax" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.tag2ansi">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">tag2ansi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/nd2py/utils/tag2ansi.html#tag2ansi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.tag2ansi" title="Link to this definition">#</a></dt>
+<dd><p>将 [tag1 tag2] 转换为 ANSI 码并智能插入 reset。
+支持多种颜色定义方式、样式组合、自动闭合。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.use_chinese_font">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.</span></span><span class="sig-name descname"><span class="pre">use_chinese_font</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fontpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/plot.html#use_chinese_font"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.use_chinese_font" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nd2py.utils.nn.html">nd2py.utils.nn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#nd2py.utils.nn.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nd2py.utils.nn.html#module-nd2py.utils.nn.gnn">nd2py.utils.nn.gnn module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nd2py.utils.nn.html#nd2py.utils.nn.gnn.GNNLayer"><code class="docutils literal notranslate"><span class="pre">GNNLayer</span></code></a><ul>
@@ -678,7 +1243,7 @@ model = MyModel.create(config, tokenizer)  # Returns MyModel instance
 <a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nd2py.utils.factory.FactoryMixin.MODEL_DICT">
-<span class="sig-name descname"><span class="pre">MODEL_DICT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin.MODEL_DICT" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">MODEL_DICT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flash_ansr':</span> <span class="pre">&lt;class</span> <span class="pre">'nd2py.search.ndformer.ndformer_model_flash_ansr.FlashANSRNDFormer'&gt;}</span></span><a class="headerlink" href="#nd2py.utils.factory.FactoryMixin.MODEL_DICT" title="Link to this definition">#</a></dt>
 <dd><p>Registry of model classes keyed by name. Shared across all subclasses.</p>
 </dd></dl>
 
@@ -734,6 +1299,43 @@ class GCNModel(MyModel):</p>
 <dt class="sig sig-object py" id="nd2py.utils.fix_parser.add_negation_flags">
 <span class="sig-prename descclassname"><span class="pre">nd2py.utils.fix_parser.</span></span><span class="sig-name descname"><span class="pre">add_negation_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArgumentParser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/fix_parser.html#add_negation_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.fix_parser.add_negation_flags" title="Link to this definition">#</a></dt>
 <dd><p>自动为 parser 中的 store_true 参数添加对应的 –no-xxx 选项。</p>
+</dd></dl>
+
+</section>
+<section id="module-nd2py.utils.lazy_loader">
+<span id="nd2py-utils-lazy-loader-module"></span><h2>nd2py.utils.lazy_loader module<a class="headerlink" href="#module-nd2py.utils.lazy_loader" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nd2py.utils.lazy_loader.setup_lazy_imports">
+<span class="sig-prename descclassname"><span class="pre">nd2py.utils.lazy_loader.</span></span><span class="sig-name descname"><span class="pre">setup_lazy_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/lazy_loader.html#setup_lazy_imports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.lazy_loader.setup_lazy_imports" title="Link to this definition">#</a></dt>
+<dd><p>Set up lazy imports for a module’s <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">(__getattr__,</span> <span class="pre">__dir__,</span> <span class="pre">__all__)</span></code> which should be assigned at
+the module level so that <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">package</span> <span class="pre">import</span> <span class="pre">OptionalClass</span></code> works
+without importing the optional dependency until it is actually needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> – The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of the calling module.</p></li>
+<li><p><strong>import_mapping</strong> – A dict mapping attribute names to
+<code class="docutils literal notranslate"><span class="pre">(module_path,</span> <span class="pre">requires)</span></code> tuples.  <em>module_path</em> is a
+relative import path (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;.torch_calc&quot;</span></code>) and <em>requires</em>
+is the optional-dependency group name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;nn&quot;</span></code>) shown in
+the error message when the dependency is missing.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># __init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoreClass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.lazy_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_lazy_imports</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.optional</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalClass</span>
+
+<span class="fm">__getattr__</span><span class="p">,</span> <span class="fm">__dir__</span><span class="p">,</span> <span class="n">__all__</span> <span class="o">=</span> <span class="n">setup_lazy_imports</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;OptionalClass&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;.optional&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">),</span>
+<span class="p">})</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -1201,6 +1803,96 @@ Example:
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict"><code class="docutils literal notranslate"><span class="pre">AttrDict</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.__init__"><code class="docutils literal notranslate"><span class="pre">AttrDict.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.load_yaml"><code class="docutils literal notranslate"><span class="pre">AttrDict.load_yaml()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.AttrDict.load_yaml_str"><code class="docutils literal notranslate"><span class="pre">AttrDict.load_yaml_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize.__init__"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.EqualizeNormalize.inverse"><code class="docutils literal notranslate"><span class="pre">EqualizeNormalize.inverse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.MAE_score"><code class="docutils literal notranslate"><span class="pre">MAE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.MAPE_score"><code class="docutils literal notranslate"><span class="pre">MAPE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer"><code class="docutils literal notranslate"><span class="pre">NamedTimer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.__init__"><code class="docutils literal notranslate"><span class="pre">NamedTimer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.add"><code class="docutils literal notranslate"><span class="pre">NamedTimer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.clear"><code class="docutils literal notranslate"><span class="pre">NamedTimer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.to_str"><code class="docutils literal notranslate"><span class="pre">NamedTimer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.names"><code class="docutils literal notranslate"><span class="pre">NamedTimer.names</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_time()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_pace"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_pace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.get_named_speed"><code class="docutils literal notranslate"><span class="pre">NamedTimer.get_named_speed()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_time"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_count"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_pace"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.NamedTimer.named_speed"><code class="docutils literal notranslate"><span class="pre">NamedTimer.named_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer"><code class="docutils literal notranslate"><span class="pre">ParallelTimer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.__init__"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.add"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.clear"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.to_str"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.names"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.names</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_time"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_time()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_pace"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_pace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.get_named_speed"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.get_named_speed()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_time"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_count"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_pace"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.ParallelTimer.named_speed"><code class="docutils literal notranslate"><span class="pre">ParallelTimer.named_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.R2_score"><code class="docutils literal notranslate"><span class="pre">R2_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.RMSE_score"><code class="docutils literal notranslate"><span class="pre">RMSE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.__init__"><code class="docutils literal notranslate"><span class="pre">Timer.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.add"><code class="docutils literal notranslate"><span class="pre">Timer.add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.clear"><code class="docutils literal notranslate"><span class="pre">Timer.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.to_str"><code class="docutils literal notranslate"><span class="pre">Timer.to_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.time"><code class="docutils literal notranslate"><span class="pre">Timer.time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.count"><code class="docutils literal notranslate"><span class="pre">Timer.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.pace"><code class="docutils literal notranslate"><span class="pre">Timer.pace</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.speed"><code class="docutils literal notranslate"><span class="pre">Timer.speed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.time_str"><code class="docutils literal notranslate"><span class="pre">Timer.time_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.count_str"><code class="docutils literal notranslate"><span class="pre">Timer.count_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.pace_str"><code class="docutils literal notranslate"><span class="pre">Timer.pace_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.speed_str"><code class="docutils literal notranslate"><span class="pre">Timer.speed_str()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.to_dict"><code class="docutils literal notranslate"><span class="pre">Timer.to_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.Timer.from_dict"><code class="docutils literal notranslate"><span class="pre">Timer.from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.add_minus_flags"><code class="docutils literal notranslate"><span class="pre">add_minus_flags()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.add_negation_flags"><code class="docutils literal notranslate"><span class="pre">add_negation_flags()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.adjust_text"><code class="docutils literal notranslate"><span class="pre">adjust_text()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty"><code class="docutils literal notranslate"><span class="pre">classproperty</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.classproperty.__init__"><code class="docutils literal notranslate"><span class="pre">classproperty.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.clear_svg"><code class="docutils literal notranslate"><span class="pre">clear_svg()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.get_fig"><code class="docutils literal notranslate"><span class="pre">get_fig()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.init_logger"><code class="docutils literal notranslate"><span class="pre">init_logger()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.load_font"><code class="docutils literal notranslate"><span class="pre">load_font()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.log_exception"><code class="docutils literal notranslate"><span class="pre">log_exception()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.merge_axes"><code class="docutils literal notranslate"><span class="pre">merge_axes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.plotOD"><code class="docutils literal notranslate"><span class="pre">plotOD()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.plot_resilience"><code class="docutils literal notranslate"><span class="pre">plot_resilience()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.render_markdown"><code class="docutils literal notranslate"><span class="pre">render_markdown()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.render_python"><code class="docutils literal notranslate"><span class="pre">render_python()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.sMAPE_score"><code class="docutils literal notranslate"><span class="pre">sMAPE_score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.seed_all"><code class="docutils literal notranslate"><span class="pre">seed_all()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.softmax"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.tag2ansi"><code class="docutils literal notranslate"><span class="pre">tag2ansi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.use_chinese_font"><code class="docutils literal notranslate"><span class="pre">use_chinese_font()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.attr_dict">nd2py.utils.attr_dict module</a><ul class="visible nav section-nav flex-column">
@@ -1241,6 +1933,10 @@ Example:
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.fix_parser">nd2py.utils.fix_parser module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_minus_flags"><code class="docutils literal notranslate"><span class="pre">add_minus_flags()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.fix_parser.add_negation_flags"><code class="docutils literal notranslate"><span class="pre">add_negation_flags()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.lazy_loader">nd2py.utils.lazy_loader module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.lazy_loader.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.log_exception">nd2py.utils.log_exception module</a><ul class="visible nav section-nav flex-column">

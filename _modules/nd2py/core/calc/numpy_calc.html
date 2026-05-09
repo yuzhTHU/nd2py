@@ -323,7 +323,7 @@
 <span class="c1"># This allows us to handle operations with multiple operands in a clean way</span>
 <span class="c1"># We can also use this decorator to suppress numpy errors</span>
 <div class="viewcode-block" id="unpack_operands">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.unpack_operands">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.unpack_operands">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">unpack_operands</span><span class="p">():</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
@@ -345,7 +345,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NumpyCalc</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -377,7 +377,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="NumpyCalc.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.visit_</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> not implemented&quot;</span>
@@ -385,7 +385,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Empty">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Empty</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Incomplete expression with Empty node is not allowed to evaluate: </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -393,42 +393,42 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Number">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Number">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Number">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Variable">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Variable">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Variable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;vars&quot;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Add">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Add">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Add">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Add</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sub">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sub">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sub">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sub</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Mul">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Mul">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Mul">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Mul</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Div">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Div">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Div">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Div</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -436,56 +436,56 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Pow">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Pow">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Pow">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span><span class="o">**</span><span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Max">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Max">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Max">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Max</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Min">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Min">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Min">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Min</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Min</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="NumpyCalc.visit_Identity">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Identity">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Identity">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Identity</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sin">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sin">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sin">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Cos">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Cos">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Cos">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cos</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Tan">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Tan">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Tan">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Tan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Tan</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sec">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sec">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sec">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sec</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -493,7 +493,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Csc">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Csc">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Csc">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Csc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Csc</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -501,7 +501,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Cot">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Cot">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Cot">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cot</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -509,7 +509,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Log">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Log">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Log">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Log</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -517,7 +517,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_LogAbs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_LogAbs">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_LogAbs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_LogAbs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">LogAbs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -525,28 +525,28 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Exp">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Exp">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Exp">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Exp</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Abs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Abs">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Abs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Abs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Abs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Neg">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Neg">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Neg">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Neg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Neg</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">x</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Inv">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Inv">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Inv">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Inv</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -554,77 +554,77 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sqrt">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sqrt">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sqrt">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sqrt</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_SqrtAbs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_SqrtAbs">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_SqrtAbs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_SqrtAbs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">SqrtAbs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Pow2">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Pow2">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Pow2">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Pow3">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Pow3">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Pow3">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Arcsin">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Arcsin">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Arcsin">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arcsin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arcsin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Arccos">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Arccos">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Arccos">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arccos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arccos</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Arctan">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Arctan">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Arctan">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arctan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arctan</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sinh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sinh">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sinh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sinh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sinh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Cosh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Cosh">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Cosh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cosh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cosh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Tanh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Tanh">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Tanh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Tanh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Tanh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sech">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sech">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sech">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sech</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sech</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -632,7 +632,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Csch">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Csch">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Csch">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Csch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Csch</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -640,7 +640,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Coth">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Coth">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Coth">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Coth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Coth</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -648,14 +648,14 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sigmoid">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sigmoid">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sigmoid">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sigmoid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Regular">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Regular">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Regular">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Regular</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -663,7 +663,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Sour">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Sour">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Sour">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sour</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or 1) -&gt; (*, n_edges or 1)&quot;&quot;&quot;</span>
@@ -680,7 +680,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Targ">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Targ">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Targ">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Targ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Targ</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or 1) -&gt; (*, n_edges or 1)&quot;&quot;&quot;</span>
@@ -697,7 +697,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Aggr">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Aggr">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Aggr">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Aggr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Aggr</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_edges or 1) -&gt; (*, n_nodes)&quot;&quot;&quot;</span>
@@ -723,7 +723,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Rgga">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Rgga">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Rgga">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Rgga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Rgga</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_edges or 1) -&gt; (*, n_nodes)&quot;&quot;&quot;</span>
@@ -749,7 +749,7 @@
 
 
 <div class="viewcode-block" id="NumpyCalc.visit_Readout">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.numpy_calc.NumpyCalc.visit_Readout">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.NumpyCalc.visit_Readout">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Readout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Readout</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or n_edges or 1) -&gt; (*, 1)&quot;&quot;&quot;</span>

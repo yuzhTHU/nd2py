@@ -316,13 +316,13 @@
 <span class="n">_local</span><span class="o">.</span><span class="n">nettype_inference</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="nettype_inference">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.nettype_inference.nettype_inference">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.nettype_inference">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nettype_inference</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_local</span><span class="p">,</span> <span class="s2">&quot;nettype_inference&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="no_nettype_inference">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.nettype_inference.no_nettype_inference">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.no_nettype_inference">[docs]</a>
 <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">no_nettype_inference</span><span class="p">():</span>
     <span class="n">prev</span> <span class="o">=</span> <span class="n">nettype_inference</span><span class="p">()</span>
@@ -334,7 +334,7 @@
 
 
 <div class="viewcode-block" id="set_nettype_inference">
-<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.core.context.nettype_inference.set_nettype_inference">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.core.context.html#nd2py.set_nettype_inference">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_nettype_inference</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
     <span class="n">_local</span><span class="o">.</span><span class="n">nettype_inference</span> <span class="o">=</span> <span class="n">value</span></div>
 

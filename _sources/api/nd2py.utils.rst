@@ -57,6 +57,14 @@ nd2py.utils.fix\_parser module
    :show-inheritance:
    :undoc-members:
 
+nd2py.utils.lazy\_loader module
+-------------------------------
+
+.. automodule:: nd2py.utils.lazy_loader
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.utils.log\_exception module
 ---------------------------------
 
