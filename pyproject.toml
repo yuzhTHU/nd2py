@@ -61,7 +61,7 @@ all = [
 
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = "-m 'not slow and not paid'"
+addopts = "--quiet -m 'not slow and not paid'"
 testpaths = ["tests"]
 markers = [
     "slow: marks tests as slow (integration tests)",
