@@ -23,7 +23,9 @@ def __getattr__(name: str):
 
     for mod in _export_modules:
         if name in dir(mod): # 使用 dir 避免触发下层模块的 __getattr__ 导致懒加载失效
-            return getattr(mod, name)
+            value = getattr(mod, name)
+            globals()[name] = value
+            return value
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 def __dir__():

@@ -14,7 +14,9 @@ _export_modules = [calc, symbols, context, converter, transform]
 def __getattr__(name: str):
     for mod in _export_modules:
         if name in dir(mod):
-            return getattr(mod, name)
+            value = getattr(mod, name)
+            globals()[name] = value
+            return value
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 def __dir__():

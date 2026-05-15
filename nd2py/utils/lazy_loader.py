@@ -42,7 +42,9 @@ def setup_lazy_imports(module_name: str, import_mapping: Dict[str, Tuple[str, st
                 module = importlib.import_module(module_path, package=module_name)
                 # If the module exposes an attribute with the same name, return it;
                 # otherwise the user wants the submodule object itself.
-                return getattr(module, name) if hasattr(module, name) else module
+                value = getattr(module, name) if hasattr(module, name) else module
+                sys.modules[module_name].__dict__[name] = value
+                return value
             except ImportError as e:
                 raise ImportError(
                     f"Failed to import '{name}' from '{module_path}' in module "
