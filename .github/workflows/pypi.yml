@@ -2,9 +2,10 @@ name: Publish to PyPI
 
 on:
   push:
-    tags:
-      - "[0-9]*.[0-9]*.[0-9]*"
-      - "v[0-9]*.[0-9]*.[0-9]*"
+    branches:
+      - main
+    paths:
+      - pyproject.toml
 
 jobs:
   pypi-publish:
@@ -19,43 +20,64 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install build tool
-        run: python -m pip install --upgrade build
-
-      - name: Set package version from tag
+      - name: Check whether package version changed
+        id: version
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
           python - <<'PY'
           import os
-          import re
+          import subprocess
+          import tomllib
           from pathlib import Path
 
-          ref_name = os.environ["GITHUB_REF_NAME"]
-          version = ref_name.removeprefix("v")
-          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
-              raise SystemExit(f"Invalid release tag: {ref_name!r}")
+          def project_version(text: str) -> str:
+              data = tomllib.loads(text)
+              return data["project"]["version"]
 
-          path = Path("pyproject.toml")
-          text = path.read_text()
-          text, count = re.subn(
-              r'(?m)^version = "[^"]+"$',
-              f'version = "{version}"',
-              text,
-              count=1,
-          )
-          if count != 1:
-              raise SystemExit("Could not find exactly one project version in pyproject.toml")
-          path.write_text(text)
-          print(f"Building nd2py {version}")
+          new_version = project_version(Path("pyproject.toml").read_text())
+          before_sha = os.environ["BEFORE_SHA"]
+          old_version = None
+
+          if before_sha and before_sha != "0000000000000000000000000000000000000000":
+              try:
+                  old_text = subprocess.check_output(
+                      ["git", "show", f"{before_sha}:pyproject.toml"],
+                      text=True,
+                  )
+              except subprocess.CalledProcessError:
+                  old_text = None
+              if old_text is not None:
+                  old_version = project_version(old_text)
+
+          should_publish = old_version != new_version
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write(f"old_version={old_version or ''}\n")
+              output.write(f"new_version={new_version}\n")
+              output.write(f"should_publish={str(should_publish).lower()}\n")
+
+          if should_publish:
+              print(f"Publishing nd2py {new_version} (previous version: {old_version or 'none'})")
+          else:
+              print(f"pyproject.toml changed, but project.version is still {new_version}; skipping publish")
           PY
 
+      - name: Install build tool
+        if: steps.version.outputs.should_publish == 'true'
+        run: python -m pip install --upgrade build
+
       - name: Build a binary wheel and a source tarball
+        if: steps.version.outputs.should_publish == 'true'
         run: python -m build
 
       - name: Publish package distributions to PyPI
+        if: steps.version.outputs.should_publish == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
