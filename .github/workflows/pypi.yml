@@ -1,8 +1,10 @@
 name: Publish to PyPI
 
 on:
-  release:
-    types: [published]  # 只有你在 GitHub 上创建一个新的 Release 时才会触发发包
+  push:
+    tags:
+      - "[0-9]*.[0-9]*.[0-9]*"
+      - "v[0-9]*.[0-9]*.[0-9]*"
 
 jobs:
   pypi-publish:
@@ -17,17 +19,43 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          
+          python-version: "3.12"
+
       - name: Install build tool
         run: python -m pip install --upgrade build
-        
+
+      - name: Set package version from tag
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          ref_name = os.environ["GITHUB_REF_NAME"]
+          version = ref_name.removeprefix("v")
+          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+              raise SystemExit(f"Invalid release tag: {ref_name!r}")
+
+          path = Path("pyproject.toml")
+          text = path.read_text()
+          text, count = re.subn(
+              r'(?m)^version = "[^"]+"$',
+              f'version = "{version}"',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit("Could not find exactly one project version in pyproject.toml")
+          path.write_text(text)
+          print(f"Building nd2py {version}")
+          PY
+
       - name: Build a binary wheel and a source tarball
         run: python -m build
-        
+
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
