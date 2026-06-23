@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     _Type = Generator[_YieldType, _SendType, _ReturnType]
 
 
-__all__ = ["MatchVisitor"]
+__all__ = ["Match"]
 
 
 class Match(Visitor):

@@ -1,13 +1,18 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+import importlib
 from typing import TYPE_CHECKING
-from . import core, dataset, generator, search, utils
 
-# 扁平化 core 中模块的导入，提供更简洁的接口
 if TYPE_CHECKING:
+    from . import core, dataset, generator, search, utils
     from .core import *
 
-from . import core
-_export_modules = [core]
+_SUBMODULES = ("core", "dataset", "generator", "search", "utils")
+
+
+def _load_module(name: str):
+    module = globals()[name] = importlib.import_module(f".{name}", __name__)
+    return module
+
 
 def __getattr__(name: str):
     if name == "__all__":
@@ -20,19 +25,21 @@ def __getattr__(name: str):
             stacklevel=2  # stacklevel=2 让警告指向用户的调用代码，而不是 __init__.py
         )
         return __dir__()
+    elif name in _SUBMODULES:
+        return _load_module(name)
+    elif name in dir(core_module := globals().get("core") or _load_module("core")):
+        value = globals()[name] = getattr(core_module, name)
+        return value
+    else:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
-    for mod in _export_modules:
-        if name in dir(mod): # 使用 dir 避免触发下层模块的 __getattr__ 导致懒加载失效
-            value = getattr(mod, name)
-            globals()[name] = value
-            return value
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 def __dir__():
-    exclude_names = {"TYPE_CHECKING", "core"}
-    names = {name for name in globals() if not name.startswith("_") and name not in exclude_names}
-    for mod in _export_modules:
-        names.update([n for n in dir(mod) if not n.startswith("_")])
-    return list(names)
+    names = {name for name in globals() if not name.startswith("_") and name != "TYPE_CHECKING"}
+    names.update(_SUBMODULES)
+    core_module = globals().get("core") or _load_module("core")
+    names.update(name for name in dir(core_module) if not name.startswith("_"))
+    return sorted(names)
 
-# __all__ = __dir__() # 不定义 __all__, 以保证用户使用 from nd2py import * 时触发 __getattr__ 中的警告
+
+# Do not define __all__; this keeps `from nd2py import *` routed through the warning above.

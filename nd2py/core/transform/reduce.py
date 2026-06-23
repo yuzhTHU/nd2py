@@ -222,7 +222,7 @@ class Reduce:
                         inner_progress.set_postfix({"rules": len(self.reduce_rules)})
             inner_progress.close()
             self.reduce_rules.extend(saved_reduce_rules)
-            for key, values in saved_hash_dict:
+            for key, values in saved_hash_dict.items():
                 self.hash_dict[key].extend(values)
             progress_bar.set_postfix({"total_rules": len(self.reduce_rules)})
             if save_cache:

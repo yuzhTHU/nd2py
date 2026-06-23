@@ -1,4 +1,21 @@
 import pytest
+from importlib.util import find_spec
+
+
+def _missing_modules(*module_names):
+    return [name for name in module_names if find_spec(name) is None]
+
+
+def pytest_ignore_collect(collection_path, config):
+    path = collection_path.as_posix()
+    optional_test_deps = {
+        "tests/search/ndformer/test_ndformer_dataset.py": ("torch", "torch_geometric", "networkx"),
+        "tests/search/ndformer/test_ndformer_generator.py": ("networkx",),
+    }
+    for test_path, module_names in optional_test_deps.items():
+        if path.endswith(test_path) and _missing_modules(*module_names):
+            return True
+    return False
 
 def pytest_addoption(parser):
     # 添加命令行参数

@@ -35,6 +35,10 @@ reducer.prepare_rule_dict(l_max=4, force_rebuild=False, save_cache=True, show_pr
 for rule in reducer.reduce_rules[:10]:
     print(rule)
 
+@pytest.fixture(name="reducer")
+def reducer_fixture():
+    return reducer
+
 @pytest.fixture
 def x(): return nd.Variable('x', nettype='scalar')
 
