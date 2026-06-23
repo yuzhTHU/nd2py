@@ -322,10 +322,10 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MetaAIGenerator</span><span class="p">:</span>
 <div class="viewcode-block" id="MetaAIGenerator.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> 
         <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Variable</span><span class="p">],</span>
@@ -361,7 +361,7 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator.sample">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.sample">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.sample">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">],</span> <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_var</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nettypes</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">nettypes</span> <span class="o">=</span> <span class="p">{</span><span class="n">nettypes</span><span class="p">}</span>
@@ -393,7 +393,7 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator.dist">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.dist">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.dist">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_op</span><span class="p">,</span> <span class="n">n_emp</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        `max_ops`: maximum number of operators</span>
@@ -417,7 +417,7 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator.generate_leaf">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_leaf">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.generate_leaf">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_var</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">n_used_var</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Symbol</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">n_used_var</span> <span class="o">&lt;</span> <span class="n">n_var</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x_</span><span class="si">{</span><span class="n">n_used_var</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">n_used_var</span><span class="o">+</span><span class="mi">1</span>
@@ -427,7 +427,7 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator.generate_ops">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_ops">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.generate_ops">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_ops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_operands</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">n_operands</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unary</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unary_prob</span><span class="p">)</span>
@@ -438,7 +438,7 @@
 
 
 <div class="viewcode-block" id="MetaAIGenerator.generate_next_pos">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.metaai_generator.MetaAIGenerator.generate_next_pos">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.MetaAIGenerator.generate_next_pos">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_next_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_empty</span><span class="p">,</span> <span class="n">n_operators</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sample the position of the next node (binary case).</span>

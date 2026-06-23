@@ -314,7 +314,7 @@
 
 
 <div class="viewcode-block" id="SubeqGenerator">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.SubeqGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SubeqGenerator</span><span class="p">(</span><span class="n">GMMGenerator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    生成高斯随机分布的 z in R^{K} 以及 D 个随机方程 f_d。以 X_d=f_d(z) 计算 y=f(X_d&#39;)。</span>
@@ -322,7 +322,7 @@
 <span class="sd">    X_d 中可能会有离群值，这会影响 X_d&#39; 的分布范围，因此归一化之前先去除 threshold (%) 之外的值。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="SubeqGenerator.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.SubeqGenerator.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eq_generator</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">max_var</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">normalize_X</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eq_generator</span> <span class="o">=</span> <span class="n">eq_generator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">max_value</span>
@@ -331,7 +331,7 @@
 
     
 <div class="viewcode-block" id="SubeqGenerator.generate_data">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.subeq_generator.SubeqGenerator.generate_data">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.SubeqGenerator.generate_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">):</span>
         <span class="n">variables</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">preorder</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)))</span>
         <span class="n">D</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>

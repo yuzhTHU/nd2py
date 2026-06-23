@@ -309,41 +309,14 @@
 <span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;setup_lazy_imports&quot;</span><span class="p">,</span> <span class="s2">&quot;TYPE_CHECKING&quot;</span><span class="p">]</span>
 
-
 <div class="viewcode-block" id="setup_lazy_imports">
-<a class="viewcode-back" href="../../../api/nd2py.utils.nn.html#nd2py.setup_lazy_imports">[docs]</a>
+<a class="viewcode-back" href="../../../api/nd2py.utils.html#nd2py.utils.lazy_loader.setup_lazy_imports">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">setup_lazy_imports</span><span class="p">(</span><span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">import_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set up lazy imports for a module&#39;s ``__init__.py``.</span>
-
-<span class="sd">    Returns ``(__getattr__, __dir__, __all__)`` which should be assigned at</span>
-<span class="sd">    the module level so that ``from package import OptionalClass`` works</span>
-<span class="sd">    without importing the optional dependency until it is actually needed.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        module_name: The ``__name__`` of the calling module.</span>
-<span class="sd">        import_mapping: A dict mapping attribute names to</span>
-<span class="sd">            ``(module_path, requires)`` tuples.  *module_path* is a</span>
-<span class="sd">            relative import path (e.g. ``&quot;.torch_calc&quot;``) and *requires*</span>
-<span class="sd">            is the optional-dependency group name (e.g. ``&quot;nn&quot;``) shown in</span>
-<span class="sd">            the error message when the dependency is missing.</span>
-
-<span class="sd">    Usage::</span>
-
-<span class="sd">        # __init__.py</span>
-<span class="sd">        from .core import CoreClass</span>
-<span class="sd">        from ..utils.lazy_loader import setup_lazy_imports</span>
-
-<span class="sd">        if TYPE_CHECKING:</span>
-<span class="sd">            from .optional import OptionalClass</span>
-
-<span class="sd">        __getattr__, __dir__, __all__ = setup_lazy_imports(__name__, {</span>
-<span class="sd">            &quot;OptionalClass&quot;: (&quot;.optional&quot;, &quot;nn&quot;),</span>
-<span class="sd">        })</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set up lazy imports for a module&#39;s ``__init__.py``.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">import_mapping</span><span class="p">:</span>
@@ -355,19 +328,22 @@
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">else</span> <span class="n">module</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="k">return</span> <span class="n">value</span>
-            <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">ModuleNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Failed to import &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; from &#39;</span><span class="si">{</span><span class="n">module_path</span><span class="si">}</span><span class="s2">&#39; in module &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; since missing optional dependency. &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;Try to run `pip install nd2py[</span><span class="si">{</span><span class="n">requires</span><span class="si">}</span><span class="s2">]` or &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;`pip install nd2py[all]` to install the required dependencies.&quot;</span>
                 <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-
+                
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;module </span><span class="si">{</span><span class="n">module_name</span><span class="si">!r}</span><span class="s2"> has no attribute </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Build __all__ from the caller&#39;s existing globals plus the lazy names.</span>
     <span class="n">caller_globals</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">f_globals</span>
-    <span class="n">eager_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">caller_globals</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)]</span>
+    <span class="n">eager_names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">caller_globals</span> 
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> 
+        <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;TYPE_CHECKING&quot;</span><span class="p">,</span> <span class="s2">&quot;setup_lazy_imports&quot;</span><span class="p">}</span>
+    <span class="p">]</span>
     <span class="n">__all__</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">eager_names</span><span class="p">)</span> <span class="o">|</span> <span class="n">import_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__dir__</span><span class="p">():</span>

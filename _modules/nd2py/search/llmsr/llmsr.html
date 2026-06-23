@@ -358,10 +358,10 @@
 
 
 <div class="viewcode-block" id="LLMSR">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LLMSR</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">):</span>
 <div class="viewcode-block" id="LLMSR.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -411,7 +411,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.fit">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.fit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -498,7 +498,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.init_islands">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.init_islands">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.init_islands">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_islands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]]:</span>
         <span class="n">islands</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">indiv</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed_program</span><span class="p">)</span>
@@ -510,7 +510,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.evolve">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.evolve">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.evolve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">evolve</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">islands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]],</span> <span class="n">data</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]]:</span>
@@ -533,7 +533,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.tournament">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.tournament">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.tournament">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tournament</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">islands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]],</span> <span class="n">data</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]]:</span>
@@ -576,7 +576,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.generate_prompt">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.generate_prompt">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.generate_prompt">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">materials</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">materials</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span>
@@ -597,7 +597,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.generate_children">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.generate_children">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.generate_children">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
         <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">program</span> <span class="ow">in</span> <span class="p">(</span><span class="n">gen</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="p">(</span><span class="n">prompt</span><span class="p">)):</span>
@@ -615,7 +615,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.clear">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.clear">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.clear">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># Find the first line of the function definition</span>
@@ -662,7 +662,7 @@
 
 
 <div class="viewcode-block" id="LLMSR.run_evaluate">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.run_evaluate">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.run_evaluate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">namespace</span> <span class="o">=</span> <span class="p">{}</span>
@@ -714,7 +714,7 @@
     <span class="c1">#     return individuals</span>
 
 <div class="viewcode-block" id="LLMSR.set_score">
-<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.llmsr.LLMSR.set_score">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.llmsr.html#nd2py.search.llmsr.LLMSR.set_score">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">:</span> <span class="n">Individual</span> <span class="o">|</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">],</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">individuals</span><span class="p">,</span> <span class="n">Individual</span><span class="p">):</span>
             <span class="n">individuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">individuals</span><span class="p">]</span>

@@ -319,10 +319,10 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SNIPGenerator</span><span class="p">(</span><span class="n">MetaAIGenerator</span><span class="p">):</span>
 <div class="viewcode-block" id="SNIPGenerator.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_var</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_unary</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_unary</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
                  <span class="n">min_binary_per_var</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_binary_per_var</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_binary_ops_offset</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                  <span class="n">max_unary_depth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_mantissa</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_exp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_exp</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -340,7 +340,7 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator.generate_eqtree">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_eqtree">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator.generate_eqtree">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_eqtree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_unary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_binary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="n">n_var</span> <span class="o">=</span> <span class="n">n_var</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_var</span><span class="p">)</span>
         <span class="n">n_unary</span> <span class="o">=</span> <span class="n">n_unary</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_unary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_unary</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -354,7 +354,7 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator.generate_float">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.generate_float">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator.generate_float">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_float</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
         <span class="n">sign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="n">mantissa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_mantissa</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_mantissa</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -372,7 +372,7 @@
         <span class="k">return</span> <span class="n">eqtree</span>
 
 <div class="viewcode-block" id="SNIPGenerator.add_unaries">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.add_unaries">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator.add_unaries">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_unaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">n_unary</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="c1"># Add some unary operations</span>
         <span class="n">eqtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_unaries</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span>
@@ -427,7 +427,7 @@
         <span class="k">return</span> <span class="n">eqtree</span>
 
 <div class="viewcode-block" id="SNIPGenerator.add_prefactors">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator.add_prefactors">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator.add_prefactors">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_prefactors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span><span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="n">_eqtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_prefactors</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">_eqtree</span><span class="o">.</span><span class="n">preorder</span><span class="p">())</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">eqtree</span><span class="o">.</span><span class="n">preorder</span><span class="p">()):</span>
@@ -439,16 +439,16 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator2">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator2">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SNIPGenerator2</span><span class="p">(</span><span class="n">SNIPGenerator</span><span class="p">):</span>
 <div class="viewcode-block" id="SNIPGenerator2.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator2.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="SNIPGenerator2.add_prefactors">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator2.add_prefactors">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator2.add_prefactors">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_prefactors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">preorder</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
@@ -463,16 +463,16 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator3">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator3">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SNIPGenerator3</span><span class="p">(</span><span class="n">SNIPGenerator</span><span class="p">):</span>
 <div class="viewcode-block" id="SNIPGenerator3.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator3.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SNIPGenerator3.generate_eqtree">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.generate_eqtree">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator3.generate_eqtree">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_eqtree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_var</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_unary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_binary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="n">n_var</span> <span class="o">=</span> <span class="n">n_var</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_var</span><span class="p">)</span>
         <span class="n">n_unary</span> <span class="o">=</span> <span class="n">n_unary</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_unary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_unary</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -486,7 +486,7 @@
 
 
 <div class="viewcode-block" id="SNIPGenerator3.generate_float">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.snip_generator.SNIPGenerator3.generate_float">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.SNIPGenerator3.generate_float">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_float</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 </div>

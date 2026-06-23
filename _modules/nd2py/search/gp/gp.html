@@ -331,10 +331,10 @@
 
 
 <div class="viewcode-block" id="Individual">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.Individual">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Individual</span><span class="p">:</span>
 <div class="viewcode-block" id="Individual.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.Individual.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eqtree</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Identity</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Sentinel Node (Identity) Missing! Got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">eqtree</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span> <span class="o">=</span> <span class="n">eqtree</span>
@@ -350,7 +350,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Individual(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
 
 <div class="viewcode-block" id="Individual.copy">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.Individual.copy">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.Individual.copy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Individual&quot;</span><span class="p">:</span>
         <span class="n">copy</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eqtree</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
         <span class="n">copy</span><span class="o">.</span><span class="n">complexity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">complexity</span>
@@ -362,14 +362,14 @@
 
 
 <div class="viewcode-block" id="GP">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GP</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Genetic Programming-based Symbolic Regression</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GP.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Variable</span><span class="p">],</span>
@@ -545,7 +545,7 @@
 
 
 <div class="viewcode-block" id="GP.fit">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.fit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
@@ -650,7 +650,7 @@
 
 
 <div class="viewcode-block" id="GP.predict">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.predict">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.predict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -672,7 +672,7 @@
 
 
 <div class="viewcode-block" id="GP.evolve">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.evolve">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.evolve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">evolve</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">],</span>
@@ -736,7 +736,7 @@
 
 
 <div class="viewcode-block" id="GP.init_population">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.init_population">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.init_population">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_population</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
@@ -753,7 +753,7 @@
 
 
 <div class="viewcode-block" id="GP.tournament">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.tournament">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.tournament">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tournament</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">],</span> <span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Select individuals from the population via tournament selection.&quot;&quot;&quot;</span>
         <span class="n">tournaments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
@@ -766,7 +766,7 @@
 
 
 <div class="viewcode-block" id="GP.crossover">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.crossover">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.crossover">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">,</span> <span class="n">donor</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by replacing a subtree of ``parent`` with one from ``donor``.&quot;&quot;&quot;</span>
         <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -778,7 +778,7 @@
 
 
 <div class="viewcode-block" id="GP.subtree_mutation">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.subtree_mutation">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.subtree_mutation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">subtree_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by replacing a random subtree with a newly generated random tree.&quot;&quot;&quot;</span>
         <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -790,7 +790,7 @@
 
 
 <div class="viewcode-block" id="GP.hoist_mutation">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.hoist_mutation">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.hoist_mutation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">hoist_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by hoisting a randomly chosen subtree to the root.&quot;&quot;&quot;</span>
         <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -801,7 +801,7 @@
 
 
 <div class="viewcode-block" id="GP.point_mutation">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.point_mutation">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.point_mutation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">point_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child by performing point mutation with random symbol replacements or insertions.&quot;&quot;&quot;</span>
         <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -846,7 +846,7 @@
 
 
 <div class="viewcode-block" id="GP.set_fitness">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.set_fitness">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.set_fitness">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute and assign complexity, accuracy, and fitness for an individual.&quot;&quot;&quot;</span>
         <span class="n">individual</span><span class="o">.</span><span class="n">complexity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">eqtree</span><span class="p">)</span>
@@ -865,7 +865,7 @@
 
 
 <div class="viewcode-block" id="GP.get_random_subtree">
-<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.gp.GP.get_random_subtree">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.search.gp.GP.get_random_subtree">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_random_subtree</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span> <span class="o">|</span> <span class="n">Symbol</span><span class="p">,</span>

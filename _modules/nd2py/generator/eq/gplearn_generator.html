@@ -318,10 +318,10 @@
 
 
 <div class="viewcode-block" id="GPLearnGenerator">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.generator.eq.GPLearnGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GPLearnGenerator</span><span class="p">:</span>
 <div class="viewcode-block" id="GPLearnGenerator.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.generator.eq.GPLearnGenerator.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Variable</span><span class="p">],</span>
@@ -352,7 +352,7 @@
 
 
 <div class="viewcode-block" id="GPLearnGenerator.generate_node">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_node">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.generator.eq.GPLearnGenerator.generate_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
         <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">sym</span> <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="k">if</span> <span class="p">(</span><span class="n">nettypes</span> <span class="o">&amp;</span> <span class="n">sym</span><span class="o">.</span><span class="n">nettype_range</span><span class="p">)]</span>
         <span class="n">symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
@@ -361,7 +361,7 @@
 
 
 <div class="viewcode-block" id="GPLearnGenerator.generate_leaf">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.generate_leaf">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.generator.eq.GPLearnGenerator.generate_leaf">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">Variable</span><span class="p">:</span>
         <span class="n">leafs</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">nettype</span> <span class="ow">in</span> <span class="n">nettypes</span><span class="p">]</span>
 
@@ -390,7 +390,7 @@
 
 
 <div class="viewcode-block" id="GPLearnGenerator.sample">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.eq.html#nd2py.generator.eq.gplearn_generator.GPLearnGenerator.sample">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.search.gp.html#nd2py.generator.eq.GPLearnGenerator.sample">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> 
         <span class="n">nettypes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scalar&quot;</span><span class="p">,</span> 

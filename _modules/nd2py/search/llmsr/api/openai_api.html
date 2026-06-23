@@ -322,7 +322,7 @@
 
 
 <div class="viewcode-block" id="OpenAIAPI">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">OpenAIAPI</span><span class="p">(</span><span class="n">LLMAPI</span><span class="p">):</span>
     <span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span>
@@ -330,7 +330,7 @@
     <span class="p">]</span>
 
 <div class="viewcode-block" id="OpenAIAPI.__init__">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-5-mini&#39;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">use_chat_completions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">=</span> <span class="n">top_p</span>
@@ -362,7 +362,7 @@
             <span class="k">return</span> <span class="n">results</span>
 
 <div class="viewcode-block" id="OpenAIAPI.create_responses">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI.create_responses">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI.create_responses">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">create_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="o">|</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; OpenAI 的最新 API, 建议新项目使用这个接口 (https://platform.openai.com/docs/guides/migrate-to-responses)</span>
 <span class="sd">        但看起来它还缺了一些功能 (比如 n parameter), 而且也无法缓存 gpt-4o-mini 的 prompt token, 所以依然保留了 create_chat_completions 接口</span>
@@ -446,7 +446,7 @@
 
 
 <div class="viewcode-block" id="OpenAIAPI.create_chat_completions">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI.create_chat_completions">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI.create_chat_completions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">create_chat_completions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="o">|</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; OpenAI 的旧版 API, 建议新项目使用 create_responses 接口 &quot;&quot;&quot;</span>
         <span class="c1">## Ensure this is a generator</span>
@@ -487,7 +487,7 @@
 
 
 <div class="viewcode-block" id="OpenAIAPI.parse_usage">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI.parse_usage">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI.parse_usage">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">parse_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="n">usage</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)}</span>
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;gpt-5-mini&#39;</span><span class="p">):</span>
@@ -516,7 +516,7 @@
 
 
 <div class="viewcode-block" id="OpenAIAPI.parse_chat_completions_usage">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.openai_api.OpenAIAPI.parse_chat_completions_usage">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.OpenAIAPI.parse_chat_completions_usage">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">parse_chat_completions_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">ChatCompletion</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="n">usage</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)}</span>
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;gpt-4o-mini&#39;</span><span class="p">):</span>

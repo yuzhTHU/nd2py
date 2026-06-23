@@ -314,17 +314,17 @@
 
 
 <div class="viewcode-block" id="GMMGenerator">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.GMMGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GMMGenerator</span><span class="p">:</span>
 <div class="viewcode-block" id="GMMGenerator.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.GMMGenerator.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">normalize_X</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">max_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normalize_X</span> <span class="o">=</span> <span class="n">normalize_X</span></div>
 
 
 <div class="viewcode-block" id="GMMGenerator.GMM">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.GMM">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.GMMGenerator.GMM">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">GMM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; 生成 (num, dim) 的 GMM 数据&quot;&quot;&quot;</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">C</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -345,7 +345,7 @@
 
 
 <div class="viewcode-block" id="GMMGenerator.generate_data">
-<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.gmm_generator.GMMGenerator.generate_data">[docs]</a>
+<a class="viewcode-back" href="../../../../api/nd2py.generator.data.html#nd2py.generator.data.GMMGenerator.generate_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">eqtree</span><span class="p">,</span> <span class="n">return_X_dict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">variables</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">eqtree</span><span class="o">.</span><span class="n">preorder</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)))</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>

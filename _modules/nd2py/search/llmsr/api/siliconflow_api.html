@@ -320,7 +320,7 @@
 
 
 <div class="viewcode-block" id="SiliconFlowAPI">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.siliconflow_api.SiliconFlowAPI">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.SiliconFlowAPI">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SiliconFlowAPI</span><span class="p">(</span><span class="n">LLMAPI</span><span class="p">):</span>
     <span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;Qwen3-8B&quot;</span><span class="p">,</span>
@@ -328,7 +328,7 @@
     <span class="p">]</span>
 
 <div class="viewcode-block" id="SiliconFlowAPI.__init__">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.siliconflow_api.SiliconFlowAPI.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.SiliconFlowAPI.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Qwen3-8B&#39;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top_p</span> <span class="o">=</span> <span class="n">top_p</span>
@@ -371,7 +371,7 @@
         <span class="k">return</span> <span class="n">results</span>
 
 <div class="viewcode-block" id="SiliconFlowAPI.qwen3_8b">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.siliconflow_api.SiliconFlowAPI.qwen3_8b">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.SiliconFlowAPI.qwen3_8b">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">qwen3_8b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
         <span class="c1">## Ensure this is a generator</span>
         <span class="k">yield from</span> <span class="p">[]</span>
@@ -410,7 +410,7 @@
 
 
 <div class="viewcode-block" id="SiliconFlowAPI.deepseek_v3">
-<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.siliconflow_api.SiliconFlowAPI.deepseek_v3">[docs]</a>
+<a class="viewcode-back" href="../../../../../api/nd2py.search.llmsr.api.html#nd2py.search.llmsr.api.SiliconFlowAPI.deepseek_v3">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">deepseek_v3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
         <span class="c1">## Ensure this is a generator</span>
         <span class="k">yield from</span> <span class="p">[]</span>

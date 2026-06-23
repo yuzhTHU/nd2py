@@ -351,7 +351,6 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.nn.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.nn.gnn">nd2py.utils.nn.gnn module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.nn.gnn.GNNLayer"><code class="docutils literal notranslate"><span class="pre">GNNLayer</span></code></a><ul class="nav section-nav flex-column">
@@ -388,40 +387,6 @@
                   
   <section id="module-nd2py.utils.nn">
 <span id="nd2py-utils-nn-package"></span><h1>nd2py.utils.nn package<a class="headerlink" href="#module-nd2py.utils.nn" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="nd2py.utils.nn.setup_lazy_imports">
-<span class="sig-prename descclassname"><span class="pre">nd2py.utils.nn.</span></span><span class="sig-name descname"><span class="pre">setup_lazy_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nd2py/utils/lazy_loader.html#setup_lazy_imports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nd2py.utils.nn.setup_lazy_imports" title="Link to this definition">#</a></dt>
-<dd><p>Set up lazy imports for a module’s <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
-<p>Returns <code class="docutils literal notranslate"><span class="pre">(__getattr__,</span> <span class="pre">__dir__,</span> <span class="pre">__all__)</span></code> which should be assigned at
-the module level so that <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">package</span> <span class="pre">import</span> <span class="pre">OptionalClass</span></code> works
-without importing the optional dependency until it is actually needed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>module_name</strong> – The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of the calling module.</p></li>
-<li><p><strong>import_mapping</strong> – A dict mapping attribute names to
-<code class="docutils literal notranslate"><span class="pre">(module_path,</span> <span class="pre">requires)</span></code> tuples.  <em>module_path</em> is a
-relative import path (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;.torch_calc&quot;</span></code>) and <em>requires</em>
-is the optional-dependency group name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;nn&quot;</span></code>) shown in
-the error message when the dependency is missing.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># __init__.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoreClass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.lazy_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_lazy_imports</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.optional</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalClass</span>
-
-<span class="fm">__getattr__</span><span class="p">,</span> <span class="fm">__dir__</span><span class="p">,</span> <span class="n">__all__</span> <span class="o">=</span> <span class="n">setup_lazy_imports</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;OptionalClass&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;.optional&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">),</span>
-<span class="p">})</span>
-</pre></div>
-</div>
-</dd></dl>
-
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
@@ -531,7 +496,6 @@ the error message when the dependency is missing.</p></li>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.nn.setup_lazy_imports"><code class="docutils literal notranslate"><span class="pre">setup_lazy_imports()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-nd2py.utils.nn.gnn">nd2py.utils.nn.gnn module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nd2py.utils.nn.gnn.GNNLayer"><code class="docutils literal notranslate"><span class="pre">GNNLayer</span></code></a><ul class="nav section-nav flex-column">

@@ -89,6 +89,14 @@ nd2py.utils.metrics module
    :show-inheritance:
    :undoc-members:
 
+nd2py.utils.model\_store module
+-------------------------------
+
+.. automodule:: nd2py.utils.model_store
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.utils.plot module
 -----------------------
 
