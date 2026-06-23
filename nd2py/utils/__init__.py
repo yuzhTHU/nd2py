@@ -1,10 +1,11 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
+from typing import TYPE_CHECKING
 from .tag2ansi import tag2ansi
 from .log_exception import log_exception
 from .classproperty import classproperty
-from .fix_parser import add_minus_flags, add_negation_flags
 from .lazy_loader import setup_lazy_imports
-from typing import TYPE_CHECKING
+from .fix_parser import add_minus_flags, add_negation_flags
+from .model_store import get_default, download_model, upload_model
 
 if TYPE_CHECKING:
     from . import nn

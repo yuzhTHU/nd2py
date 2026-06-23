@@ -36,6 +36,10 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
+[project.scripts]
+sr-agent-download-models = "sr_agent.cli.download_models:main"
+sr-agent-upload-models = "sr_agent.cli.upload_models:main"
+
 # 可选依赖定义
 [project.optional-dependencies]
 nn = [

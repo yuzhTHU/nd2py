@@ -88,9 +88,29 @@ class Reduce:
         if not self._cache_path.exists():
             _logger.warning('No Cache Founded!')
             return
-        with open(self._cache_path, 'rb') as f:
-            self.anchors, self.hash_dict, self.reduce_rules = pickle.load(f)
+        try:
+            with open(self._cache_path, 'rb') as f:
+                anchors, hash_dict, reduce_rules = pickle.load(f)
+            self._validate_cache(hash_dict, reduce_rules)
+        except Exception as e:
+            _logger.warning(f'Ignore invalid reduce cache {self._cache_path}: {e}')
+            self.hash_dict = defaultdict(list)
+            self.reduce_rules = []
+            return
+        self.anchors = anchors
+        self.hash_dict = hash_dict
+        self.reduce_rules = reduce_rules
         _logger.info(f'Load Cache from {self._cache_path}')
+
+    @staticmethod
+    def _validate_cache(hash_dict, reduce_rules):
+        for bucket in hash_dict.values():
+            for eq, _val in bucket:
+                if eq is None:
+                    raise ValueError("hash_dict contains an empty expression")
+        for rule in reduce_rules:
+            if rule is None or rule.source is None:
+                raise ValueError("reduce_rules contains an empty rule")
 
     def __call__(self, root: Symbol) -> Symbol:
         """
@@ -100,11 +120,38 @@ class Reduce:
         for _ in range(self.max_online_iterations):
             _current_expr = current_expr.copy()
             current_expr = self._rule_pass(current_expr)[0]
+            current_expr = self._builtin_rule_pass(current_expr)
             current_expr = FoldConstant(fold_fitable=True, fold_constant=True)(current_expr)
             current_expr = reduce(lambda a, b: a + b, current_expr.split_by_add(split_by_sub=True, expand_mul=True, expand_div=True, merge_bias=True))
-            if str(_current_expr) == str(_current_expr):
+            if str(_current_expr) == str(current_expr):
                 break  # 如果表达式没有改变，说明已收敛
         return current_expr
+
+    def _is_functionally_equivalent(self, expr1: Symbol, expr2: Symbol) -> bool:
+        anchors = self._get_eval_anchors(expr1, expr2)
+        val1 = expr1.eval(anchors)
+        val2 = expr2.eval(anchors)
+        if np.size(val1) == 1:
+            val1 = np.full(next(iter(anchors.values())).shape, val1)
+        if np.size(val2) == 1:
+            val2 = np.full(next(iter(anchors.values())).shape, val2)
+        return np.allclose(val1, val2, equal_nan=True, atol=1e-8, rtol=1e-5)
+
+    def _get_eval_anchors(self, *exprs: Symbol) -> Dict[str, np.ndarray]:
+        names = sorted({
+            node.name
+            for expr in exprs
+            for node in expr.iter_preorder()
+            if type(node).__name__ == 'Variable'
+        })
+        if not names:
+            return {"x0": np.zeros_like(next(iter(self.anchors.values())))}
+        base = list(self.anchors.values())
+        rng = np.random.default_rng(42)
+        return {
+            name: base[idx] if idx < len(base) else rng.uniform(-5, 5, len(base[0]))
+            for idx, name in enumerate(names)
+        }
 
     def prepare_rule_dict(
         self,
@@ -146,7 +193,7 @@ class Reduce:
             loader = (tau for tau in inner_progress if self.has_variable(tau))
             for tau in loader:
                 rule, (tau, val, val_hash) = self.process_tau(tau, self.anchors, self.hash_dict)
-                if rule is None: 
+                if rule is not None:
                     self.reduce_rules.append(rule)
                 else: 
                     self.hash_dict[val_hash].append((tau, val))
@@ -264,6 +311,44 @@ class Reduce:
         for child, new_child in children_results:
             node = node.replace(child, new_child, no_warn=True)
         return node, len(children_results) > 0
+
+    def _builtin_rule_pass(self, node: Symbol) -> Symbol:
+        node = node.copy()
+        for child in list(node.operands):
+            node = node.replace(child, self._builtin_rule_pass(child), no_warn=True)
+
+        node_type = type(node).__name__
+        if node.n_operands == 1:
+            child = node.operands[0]
+            child_type = type(child).__name__
+            inverse_pairs = {
+                ("Sin", "Arcsin"),
+                ("Arcsin", "Sin"),
+                ("Exp", "Log"),
+                ("Log", "Exp"),
+            }
+            if (node_type, child_type) in inverse_pairs:
+                return child.operands[0].copy()
+
+        if node_type == "Add":
+            terms = node.split_by_add(split_by_sub=False, expand_mul=False, expand_div=False, merge_bias=False)
+            coeffs_and_terms = [self._get_linear_term(term) for term in terms]
+            first_term = coeffs_and_terms[0][1]
+            if len(terms) > 1 and all(str(term) == str(first_term) for _coeff, term in coeffs_and_terms[1:]):
+                coeff = sum(coeff for coeff, _term in coeffs_and_terms)
+                return Number(coeff) * first_term.copy()
+
+        return node
+
+    @staticmethod
+    def _get_linear_term(node: Symbol) -> Tuple[float, Symbol]:
+        if type(node).__name__ == "Mul":
+            left, right = node.operands
+            if type(left).__name__ == "Number":
+                return left.value, right
+            if type(right).__name__ == "Number":
+                return right.value, left
+        return 1, node
 
     @staticmethod
     def get_array_hash(val, n=8):
