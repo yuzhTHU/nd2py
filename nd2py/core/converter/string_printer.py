@@ -1,5 +1,6 @@
 # Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.
 from __future__ import annotations
+import re
 import numbers
 import numpy as np
 from typing import Generator, Tuple, Dict, List, TYPE_CHECKING
@@ -10,6 +11,22 @@ if TYPE_CHECKING:
     _SendType = str
     _ReturnType = str
     _Type = Generator[_YieldType, _SendType, _ReturnType]
+
+
+GREEK_LETTERS = [
+    'alpha', 'beta', 'gamma', 'delta', 'epsilon', 
+    'zeta', 'eta', 'theta', 'iota', 'kappa', 
+    'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 
+    'rho', 'sigma', 'tau', 'upsilon', 
+    'phi', 'chi', 'psi', 'omega'
+]
+def replace_greek(s):
+    def repl(m):
+        match = m.group(0)
+        if match.lower() in GREEK_LETTERS:
+            return rf"\{match.lower()}"
+        return match
+    return re.sub(r'\b[a-zA-Z]+\b', repl, s)
 
 
 class StringPrinter(Visitor):
@@ -100,11 +117,19 @@ class StringPrinter(Visitor):
         if kwargs.get("raw", False):
             return f'Variable("{node.name}", "{node.nettype}")'
         if kwargs.get("latex", False):
-            return (
-                f"{node.name[0]}_{{{node.name[1:]}}}"
-                if len(node.name) > 1
-                else node.name
-            )
+            if len(node.name) == 1:
+                return node.name
+            elif node.name.lower() in GREEK_LETTERS:
+                return replace_greek(node.name)
+            elif '_' in node.name:
+                var, suffix = node.name.split('_', 1)
+                var = replace_greek(var)
+                suffix = replace_greek(suffix.replace('_', ' '))
+                return f"{var}_{{{suffix}}}"
+            else: # frequency -> f_{frequency}, lambda -> l_{lambda}
+                var, suffix = node.name[0], node.name
+                suffix = replace_greek(suffix)
+                return f"{var}_{{{suffix}}}"
         return node.name
 
     def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
