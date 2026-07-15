@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nd2py.core.transform.fold_constant &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+    <title>nd2py.core.symbols.grouped_parameter &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
   
   
   
@@ -42,7 +42,7 @@
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/core/transform/fold_constant';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/core/symbols/grouped_parameter';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -305,91 +305,79 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for nd2py.core.transform.fold_constant</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright (c) 2024-present, Yumeow. Licensed under the MIT License.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..base_visitor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Visitor</span><span class="p">,</span> <span class="n">yield_nothing</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..symbols</span><span class="w"> </span><span class="kn">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">Variable</span>
+  <h1>Source code for nd2py.core.symbols.grouped_parameter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Real</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.symbol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Symbol</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.variable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..nettype</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetType</span>
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GroupedParameter&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="FoldConstant">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">FoldConstant</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    访问器，用于将表达式中不含 Number 的子表达式折叠为 Constant。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="FoldConstant.__init__">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">fold_fitable</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">fold_constant</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fold_fitable</span> <span class="o">=</span> <span class="n">fold_fitable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fold_constant</span> <span class="o">=</span> <span class="n">fold_constant</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">node</span><span class="p">:</span><span class="n">Symbol</span><span class="p">,</span>
-        <span class="nb">vars</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
-        <span class="n">edge_list</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Symbol</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Args:</span>
-<span class="sd">        - node (Symbol): 要访问的节点。</span>
-<span class="sd">        - vars (Dict): 变量字典，包含所有变量的值。</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span>
-            <span class="n">node</span><span class="p">,</span> 
-            <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span>
-            <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">,</span>
-            <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span>
-        <span class="p">)</span>
-
-<div class="viewcode-block" id="FoldConstant.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.generic_visit">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">node2</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="o">*</span><span class="n">X</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fold_constant</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">fitable</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">):</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">node2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Number</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">fitable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">node2</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fold_fitable</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">fitable</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">):</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">node2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Number</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">fitable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">node2</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">node2</span></div>
-
+<div class="viewcode-block" id="GroupedParameter">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.GroupedParameter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupedParameter</span><span class="p">(</span><span class="n">Symbol</span><span class="p">):</span>
+    <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">1</span>
     
-<div class="viewcode-block" id="FoldConstant.visit_Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Empty">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Empty node should not be visited.&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="GroupedParameter.__init__">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.GroupedParameter.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="o">*</span><span class="n">operands</span><span class="p">,</span> 
+        <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fitable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">nettype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetType</span><span class="o">|</span><span class="n">Set</span><span class="p">[</span><span class="n">NetType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A fitable parameter lookup indexed by a categorical variable.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Variable</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;GroupedParameter expects exactly one Variable operand&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;value must be a mapping from group labels to numbers&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Real</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;all grouped parameter values must be real numbers&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">operands</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">nettype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">group_labels</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">group_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitable</span> <span class="o">=</span> <span class="n">fitable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_labels</span> <span class="o">=</span> <span class="n">group_labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">group_labels</span><span class="p">)}</span></div>
 
 
-<div class="viewcode-block" id="FoldConstant.visit_Number">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Number">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">node</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Variable</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="GroupedParameter.bind">
+<a class="viewcode-back" href="../../../../api/nd2py.core.symbols.html#nd2py.GroupedParameter.bind">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add previously unseen labels, initialized with ``default``.&quot;&quot;&quot;</span>
+        <span class="n">new_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># Convert NumPy scalar keys to their Python equivalents when possible.</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">)</span> <span class="k">else</span> <span class="n">label</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_to_index</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">label_to_index</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_labels</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_labels</span><span class="p">)</span>
+                <span class="n">new_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_labels</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">group_labels</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_labels</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_labels</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+            <span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="FoldConstant.visit_Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.transform.html#nd2py.FoldConstant.visit_Variable">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span><span class="n">Variable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vars&#39;</span><span class="p">,</span> <span class="p">{}):</span>
-            <span class="k">return</span> <span class="n">node</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Number</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">fitable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">nettype</span><span class="p">)</span></div>
-
-
-    <span class="n">visit_GroupedParameter</span> <span class="o">=</span> <span class="n">visit_Number</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_labels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span></div>
 
 </pre></div>
 

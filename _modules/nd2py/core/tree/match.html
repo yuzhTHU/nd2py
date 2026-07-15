@@ -414,6 +414,17 @@
         <span class="k">return</span> <span class="n">_numbers_equal</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Match.visit_GroupedParameter">
+<a class="viewcode-back" href="../../../../api/nd2py.core.tree.html#nd2py.core.tree.match.Match.visit_GroupedParameter">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_GroupedParameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">bindings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">p_by</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">by</span>
+        <span class="n">t_by</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">by</span>
+        <span class="n">match_result</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">p_by</span><span class="p">,</span> <span class="p">(</span><span class="n">t_by</span><span class="p">,</span> <span class="n">bindings</span><span class="p">),</span> <span class="p">{})</span>
+        <span class="k">return</span> <span class="n">match_result</span></div>
+
+
 <div class="viewcode-block" id="Match.visit_Empty">
 <a class="viewcode-back" href="../../../../api/nd2py.core.tree.html#nd2py.core.tree.match.Match.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Empty</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">bindings</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">_Type</span><span class="p">:</span>

@@ -443,6 +443,13 @@
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;vars&quot;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="TorchCalc.visit_GroupedParameter">
+<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_GroupedParameter">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_GroupedParameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">GroupedParameter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;GroupedParameter is currently supported only by NumPyCalc&quot;</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="TorchCalc.visit_Add">
 <a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Add">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

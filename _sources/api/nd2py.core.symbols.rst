@@ -25,6 +25,14 @@ nd2py.core.symbols.functions module
    :show-inheritance:
    :undoc-members:
 
+nd2py.core.symbols.grouped\_parameter module
+--------------------------------------------
+
+.. automodule:: nd2py.core.symbols.grouped_parameter
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 nd2py.core.symbols.number module
 --------------------------------
 

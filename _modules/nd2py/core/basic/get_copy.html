@@ -351,6 +351,19 @@
         <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">_assigned_nettypes</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="GetCopy.visit_GroupedParameter">
+<a class="viewcode-back" href="../../../../api/nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.visit_GroupedParameter">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_GroupedParameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">by</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">by</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="n">by</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value_dict</span><span class="p">),</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">fitable</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">fitable</span><span class="p">,</span>
+            <span class="n">nettype</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">_assigned_nettypes</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="GetCopy.visit_Empty">
 <a class="viewcode-back" href="../../../../api/nd2py.core.basic.html#nd2py.core.basic.get_copy.GetCopy.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
