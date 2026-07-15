@@ -24,3 +24,14 @@ def test_bfgs_fit(fit_cls, node, vars):
     bfgs_fit = fit_cls(node2)
     bfgs_fit.fit(vars, y)
     assert np.abs(node2.eval(vars) - y).max() < 1e-5, f'{node} != {node2}'
+
+
+def test_bfgs_fit_writes_numbers_back_after_constant_folding():
+    target = 3.0 * x + 2.0
+    expression = 0.5 * x + 0.5
+
+    fit = nd.BFGSFit(expression, fold_constant=True)
+    fit.fit(vars, target.eval(vars))
+
+    assert np.max(np.abs(fit.expression.eval(vars) - target.eval(vars))) < 1e-5
+    assert fit.predict(vars).shape == target.eval(vars).shape

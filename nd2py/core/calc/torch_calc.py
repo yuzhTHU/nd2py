@@ -118,6 +118,10 @@ class TorchCalc(Visitor):
         device = kwargs.get("device")
         return torch.as_tensor(kwargs["vars"][node.name], device=device)
 
+    def visit_GroupedParameter(self, node: GroupedParameter, *args, **kwargs):
+        yield from yield_nothing()
+        raise NotImplementedError("GroupedParameter is currently supported only by NumPyCalc")
+
     @unpack_operands(mask_out_nan=True)
     def visit_Add(self, node: Add, x1, x2, *args, **kwargs):
         return x1 + x2

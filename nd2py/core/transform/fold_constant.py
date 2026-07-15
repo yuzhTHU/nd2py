@@ -63,3 +63,5 @@ class FoldConstant(Visitor):
             return node
         y = node.eval(*args, **kwargs)
         return Number(y, fitable=False, nettype=node.nettype)
+
+    visit_GroupedParameter = visit_Number

@@ -38,6 +38,7 @@ class StringPrinter(Visitor):
         number_format="",
         omit_mul_sign=False,
         skeleton=False,
+        grouped_parameter_symbol='alpha',
     ) -> str:
         """
         Args:
@@ -48,6 +49,11 @@ class StringPrinter(Visitor):
         - skeleton:bool=False, whether to ignore the concrete values of Number
         """
 
+        grouped_parameters = []
+        for item in node.iter_preorder():
+            if type(item).__name__ == "GroupedParameter":
+                grouped_parameters.append(item)
+
         return super().__call__(
             node,
             raw=raw,
@@ -55,6 +61,8 @@ class StringPrinter(Visitor):
             number_format=number_format,
             omit_mul_sign=omit_mul_sign,
             skeleton=skeleton,
+            grouped_parameters=grouped_parameters,
+            grouped_parameter_symbol=grouped_parameter_symbol,
         )
 
     def generic_visit(self, node: Symbol, *args, **kwargs) -> _Type:
@@ -131,6 +139,26 @@ class StringPrinter(Visitor):
                 suffix = replace_greek(suffix)
                 return f"{var}_{{{suffix}}}"
         return node.name
+
+    def visit_GroupedParameter(self, node: GroupedParameter, *args, **kwargs) -> _Type:
+        yield from yield_nothing()
+        by = yield (node.by, args, kwargs)
+        if kwargs.get("raw", False):
+            return (
+                f"GroupedParameter({by}, "
+                f"value={node.value_dict!r}, default={node.default!r}, "
+                f"fitable={node.fitable!r}, nettype={node.nettype!r})"
+            )
+        sym = kwargs.get("grouped_parameter_symbol", "alpha")
+        if len(grouped_parameters := kwargs.get("grouped_parameters", [])) > 1:
+            assert node in grouped_parameters, f"GroupedParameter {node} not found in grouped_parameters list."
+            sym_idx = grouped_parameters.index(node) + 1
+        else:
+            sym_idx = None
+        if kwargs.get("latex"):
+            sym = replace_greek(sym)
+            return rf"{sym}^{{({sym_idx})}}_{{{by}}}" if sym_idx is not None else rf"{sym}_{{{by}}}"
+        return f"{sym}^({sym_idx})[{by}]" if sym_idx is not None else f"{sym}[{by}]"
 
     def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
         x1 = yield (node.operands[0], args, kwargs)

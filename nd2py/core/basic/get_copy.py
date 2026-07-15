@@ -32,6 +32,16 @@ class GetCopy(Visitor):
         yield from yield_nothing()
         return node.__class__(node.name, nettype=node._assigned_nettypes)
 
+    def visit_GroupedParameter(self, node, *args, **kwargs):
+        by = yield (node.by, args, kwargs)
+        return node.__class__(
+            by,
+            value=deepcopy(node.value_dict),
+            default=node.default,
+            fitable=node.fitable,
+            nettype=node._assigned_nettypes,
+        )
+
     def visit_Empty(self, node, *args, **kwargs):
         yield from yield_nothing()
         return node.__class__(nettype=node._assigned_nettypes)

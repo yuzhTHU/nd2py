@@ -94,6 +94,17 @@ class FixNetType(Visitor):
         else:
             raise ValueError(f"Unsupported direction: {kwargs['direction']}")
 
+    def visit_GroupedParameter(self, node, *args, **kwargs) -> _Type:
+        by = yield (node.by, args, kwargs)
+        nettype = kwargs["nettype"] if kwargs["direction"] == "top-down" else by.nettype
+        return node.__class__(
+            by,
+            value=node.value_dict,
+            default=node.default,
+            fitable=node.fitable,
+            nettype=nettype,
+        )
+
     def visit_BinaryOp(self, node, *args, **kwargs) -> _Type:
         yield from yield_nothing()
         if kwargs["direction"] == "top-down":

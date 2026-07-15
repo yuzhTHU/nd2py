@@ -107,6 +107,8 @@ class Simplify(Visitor):
         yield from yield_nothing()
         return node
 
+    visit_GroupedParameter = visit_Variable
+
     def visit_Add(self, node: Add, *args, **kwargs) -> _Type:
         Add = self._get_symbol("Add")
         results = []

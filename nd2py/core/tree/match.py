@@ -95,6 +95,14 @@ class Match(Visitor):
         yield from yield_nothing()
         return _numbers_equal(pattern, target)
 
+    def visit_GroupedParameter(self, pattern, target, bindings) -> _Type:
+        if type(pattern) is not type(target):
+            return False
+        p_by = pattern.by
+        t_by = target.by
+        match_result = yield (p_by, (t_by, bindings), {})
+        return match_result
+
     def visit_Empty(self, pattern: Empty, target: Symbol, bindings: Dict[str, Symbol]) -> _Type:
         """
         Visitor for Empty nodes.

@@ -29,6 +29,7 @@ class SymbolAPIMixin:
         number_format="",
         omit_mul_sign=False,
         skeleton=False,
+        grouped_parameter_symbol="alpha",
     ) -> str:
         """Return a string representation of the symbol expression.
 
@@ -62,6 +63,7 @@ class SymbolAPIMixin:
             number_format=number_format,
             omit_mul_sign=omit_mul_sign,
             skeleton=skeleton,
+            grouped_parameter_symbol=grouped_parameter_symbol,
         )
 
     def to_tree(self, number_format="", flat=False, skeleton=False) -> str:

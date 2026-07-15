@@ -81,6 +81,13 @@ class NumpyCalc(Visitor):
         yield from yield_nothing()
         return np.asarray(kwargs["vars"][node.name])
 
+    def visit_GroupedParameter(self, node: GroupedParameter, *args, **kwargs):
+        labels = yield (node.by, args, kwargs)
+        node.bind(labels)
+        get_index = np.vectorize(node.label_to_index.__getitem__, otypes=[int])
+        indices = get_index(np.asarray(labels, dtype=object))
+        return np.asarray(node.value)[indices]
+
     @unpack_operands()
     def visit_Add(self, node: Add, x1, x2, *args, **kwargs):
         return x1 + x2
