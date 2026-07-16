@@ -1,0 +1,966 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Examples &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=2fe79b4b" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="_static/documentation_options.js?v=8a3dca25"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="Guide" href="guide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.4" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide.html">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide.html">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide.html">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Examples</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
+<p>The examples on this page are complete tasks that can be copied into a script
+or notebook. Use the page table of contents to move between examples.</p>
+<section id="define-variables">
+<h2>1. Define variables<a class="headerlink" href="#define-variables" title="Link to this heading">#</a></h2>
+<p>Create one variable directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create several scalar variables at once:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">variables</span><span class="p">(</span><span class="s2">&quot;x y z&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Variables read values from a dictionary by name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="c1"># [1. 2. 3.]</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">nettype</span></code> when a variable represents one value per node or edge:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node_state</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;node_state&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+<span class="n">edge_weight</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;edge_weight&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;edge&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="combine-variables-into-an-expression">
+<h2>2. Combine variables into an expression<a class="headerlink" href="#combine-variables-into-an-expression" title="Link to this heading">#</a></h2>
+<p>Python arithmetic and nd2py functions build a Symbol tree:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">variables</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+
+<span class="n">expression</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="c1"># 2 * x + sin(y) - x ** 2 / 3</span>
+</pre></div>
+</div>
+<p>Common functions include:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">logabs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">sqrtabs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Python numbers embedded in an expression become fitable <code class="docutils literal notranslate"><span class="pre">Number</span></code> nodes. Use
+<code class="docutils literal notranslate"><span class="pre">Constant</span></code> when a value must remain fixed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitable_scale</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">fixed_offset</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">fitable_scale</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fixed_offset</span>
+</pre></div>
+</div>
+</section>
+<section id="evaluate-an-expression-with-numpy">
+<h2>3. Evaluate an expression with NumPy<a class="headerlink" href="#evaluate-an-expression-with-numpy" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">variables</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># [ 9. 14. 21.]</span>
+</pre></div>
+</div>
+<p>NumPy broadcasting applies normally:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">]]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">]),</span>
+<span class="p">})</span>
+
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="print-an-expression">
+<h2>4. Print an expression<a class="headerlink" href="#print-an-expression" title="Link to this heading">#</a></h2>
+<p>The default form is intended for people:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">())</span>
+<span class="c1"># sin(2 * x + 1)</span>
+</pre></div>
+</div>
+<section id="tree-form">
+<h3>Tree form<a class="headerlink" href="#tree-form" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_tree</span><span class="p">())</span>
+<span class="c1"># Sin (scalar)</span>
+<span class="c1"># └ Add (scalar)</span>
+<span class="c1">#   ├ Mul (scalar)</span>
+<span class="c1">#   ┆ ├ 2 (scalar)</span>
+<span class="c1">#   ┆ └ x (scalar)</span>
+<span class="c1">#   └ 1 (scalar)</span>
+</pre></div>
+</div>
+</section>
+<section id="latex-form">
+<h3>LaTeX form<a class="headerlink" href="#latex-form" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">latex</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">latex</span><span class="p">)</span>
+<span class="c1"># sin(2 \times x + 1)</span>
+</pre></div>
+</div>
+<p>The returned string can be passed to a notebook renderer or inserted into a
+LaTeX document.</p>
+</section>
+<section id="raw-form">
+<h3>Raw form<a class="headerlink" href="#raw-form" title="Link to this heading">#</a></h3>
+<p>The raw form records constructors, nettypes, values, and fitability:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="c1"># Sin(Number(2, &quot;scalar&quot;, True) * Variable(&quot;x&quot;, &quot;scalar&quot;) + Number(1, &quot;scalar&quot;, True))</span>
+
+<span class="n">restored</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">restored</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]}),</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]}))</span>
+</pre></div>
+</div>
+</section>
+<section id="number-formatting">
+<h3>Number formatting<a class="headerlink" href="#number-formatting" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">1.234567</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;.3f&quot;</span><span class="p">))</span>
+<span class="c1"># 1.235 * x</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="parse-a-formula-from-text">
+<h2>5. Parse a formula from text<a class="headerlink" href="#parse-a-formula-from-text" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;sin(2 * x) + y ** 2&quot;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># [4.         9.90929743]</span>
+</pre></div>
+</div>
+<p>Provide predeclared variables when their nettypes matter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;2 * x + 1&quot;</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">})</span>
+<span class="k">assert</span> <span class="n">expression</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="inspect-and-traverse-the-expression-tree">
+<h2>6. Inspect and traverse the expression tree<a class="headerlink" href="#inspect-and-traverse-the-expression-tree" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># Sin</span>
+<span class="c1"># Add</span>
+<span class="c1"># Mul</span>
+<span class="c1"># Number</span>
+<span class="c1"># Variable</span>
+<span class="c1"># Number</span>
+</pre></div>
+</div>
+<p>Postorder is useful for bottom-up computations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">iter_postorder</span><span class="p">())</span>
+<span class="k">assert</span> <span class="n">nodes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="n">expression</span>
+</pre></div>
+</div>
+</section>
+<section id="copy-and-replace-a-subexpression">
+<h2>7. Copy and replace a subexpression<a class="headerlink" href="#copy-and-replace-a-subexpression" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">copy()</span></code> creates an independent expression tree:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">copied</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">copied</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">expression</span>
+</pre></div>
+</div>
+<p>Replace a selected node from a root expression:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">x_node</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span>
+<span class="p">)</span>
+
+<span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">x_node</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="c1"># sin(y) + 1</span>
+</pre></div>
+</div>
+</section>
+<section id="match-an-expression-pattern">
+<h2>8. Match an expression pattern<a class="headerlink" href="#match-an-expression-pattern" title="Link to this heading">#</a></h2>
+<p>Pattern variables match arbitrary subexpressions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bindings</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bindings</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>
+<span class="c1"># 2 * x + 1</span>
+</pre></div>
+</div>
+<p>Repeated pattern names must match the same subexpression:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pattern</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">a</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="fit-numerical-parameters">
+<h2>9. Fit numerical parameters<a class="headerlink" href="#fit-numerical-parameters" title="Link to this heading">#</a></h2>
+<p>Fit the constants in a fixed formula with BFGS:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)}</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">2.0</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">BFGSFit</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">fold_constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">loss_</span><span class="p">)</span>
+<span class="c1"># 3.0000000371975344 * x + 2.0000000376510387</span>
+<span class="c1"># 3.2997463432895325e-15</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">prediction</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-10</span>
+</pre></div>
+</div>
+<p>Inspect fitted Number nodes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">fitable</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="work-with-network-types">
+<h2>10. Work with network types<a class="headerlink" href="#work-with-network-types" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">)</span>
+
+<span class="n">expression</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">x</span>
+<span class="k">assert</span> <span class="n">expression</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span>
+</pre></div>
+</div>
+<p>Map node values to edges using source and target indices:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source_value</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sour</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">target_value</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">targ</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">edge_list</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">])}</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span>
+    <span class="n">source_value</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">]),</span>
+<span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span>
+    <span class="n">target_value</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="n">edge_list</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="fit-grouped-parameters">
+<h2>11. Fit grouped parameters<a class="headerlink" href="#fit-grouped-parameters" title="Link to this heading">#</a></h2>
+<p>This example fits <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">alpha[s]</span> <span class="pre">*</span> <span class="pre">x</span></code>, where every value of <code class="docutils literal notranslate"><span class="pre">s</span></code> selects a
+different trainable slope.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;group1&quot;</span><span class="p">,</span> <span class="s2">&quot;group1&quot;</span><span class="p">,</span> <span class="s2">&quot;group2&quot;</span><span class="p">,</span> <span class="s2">&quot;group2&quot;</span><span class="p">,</span> <span class="s2">&quot;group3&quot;</span><span class="p">,</span> <span class="s2">&quot;group3&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">GroupedParameter</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">BFGSFit</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+
+<span class="n">fitted_parameter</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fitted_parameter</span><span class="o">.</span><span class="n">value_dict</span><span class="p">)</span>
+<span class="c1"># {&#39;group1&#39;: 1.0000001749568208, &#39;group2&#39;: 1.9999999888181819,</span>
+<span class="c1">#  &#39;group3&#39;: 2.99999999086196}</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">prediction</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">mse</span> <span class="o">&lt;</span> <span class="mf">1e-10</span>
+</pre></div>
+</div>
+<p>Expected fitted values are approximately:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;group1&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;group2&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="s2">&quot;group3&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="define-a-custom-operator">
+<h2>12. Define a custom operator<a class="headerlink" href="#define-a-custom-operator" title="Link to this heading">#</a></h2>
+<p>This example adds an elementwise <code class="docutils literal notranslate"><span class="pre">cube(x)</span></code> operator without changing any file
+inside nd2py. A custom Symbol defines the expression-tree structure, while
+Visitor methods provide its NumPy and printing behavior.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.calc.numpy_calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumpyCalc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.converter.string_printer</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringPrinter</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Cube</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the elementwise cube of one operand.&quot;&quot;&quot;</span>
+
+    <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;\left(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">\right)^3&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+
+<span class="n">NumpyCalc</span><span class="o">.</span><span class="n">visit_Cube</span> <span class="o">=</span> <span class="n">visit_Cube_numpy</span>
+<span class="n">StringPrinter</span><span class="o">.</span><span class="n">visit_Cube</span> <span class="o">=</span> <span class="n">visit_Cube_string</span>
+</pre></div>
+</div>
+<p>The Visitor protocol evaluates the operand by yielding it, then applies the
+custom operation to the value sent back. Registration uses the exact class
+name: <code class="docutils literal notranslate"><span class="pre">Cube</span></code> is dispatched to <code class="docutils literal notranslate"><span class="pre">visit_Cube</span></code>.</p>
+<p>The new operator now composes with built-in Symbols:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">Cube</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="c1"># cube(x) + 1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># [ 2.  9. 28.]</span>
+</pre></div>
+</div>
+<p>It can also be made available to the parser without modifying nd2py’s global
+callable table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parsed</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+    <span class="s2">&quot;cube(x) + 1&quot;</span><span class="p">,</span>
+    <span class="n">callables</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cube&quot;</span><span class="p">:</span> <span class="n">Cube</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Direct monkey patching is process-global. Reusable extension packages should
+perform registration in an explicit setup function and check that an existing
+<code class="docutils literal notranslate"><span class="pre">visit_Cube</span></code> method is not being overwritten. The Guide contains a defensive
+<code class="docutils literal notranslate"><span class="pre">register_visitor</span></code> helper and discusses which Visitors usually need custom
+integration.</p>
+</section>
+<section id="diagnose-numerical-exceptions">
+<h2>13. Diagnose numerical exceptions<a class="headerlink" href="#diagnose-numerical-exceptions" title="Link to this heading">#</a></h2>
+<p>Ask NumPy evaluation to identify the exact subexpressions producing non-finite
+values:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">result</span><span class="p">,</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])},</span>
+    <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">exceptions</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># [nan nan  1.]</span>
+<span class="c1"># Subexpression log(x) produced non-finite values: 33.33% NaN, 0.00% Inf, 33.33% NegInf</span>
+<span class="c1"># Subexpression 1 / x produced non-finite values: 0.00% NaN, 33.33% Inf, 0.00% NegInf</span>
+<span class="c1"># Subexpression log(x) + 1 / x produced non-finite values: 66.67% NaN, 0.00% Inf, 0.00% NegInf</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">exceptions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="k">assert</span> <span class="s2">&quot;log(x)&quot;</span> <span class="ow">in</span> <span class="n">exceptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">assert</span> <span class="s2">&quot;1 / x&quot;</span> <span class="ow">in</span> <span class="n">exceptions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Without <code class="docutils literal notranslate"><span class="pre">return_exceptions=True</span></code>, <code class="docutils literal notranslate"><span class="pre">eval</span></code> keeps its original return type and
+returns only the numerical result.</p>
+</section>
+<section id="estimate-numerical-sensitivity-with-eic">
+<h2>14. Estimate numerical sensitivity with EIC<a class="headerlink" href="#estimate-numerical-sensitivity-with-eic" title="Link to this heading">#</a></h2>
+<p>The Effective Information Criterion estimates the number of decimal digits
+lost through numerical sensitivity:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+<span class="n">stable_eic</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">eval_eic</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])})</span>
+<span class="n">unstable_eic</span><span class="p">,</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">eval_eic</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])},</span>
+    <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stable_eic</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unstable_eic</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">exceptions</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># 0.09658807486020385</span>
+<span class="c1"># inf</span>
+<span class="c1"># The subexpression x - x exhibits elevated local numerical sensitivity,</span>
+<span class="c1"># corresponding to an estimated loss of inf decimal digits of precision.</span>
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">stable_eic</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">unstable_eic</span><span class="p">)</span>
+<span class="k">assert</span> <span class="s2">&quot;x - x&quot;</span> <span class="ow">in</span> <span class="n">exceptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="guide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="api_reference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-variables">1. Define variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combine-variables-into-an-expression">2. Combine variables into an expression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-an-expression-with-numpy">3. Evaluate an expression with NumPy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#print-an-expression">4. Print an expression</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tree-form">Tree form</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#latex-form">LaTeX form</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-form">Raw form</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-formatting">Number formatting</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parse-a-formula-from-text">5. Parse a formula from text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-and-traverse-the-expression-tree">6. Inspect and traverse the expression tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-and-replace-a-subexpression">7. Copy and replace a subexpression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#match-an-expression-pattern">8. Match an expression pattern</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-numerical-parameters">9. Fit numerical parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-with-network-types">10. Work with network types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-grouped-parameters">11. Fit grouped parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-a-custom-operator">12. Define a custom operator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnose-numerical-exceptions">13. Diagnose numerical exceptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-numerical-sensitivity-with-eic">14. Estimate numerical sensitivity with EIC</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

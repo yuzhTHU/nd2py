@@ -26,42 +26,48 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=2fe79b4b" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../../../_static/documentation_options.js?v=8bb39fa6"></script>
+    <script src="../../../../_static/documentation_options.js?v=8a3dca25"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/nd2py/core/calc/torch_calc';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
+  <meta name="docsearch:version" content="3.4" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -72,8 +78,8 @@
   <input type="search"
          class="form-control"
          name="q"
-         placeholder="Search..."
-         aria-label="Search..."
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
          autocomplete="off"
          autocorrect="off"
          autocapitalize="off"
@@ -87,7 +93,129 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../guide.html">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
     </header>
   
 
@@ -106,94 +234,104 @@
   <div class="sidebar-header-items sidebar-primary__section">
     
     
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../guide.html">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
     
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
-  
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
     
-  
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../guide.html">
+    Guide
+  </a>
+</li>
 
-<a class="navbar-brand logo" href="../../../../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
-  
-</a></div>
-        <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api_reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.api.html">nd2py.search.llmsr.api package</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/modules.html">nd2py</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/nd2py.html">nd2py package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.core.html">nd2py.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.basic.html">nd2py.core.basic package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.calc.html">nd2py.core.calc package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.context.html">nd2py.core.context package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.converter.html">nd2py.core.converter package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.nettype.html">nd2py.core.nettype package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.symbols.html">nd2py.core.symbols package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.transform.html">nd2py.core.transform package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.core.tree.html">nd2py.core.tree package</a></li>
-</ul>
-</details></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../api/nd2py.dataset.html">nd2py.dataset package</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.generator.html">nd2py.generator package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.data.html">nd2py.generator.data package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.generator.eq.html">nd2py.generator.eq package</a></li>
-</ul>
-</details></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.search.html">nd2py.search package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.e2esr.html">nd2py.search.e2esr package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.gp.html">nd2py.search.gp package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.llmsr.html">nd2py.search.llmsr package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.mcts.html">nd2py.search.mcts package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.search.ndformer.html">nd2py.search.ndformer package</a></li>
-</ul>
-</details></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/nd2py.utils.html">nd2py.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../api/nd2py.utils.nn.html">nd2py.utils.nn package</a></li>
-</ul>
-</details></li>
-</ul>
-</details></li>
-</ul>
-</details></li>
-</ul>
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples.html">
+    Examples
+  </a>
+</li>
 
-    </div>
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
 </nav></div>
     </div>
   
@@ -214,9 +352,6 @@
       <main id="main-content" class="bd-main" role="main">
         
         
-
-<div class="sbt-scroll-pixel-helper"></div>
-
           <div class="bd-content">
             <div class="bd-article-container">
               
@@ -225,81 +360,31 @@
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</button></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
         <div class="header-article-item">
 
-<div class="article-header-buttons">
-
-
-<a href="https://github.com/yuzhTHU/nd2py" target="_blank"
-   class="btn btn-sm btn-source-repository-button"
-   title="Source repository"
-   data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
-  title="Fullscreen mode"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-
-</div></div>
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">nd2py.core.calc.torch_calc</span></li>
+  </ul>
+</nav>
+</div>
       
     </div>
   
+  
 </div>
 </div>
               
               
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1></h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            
-        </div>
-    </div>
-</div>
-
               
                 
 <div id="searchbox"></div>
@@ -325,7 +410,7 @@
 <span class="c1"># This allows us to handle operations with multiple operands in a clean way</span>
 <span class="c1"># We can also use this decorator to replace NaN values in the input and output</span>
 <div class="viewcode-block" id="unpack_operands">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.unpack_operands">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.unpack_operands">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">unpack_operands</span><span class="p">(</span>
     <span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -368,7 +453,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TorchCalc</span><span class="p">(</span><span class="n">Visitor</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -412,7 +497,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
 <div class="viewcode-block" id="TorchCalc.generic_visit">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.generic_visit">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.generic_visit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generic_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.visit_</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> not implemented&quot;</span>
@@ -420,7 +505,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Empty">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Empty">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Empty">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Empty</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Incomplete expression with Empty node is not allowed to evaluate: </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -428,7 +513,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Number">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Number">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Number">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;device&quot;</span><span class="p">)</span>
@@ -436,7 +521,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Variable">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Variable">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Variable">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Variable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;device&quot;</span><span class="p">)</span>
@@ -444,35 +529,35 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_GroupedParameter">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_GroupedParameter">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_GroupedParameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_GroupedParameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">GroupedParameter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">yield from</span> <span class="n">yield_nothing</span><span class="p">()</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;GroupedParameter is currently supported only by NumPyCalc&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Add">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Add">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Add">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Add</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sub">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sub">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sub">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sub</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Mul">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Mul">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Mul">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Mul</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Div">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Div">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Div">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Div</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -480,49 +565,49 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Pow">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x1</span><span class="o">**</span><span class="n">x2</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Max">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Max">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Max">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Max</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Min">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Min">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Min">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Min</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Min</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sin">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sin">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sin">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Cos">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cos">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cos">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cos</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Tan">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tan">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tan">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Tan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Tan</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sec">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sec">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sec">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sec</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -530,7 +615,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Csc">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csc">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csc">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Csc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Csc</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -538,7 +623,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Cot">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cot">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cot">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cot</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -546,14 +631,14 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Log">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Log">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Log">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Log</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_LogAbs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_LogAbs">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_LogAbs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_LogAbs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">LogAbs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -561,28 +646,28 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Exp">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Exp">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Exp">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Exp</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Abs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Abs">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Abs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Abs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Abs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Neg">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Neg">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Neg">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Neg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Neg</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">x</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Inv">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Inv">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Inv">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Inv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Inv</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -590,77 +675,77 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sqrt">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sqrt">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sqrt">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sqrt</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_SqrtAbs">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_SqrtAbs">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_SqrtAbs">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_SqrtAbs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">SqrtAbs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Pow2">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow2">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow2">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Pow3">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow3">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Pow3">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Pow3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Pow3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Arcsin">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arcsin">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arcsin">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arcsin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arcsin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Arccos">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arccos">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arccos">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arccos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arccos</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Arctan">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arctan">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Arctan">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Arctan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Arctan</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sinh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sinh">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sinh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sinh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sinh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Cosh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cosh">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Cosh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cosh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Cosh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Tanh">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tanh">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Tanh">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Tanh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Tanh</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sech">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sech">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sech">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sech</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sech</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -668,7 +753,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Csch">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csch">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Csch">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Csch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Csch</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -676,7 +761,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Coth">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Coth">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Coth">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Coth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Coth</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -684,14 +769,14 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sigmoid">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sigmoid">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sigmoid">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sigmoid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Regular">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Regular">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Regular">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">(</span><span class="n">mask_out_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">double_check_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Regular</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_eps&quot;</span><span class="p">)</span>
@@ -699,7 +784,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Sour">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sour">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Sour">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Sour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Sour</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or 1) -&gt; (*, n_edges or 1)&quot;&quot;&quot;</span>
@@ -716,7 +801,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Targ">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Targ">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Targ">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Targ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Targ</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or 1) -&gt; (*, n_edges or 1)&quot;&quot;&quot;</span>
@@ -733,7 +818,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Aggr">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Aggr">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Aggr">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Aggr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Aggr</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_edges or 1) -&gt; (*, n_nodes)&quot;&quot;&quot;</span>
@@ -759,7 +844,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Rgga">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Rgga">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Rgga">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Rgga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Rgga</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_edges or 1) -&gt; (*, n_nodes)&quot;&quot;&quot;</span>
@@ -785,7 +870,7 @@
 
 
 <div class="viewcode-block" id="TorchCalc.visit_Readout">
-<a class="viewcode-back" href="../../../../api/nd2py.core.calc.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Readout">[docs]</a>
+<a class="viewcode-back" href="../../../../api_reference.html#nd2py.core.calc.torch_calc.TorchCalc.visit_Readout">[docs]</a>
     <span class="nd">@unpack_operands</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_Readout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Readout</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;(*, n_nodes or n_edges or 1) -&gt; (*, 1)&quot;&quot;&quot;</span>
@@ -796,7 +881,6 @@
 
                 </article>
               
-
               
               
               
@@ -815,18 +899,22 @@
           </div>
           <footer class="bd-footer-content">
             
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-By YuMeow
-</p>
-
+          </footer>
+        
+      </main>
+    </div>
   </div>
   
-  <div class="footer-item">
-    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
 
   <p class="copyright">
     
@@ -834,30 +922,32 @@ By YuMeow
       <br/>
     
   </p>
+</div>
+      
+        <div class="footer-item">
 
-  </div>
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
   
-  <div class="footer-item">
-    
-  </div>
   
-  <div class="footer-item">
-    
-  </div>
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+</p></div>
+      
+    </div>
   
 </div>
-          </footer>
-        
 
-      </main>
-    </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
-
-  <footer class="bd-footer">
   </footer>
   </body>
 </html>

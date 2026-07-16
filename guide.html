@@ -1,0 +1,1365 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Guide &#8212; nd2py (Neural Discovery of Network Dynamics)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=2fe79b4b" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="_static/documentation_options.js?v=8a3dca25"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="nd2py documentation" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.4" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nd2py (Neural Discovery of Network Dynamics)</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yuzhTHU/nd2py" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Guide</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="guide">
+<h1>Guide<a class="headerlink" href="#guide" title="Link to this heading">#</a></h1>
+<p>This page presents the complete nd2py user guide in one place. Use the
+right-hand table of contents or your browser’s page search to jump directly to
+a concept.</p>
+<hr class="docutils" />
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>nd2py requires Python 3.12 or newer.</p>
+<section id="install-from-pypi">
+<h3>Install from PyPI<a class="headerlink" href="#install-from-pypi" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nd2py
+</pre></div>
+</div>
+<p>Install optional neural-network or search dependencies when needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nd2py[nn]&quot;</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nd2py[search]&quot;</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nd2py[all]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="install-for-development">
+<h3>Install for development<a class="headerlink" href="#install-for-development" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yuzhTHU/nd2py.git
+<span class="nb">cd</span><span class="w"> </span>nd2py
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+pytest
+</pre></div>
+</div>
+<p>The core symbolic engine and NumPy evaluator do not require the optional
+PyTorch stack.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<section id="build-and-evaluate-an-expression">
+<h3>Build and evaluate an expression<a class="headerlink" href="#build-and-evaluate-an-expression" title="Link to this heading">#</a></h3>
+<p>Symbols compose through ordinary Python arithmetic:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">variables</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="c1"># sin(2 * x) + y ** 2</span>
+<span class="c1"># [1.         4.84147098 9.90929743]</span>
+</pre></div>
+</div>
+<p>An expression is a tree. Inspect it with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_tree</span><span class="p">())</span>
+<span class="c1"># Add (scalar)</span>
+<span class="c1"># ├ Sin (scalar)</span>
+<span class="c1"># ┆ └ Mul (scalar)</span>
+<span class="c1"># ┆   ├ 2 (scalar)</span>
+<span class="c1"># ┆   └ x (scalar)</span>
+<span class="c1"># └ Pow2 (scalar)</span>
+<span class="c1">#   └ y (scalar)</span>
+</pre></div>
+</div>
+</section>
+<section id="fit-numerical-constants">
+<h3>Fit numerical constants<a class="headerlink" href="#fit-numerical-constants" title="Link to this heading">#</a></h3>
+<p>Numbers created through arithmetic are fitable by default. <code class="docutils literal notranslate"><span class="pre">BFGSFit</span></code> optimizes
+them against observations while leaving the symbolic structure unchanged.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">model_expression</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)}</span>
+<span class="n">target</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">2.0</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">BFGSFit</span><span class="p">(</span><span class="n">model_expression</span><span class="p">,</span> <span class="n">fold_constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">loss_</span><span class="p">)</span>
+<span class="c1"># 3.0000000371975344 * x + 2.0000000376510387</span>
+<span class="c1"># 3.2997463432895325e-15</span>
+</pre></div>
+</div>
+<p>The last digits can vary slightly with SciPy versions; the fitted coefficient
+and intercept should be close to 3 and 2, and the loss should be near zero.</p>
+<p>Use <a class="reference internal" href="api_reference.html#nd2py.core.symbols.number.Number" title="nd2py.core.symbols.number.Number"><code class="xref py py-class docutils literal notranslate"><span class="pre">nd2py.core.symbols.number.Number</span></code></a> for a fitable number and
+<a class="reference internal" href="api_reference.html#nd2py.core.symbols.functions.Constant" title="nd2py.core.symbols.functions.Constant"><code class="xref py py-func docutils literal notranslate"><span class="pre">nd2py.core.symbols.functions.Constant()</span></code></a> for a fixed numerical constant.</p>
+</section>
+<section id="parse-an-expression">
+<h3>Parse an expression<a class="headerlink" href="#parse-an-expression" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;sin(2 * x) + y ** 2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parsing uses the same Symbol classes as programmatic construction, so parsed
+expressions support evaluation, printing, tree operations, and transforms.</p>
+</section>
+<section id="where-to-go-next">
+<h3>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Read <a class="reference internal" href="#expressions-and-symbols"><span class="std std-ref">Expressions and symbols</span></a> for the object model.</p></li>
+<li><p>Read <a class="reference internal" href="#network-types"><span class="std std-ref">Network types</span></a> for graph-aware expressions.</p></li>
+<li><p>Read <a class="reference internal" href="#parameter-fitting"><span class="std std-ref">Parameter fitting</span></a> for BFGS.</p></li>
+<li><p>Read <a class="reference internal" href="#custom-operators-outside-nd2py"><span class="std std-ref">Custom operators outside nd2py</span></a> to extend nd2py outside the repository.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="expressions-and-symbols">
+<span id="id1"></span><h2>Expressions and symbols<a class="headerlink" href="#expressions-and-symbols" title="Link to this heading">#</a></h2>
+<p>Every nd2py expression is a tree of <a class="reference internal" href="api_reference.html#nd2py.core.symbols.symbol.Symbol" title="nd2py.core.symbols.symbol.Symbol"><code class="xref py py-class docutils literal notranslate"><span class="pre">Symbol</span></code></a>
+objects. Leaves provide data or parameters, while internal nodes describe
+operations.</p>
+<section id="core-symbol-kinds">
+<h3>Core symbol kinds<a class="headerlink" href="#core-symbol-kinds" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head text-right"><p>Depends on input data?</p></th>
+<th class="head text-right"><p>Fitable?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Variable</span></code></p></td>
+<td><p>Named value read from the data mapping</p></td>
+<td class="text-right"><p>Yes</p></td>
+<td class="text-right"><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Number</span></code></p></td>
+<td><p>Numerical constant or parameter</p></td>
+<td class="text-right"><p>No</p></td>
+<td class="text-right"><p>Optional</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GroupedParameter</span></code></p></td>
+<td><p>Parameter selected by a categorical variable</p></td>
+<td class="text-right"><p>Yes</p></td>
+<td class="text-right"><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Operators</p></td>
+<td><p>Functions such as addition, sine, and aggregation</p></td>
+<td class="text-right"><p>Through operands</p></td>
+<td class="text-right"><p>No internal state</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">fitable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p>Python numbers used inside an expression are automatically wrapped as
+<code class="docutils literal notranslate"><span class="pre">Number</span></code> nodes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</section>
+<section id="operands-and-ownership">
+<h3>Operands and ownership<a class="headerlink" href="#operands-and-ownership" title="Link to this heading">#</a></h3>
+<p>Each Symbol declares <code class="docutils literal notranslate"><span class="pre">n_operands</span></code>. A unary operator has one operand, a binary
+operator has two, and leaves have none. <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> validates arity and links each
+child to its parent during construction.</p>
+<p>nd2py maintains a tree rather than a general directed acyclic graph. A
+non-variable subexpression already owned by a parent is copied when inserted
+elsewhere. This keeps replacement, type inference, and traversal semantics
+unambiguous.</p>
+</section>
+<section id="string-forms">
+<h3>String forms<a class="headerlink" href="#string-forms" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">())</span>
+<span class="c1"># 2 * x + Constant(1)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="c1"># Number(2.0, &quot;scalar&quot;, True) * Variable(&quot;x&quot;, &quot;scalar&quot;) + Number(1.0, &quot;scalar&quot;, False)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">latex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="c1"># 2 \times x + Constant(1)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">to_tree</span><span class="p">())</span>
+<span class="c1"># Add (scalar)</span>
+<span class="c1"># ├ Mul (scalar)</span>
+<span class="c1"># ┆ ├ 2.0 (scalar)</span>
+<span class="c1"># ┆ └ x (scalar)</span>
+<span class="c1"># └ Constant(1.0) (scalar)</span>
+</pre></div>
+</div>
+<p>The raw representation is intended for round trips through <code class="xref py py-func docutils literal notranslate"><span class="pre">nd2py.parse()</span></code>.</p>
+</section>
+<section id="public-operations">
+<h3>Public operations<a class="headerlink" href="#public-operations" title="Link to this heading">#</a></h3>
+<p>The methods exposed by a Symbol are a facade over specialized visitors. For
+example, <code class="docutils literal notranslate"><span class="pre">eval()</span></code> invokes <code class="docutils literal notranslate"><span class="pre">NumpyCalc</span></code>, <code class="docutils literal notranslate"><span class="pre">to_str()</span></code> invokes <code class="docutils literal notranslate"><span class="pre">StringPrinter</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">copy()</span></code> invokes <code class="docutils literal notranslate"><span class="pre">GetCopy</span></code>. This separation lets the same expression tree have
+multiple interpretations without putting every implementation inside Symbol.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="evaluation-and-visitors">
+<h2>Evaluation and visitors<a class="headerlink" href="#evaluation-and-visitors" title="Link to this heading">#</a></h2>
+<p>nd2py evaluates and transforms expressions with visitors. A visitor dispatches
+on the exact runtime class name:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add              -&gt; visit_Add
+Variable         -&gt; visit_Variable
+GroupedParameter -&gt; visit_GroupedParameter
+</pre></div>
+</div>
+<p>If a matching method is unavailable, the visitor uses <code class="docutils literal notranslate"><span class="pre">generic_visit</span></code>.</p>
+<section id="numpy-evaluation">
+<h3>NumPy evaluation<a class="headerlink" href="#numpy-evaluation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="nb">vars</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_values</span><span class="p">},</span>
+    <span class="n">edge_list</span><span class="o">=</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">targets</span><span class="p">),</span>
+    <span class="n">num_nodes</span><span class="o">=</span><span class="n">number_of_nodes</span><span class="p">,</span>
+    <span class="n">use_eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="api_reference.html#nd2py.core.calc.numpy_calc.NumpyCalc" title="nd2py.core.calc.numpy_calc.NumpyCalc"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumpyCalc</span></code></a> reads variables from <code class="docutils literal notranslate"><span class="pre">vars</span></code> and
+applies NumPy operations node by node. Sample dimensions are ordinary NumPy
+dimensions; nettype describes graph scope rather than array dtype or a general
+shape system.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">return_exceptions=True</span></code> to locate subexpressions that produce NaN or
+positive or negative infinity. The normal return value is unchanged by
+default; when diagnostics are enabled, evaluation returns
+<code class="docutils literal notranslate"><span class="pre">(result,</span> <span class="pre">exceptions)</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">nd</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">result</span><span class="p">,</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])},</span>
+    <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">exceptions</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># [nan nan  1.]</span>
+<span class="c1"># Subexpression log(x) produced non-finite values: 33.33% NaN, 0.00% Inf, 33.33% NegInf</span>
+<span class="c1"># Subexpression 1 / x produced non-finite values: 0.00% NaN, 33.33% Inf, 0.00% NegInf</span>
+<span class="c1"># Subexpression log(x) + 1 / x produced non-finite values: 66.67% NaN, 0.00% Inf, 0.00% NegInf</span>
+</pre></div>
+</div>
+<p>Each diagnostic reports the offending subexpression and the fraction of its
+values that are NaN, Inf, or NegInf.</p>
+</section>
+<section id="effective-information-criterion">
+<h3>Effective Information Criterion<a class="headerlink" href="#effective-information-criterion" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">expression.eval_eic(data)</span></code> estimates the number of decimal digits effectively
+lost through numerical sensitivity in the expression tree. Larger values
+indicate less stable structure; zero means no estimated loss at the sampled
+inputs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">unstable</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span>
+
+<span class="n">eic</span><span class="p">,</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="n">unstable</span><span class="o">.</span><span class="n">eval_eic</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])},</span>
+    <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">eic</span><span class="p">)</span>
+<span class="k">assert</span> <span class="s2">&quot;x - x&quot;</span> <span class="ow">in</span> <span class="n">exceptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">eic</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">exceptions</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># inf</span>
+<span class="c1"># The subexpression x - x exhibits elevated local numerical sensitivity,</span>
+<span class="c1"># corresponding to an estimated loss of inf decimal digits of precision.</span>
+</pre></div>
+</div>
+<p>Common elementwise operators use analytic derivatives. Other supported NumPy
+operators fall back to central finite differences controlled by
+<code class="docutils literal notranslate"><span class="pre">perturbation</span></code>. <code class="docutils literal notranslate"><span class="pre">exception_threshold</span></code> controls which local digit-loss values
+are reported; it does not change the returned EIC.</p>
+</section>
+<section id="pytorch-evaluation">
+<h3>PyTorch evaluation<a class="headerlink" href="#pytorch-evaluation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval_torch</span><span class="p">(</span><span class="nb">vars</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="api_reference.html#nd2py.core.calc.torch_calc.TorchCalc" title="nd2py.core.calc.torch_calc.TorchCalc"><code class="xref py py-class docutils literal notranslate"><span class="pre">TorchCalc</span></code></a> follows the same expression tree
+with PyTorch operations. Not every specialized Symbol necessarily supports
+both backends. In particular, <code class="docutils literal notranslate"><span class="pre">GroupedParameter</span></code> currently supports NumPy only.</p>
+</section>
+<section id="visitor-protocol">
+<h3>Visitor protocol<a class="headerlink" href="#visitor-protocol" title="Link to this heading">#</a></h3>
+<p>Visitor methods are generators. They yield a child together with the arguments
+used to visit it, then return the current node’s result:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">visit_Square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>The explicit stack in the base Visitor avoids Python recursion for deep trees.
+See <a class="reference internal" href="#custom-operators-outside-nd2py"><span class="std std-ref">Custom operators outside nd2py</span></a> for a complete extension example.</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="network-types">
+<span id="id2"></span><h2>Network types<a class="headerlink" href="#network-types" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">NetType</span></code> describes where a value lives in a network-dynamics expression:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">NetType</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;scalar&quot;</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>It is not a NumPy shape or dtype.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Nettype</p></th>
+<th class="head"><p>Interpretation</p></th>
+<th class="head"><p>Typical last dimension</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scalar</span></code></p></td>
+<td><p>One value shared across the graph</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code> or broadcastable</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">node</span></code></p></td>
+<td><p>One value for each node</p></td>
+<td><p>number of nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">edge</span></code></p></td>
+<td><p>One value for each edge</p></td>
+<td><p>number of edges</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Link to this heading">#</a></h3>
+<p><a class="reference internal" href="api_reference.html#nd2py.core.nettype.nettype_mixin.NetTypeMixin" title="nd2py.core.nettype.nettype_mixin.NetTypeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">NetTypeMixin</span></code></a> stores two related
+pieces of state:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_assigned_nettypes</span></code>: hard constraints supplied by the user;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_possible_nettypes</span></code>: candidates remaining after inference.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">infer_nettype()</span></code> performs bottom-up and top-down propagation over the whole
+expression tree. Ordinary arithmetic follows the non-scalar operand: combining
+a node value with a scalar produces a node value, while directly combining
+node and edge values is invalid.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;node&quot;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">nettype</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="k">assert</span> <span class="n">expression</span><span class="o">.</span><span class="n">nettype</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="graph-aware-operators">
+<h3>Graph-aware operators<a class="headerlink" href="#graph-aware-operators" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Sour(x)</span></code> and <code class="docutils literal notranslate"><span class="pre">Targ(x)</span></code> gather node values onto source or target edges.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Aggr(x)</span></code> and <code class="docutils literal notranslate"><span class="pre">Rgga(x)</span></code> aggregate edge values onto nodes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Readout(x)</span></code> reduces a node or edge value to scalar scope.</p></li>
+</ul>
+<p>These operators implement custom <code class="docutils literal notranslate"><span class="pre">map_nettype</span></code> rules. A custom operator can
+override the same class method when the default arithmetic mapping is not
+appropriate.</p>
+</section>
+<section id="hard-constraints-and-ambiguity">
+<h3>Hard constraints and ambiguity<a class="headerlink" href="#hard-constraints-and-ambiguity" title="Link to this heading">#</a></h3>
+<p>Passing <code class="docutils literal notranslate"><span class="pre">nettype=</span></code> anchors a node. If inference cannot find a compatible
+combination of child types, nd2py raises a type-inference conflict rather than
+silently broadcasting node and edge quantities.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="expression-trees">
+<h2>Expression trees<a class="headerlink" href="#expression-trees" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Symbol</span></code> inherits tree operations from
+<a class="reference internal" href="api_reference.html#nd2py.core.tree.tree_mixin.TreeMixin" title="nd2py.core.tree.tree_mixin.TreeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TreeMixin</span></code></a>. These operations work for built-in
+and custom Symbols because they depend on <code class="docutils literal notranslate"><span class="pre">operands</span></code> and <code class="docutils literal notranslate"><span class="pre">parent</span></code>, not on a
+fixed operator list.</p>
+<section id="traversal">
+<h3>Traversal<a class="headerlink" href="#traversal" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># Sin</span>
+<span class="c1"># Add</span>
+<span class="c1"># Mul</span>
+<span class="c1"># Number</span>
+<span class="c1"># Variable</span>
+<span class="c1"># Number</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_postorder</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># Number</span>
+<span class="c1"># Variable</span>
+<span class="c1"># Mul</span>
+<span class="c1"># Number</span>
+<span class="c1"># Add</span>
+<span class="c1"># Sin</span>
+</pre></div>
+</div>
+<p>Preorder visits a node before its children. Postorder visits children before
+their parent and is useful for bottom-up analysis.</p>
+</section>
+<section id="paths-and-replacement">
+<h3>Paths and replacement<a class="headerlink" href="#paths-and-replacement" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subexpression</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">iter_preorder</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">path_to</span><span class="p">(</span><span class="n">subexpression</span><span class="p">)</span>
+<span class="n">same_node</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">same_node</span><span class="p">)</span>
+<span class="c1"># (0, 0, 1)</span>
+<span class="c1"># x</span>
+
+<span class="n">replacement</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">subexpression</span><span class="p">,</span> <span class="n">replacement</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="c1"># sin(2 * y + 1)</span>
+</pre></div>
+</div>
+<p>Replacement must begin at a root expression. When the root itself is replaced,
+use the returned value because Python references to the old root cannot be
+updated automatically.</p>
+</section>
+<section id="copying">
+<h3>Copying<a class="headerlink" href="#copying" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">copied</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Copies have independent parent links and parameter values. Stateful Symbol
+types may need a specialized <code class="docutils literal notranslate"><span class="pre">GetCopy.visit_&lt;Type&gt;</span></code> implementation; stateless
+operators whose constructor accepts only operands and <code class="docutils literal notranslate"><span class="pre">nettype</span></code> use the generic
+implementation.</p>
+</section>
+<section id="structural-matching">
+<h3>Structural matching<a class="headerlink" href="#structural-matching" title="Link to this heading">#</a></h3>
+<p>Variables in a pattern act as placeholders:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bindings</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bindings</span><span class="p">)</span>
+<span class="c1"># {&#39;a&#39;: 2 * x + 1}</span>
+</pre></div>
+</div>
+<p>Repeated occurrences of the same pattern variable must bind to the same
+subexpression.</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="parameter-fitting">
+<span id="id3"></span><h2>Parameter fitting<a class="headerlink" href="#parameter-fitting" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="api_reference.html#nd2py.core.transform.bfgs_fit.BFGSFit" title="nd2py.core.transform.bfgs_fit.BFGSFit"><code class="xref py py-class docutils literal notranslate"><span class="pre">BFGSFit</span></code></a> optimizes fitable numerical
+parameters for a fixed symbolic structure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)}</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">2.0</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">BFGSFit</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">fold_constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">loss_</span><span class="p">,</span> <span class="n">fit</span><span class="o">.</span><span class="n">success_</span><span class="p">)</span>
+<span class="c1"># 3.000000175954602 * x + 1.9999999661591596</span>
+<span class="c1"># 1.1673694793736501e-14 True</span>
+</pre></div>
+</div>
+<p>Exact final digits can vary with SciPy versions. The meaningful checks are
+that the parameters approach 3 and 2, the loss is near zero, and fitting
+reports success.</p>
+<section id="fittable-and-fixed-constants">
+<h3>Fittable and fixed constants<a class="headerlink" href="#fittable-and-fixed-constants" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Number(...,</span> <span class="pre">fitable=True)</span></code> participates in optimization. The default depends
+on the <code class="docutils literal notranslate"><span class="pre">set_fitable</span></code> context. <code class="docutils literal notranslate"><span class="pre">Constant(...)</span></code> explicitly creates a fixed
+Number.</p>
+</section>
+<section id="constant-folding">
+<h3>Constant folding<a class="headerlink" href="#constant-folding" title="Link to this heading">#</a></h3>
+<p>With <code class="docutils literal notranslate"><span class="pre">fold_constant=True</span></code>, BFGS first combines fitable constant-only subtrees,
+then evaluates data-only subtrees once. The resulting loss expression is a
+temporary tree. After optimization, BFGS explicitly writes every fitted value
+back to <code class="docutils literal notranslate"><span class="pre">fit.expression</span></code>; it does not rely on the temporary and retained trees
+sharing node identity.</p>
+</section>
+<section id="parameter-arrays">
+<h3>Parameter arrays<a class="headerlink" href="#parameter-arrays" title="Link to this heading">#</a></h3>
+<p>Parameters are flattened before SciPy optimization and restored to their
+original shapes afterward. This supports scalar Numbers, array-valued Numbers,
+and GroupedParameters in one expression.</p>
+</section>
+<section id="estimator-attributes">
+<h3>Estimator attributes<a class="headerlink" href="#estimator-attributes" title="Link to this heading">#</a></h3>
+<p>After <code class="docutils literal notranslate"><span class="pre">fit</span></code>, inspect:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">expression</span></code>: retained expression containing fitted values;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss_</span></code>: final mean squared error;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">success_</span></code>: SciPy optimizer success flag;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message_</span></code>: optimizer termination message;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_</span></code>: number of optimizer iterations.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="grouped-parameters">
+<h2>Grouped parameters<a class="headerlink" href="#grouped-parameters" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="api_reference.html#nd2py.core.symbols.grouped_parameter.GroupedParameter" title="nd2py.core.symbols.grouped_parameter.GroupedParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupedParameter</span></code></a> associates one
+fitable scalar with each distinct label of a categorical variable.</p>
+<p>Suppose the same linear structure applies to several groups but each group has
+its own slope:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;group1&quot;</span><span class="p">,</span> <span class="s2">&quot;group1&quot;</span><span class="p">,</span> <span class="s2">&quot;group2&quot;</span><span class="p">,</span> <span class="s2">&quot;group2&quot;</span><span class="p">,</span> <span class="s2">&quot;group3&quot;</span><span class="p">,</span> <span class="s2">&quot;group3&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]),</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">GroupedParameter</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">BFGSFit</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value_dict</span><span class="p">)</span>
+<span class="c1"># {&#39;group1&#39;: 1.0000001749568208, &#39;group2&#39;: 1.9999999888181819,</span>
+<span class="c1">#  &#39;group3&#39;: 2.99999999086196}</span>
+</pre></div>
+</div>
+<p>The final digits can vary with SciPy versions; the meaningful fitted values
+are approximately 1, 2, and 3.</p>
+<section id="category-binding">
+<h3>Category binding<a class="headerlink" href="#category-binding" title="Link to this heading">#</a></h3>
+<p>Labels are bound in first-seen order. Previously unseen labels are appended to
+<code class="docutils literal notranslate"><span class="pre">group_labels</span></code>, added to <code class="docutils literal notranslate"><span class="pre">label_to_index</span></code>, and initialized with <code class="docutils literal notranslate"><span class="pre">default</span></code>.
+Evaluation therefore has defaultdict-like semantics:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parameter</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">GroupedParameter</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">},</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">parameter</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;known&quot;</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">])})</span>
+
+<span class="k">assert</span> <span class="n">parameter</span><span class="o">.</span><span class="n">value_dict</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>New categories encountered after fitting use <code class="docutils literal notranslate"><span class="pre">default</span></code>; they have not been
+optimized from training observations.</p>
+</section>
+<section id="representation">
+<h3>Representation<a class="headerlink" href="#representation" title="Link to this heading">#</a></h3>
+<p>One grouped parameter prints as <code class="docutils literal notranslate"><span class="pre">alpha[s]</span></code>. Multiple grouped parameters in one
+expression are numbered by preorder occurrence:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>alpha^(1)[s] * x + alpha^(2)[s]
+</pre></div>
+</div>
+<p>The LaTeX form is <code class="docutils literal notranslate"><span class="pre">\alpha^{(1)}_{s}</span></code>. Use
+<code class="docutils literal notranslate"><span class="pre">grouped_parameter_symbol=&quot;theta&quot;</span></code> with <code class="docutils literal notranslate"><span class="pre">to_str</span></code> to change the displayed symbol.</p>
+</section>
+<section id="backend-support">
+<h3>Backend support<a class="headerlink" href="#backend-support" title="Link to this heading">#</a></h3>
+<p>GroupedParameter currently supports NumPy evaluation and BFGS fitting. Torch
+evaluation raises a deliberate <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> because string categories
+must first be encoded into integer tensor indices.</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="custom-operators-outside-nd2py">
+<span id="id4"></span><h2>Custom operators outside nd2py<a class="headerlink" href="#custom-operators-outside-nd2py" title="Link to this heading">#</a></h2>
+<p>You can define an operator and integrate it with nd2py visitors from an
+application, notebook, or separate package. No modification of the nd2py
+repository is required.</p>
+<p>This page builds a unary <code class="docutils literal notranslate"><span class="pre">Cube</span></code> operator, adds NumPy evaluation and string
+rendering, and makes it available to the parser.</p>
+<section id="define-the-symbol">
+<h3>Define the Symbol<a class="headerlink" href="#define-the-symbol" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Cube</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the elementwise cube of one operand.&quot;&quot;&quot;</span>
+
+    <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The inherited <code class="docutils literal notranslate"><span class="pre">Symbol.map_nettype</span></code> rule is sufficient because <code class="docutils literal notranslate"><span class="pre">Cube</span></code> preserves
+the network scope of its operand. Override <code class="docutils literal notranslate"><span class="pre">map_nettype</span></code> when an operator maps
+between scalar, node, and edge scope.</p>
+<p>The generic tree, length, and nettype visitors already understand this class
+through <code class="docutils literal notranslate"><span class="pre">n_operands</span></code>. Backend-specific semantics require registration.</p>
+</section>
+<section id="add-numpy-evaluation">
+<h3>Add NumPy evaluation<a class="headerlink" href="#add-numpy-evaluation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.calc.numpy_calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumpyCalc</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+
+<span class="n">NumpyCalc</span><span class="o">.</span><span class="n">visit_Cube</span> <span class="o">=</span> <span class="n">visit_Cube_numpy</span>
+</pre></div>
+</div>
+<p>Visitor methods are generators. The yielded tuple asks the visitor to evaluate
+the child with the current arguments. The value sent back into <code class="docutils literal notranslate"><span class="pre">x</span></code> is the
+child’s NumPy result.</p>
+</section>
+<section id="add-string-rendering">
+<h3>Add string rendering<a class="headerlink" href="#add-string-rendering" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.converter.string_printer</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringPrinter</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;\left(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">\right)^3&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+
+<span class="n">StringPrinter</span><span class="o">.</span><span class="n">visit_Cube</span> <span class="o">=</span> <span class="n">visit_Cube_string</span>
+</pre></div>
+</div>
+<p>Because dispatch uses the exact class name, the method must be named
+<code class="docutils literal notranslate"><span class="pre">visit_Cube</span></code>.</p>
+</section>
+<section id="protect-existing-registrations">
+<h3>Protect existing registrations<a class="headerlink" href="#protect-existing-registrations" title="Link to this heading">#</a></h3>
+<p>Direct monkey patching is process-global. A small registration helper prevents
+accidental replacement:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">register_visitor</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">symbol_class</span><span class="p">,</span> <span class="n">visit_method</span><span class="p">):</span>
+    <span class="n">method_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;visit_</span><span class="si">{</span><span class="n">symbol_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">visitor_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2"> already exists&quot;</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">visit_method</span><span class="p">)</span>
+
+
+<span class="n">register_visitor</span><span class="p">(</span><span class="n">NumpyCalc</span><span class="p">,</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">visit_Cube_numpy</span><span class="p">)</span>
+<span class="n">register_visitor</span><span class="p">(</span><span class="n">StringPrinter</span><span class="p">,</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">visit_Cube_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a reusable extension package, perform registration in an explicit setup
+function rather than silently at import time.</p>
+</section>
+<section id="build-evaluate-and-parse">
+<h3>Build, evaluate, and parse<a class="headerlink" href="#build-evaluate-and-parse" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">expression</span> <span class="o">=</span> <span class="n">Cube</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])})</span>
+<span class="c1"># array([2., 9., 28.])</span>
+
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+    <span class="s2">&quot;cube(x) + 1&quot;</span><span class="p">,</span>
+    <span class="n">callables</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cube&quot;</span><span class="p">:</span> <span class="n">Cube</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Passing <code class="docutils literal notranslate"><span class="pre">callables</span></code> makes the custom operator available without adding it to
+<code class="docutils literal notranslate"><span class="pre">nd2py.core.symbols</span></code>.</p>
+</section>
+<section id="which-visitors-need-integration">
+<h3>Which visitors need integration?<a class="headerlink" href="#which-visitors-need-integration" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Capability</p></th>
+<th class="head text-right"><p>Usually needs a custom method?</p></th>
+<th class="head"><p>Reason</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Tree traversal</p></td>
+<td class="text-right"><p>No</p></td>
+<td><p>Uses <code class="docutils literal notranslate"><span class="pre">operands</span></code> generically</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tree printing</p></td>
+<td class="text-right"><p>No</p></td>
+<td><p>Generic structural output is sufficient</p></td>
+</tr>
+<tr class="row-even"><td><p>Copy</p></td>
+<td class="text-right"><p>No for stateless operators</p></td>
+<td><p>Reconstructs from operands and nettype</p></td>
+</tr>
+<tr class="row-odd"><td><p>Nettype inference</p></td>
+<td class="text-right"><p>No for scope-preserving arithmetic</p></td>
+<td><p>Inherited mapping works</p></td>
+</tr>
+<tr class="row-even"><td><p>NumPy evaluation</p></td>
+<td class="text-right"><p>Yes</p></td>
+<td><p>Numerical semantics are operator-specific</p></td>
+</tr>
+<tr class="row-odd"><td><p>EIC evaluation</p></td>
+<td class="text-right"><p>Usually</p></td>
+<td><p>Register an analytic derivative or NumPy semantics compatible with finite differences</p></td>
+</tr>
+<tr class="row-even"><td><p>Torch evaluation</p></td>
+<td class="text-right"><p>Yes</p></td>
+<td><p>Backend semantics are operator-specific</p></td>
+</tr>
+<tr class="row-odd"><td><p>String rendering</p></td>
+<td class="text-right"><p>Recommended</p></td>
+<td><p>Generic output works but is less readable</p></td>
+</tr>
+<tr class="row-even"><td><p>Simplification</p></td>
+<td class="text-right"><p>Only for special identities</p></td>
+<td><p>Algebraic rules are operator-specific</p></td>
+</tr>
+<tr class="row-odd"><td><p>Constant folding</p></td>
+<td class="text-right"><p>Usually no</p></td>
+<td><p>Generic evaluation works after a calculator is registered</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Stateful Symbols need more care than the stateless <code class="docutils literal notranslate"><span class="pre">Cube</span></code>: copying and any
+transform that reconstructs the node must preserve their additional state.</p>
+</section>
+<section id="complete-runnable-example">
+<h3>Complete runnable example<a class="headerlink" href="#complete-runnable-example" title="Link to this heading">#</a></h3>
+<p>The following file is executed by the documentation test workflow:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;Define and register an nd2py operator without modifying nd2py itself.&quot;&quot;&quot;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">nd2py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nd</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.calc.numpy_calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumpyCalc</span>
+<span class="linenos"> 7</span><span class="kn">from</span><span class="w"> </span><span class="nn">nd2py.core.converter.string_printer</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringPrinter</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">class</span><span class="w"> </span><span class="nc">Cube</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">Symbol</span><span class="p">):</span>
+<span class="linenos">11</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the elementwise cube of one operand.&quot;&quot;&quot;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="n">n_operands</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="nd">@classmethod</span>
+<span class="linenos">16</span>    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>        <span class="k">def</span><span class="w"> </span><span class="nf">register_visitor</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">symbol_class</span><span class="p">,</span> <span class="n">visit_method</span><span class="p">):</span>
+<span class="linenos">19</span><span class="w">            </span><span class="sd">&quot;&quot;&quot;Register a visit method while protecting existing registrations.&quot;&quot;&quot;</span>
+<span class="linenos">20</span>            <span class="n">method_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;visit_</span><span class="si">{</span><span class="n">symbol_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">21</span>            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">method_name</span><span class="p">):</span>
+<span class="linenos">22</span>                <span class="nb">setattr</span><span class="p">(</span><span class="n">visitor_class</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">visit_method</span><span class="p">)</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>        <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos">25</span><span class="w">            </span><span class="sd">&quot;&quot;&quot;Render Cube in readable and LaTeX expressions.&quot;&quot;&quot;</span>
+<span class="linenos">26</span>            <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos">27</span>            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">):</span>
+<span class="linenos">28</span>                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="linenos">29</span>            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latex&quot;</span><span class="p">):</span>
+<span class="linenos">30</span>                <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;\left(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">\right)^3&quot;</span>
+<span class="linenos">31</span>            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;cube(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>        <span class="n">register_visitor</span><span class="p">(</span><span class="n">StringPrinter</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">visit_Cube_string</span><span class="p">)</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>        <span class="k">def</span><span class="w"> </span><span class="nf">visit_Cube_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos">36</span><span class="w">            </span><span class="sd">&quot;&quot;&quot;Evaluate Cube with NumPy.&quot;&quot;&quot;</span>
+<span class="linenos">37</span>            <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos">38</span>            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>        <span class="n">register_visitor</span><span class="p">(</span><span class="n">NumpyCalc</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">visit_Cube_numpy</span><span class="p">)</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="n">Cube</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="linenos">46</span><span class="n">expression</span> <span class="o">=</span> <span class="n">Cube</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="c1"># StringPrinter</span>
+<span class="linenos">49</span><span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span><span class="c1"># NumpyCalc</span>
+<span class="linenos">52</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])}</span>
+<span class="linenos">53</span><span class="nb">print</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span><span class="c1"># Parse</span>
+<span class="linenos">56</span><span class="n">parsed</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;cube(x) + 1&quot;</span><span class="p">,</span> <span class="n">callables</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cube&quot;</span><span class="p">:</span> <span class="n">Cube</span><span class="p">})</span>
+<span class="linenos">57</span><span class="nb">print</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">nd2py documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-pypi">Install from PyPI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-for-development">Install for development</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick start</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-evaluate-an-expression">Build and evaluate an expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-numerical-constants">Fit numerical constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parse-an-expression">Parse an expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressions-and-symbols">Expressions and symbols</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-symbol-kinds">Core symbol kinds</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operands-and-ownership">Operands and ownership</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#string-forms">String forms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#public-operations">Public operations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-visitors">Evaluation and visitors</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-evaluation">NumPy evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effective-information-criterion">Effective Information Criterion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-evaluation">PyTorch evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visitor-protocol">Visitor protocol</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-types">Network types</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-aware-operators">Graph-aware operators</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hard-constraints-and-ambiguity">Hard constraints and ambiguity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-trees">Expression trees</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traversal">Traversal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paths-and-replacement">Paths and replacement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copying">Copying</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-matching">Structural matching</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-fitting">Parameter fitting</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fittable-and-fixed-constants">Fittable and fixed constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constant-folding">Constant folding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-arrays">Parameter arrays</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimator-attributes">Estimator attributes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouped-parameters">Grouped parameters</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#category-binding">Category binding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-support">Backend support</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-operators-outside-nd2py">Custom operators outside nd2py</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-symbol">Define the Symbol</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-numpy-evaluation">Add NumPy evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-string-rendering">Add string rendering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#protect-existing-registrations">Protect existing registrations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-evaluate-and-parse">Build, evaluate, and parse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#which-visitors-need-integration">Which visitors need integration?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-runnable-example">Complete runnable example</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, YuMeow.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
