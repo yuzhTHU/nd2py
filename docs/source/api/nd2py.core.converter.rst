@@ -1,16 +1,11 @@
 nd2py.core.converter package
 ============================
 
-.. automodule:: nd2py.core.converter
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.core.converter.from\_postorder module
--------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.converter.from_postorder
    :members:
@@ -18,7 +13,7 @@ nd2py.core.converter.from\_postorder module
    :undoc-members:
 
 nd2py.core.converter.from\_preorder module
-------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.converter.from_preorder
    :members:
@@ -26,7 +21,7 @@ nd2py.core.converter.from\_preorder module
    :undoc-members:
 
 nd2py.core.converter.parser module
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.converter.parser
    :members:
@@ -34,7 +29,7 @@ nd2py.core.converter.parser module
    :undoc-members:
 
 nd2py.core.converter.string\_printer module
--------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.converter.string_printer
    :members:
@@ -42,7 +37,7 @@ nd2py.core.converter.string\_printer module
    :undoc-members:
 
 nd2py.core.converter.tree\_printer module
------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.converter.tree_printer
    :members:

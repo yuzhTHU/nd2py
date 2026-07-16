@@ -1,16 +1,11 @@
 nd2py.core.symbols package
 ==========================
 
-.. automodule:: nd2py.core.symbols
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.core.symbols.empty module
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.symbols.empty
    :members:
@@ -18,7 +13,7 @@ nd2py.core.symbols.empty module
    :undoc-members:
 
 nd2py.core.symbols.functions module
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.symbols.functions
    :members:
@@ -26,31 +21,38 @@ nd2py.core.symbols.functions module
    :undoc-members:
 
 nd2py.core.symbols.number module
---------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.symbols.number
    :members:
    :show-inheritance:
    :undoc-members:
 
+nd2py.core.symbols.grouped\_parameter module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: nd2py.core.symbols.grouped_parameter
+   :members:
+   :show-inheritance:
+
 nd2py.core.symbols.operands module
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.symbols.operands
    :members:
    :show-inheritance:
    :undoc-members:
 
-nd2py.core.symbols.symbols module
----------------------------------
+nd2py.core.symbols.symbol module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. automodule:: nd2py.core.symbols.symbols
+.. automodule:: nd2py.core.symbols.symbol
    :members:
    :show-inheritance:
-   :undoc-members:
+   :no-index:
 
 nd2py.core.symbols.variable module
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.symbols.variable
    :members:

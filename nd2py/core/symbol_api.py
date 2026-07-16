@@ -53,6 +53,14 @@ class SymbolAPIMixin:
 
         Returns:
             str: String representation of the symbol expression.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> (2 * x + 1).to_str()
+            '2 * x + 1'
+            >>> (2 * x + 1).to_str(latex=True)
+            '2 \\\\times x + 1'
         """
         from .converter import StringPrinter
 
@@ -81,6 +89,15 @@ class SymbolAPIMixin:
 
         Returns:
             str: Multi-line string visualising the expression tree.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> print((nd.sin(x) + 1).to_tree())
+            Add (scalar)
+            ├ Sin (scalar)
+            ┆ └ x (scalar)
+            └ 1 (scalar)
         """
         from .converter import TreePrinter
 
@@ -118,8 +135,16 @@ class SymbolAPIMixin:
                 subexpression. Defaults to False.
 
         Returns:
-            numpy.ndarray | float | tuple: Numerical evaluation result, or a
+            numpy.ndarray | float | tuple: Numerical evaluation result of the
+            expression, whose shape depends on the symbol and inputs. Or a
             ``(result, exceptions)`` tuple when ``return_exceptions`` is True.
+
+        Examples:
+            >>> import numpy as np
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> (x ** 2 + 1).eval({"x": np.array([1.0, 2.0])})
+            array([2., 5.])
         """
         from .calc import NumpyCalc
 
@@ -158,6 +183,19 @@ class SymbolAPIMixin:
         Returns:
             float | tuple: Estimated decimal digits lost, optionally paired
             with diagnostics identifying anomalous subexpressions.
+
+        Examples:
+            >>> import numpy as np
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> eic, exceptions = (x - x).eval_eic(
+            ...     {"x": np.array([1.0, 2.0])},
+            ...     return_exceptions=True,
+            ... )
+            >>> bool(np.isinf(eic))
+            True
+            >>> "x - x" in exceptions[0]
+            True
         """
         from .calc import EICCalc
 
@@ -203,6 +241,13 @@ class SymbolAPIMixin:
 
         Returns:
             torch.Tensor: Numerical evaluation result of the expression.
+
+        Examples:
+            >>> import torch
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> (x + 1).eval_torch({"x": torch.tensor([1.0, 2.0])})
+            tensor([2., 3.])
         """
         from .calc.torch_calc import TorchCalc
 
@@ -261,6 +306,12 @@ class SymbolAPIMixin:
 
         Returns:
             List[Symbol]: List of symbols corresponding to each additive term.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x, y = nd.variables("x y")
+            >>> [term.to_str() for term in (x + y + 1).split_by_add()]
+            ['x', 'y', '1']
         """
         from .transform.split_by_add import SplitByAdd
 
@@ -299,6 +350,12 @@ class SymbolAPIMixin:
         Returns:
             List[Symbol]: List of symbols corresponding to each multiplicative
             factor.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x, y = nd.variables("x y")
+            >>> [factor.to_str() for factor in (2 * x * y).split_by_mul()]
+            ['2', 'x', 'y']
         """
         from .transform.split_by_mul import SplitByMul
 
@@ -347,6 +404,13 @@ class SymbolAPIMixin:
 
         Returns:
             Symbol: Root symbol of the expression with consistent nettypes.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x", nettype="node")
+            >>> fixed = x.fix_nettype("node")
+            >>> fixed.nettype
+            'node'
         """
         from .transform.fix_nettype import FixNetType
 
@@ -414,6 +478,12 @@ class SymbolAPIMixin:
 
         Returns:
             Symbol: A simplified version of the original symbol expression.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> (x + 0).simplify().to_str()
+            'x'
         """
         from .transform.simplify import Simplify
 

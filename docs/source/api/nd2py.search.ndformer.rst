@@ -7,10 +7,10 @@ nd2py.search.ndformer package
    :undoc-members:
 
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.search.ndformer.ndformer\_config module
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.ndformer.ndformer_config
    :members:
@@ -18,7 +18,7 @@ nd2py.search.ndformer.ndformer\_config module
    :undoc-members:
 
 nd2py.search.ndformer.ndformer\_dataset module
-----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.ndformer.ndformer_dataset
    :members:
@@ -26,7 +26,7 @@ nd2py.search.ndformer.ndformer\_dataset module
    :undoc-members:
 
 nd2py.search.ndformer.ndformer\_generator module
-------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.ndformer.ndformer_generator
    :members:
@@ -34,7 +34,7 @@ nd2py.search.ndformer.ndformer\_generator module
    :undoc-members:
 
 nd2py.search.ndformer.ndformer\_model module
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.ndformer.ndformer_model
    :members:
@@ -42,17 +42,9 @@ nd2py.search.ndformer.ndformer\_model module
    :undoc-members:
 
 nd2py.search.ndformer.ndformer\_tokenizer module
-------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.ndformer.ndformer_tokenizer
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-nd2py.search.ndformer.ndformer\_train module
---------------------------------------------
-
-.. automodule:: nd2py.search.ndformer.ndformer_train
    :members:
    :show-inheritance:
    :undoc-members:

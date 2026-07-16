@@ -7,7 +7,7 @@ nd2py.generator package
    :undoc-members:
 
 Subpackages
------------
+^^^^^^^^^^^
 
 .. toctree::
    :maxdepth: 4

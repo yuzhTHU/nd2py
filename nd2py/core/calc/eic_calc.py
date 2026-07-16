@@ -9,8 +9,11 @@ if TYPE_CHECKING:
 
 
 class EICCalc(Visitor):
-    """Estimate the number of effective decimal digits lost by a symbol tree, see 
-    `Beyond Accuracy and Complexity: The Effective Information Criterion for Structurally Stable Symbolic Regression'
+    """Estimate the number of effective decimal digits lost by a symbol tree.
+
+    This implements the diagnostic described in *Beyond Accuracy and
+    Complexity: The Effective Information Criterion for Structurally Stable
+    Symbolic Regression*.
 
     The estimate recursively measures how much each subexpression amplifies
     relative input errors. Analytic derivatives are used for common

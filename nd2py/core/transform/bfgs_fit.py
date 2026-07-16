@@ -16,6 +16,32 @@ def collect_numbers(expression):
 
 
 class BFGSFit(BaseEstimator, RegressorMixin):
+    """Fit numerical parameters in a symbolic expression with SciPy.
+
+    Args:
+        expression: Expression containing fitable ``Number`` or
+            ``GroupedParameter`` nodes.
+        edge_list: Optional graph edge list used during evaluation.
+        num_nodes: Optional number of graph nodes.
+        use_eps: Numerical-stability epsilon used during evaluation.
+        method: Optimization method passed to ``scipy.optimize.minimize``.
+        tol: Termination tolerance passed to the optimizer.
+        options: Optional optimizer-specific settings.
+        fold_constant: Whether to fold constant subtrees before fitting.
+
+    Examples:
+        >>> import numpy as np
+        >>> import nd2py as nd
+        >>> x = nd.Variable("x")
+        >>> coefficient = nd.Number(1.0)
+        >>> fit = nd.BFGSFit(coefficient * x).fit(
+        ...     {"x": np.array([1.0, 2.0, 3.0])},
+        ...     np.array([2.0, 4.0, 6.0]),
+        ... )
+        >>> np.allclose(fit.predict({"x": np.array([4.0])}), [8.0])
+        True
+    """
+
     def __init__(
         self,
         expression: Symbol,

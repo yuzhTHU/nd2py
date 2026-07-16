@@ -1,0 +1,76 @@
+:root {
+  --pst-color-primary: #cf3651;
+  --pst-color-link: #cf3651;
+  --pst-color-link-hover: #9f2038;
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: #ff6b81;
+  --pst-color-link: #ff7b8e;
+}
+
+.bd-header {
+  border-bottom: 1px solid var(--pst-color-border);
+  box-shadow: none;
+}
+
+.navbar-header-items__start .navbar-item:first-child {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.bd-main .bd-content .bd-article-container {
+  max-width: 58rem;
+}
+
+.bd-article h1 {
+  color: var(--pst-color-primary);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+.bd-article h2 {
+  border-top: 1px solid var(--pst-color-border);
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+}
+
+.highlight pre {
+  border-radius: 0.55rem;
+  padding: 1rem 1.15rem;
+}
+
+.bd-sidebar-primary {
+  background: color-mix(in srgb, var(--pst-color-background) 96%, var(--pst-color-primary));
+}
+
+.bd-sidebar-primary .bd-navbar-elements {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+}
+
+.bd-sidebar-primary .bd-navbar-elements .nav-item,
+.bd-sidebar-primary .bd-navbar-elements .nav-link {
+  width: 100%;
+}
+
+.bd-sidebar-primary .bd-navbar-elements .nav-link {
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.7rem;
+}
+
+.bd-sidebar-primary .bd-navbar-elements .nav-link.active {
+  background: color-mix(in srgb, var(--pst-color-primary) 12%, transparent);
+  color: var(--pst-color-primary);
+  font-weight: 650;
+}
+
+.bd-sidebar-secondary {
+  font-size: 0.9rem;
+}
+
+table.docutils {
+  width: 100%;
+}

@@ -7,10 +7,10 @@ nd2py.search.llmsr package
    :undoc-members:
 
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.search.llmsr.llmsr module
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.search.llmsr.llmsr
    :members:

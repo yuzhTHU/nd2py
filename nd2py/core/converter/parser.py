@@ -47,6 +47,19 @@ def parse(
     variables: Dict[str, Symbol] = None,
     callables: Dict[str, callable] = None,
 ) -> Symbol:
+    """Parse a textual expression into a symbol tree.
+
+    Args:
+        expression: Python-like symbolic expression to parse.
+        variables: Optional mapping overriding inferred variables.
+        callables: Optional mapping adding or overriding callable symbols.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> expression = nd.parse("sin(x) + 1")
+        >>> float(expression.eval({"x": 0.0}))
+        1.0
+    """
     _variables, _callables = get_variables_and_callables(expression)
     default_variables = {name: Variable(name, nettype="scalar") for name in _variables}
     if variables is None:

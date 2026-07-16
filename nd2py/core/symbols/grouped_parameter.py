@@ -18,7 +18,33 @@ class GroupedParameter(Symbol):
         fitable: bool = True,
         nettype: Optional[NetType|Set[NetType]] = None, 
     ):
-        """A fitable parameter lookup indexed by a categorical variable."""
+        """Create a fitable parameter lookup indexed by a categorical variable.
+
+        Each distinct value of the Variable operand selects one scalar entry
+        of :attr:`value`. Labels not present in ``value`` are added on first
+        evaluation and initialized with ``default``.
+
+        Args:
+            *operands: Exactly one categorical :class:`Variable` used to
+                select parameter values.
+            value: Optional initial mapping from category labels to numerical
+                parameter values. Mapping order is preserved.
+            default: Value assigned to a previously unseen label. ``None`` is
+                interpreted as ``0.0``.
+            fitable: Whether :class:`~nd2py.BFGSFit` may optimize the values.
+            nettype: Optional network-type constraint. By default, the result
+                follows the Variable operand.
+
+        Examples:
+            >>> import numpy as np
+            >>> import nd2py as nd
+            >>> s = nd.Variable("s")
+            >>> parameter = nd.GroupedParameter(s, default=1.0)
+            >>> parameter.eval({"s": np.array(["a", "b", "a"])})
+            array([1., 1., 1.])
+            >>> parameter.value_dict
+            {'a': 1.0, 'b': 1.0}
+        """
         if len(operands) != 1 or not isinstance(operands[0], Variable):
             raise TypeError("GroupedParameter expects exactly one Variable operand")
         if value is not None and not isinstance(value, dict):
@@ -44,7 +70,14 @@ class GroupedParameter(Symbol):
         return self.operands[0]
 
     def bind(self, labels) -> None:
-        """Add previously unseen labels, initialized with ``default``."""
+        """Add previously unseen labels initialized with :attr:`default`.
+
+        Labels are appended in first-seen order. Existing labels and parameter
+        values are left unchanged.
+
+        Args:
+            labels: Scalar or array-like categorical labels.
+        """
         new_labels = []
         for label in np.asarray(labels, dtype=object).reshape(-1):
             # Convert NumPy scalar keys to their Python equivalents when possible.
@@ -61,4 +94,5 @@ class GroupedParameter(Symbol):
 
     @property
     def value_dict(self):
+        """Return the current label-to-parameter mapping."""
         return dict(zip(self.group_labels, np.asarray(self.value).tolist()))

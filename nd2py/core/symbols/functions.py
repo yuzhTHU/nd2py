@@ -55,28 +55,78 @@ rgga = Rgga
 readout = Readout
 
 def sum(*operands):
+    """Combine operands into an additive expression.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> x, y = nd.variables("x y")
+        >>> nd.sum(x, y, 1).to_str()
+        'x + y + 1'
+    """
     return reduce(add, operands)
 
 def prod(*operands):
+    """Combine operands into a multiplicative expression.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> x, y = nd.variables("x y")
+        >>> nd.prod(2, x, y).to_str()
+        '2 * x * y'
+    """
     return reduce(mul, operands)
 
 def maximum(*operands):
+    """Return the elementwise maximum of all operands.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> x, y = nd.variables("x y")
+        >>> float(nd.maximum(x, y).eval({"x": 1.0, "y": 2.0}))
+        2.0
+    """
     return reduce(max, operands)
 
 def minimum(*operands):
+    """Return the elementwise minimum of all operands.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> x, y = nd.variables("x y")
+        >>> float(nd.minimum(x, y).eval({"x": 1.0, "y": 2.0}))
+        1.0
+    """
     return reduce(min, operands)
 
 
 def Constant(value, nettype: NetType = "scalar") -> Number:
-    """
-    一个工厂函数，返回一个 fitable 为 False 的 Number 对象。
+    """Create a fixed numerical constant.
+
+    Args:
+        value: Numerical value of the constant.
+        nettype: Network type of the constant. Defaults to ``"scalar"``.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> constant = nd.Constant(2.0)
+        >>> constant.fitable
+        False
     """
     return Number(value, nettype=nettype, fitable=False)
 
 def variables(vars, *args, **kwargs):
-    """
-    一个工厂函数，返回一个或多个 Variable 对象。
-    如果 vars 中包含空格，则认为是多个变量的名字，并返回一个列表；否则认为是单个变量的名字，并返回一个 Variable 对象。
+    """Create one variable or a list of space-separated variables.
+
+    Args:
+        vars: One variable name or several names separated by spaces.
+        *args: Additional positional arguments passed to :class:`Variable`.
+        **kwargs: Additional keyword arguments passed to :class:`Variable`.
+
+    Examples:
+        >>> import nd2py as nd
+        >>> x, y = nd.variables("x y")
+        >>> x.name, y.name
+        ('x', 'y')
     """
     if isinstance(vars, str) and " " in vars:
         return [Variable(v, *args, **kwargs) for v in vars.split(" ") if v]

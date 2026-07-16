@@ -7,10 +7,10 @@ nd2py.core.basic package
    :undoc-members:
 
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.core.basic.get\_copy module
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.basic.get_copy
    :members:
@@ -18,7 +18,7 @@ nd2py.core.basic.get\_copy module
    :undoc-members:
 
 nd2py.core.basic.get\_length module
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.core.basic.get_length
    :members:

@@ -7,10 +7,10 @@ nd2py.dataset package
    :undoc-members:
 
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.dataset.tokenizer module
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.dataset.tokenizer
    :members:

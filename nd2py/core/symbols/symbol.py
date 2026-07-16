@@ -73,6 +73,16 @@ class Symbol(NetTypeMixin, TreeMixin, SymbolAPIMixin, metaclass=SymbolMeta):
                 this symbol, such as ``"node"``, ``"edge"``, or ``"scalar"``,
                 or a set of allowed nettypes. If provided, it is propagated
                 through the tree by ``infer_nettype()``.
+
+        Examples:
+            Concrete symbols are normally composed through the public
+            operator classes and Python operators:
+
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> expression = nd.sin(x) + 1
+            >>> float(expression.eval({"x": 0.0}))
+            1.0
         """
         NetTypeMixin.__init__(self, nettype=nettype)
 

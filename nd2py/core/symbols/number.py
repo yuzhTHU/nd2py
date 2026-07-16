@@ -12,6 +12,21 @@ class Number(Symbol):
     n_operands = 0
 
     def __init__(self, value, nettype: NetType = "scalar", fitable=None):
+        """Create a numerical parameter.
+
+        Args:
+            value: Scalar or array-like numerical value.
+            nettype: Network type of the parameter. Defaults to ``"scalar"``.
+            fitable: Whether fitting algorithms may optimize the value. If
+                omitted, the current fitable context is used.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> coefficient = nd.Number(2.0)
+            >>> x = nd.Variable("x")
+            >>> float((coefficient * x).eval({"x": 3.0}))
+            6.0
+        """
         super().__init__(nettype=nettype)
         if isinstance(value, Number):
             if fitable is None: fitable = value.fitable

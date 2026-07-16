@@ -7,7 +7,7 @@ nd2py.utils package
    :undoc-members:
 
 Subpackages
------------
+^^^^^^^^^^^
 
 .. toctree::
    :maxdepth: 4
@@ -15,10 +15,10 @@ Subpackages
    nd2py.utils.nn
 
 Submodules
-----------
+^^^^^^^^^^
 
 nd2py.utils.attr\_dict module
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.attr_dict
    :members:
@@ -26,7 +26,7 @@ nd2py.utils.attr\_dict module
    :undoc-members:
 
 nd2py.utils.auto\_gpu module
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.auto_gpu
    :members:
@@ -34,7 +34,7 @@ nd2py.utils.auto\_gpu module
    :undoc-members:
 
 nd2py.utils.classproperty module
---------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.classproperty
    :members:
@@ -42,7 +42,7 @@ nd2py.utils.classproperty module
    :undoc-members:
 
 nd2py.utils.fix\_parser module
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.fix_parser
    :members:
@@ -50,7 +50,7 @@ nd2py.utils.fix\_parser module
    :undoc-members:
 
 nd2py.utils.logger module
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.logger
    :members:
@@ -58,7 +58,7 @@ nd2py.utils.logger module
    :undoc-members:
 
 nd2py.utils.metrics module
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.metrics
    :members:
@@ -66,7 +66,7 @@ nd2py.utils.metrics module
    :undoc-members:
 
 nd2py.utils.plot module
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.plot
    :members:
@@ -74,7 +74,7 @@ nd2py.utils.plot module
    :undoc-members:
 
 nd2py.utils.render\_markdown module
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.render_markdown
    :members:
@@ -82,7 +82,7 @@ nd2py.utils.render\_markdown module
    :undoc-members:
 
 nd2py.utils.render\_python module
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.render_python
    :members:
@@ -90,7 +90,7 @@ nd2py.utils.render\_python module
    :undoc-members:
 
 nd2py.utils.softmax module
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.softmax
    :members:
@@ -98,7 +98,7 @@ nd2py.utils.softmax module
    :undoc-members:
 
 nd2py.utils.tag2ansi module
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.tag2ansi
    :members:
@@ -106,7 +106,7 @@ nd2py.utils.tag2ansi module
    :undoc-members:
 
 nd2py.utils.timing module
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.timing
    :members:
@@ -114,7 +114,7 @@ nd2py.utils.timing module
    :undoc-members:
 
 nd2py.utils.utils module
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: nd2py.utils.utils
    :members:

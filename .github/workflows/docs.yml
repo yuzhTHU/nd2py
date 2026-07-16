@@ -33,7 +33,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           # 安装文档工具
-          pip install sphinx sphinx-book-theme myst-parser sphinx-autodoc-typehints
+          pip install sphinx pydata-sphinx-theme myst-parser sphinx-autodoc-typehints
           # 🚨 关键：以开发者模式安装 nd2py 本身，这样 Sphinx 才能读取到源码和 docstring
           pip install -e .
 
@@ -41,10 +41,8 @@ jobs:
       - name: Build Sphinx docs
         run: |
           cd docs
-          # 生成 API 文档占位符 (防止有新增模块没被抓取)
-          sphinx-apidoc -o source/api ../nd2py -f -M
-          # 编译 HTML
-          make html
+          # API sections are curated; autodoc fills them from docstrings.
+          sphinx-build -b html --keep-going source build/html
 
       # 5. 将生成的 HTML 部署到 GitHub Pages
       - name: Deploy to GitHub Pages

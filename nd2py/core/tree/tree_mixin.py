@@ -11,12 +11,16 @@ if TYPE_CHECKING:
 
 
 class TreeMixin:
-    """
-    Mixin 类：负责维护 Symbol 作为一棵符号树的结构关系 (parent, operands) 并提供树形操作方法。
-    宿主类必须提供以下属性:
-        - self.n_operands
-        - self.parent
-        - self.operands
+    """Provide structural operations for a Symbol expression tree.
+
+    The host class supplies ``n_operands``, ``parent``, and ``operands``.
+    TreeMixin then provides root discovery, iterative preorder and postorder
+    traversal, path lookup, replacement, and structural matching.
+
+    Notes:
+        nd2py expressions are trees with one parent per non-root Symbol. A
+        child already owned by another parent is copied when inserted into a
+        new expression.
     """
     n_operands: int
     parent: Optional["Symbol"]

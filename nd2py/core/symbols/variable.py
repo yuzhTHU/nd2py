@@ -10,6 +10,18 @@ class Variable(Symbol):
     n_operands = 0
 
     def __init__(self, name, nettype: NetType = "scalar"):
+        """Create a named input variable.
+
+        Args:
+            name: Key used to look up the variable in evaluation data.
+            nettype: Network type of the variable. Defaults to ``"scalar"``.
+
+        Examples:
+            >>> import nd2py as nd
+            >>> x = nd.Variable("x")
+            >>> float(x.eval({"x": 2.0}))
+            2.0
+        """
         super().__init__(nettype=nettype)
         self.name = name
 
