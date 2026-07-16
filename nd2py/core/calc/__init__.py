@@ -6,6 +6,7 @@ The implementation of calculation functionality of Symbol, including:
 """
 
 from .numpy_calc import NumpyCalc
+from .eic_calc import EICCalc
 from ...utils.lazy_loader import setup_lazy_imports
 from typing import TYPE_CHECKING
 

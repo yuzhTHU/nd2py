@@ -26,7 +26,9 @@ def unpack_operands():
                 X.append(x)
             # Use the defined 'visit_<Operation>' as 'func' to process the operands
             with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
-                return func(self, node, *X, *args, **kwargs)
+                result = func(self, node, *X, *args, **kwargs)
+            self._record_exceptions(node, result, kwargs)
+            return result
 
         return wrapper
 
@@ -41,6 +43,7 @@ class NumpyCalc(Visitor):
         edge_list: Tuple[List[int], List[int]] = None,
         num_nodes: int = None,
         use_eps: float = 0.0,
+        return_exceptions: bool = False,
     ):
         """
         Args:
@@ -50,18 +53,24 @@ class NumpyCalc(Visitor):
         - num_nodes: the number of nodes in the graph
             if not provided, it will be inferred from edge_list
         - use_eps: a small value to avoid division by zero
+        - return_exceptions: whether to return diagnostics for non-finite values
         """
         if num_nodes is None and edge_list is not None:
             nodes = np.unique(np.array(edge_list).reshape(-1))
             num_nodes = max(nodes) + 1
 
-        return super().__call__(
+        exceptions = [] if return_exceptions else None
+        result = super().__call__(
             node,
             vars=vars,
             edge_list=edge_list,
             num_nodes=num_nodes,
             use_eps=use_eps,
+            exceptions=exceptions,
         )
+        if return_exceptions:
+            return result, exceptions
+        return result
 
     def generic_visit(self, node: Symbol, *args, **kwargs):
         raise NotImplementedError(
@@ -75,11 +84,15 @@ class NumpyCalc(Visitor):
 
     def visit_Number(self, node: Number, *args, **kwargs):
         yield from yield_nothing()
-        return np.asarray(node.value)
+        result = np.asarray(node.value)
+        self._record_exceptions(node, result, kwargs)
+        return result
 
     def visit_Variable(self, node: Variable, *args, **kwargs):
         yield from yield_nothing()
-        return np.asarray(kwargs["vars"][node.name])
+        result = np.asarray(kwargs["vars"][node.name])
+        self._record_exceptions(node, result, kwargs)
+        return result
 
     def visit_GroupedParameter(self, node: GroupedParameter, *args, **kwargs):
         labels = yield (node.by, args, kwargs)
@@ -317,6 +330,28 @@ class NumpyCalc(Visitor):
     def visit_Readout(self, node: Readout, x, *args, **kwargs):
         """(*, n_nodes or n_edges or 1) -> (*, 1)"""
         return np.sum(x, axis=-1, keepdims=True)
+
+    @staticmethod
+    def _record_exceptions(node: Symbol, result, kwargs):
+        """Record non-finite values produced by one subexpression."""
+        if kwargs.get("exceptions") is None:
+            return
+        value = np.asarray(result)
+        if value.size == 0:
+            return
+        try:
+            nan_num = np.count_nonzero(np.isnan(value))
+            posinf_num = np.count_nonzero(np.isposinf(value))
+            neginf_num = np.count_nonzero(np.isneginf(value))
+        except TypeError: # Non-numeric values cannot contain NumPy's exceptional values.
+            return
+        if nan_num or posinf_num or neginf_num:
+            kwargs["exceptions"].append(
+                f"Subexpression {node} produced non-finite values: "
+                f"{nan_num / value.size:.2%} NaN, "
+                f"{posinf_num / value.size:.2%} Inf, "
+                f"{neginf_num / value.size:.2%} NegInf"
+            )
 
 
 """

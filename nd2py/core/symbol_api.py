@@ -94,6 +94,7 @@ class SymbolAPIMixin:
         edge_list: Tuple[List[int], List[int]] = None,
         num_nodes: int = None,
         use_eps: float = 0.0,
+        return_exceptions: bool = False,
     ):
         """Evaluate the expression numerically using NumPy.
 
@@ -112,15 +113,63 @@ class SymbolAPIMixin:
                 denominators or other potentially unstable operations to avoid
                 division by zero and improve numerical stability. Defaults to
                 0.0.
+            return_exceptions (bool, optional): If True, also return a list of
+                diagnostics describing non-finite values produced by each
+                subexpression. Defaults to False.
 
         Returns:
-            numpy.ndarray | float: Numerical evaluation result of the
-            expression, whose shape depends on the symbol and inputs.
+            numpy.ndarray | float | tuple: Numerical evaluation result, or a
+            ``(result, exceptions)`` tuple when ``return_exceptions`` is True.
         """
         from .calc import NumpyCalc
 
         return NumpyCalc()(
-            self, vars=vars, edge_list=edge_list, num_nodes=num_nodes, use_eps=use_eps
+            self,
+            vars=vars,
+            edge_list=edge_list,
+            num_nodes=num_nodes,
+            use_eps=use_eps,
+            return_exceptions=return_exceptions,
+        )
+
+    def eval_eic(
+        self,
+        vars: dict = {},
+        edge_list: Tuple[List[int], List[int]] = None,
+        num_nodes: int = None,
+        use_eps: float = 0.0,
+        perturbation: float = 1e-6,
+        return_exceptions: bool = False,
+        exception_threshold: float = 1.0,
+    ):
+        """Estimate the number of effective decimal digits lost during evaluation.
+
+        Args:
+            vars: Mapping from variable names to sampled values.
+            edge_list: Optional graph edge sources and targets.
+            num_nodes: Optional number of graph nodes.
+            use_eps: Stabilising value used by protected operations.
+            perturbation: Relative central-difference step for operators whose
+                derivatives are not implemented analytically.
+            return_exceptions: If True, return ``(eic, exceptions)``.
+            exception_threshold: Minimum estimated local digit loss reported
+                as an anomalous structure.
+
+        Returns:
+            float | tuple: Estimated decimal digits lost, optionally paired
+            with diagnostics identifying anomalous subexpressions.
+        """
+        from .calc import EICCalc
+
+        return EICCalc()(
+            self,
+            vars=vars,
+            edge_list=edge_list,
+            num_nodes=num_nodes,
+            use_eps=use_eps,
+            perturbation=perturbation,
+            return_exceptions=return_exceptions,
+            exception_threshold=exception_threshold,
         )
 
     def eval_torch(
